@@ -7,8 +7,8 @@
     "clean": "rimraf .next",
     "autofix": "eslint --fix --quiet --ext .ts --ext .tsx .",
     "autoformat": "prettier --write ./**/*",
-    "dev": "next --port ${APP_PORT:-3000}",
-    "build": "yarn clean && next build",
+    "dev": "yarn clean && next --port ${APP_PORT:-3000}",
+    "build": "next build",
     "start": "next start --port ${APP_PORT:-3000}"
   },
   "dependencies": {
