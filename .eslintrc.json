@@ -3,14 +3,8 @@
   "env": {
     "browser": true
   },
-  "extends": [
-    "airbnb",
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
-  ],
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "extends": ["airbnb", "plugin:prettier/recommended", "prettier/@typescript-eslint"],
+  "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "sourceType": "module",
@@ -25,13 +19,7 @@
     "import/resolver": {
       "typescript": {},
       "node": {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx",
-          ".md"
-        ]
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".md"]
       }
     }
   },
@@ -45,31 +33,17 @@
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
-        "components": [
-          "Link"
-        ],
-        "specialLink": [
-          "hrefLeft",
-          "hrefRight"
-        ],
-        "aspects": [
-          "invalidHref",
-          "preferButton"
-        ]
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
       }
     ],
     "jsx-a11y/label-has-associated-control": [
       "error",
       {
-        "labelComponents": [
-          "label"
-        ],
-        "labelAttributes": [
-          "htmlFor"
-        ],
-        "controlComponents": [
-          "input"
-        ]
+        "labelComponents": ["label"],
+        "labelAttributes": ["htmlFor"],
+        "controlComponents": ["input"]
       }
     ],
     "no-console": "warn",
@@ -81,9 +55,7 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".tsx"
-        ]
+        "extensions": [".tsx"]
       }
     ],
     "react/jsx-props-no-spreading": "off",
