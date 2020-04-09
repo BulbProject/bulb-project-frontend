@@ -7,6 +7,8 @@ import { createGlobalStyle } from 'styled-components';
 
 import { ThemeProvider } from 'ustudio-ui/theme';
 
+import Layout from '../components/Layout';
+
 const GlobalStyles = createGlobalStyle`
   body {
     height: 100%;
@@ -35,7 +37,9 @@ const CustomApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         />
       </Head>
       <ThemeProvider>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
       <GlobalStyles />
     </>
