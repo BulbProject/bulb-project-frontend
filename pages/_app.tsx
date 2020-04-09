@@ -28,7 +28,7 @@ const CustomApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <meta name="application-name" content="The Bulb Project" />
         <meta name="msapplication-TileColor" content="#fcfcfc" />
         <meta name="theme-color" content="#fcfcfc" />
-        <meta name="description" content="The Bulb project" />
+        <meta name="description" content="Bulb project" />
         <meta name="keywords" content="Bulb" />
 
         <link
@@ -36,8 +36,10 @@ const CustomApp: React.FC<AppProps> = ({ Component, pageProps }) => {
           rel="stylesheet"
         />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/logo192.png" />
-        <link rel="apple-touch-icon" href="/logo512.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
       </Head>
       <ThemeProvider>
         <Component {...pageProps} />
