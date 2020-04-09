@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  bulb-frontend:
+    container_name: 'bulb-frontend'
+    build: .
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    expose:
+      - ${APP_PORT}
+    environment:
+      - NODE_ENV=production
+      - APP_PORT=${APP_PORT}
