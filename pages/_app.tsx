@@ -30,7 +30,7 @@ const CustomApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <meta name="theme-color" content="#fcfcfc" />
 
         <link
-          href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=Source+Code+Pro&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap"
           rel="stylesheet"
         />
       </Head>
