@@ -28,7 +28,7 @@ const CustomApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <meta name="application-name" content="The Bulb Project" />
         <meta name="msapplication-TileColor" content="#fcfcfc" />
         <meta name="theme-color" content="#fcfcfc" />
-        <meta name="description" content="Bulb project Front-End" />
+        <meta name="description" content="The Bulb project" />
         <meta name="keywords" content="Bulb" />
 
         <link
