@@ -12,8 +12,6 @@ const GlobalStyles = createGlobalStyle`
     height: 100%;
     min-height: 100vh;
     overflow-x: hidden;
-    background-color: var(--c-lightest);
-    color: var(--c-darkest);
   }
 `;
 
@@ -28,8 +26,8 @@ const CustomApp: React.FC<AppProps> = ({ Component, pageProps }) => {
 
         <meta name="apple-mobile-web-app-title" content="The Bulb Project" />
         <meta name="application-name" content="The Bulb Project" />
-        <meta name="msapplication-TileColor" content="#fff" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="msapplication-TileColor" content="#fcfcfc" />
+        <meta name="theme-color" content="#fcfcfc" />
 
         <link
           href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=Source+Code+Pro&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap"
