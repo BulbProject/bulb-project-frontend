@@ -5,8 +5,8 @@
   "repository": "https://github.com/BulbProject/bulb-project-frontend.git",
   "scripts": {
     "clean": "rimraf .next",
-    "autofix": "eslint --fix --quiet --ext .ts --ext .tsx .",
-    "autoformat": "prettier --write ./**/*",
+    "lint": "eslint --fix --quiet --ext .ts --ext .tsx .",
+    "format": "prettier --write ./**/*",
     "dev": "yarn clean && next --port ${APP_PORT:-3000}",
     "build": "next build",
     "start": "next start --port ${APP_PORT:-3000}"
@@ -44,8 +44,8 @@
   },
   "lint-staged": {
     ".": [
-      "yarn autofix",
-      "yarn autoformat",
+      "yarn lint",
+      "yarn format",
       "git add"
     ]
   },
