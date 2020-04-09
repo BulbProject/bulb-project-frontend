@@ -28,11 +28,16 @@ const CustomApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <meta name="application-name" content="The Bulb Project" />
         <meta name="msapplication-TileColor" content="#fcfcfc" />
         <meta name="theme-color" content="#fcfcfc" />
+        <meta name="description" content="Bulb project frontend" />
+        <meta name="keywords" content="Bulb" />
 
         <link
           href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap"
           rel="stylesheet"
         />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/logo192.png" />
+        <link rel="apple-touch-icon" href="/logo512.png" />
       </Head>
       <ThemeProvider>
         <Component {...pageProps} />
