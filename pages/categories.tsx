@@ -1,7 +1,8 @@
 import React from 'react';
 import { NextPage } from 'next';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Text, Flex } from 'ustudio-ui';
+import Link from 'next/link';
+import { Text, Flex, Cell } from 'ustudio-ui';
 
 import Styled from './../styles/categories';
 
@@ -26,6 +27,7 @@ interface CategoryCard {
   id: string;
   title: string;
   description: string;
+  version: string;
   classification: {
     scheme: string;
     id: string;
@@ -34,28 +36,34 @@ interface CategoryCard {
 }
 
 const Categories: NextPage<{ categories?: CategoryCard[]; error?: string }> = ({ categories, error }) => {
-  return !error ? (
-    <Styled.Container alignment={{ vertical: 'center', horizontal: 'center' }}>
-      <Styled.Categories direction="column">
-        <Styled.ListTitle variant="h1">Categories</Styled.ListTitle>
-        {!categories?.length && <Text variant="h3">No categories</Text>}
+  return (
+    <Styled.Wrapper>
+      <Styled.Container isContainer>
+        <Cell xs={{ offset: { before: 2, after: 2 }, size: 8 }}>
+          <Flex direction="column">
+            <Styled.ListTitle variant="h1">Categories</Styled.ListTitle>
+            {!categories?.length && <Text variant="h3">No categories</Text>}
 
-        {categories?.map(category => (
-          <Styled.Card key={category.id} direction="column">
-            <Styled.CardTitle variant="h5">{category.title}</Styled.CardTitle>
-            <Styled.CardDescription variant="small">{category.description}</Styled.CardDescription>
-            <Flex alignment={{ vertical: 'center' }}>
-              <Text variant="small">{category.classification.id}</Text>
-              <Styled.ClassificationDescription variant="small">
-                {category.classification.description}
-              </Styled.ClassificationDescription>
-            </Flex>
-          </Styled.Card>
-        ))}
-      </Styled.Categories>
-    </Styled.Container>
-  ) : (
-    <Text>{error}</Text>
+            {categories?.map(category => (
+              <Link key={category.id} href={`/categories/${category.id}/${category.version}`} passHref>
+                <Styled.Link>
+                  <Styled.Card key={category.id} direction="column">
+                    <Styled.CardTitle variant="h5">{category.title}</Styled.CardTitle>
+                    <Styled.CardDescription variant="small">{category.description}</Styled.CardDescription>
+                    <Flex alignment={{ vertical: 'center' }}>
+                      <Styled.ClassificationId variant="small">{category.classification.id}</Styled.ClassificationId>
+                      <Styled.ClassificationDescription variant="small">
+                        {category.classification.description}
+                      </Styled.ClassificationDescription>
+                    </Flex>
+                  </Styled.Card>
+                </Styled.Link>
+              </Link>
+            ))}
+          </Flex>
+        </Cell>
+      </Styled.Container>
+    </Styled.Wrapper>
   );
 };
 
@@ -75,6 +83,7 @@ Categories.getInitialProps = async () => {
       title: _cat.title,
       description: _cat.description,
       classification: _cat.classification,
+      version: _cat.id,
     }));
 
     return { categories: transformedCategories };

@@ -1,20 +1,28 @@
-import styled from 'styled-components';
-import { Flex, Text } from 'ustudio-ui';
+import styled, { css } from 'styled-components';
+import { Flex, Text, Grid } from 'ustudio-ui';
+import { Mixin } from 'ustudio-ui/theme';
 
-const Container = styled(Flex)`
-  height: 100%;
-  min-height: 100vh;
+const Wrapper = styled.div`
+  padding: var(--i-large) 0;
 `;
 
-const Categories = styled(Flex)`
-  max-width: 1024px;
-  min-height: 100vh;
-
-  padding: var(--i-regular) 0;
+const Container = styled(Grid)`
+  padding: 0 var(--i-large);
+  ${Mixin.Screen.xs(
+    css`
+      padding: 0;
+    `
+  )}
 `;
 
 const ListTitle = styled(Text)`
   margin-bottom: 41px;
+`;
+
+const Link = styled.a`
+  &:after {
+    height: 0;
+  }
 `;
 
 const Card = styled(Flex)`
@@ -38,11 +46,12 @@ const Card = styled(Flex)`
 
 const CardTitle = styled(Text)`
   margin-bottom: var(--i-medium);
+  color: var(--c-darkest);
 `;
 
 const CardDescription = styled(Text)`
   margin-bottom: var(--i-regular);
-  
+
   color: var(--c-dark);
 `;
 
@@ -50,13 +59,18 @@ const ClassificationDescription = styled(Text)`
   margin-left: 6px;
   color: var(--c-dark);
 `;
+const ClassificationId = styled(Text)`
+  color: var(--c-darkest);
+`;
 
 export default {
+  Wrapper,
   Container,
-  Categories,
   ListTitle,
+  Link,
   Card,
   CardTitle,
   CardDescription,
+  ClassificationId,
   ClassificationDescription,
 };
