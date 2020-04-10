@@ -19,8 +19,8 @@ const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: Reques
   const { reload, back } = useRouter();
 
   return (
-    <Styled.Container>
-      <Grid isContainer>
+    <Styled.Wrapper>
+      <Styled.Container isContainer>
         <Cell xs={{ offset: { before: 2, after: 2 }, size: 8 }}>
           {error ? (
             <Flex direction="column" alignment={{ horizontal: 'center' }}>
@@ -52,8 +52,8 @@ const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: Reques
             </Flex>
           )}
         </Cell>
-      </Grid>
-    </Styled.Container>
+      </Styled.Container>
+    </Styled.Wrapper>
   );
 };
 

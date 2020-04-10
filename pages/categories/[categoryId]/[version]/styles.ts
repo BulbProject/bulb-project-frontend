@@ -1,12 +1,23 @@
-import styled from 'styled-components';
-import { Button, Text } from 'ustudio-ui';
+import styled, { css } from 'styled-components';
+import { Button, Grid, Text } from 'ustudio-ui';
+import { Mixin } from 'ustudio-ui/theme';
 
 import ClassificationComponent from '../../../../components/Classification';
 
-const Container = styled.div`
+const Wrapper = styled.div`
   background-color: var(--c-light);
 
   padding: var(--i-large) 0;
+`;
+
+const Container = styled(Grid)`
+  padding: 0 var(--i-large);
+
+  ${Mixin.Screen.xs(
+    css`
+      padding: 0;
+    `
+  )}
 `;
 
 const CategoryDescription = styled(Text)`
@@ -23,4 +34,4 @@ const RetryButton = styled(Button)`
   margin-top: var(--i-large);
 `;
 
-export default { Container, CategoryDescription, Classification, RetryButton };
+export default { Wrapper, Container, CategoryDescription, Classification, RetryButton };
