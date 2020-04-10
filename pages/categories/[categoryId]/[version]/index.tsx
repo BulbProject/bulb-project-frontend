@@ -5,12 +5,13 @@ import { useRouter } from 'next/router';
 import { Cell, Flex, Grid, Text } from 'ustudio-ui';
 
 import { getCategoryVersionConfig } from '../../../../config';
-import { CategoryVersion } from '../../../../types';
+import { RequestError } from '../../../../types';
+import { CategoryVersion } from '../../../../types/data';
 import { requestData } from '../../../../utils';
 
 import Styled from './styles';
 
-const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: string }> = ({
+const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: RequestError }> = ({
   categoryVersion = {},
   error,
 }) => {

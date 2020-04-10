@@ -1,10 +1,10 @@
 import { AxiosRequestConfig } from 'axios';
-import { Category, CategoryVersion } from '../types';
+import { Category, CategoryVersion } from '../types/data';
 
-const serviceProtocol = 'http://';
+const serviceProtocol = 'http';
 const serviceIP = '185.25.116.133';
 const servisePort = 8989;
-const serviceAddress = `${serviceProtocol}${serviceIP}:${servisePort}`;
+const serviceAddress = `${serviceProtocol}://${serviceIP}:${servisePort}`;
 
 const createRequestConfig = ({
   method,
