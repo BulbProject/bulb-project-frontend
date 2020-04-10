@@ -20,37 +20,39 @@ const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: Reques
 
   return (
     <Styled.Container>
-      <Cell xs={{ offset: { before: 2, after: 2 }, size: 8 }}>
-        {error ? (
-          <Flex direction="column" alignment={{ horizontal: 'center' }}>
-            <Text>Sorry, we could not get this category to load.</Text>
+      <Grid isContainer>
+        <Cell xs={{ offset: { before: 2, after: 2 }, size: 8 }}>
+          {error ? (
+            <Flex direction="column" alignment={{ horizontal: 'center' }}>
+              <Text>Sorry, we could not get this category to load.</Text>
 
-            <Grid xs={{ gap: 32 }}>
-              <Cell>
-                <Flex alignment={{ horizontal: 'end' }}>
-                  <Styled.RetryButton onClick={() => back()}>Go back</Styled.RetryButton>
-                </Flex>
-              </Cell>
+              <Grid xs={{ gap: 32 }}>
+                <Cell>
+                  <Flex alignment={{ horizontal: 'end' }}>
+                    <Styled.RetryButton onClick={() => back()}>Go back</Styled.RetryButton>
+                  </Flex>
+                </Cell>
 
-              <Cell>
-                <Flex alignment={{ horizontal: 'start' }}>
-                  <Styled.RetryButton intent="positive" onClick={() => reload()}>
-                    Try again
-                  </Styled.RetryButton>
-                </Flex>
-              </Cell>
-            </Grid>
-          </Flex>
-        ) : (
-          <Flex direction="column">
-            <Text variant="h3">{title}</Text>
+                <Cell>
+                  <Flex alignment={{ horizontal: 'start' }}>
+                    <Styled.RetryButton intent="positive" onClick={() => reload()}>
+                      Try again
+                    </Styled.RetryButton>
+                  </Flex>
+                </Cell>
+              </Grid>
+            </Flex>
+          ) : (
+            <Flex direction="column">
+              <Text variant="h3">{title}</Text>
 
-            {description && <Styled.CategoryDescription variant="small">{description}</Styled.CategoryDescription>}
+              {description && <Styled.CategoryDescription variant="small">{description}</Styled.CategoryDescription>}
 
-            <Styled.Classification id={classification?.id} description={classification?.description} />
-          </Flex>
-        )}
-      </Cell>
+              <Styled.Classification id={classification?.id} description={classification?.description} />
+            </Flex>
+          )}
+        </Cell>
+      </Grid>
     </Styled.Container>
   );
 };

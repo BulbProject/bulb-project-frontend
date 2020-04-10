@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { Button, Grid, Text } from 'ustudio-ui';
+import { Button, Text } from 'ustudio-ui';
 
 import ClassificationComponent from '../../../../components/Classification';
 
-const Container = styled(Grid)`
+const Container = styled.div`
   background-color: var(--c-light);
 
   padding: var(--i-large) 0;
