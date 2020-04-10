@@ -2,48 +2,51 @@ import React, { FC, useState } from 'react';
 
 import Link from 'next/link';
 
-import Styles from './styles';
+import Styled from './styles';
 
 const Layout: FC = ({ children }) => {
-  const [drawerIsShow, setDrawerIsShow] = useState(false);
+  const [drawerIsOpen, setDrawerOpen] = useState(false);
 
   return (
-    <Styles.Layout>
-      <Styles.Header>
+    <Styled.Layout>
+      <Styled.Header>
         <Link href="/" passHref>
-          <Styles.LogoLink>
-            <Styles.LogoImage src="/assets/images/logo.png" alt="Bulb Project Logo" />
-            <Styles.LogoText>Bulb Project</Styles.LogoText>
-          </Styles.LogoLink>
+          <Styled.LogoLink>
+            <Styled.LogoImage src="/assets/images/logo.png" alt="Bulb Project Logo" />
+            <Styled.LogoText>Bulb Project</Styled.LogoText>
+          </Styled.LogoLink>
         </Link>
 
-        <Styles.DrawerButton drawerIsShow={drawerIsShow} onClick={() => setDrawerIsShow(!drawerIsShow)} />
-      </Styles.Header>
-      <Styles.Drawer position="right" showOverlay isOpen={drawerIsShow} onChange={() => setDrawerIsShow(false)}>
-        <Styles.DrawerTitle variant="h3">Resources</Styles.DrawerTitle>
-        <Styles.Nav>
+        <Styled.DrawerButton drawerIsOpen={drawerIsOpen} onClick={() => setDrawerOpen(!drawerIsOpen)} />
+      </Styled.Header>
+
+      <Styled.Drawer position="right" showOverlay isOpen={drawerIsOpen} onChange={() => setDrawerOpen(false)}>
+        <Styled.DrawerTitle variant="h3">Resources</Styled.DrawerTitle>
+        <Styled.Nav>
           <Link href="/" passHref>
-            <Styles.NavLink>Handbook</Styles.NavLink>
+            <Styled.NavLink>Handbook</Styled.NavLink>
           </Link>
 
           <Link href="/" passHref>
-            <Styles.NavLink>Contacts</Styles.NavLink>
+            <Styled.NavLink>Contacts</Styled.NavLink>
           </Link>
 
           <Link href="/" passHref>
-            <Styles.NavLink>How to use?</Styles.NavLink>
+            <Styled.NavLink>How to use?</Styled.NavLink>
           </Link>
-        </Styles.Nav>
-      </Styles.Drawer>
-      <Styles.Main>{children}</Styles.Main>
-      <Styles.Footer>
+        </Styled.Nav>
+      </Styled.Drawer>
+
+      <Styled.Main>{children}</Styled.Main>
+
+      <Styled.Footer>
         © 2020{' '}
         <a href="https://ustudio.company" target="_blank" rel="noreferrer noopener">
           uStudio LLC
         </a>{' '}
         ❤️
-      </Styles.Footer>
-    </Styles.Layout>
+      </Styled.Footer>
+    </Styled.Layout>
   );
 };
 
