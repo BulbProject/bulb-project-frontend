@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Text, Flex, Cell } from 'ustudio-ui';
 
 import Styled from './../styles/categories';
+import { log } from 'util';
 
 export const baseURL = 'http://185.25.116.133:8989';
 
@@ -74,16 +75,16 @@ Categories.getInitialProps = async () => {
     const promises = data.map(async _cat => {
       const category: AxiosResponse<any> = await axios(getCategoryConfig(_cat.id, _cat.version));
 
-      return category?.data?.category;
+      return category?.data;
     });
     const categories = await Promise.all(promises);
 
     const transformedCategories = categories.map(_cat => ({
-      id: _cat.id,
-      title: _cat.title,
-      description: _cat.description,
-      classification: _cat.classification,
-      version: _cat.id,
+      id: _cat.category.id,
+      title: _cat.category.title,
+      description: _cat.category.description,
+      classification: _cat.category.classification,
+      version: _cat.version,
     }));
 
     return { categories: transformedCategories };
