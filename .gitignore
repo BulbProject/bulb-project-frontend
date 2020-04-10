@@ -9,7 +9,6 @@ node_modules
 
 .next
 
-sw.js
-workbox-6f0d2936.js
+public/*.js
 
 *.log
