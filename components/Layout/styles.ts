@@ -1,6 +1,7 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
-import { Drawer as uDrawer, Text } from 'ustudio-ui';
+import { Drawer as LibDrawer, Text } from 'ustudio-ui';
+import { Mixin } from 'ustudio-ui/theme';
 
 const Layout = styled.div`
   height: 100%;
@@ -46,8 +47,38 @@ const LogoText = styled.span`
   user-select: none;
 `;
 
+const OpenDrawerButtonAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
+
+const CloseDrawerButtonAnimation = keyframes`
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
+
 const DrawerButton = styled.button(
-  ({ drawerIsShow }: { drawerIsShow: boolean }) => css`
+  ({ drawerIsOpen }: { drawerIsOpen: boolean }) => css`
+    --delay: calc(var(--transition) * 2);
+
     width: 2rem;
     height: 22px;
 
@@ -69,7 +100,12 @@ const DrawerButton = styled.button(
     background-repeat: no-repeat;
     background-position-x: 0;
 
+    animation-name: ${CloseDrawerButtonAnimation};
+    animation-duration: var(--delay);
+    animation-fill-mode: both;
+
     transition: var(--transition);
+    transition-delay: 0s;
 
     &:before,
     &:after {
@@ -82,11 +118,22 @@ const DrawerButton = styled.button(
       transform-origin: right center;
 
       transition: var(--transition);
+      transition-delay: 0s;
     }
 
-    ${drawerIsShow
+    ${drawerIsOpen
       ? css`
           background-position-x: 32px;
+          animation-name: ${OpenDrawerButtonAnimation};
+          animation-duration: var(--delay);
+          animation-fill-mode: forwards;
+
+          transition-delay: var(--delay);
+
+          &:before,
+          &:after {
+            transition-delay: var(--delay);
+          }
 
           &:before {
             transform: rotate(-45deg) scale(0.89);
@@ -100,7 +147,7 @@ const DrawerButton = styled.button(
   `
 );
 
-const Drawer = styled(uDrawer)`
+const Drawer = styled(LibDrawer)`
   min-width: 320px;
 
   flex-direction: column;
@@ -119,9 +166,7 @@ const Nav = styled.nav`
 `;
 
 const NavLink = styled.a`
-  &:not(:last-child) {
-    margin-bottom: var(--i-large);
-  }
+  margin-bottom: var(--i-large);
 `;
 
 const Main = styled.main`
@@ -129,11 +174,11 @@ const Main = styled.main`
 `;
 
 const Footer = styled.footer`
-  padding: 4px 0;
+  padding: var(--i-small) 0;
 
   background-color: var(--c-light);
 
-  font-size: 12px;
+  ${Mixin.Font.bodySmall()};
   text-align: center;
 `;
 
