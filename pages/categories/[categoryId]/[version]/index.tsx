@@ -20,14 +20,15 @@ const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: string
   return (
     <Styled.Container>
       <Cell xs={{ offset: { before: 2, after: 2 }, size: 8 }}>
-        {error && !categoryVersion ? (
+        {error ? (
           <Alert
             isOpen={isAlertOpen}
             onChange={() => setAlertOpen(false)}
             verticalPosition="top"
             horizontalPosition="center"
+            intent="negative"
           >
-            {error}
+            Sorry, we could not get this category to load.
           </Alert>
         ) : (
           <Flex direction="column">
