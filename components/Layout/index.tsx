@@ -12,7 +12,7 @@ const Layout: FC = ({ children }) => {
       <Styled.Header>
         <Link href="/" passHref>
           <Styled.LogoLink>
-            <Styled.LogoImage src="/assets/images/logo.png" alt="Bulb Project Logo" />
+            <Styled.LogoImage src="/assets/images/logo.svg" alt="Bulb Project Logo" />
             <Styled.LogoText>Bulb Project</Styled.LogoText>
           </Styled.LogoLink>
         </Link>
@@ -22,6 +22,7 @@ const Layout: FC = ({ children }) => {
 
       <Styled.Drawer position="right" showOverlay isOpen={drawerIsOpen} onChange={() => setDrawerOpen(false)}>
         <Styled.DrawerTitle variant="h3">Resources</Styled.DrawerTitle>
+
         <Styled.Nav>
           <Link href="/" passHref>
             <Styled.NavLink>Handbook</Styled.NavLink>
