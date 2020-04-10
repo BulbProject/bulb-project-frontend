@@ -106,8 +106,8 @@ const DrawerButton = styled.button(
     animation-duration: calc(var(--delay) * 2);
     animation-fill-mode: both;
 
-    transition: var(--transition);
-    transition-delay: 0s;
+    transition: calc(var(--transition) / 2);
+    transition-delay: calc(var(--delay) * 2);
 
     &:before,
     &:after {
@@ -119,8 +119,8 @@ const DrawerButton = styled.button(
 
       transform-origin: right center;
 
-      transition: var(--transition);
-      transition-delay: 0s;
+      transition: calc(var(--transition) / 2);
+      transition-delay: calc(var(--delay) * 2);
     }
 
     ${drawerIsOpen
