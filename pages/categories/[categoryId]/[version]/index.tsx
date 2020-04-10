@@ -1,7 +1,8 @@
-import { NextPage } from 'next';
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Alert, Cell, Flex, Text } from 'ustudio-ui';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { Cell, Flex, Grid, Text } from 'ustudio-ui';
 
 import { getCategoryVersionConfig } from '../../../../config';
 import { CategoryVersion } from '../../../../types';
@@ -13,23 +14,32 @@ const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: string
   categoryVersion = {},
   error,
 }) => {
-  const [isAlertOpen, setAlertOpen] = useState(!!error);
-
   const { category: { title, description, classification } = {} } = categoryVersion;
+  const { reload, back } = useRouter();
 
   return (
     <Styled.Container>
       <Cell xs={{ offset: { before: 2, after: 2 }, size: 8 }}>
         {error ? (
-          <Alert
-            isOpen={isAlertOpen}
-            onChange={() => setAlertOpen(false)}
-            verticalPosition="top"
-            horizontalPosition="center"
-            intent="negative"
-          >
-            Sorry, we could not get this category to load.
-          </Alert>
+          <Flex direction="column" alignment={{ horizontal: 'center' }}>
+            <Text>Sorry, we could not get this category to load.</Text>
+
+            <Grid xs={{ gap: 32 }}>
+              <Cell>
+                <Flex alignment={{ horizontal: 'end' }}>
+                  <Styled.RetryButton onClick={() => back()}>Go back</Styled.RetryButton>
+                </Flex>
+              </Cell>
+
+              <Cell>
+                <Flex alignment={{ horizontal: 'start' }}>
+                  <Styled.RetryButton intent="positive" onClick={() => reload()}>
+                    Try again
+                  </Styled.RetryButton>
+                </Flex>
+              </Cell>
+            </Grid>
+          </Flex>
         ) : (
           <Flex direction="column">
             <Text variant="h3">{title}</Text>

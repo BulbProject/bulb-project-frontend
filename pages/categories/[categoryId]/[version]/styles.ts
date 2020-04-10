@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Grid, Text } from 'ustudio-ui';
+import { Button, Grid, Text } from 'ustudio-ui';
 
 import ClassificationComponent from '../../../../components/Classification';
 
@@ -19,4 +19,8 @@ const Classification = styled(ClassificationComponent)`
   margin-top: var(--i-regular);
 `;
 
-export default { Container, CategoryDescription, Classification };
+const RetryButton = styled(Button)`
+  margin-top: var(--i-large);
+`;
+
+export default { Container, CategoryDescription, Classification, RetryButton };
