@@ -53,24 +53,28 @@ const OpenDrawerButtonAnimation = keyframes`
   }
 
   50% {
+    z-index: 801;
     opacity: 0;
   }
 
   100% {
+    z-index: 801;
     opacity: 1;
   }
 `;
 
 const CloseDrawerButtonAnimation = keyframes`
   0% {
-    opacity: 1;
+    opacity: 0;
   }
 
   50% {
+    z-index: 1;
     opacity: 0;
   }
 
   100% {
+    z-index: 1;
     opacity: 1;
   }
 `;
@@ -86,8 +90,6 @@ const DrawerButton = styled.button(
     flex-direction: column;
     justify-content: space-between;
 
-    z-index: 801;
-
     border: none;
 
     background-image: linear-gradient(
@@ -101,7 +103,7 @@ const DrawerButton = styled.button(
     background-position-x: 0;
 
     animation-name: ${CloseDrawerButtonAnimation};
-    animation-duration: var(--delay);
+    animation-duration: calc(var(--delay) * 2);
     animation-fill-mode: both;
 
     transition: var(--transition);
