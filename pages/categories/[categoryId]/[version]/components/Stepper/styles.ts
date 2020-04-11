@@ -2,25 +2,29 @@ import styled, { css } from 'styled-components';
 import { Flex, Progress, Text } from 'ustudio-ui';
 import { StepProps } from './props';
 
+const circleDimension = 1;
+const progressHeight = 0.5;
+const stepHeight = 4;
+
 const StepCircle = styled.div`
-  width: 1rem;
-  height: 1rem;
+  width: ${circleDimension}rem;
+  height: ${circleDimension}rem;
 
   position: absolute;
   left: 50%;
 
   transform: translateX(-50%);
 
-  border-radius: 0.5rem;
+  border-radius: ${circleDimension / 2}rem;
 
   transition: background-color var(--transition);
 `;
 
 const StepProgress = styled(Progress)`
-  width: calc(100% - 2rem);
+  width: calc(100% - ${circleDimension * 2}rem);
 
   position: absolute;
-  left: calc(-50% + 0.5rem);
+  left: calc(-50% + ${circleDimension / 2}rem);
 
   margin: 0 var(--i-medium);
 
@@ -45,7 +49,7 @@ const Step = styled.div<Pick<StepProps, 'isActive'>>(
     color: ${isActive ? 'var(--c-primary)' : 'var(--c-neutral)'};
     text-align: center;
 
-    height: 4rem;
+    height: ${stepHeight}rem;
 
     position: relative;
 
@@ -54,20 +58,20 @@ const Step = styled.div<Pick<StepProps, 'isActive'>>(
     align-self: flex-start;
 
     ${StepCircle} {
-      top: calc(100% - 0.5rem);
+      top: calc(100% - ${circleDimension / 2}rem);
 
       background-color: ${isActive ? 'var(--c-primary)' : 'var(--c-light)'};
     }
 
     ${StepProgress} {
-      top: calc(100% - 0.25rem);
+      top: calc(100% - ${progressHeight / 2}rem);
     }
   `
 );
 
 const Stepper = styled(Flex)<{ length: number }>(
   ({ length }) => css`
-    height: ${`${length > 4 ? 8 : 4}rem`};
+    height: ${`${length > stepHeight ? stepHeight * 2 : stepHeight}rem`};
 
     ${Step} {
       width: ${`${100 / length}%`};
@@ -78,15 +82,15 @@ const Stepper = styled(Flex)<{ length: number }>(
               align-self: flex-end;
 
               ${StepCircle} {
-                top: -0.5rem;
+                top: -${circleDimension / 2}rem;
               }
 
               ${StepProgress} {
-                top: -0.25rem;
+                top: -${progressHeight / 2}rem;
               }
             }
           `
-        : ``};
+        : ``}
     }
   `
 );
