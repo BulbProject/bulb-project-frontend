@@ -10,7 +10,9 @@ const Wrapper = styled.div`
   padding: var(--i-large) 0;
 `;
 
-const Container = styled(Grid)`
+const Container = styled(Grid).attrs(() => ({
+  isContainer: true,
+}))`
   padding: 0 var(--i-large);
 
   ${Mixin.Screen.xs(
