@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components';
 import { Flex, Progress, Text } from 'ustudio-ui';
 import { StepProps } from './props';
 
-const circleDimension = 1;
-const progressHeight = 0.5;
+const circleDimension = 0.75;
+const progressHeight = 0.125;
 const stepHeight = 4;
 
 const StepCircle = styled.div`
@@ -21,7 +21,8 @@ const StepCircle = styled.div`
 `;
 
 const StepProgress = styled(Progress)`
-  width: calc(100% - ${circleDimension * 2}rem);
+  height: ${progressHeight}rem;
+  width: calc(100% - ${1 + circleDimension}rem);
 
   position: absolute;
   left: calc(-50% + ${circleDimension / 2}rem);
@@ -33,6 +34,8 @@ const StepProgress = styled(Progress)`
   &:after {
     animation: none;
     background: var(--c-primary);
+
+    transition: width var(--transition);
   }
 `;
 

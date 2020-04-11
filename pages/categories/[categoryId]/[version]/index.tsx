@@ -65,7 +65,7 @@ const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: Reques
 
       <Stepper
         steps={criteria?.map(criterion => criterion.title) as string[]}
-        activeStep={criteria?.[0]?.title || ''}
+        activeStep={criteria?.[2]?.title || ''}
       />
     </>
   );
