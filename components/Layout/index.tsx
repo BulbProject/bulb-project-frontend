@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import Styled from './styles';
 
+import logoImage from '../../public/assets/images/logo.svg';
+
 const Layout: FC = ({ children }) => {
   const [drawerIsOpen, setDrawerOpen] = useState(false);
 
@@ -12,7 +14,7 @@ const Layout: FC = ({ children }) => {
       <Styled.Header>
         <Link href="/" passHref>
           <Styled.LogoLink>
-            <Styled.LogoImage src="/assets/images/logo.svg" alt="Bulb Project Logo" />
+            <Styled.LogoImage src={logoImage} alt="Bulb Project Logo" />
             <Styled.LogoText>Bulb Project</Styled.LogoText>
           </Styled.LogoLink>
         </Link>
@@ -24,16 +26,8 @@ const Layout: FC = ({ children }) => {
         <Styled.DrawerTitle variant="h3">Resources</Styled.DrawerTitle>
 
         <Styled.Nav>
-          <Link href="/" passHref>
-            <Styled.NavLink>Handbook</Styled.NavLink>
-          </Link>
-
-          <Link href="/" passHref>
-            <Styled.NavLink>Contacts</Styled.NavLink>
-          </Link>
-
-          <Link href="/" passHref>
-            <Styled.NavLink>How to use?</Styled.NavLink>
+          <Link href="/info/demo-markdown" passHref>
+            <Styled.NavLink>Demo Markdown</Styled.NavLink>
           </Link>
         </Styled.Nav>
       </Styled.Drawer>
