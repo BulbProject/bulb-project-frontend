@@ -9,7 +9,7 @@ const requestData = async <Response>(
 
     return { data };
   } catch (error) {
-    return { error: { message: error.message, statusCode: error.response.status } };
+    return { error: { message: error.message, statusCode: error?.response?.status } };
   }
 };
 
