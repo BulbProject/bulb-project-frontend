@@ -20,7 +20,13 @@ const createRequestConfig = ({
   responseType: 'json',
 });
 
+export const getCategoriesConfig = (): AxiosRequestConfig => createRequestConfig({
+  method: 'get',
+  path: 'categories',
+});
+
 export const getCategoryVersionConfig = (
   categoryId: Category['id'],
   version: CategoryVersion['version']
 ): AxiosRequestConfig => createRequestConfig({ method: 'get', path: 'categories', params: [categoryId, version] });
+
