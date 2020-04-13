@@ -17,7 +17,7 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-const CustomApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+const CustomApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
