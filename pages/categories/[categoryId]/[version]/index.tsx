@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Cell, Flex, Grid, Text } from 'ustudio-ui';
 
@@ -71,14 +71,14 @@ const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: Reques
   );
 };
 
-CategoryPage.getInitialProps = async context => {
-  const { categoryId, version } = context.query;
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { categoryId, version } = query;
 
   const { data: categoryVersion, error } = await requestData<CategoryVersion>(
     getCategoryVersionConfig(categoryId as string, version as string)
   );
 
-  return { categoryVersion, error };
+  return { props: { categoryVersion, error } };
 };
 
 export default CategoryPage;
