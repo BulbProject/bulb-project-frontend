@@ -8,7 +8,7 @@ import { getCategoryVersionConfig } from '../../../../config';
 import { RequestError } from '../../../../types';
 import { CategoryVersion } from '../../../../types/data';
 import { requestData } from '../../../../utils';
-import { Stepper } from './components';
+import { Stepper } from '../../../../components/category-version';
 
 import Styled from './styles';
 
