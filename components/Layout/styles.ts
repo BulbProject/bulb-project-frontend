@@ -150,11 +150,13 @@ const DrawerButton = styled.button(
 );
 
 const Drawer = styled(LibDrawer)`
-  min-width: 320px;
+  &&& {
+    min-width: 320px;
 
-  flex-direction: column;
+    flex-direction: column;
 
-  padding: var(--i-regular) var(--i-large);
+    padding: var(--i-regular) var(--i-large);
+  }
 `;
 
 const DrawerTitle = styled(Text)`
