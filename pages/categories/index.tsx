@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Text, Flex, Cell, Placeholder, Button } from 'ustudio-ui';
 
 import Styled from '../../styles/categories';
 import Classification from '../../components/Classification';
 import { requestData } from '../../utils';
-import { CategoryCard, ShortCategoryInfo, CategoryVersion } from '../../types/data';
+import { CategoryCard, CategoriesListEntity, CategoryVersion, CategoryCardData } from '../../types/data';
 import { getCategoriesConfig, getCategoryVersionConfig } from '../../config';
 import { RequestError } from '../../types';
-import { useRouter } from 'next/router';
 
-const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: RequestError }> = ({
+const Categories: NextPage<{ categoriesList?: CategoriesListEntity[]; error?: RequestError }> = ({
   categoriesList = [],
   error,
 }) => {
   const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { reload } = useRouter();
 
   const getRandomWidth = () => {
@@ -29,49 +29,51 @@ const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: Reque
     return { id, version, categoryVersion, error };
   };
 
-  const transformCategoryData = (categoryVersion: CategoryVersion) => ({
-    id: categoryVersion.category.id,
-    title: categoryVersion.category.title,
-    description: categoryVersion.category.description,
-    classification: categoryVersion.category.classification,
-    version: categoryVersion.version,
+  const transformCategoryData: ({
+    version,
+    category: { id, title, description, classification },
+  }: CategoryVersion) => CategoryCardData = ({ version, category: { id, title, description, classification } }) => ({
+    id,
+    title,
+    description,
+    classification,
+    version,
   });
 
   const getFullCategoriesInfo = async () => {
-    setIsLoading(true);
+    setLoading(true);
 
-    const promises = categoriesList?.map(async _cat => {
-      return await getCategory(_cat.id, _cat.version);
+    const categoriesListPromises = categoriesList?.map(async category => {
+      return await getCategory(category.id, category.version);
     });
 
-    Promise.all(promises)
+    Promise.all(categoriesListPromises)
       .then((responses: { id: string; version: string; categoryVersion?: CategoryVersion; error?: RequestError }[]) => {
-        const transformedCategories = responses.reduce((accCat: CategoryCard[], resData) => {
-          if (!resData.categoryVersion)
+        const transformedCategories = responses.reduce((fullInfoCategories: CategoryCard[], responseData) => {
+          if (!responseData.categoryVersion)
             return [
-              ...accCat,
+              ...fullInfoCategories,
               {
-                id: resData.id,
-                version: resData.version,
-                error: resData.error,
+                id: responseData.id,
+                version: responseData.version,
+                error: responseData.error,
               },
             ];
 
           return [
-            ...accCat,
+            ...fullInfoCategories,
             {
-              id: resData.id,
-              version: resData.version,
-              data: transformCategoryData(resData.categoryVersion),
+              id: responseData.id,
+              version: responseData.version,
+              data: transformCategoryData(responseData.categoryVersion),
             },
           ];
         }, []);
 
         setFullCategories(transformedCategories);
-
       })
       .catch((err: RequestError) => console.log(err))
-      .finally(() => setIsLoading(false));
+      .finally(() => setLoading(false));
   };
 
   const reloadItem = (id: string, version: string) => {
@@ -80,6 +82,7 @@ const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: Reque
     Promise.resolve(category).then(resData => {
       if (resData.categoryVersion) {
         const filteredCategories = fullCategories.filter(_cat => _cat.id !== id);
+
         setFullCategories([
           ...filteredCategories,
           {
@@ -103,6 +106,7 @@ const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: Reque
           {error ? (
             <Flex direction="column" alignment={{ horizontal: 'center' }}>
               <Text>Sorry, we could not get categories list to load.</Text>
+
               <Styled.ButtonContainer alignment={{ horizontal: 'center' }}>
                 <Button intent="positive" onClick={() => reload()}>
                   Try again
@@ -112,9 +116,10 @@ const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: Reque
           ) : (
             <Flex direction="column">
               <Styled.ListTitle variant="h1">Categories</Styled.ListTitle>
+
               {!categoriesList?.length && <Text variant="h3">No categories</Text>}
 
-              {isLoading &&
+              {loading &&
                 categoriesList?.map((category, categoryIndex) => (
                   <Styled.BaseCard key={categoryIndex} direction="column">
                     <Styled.StubTitle
@@ -124,6 +129,7 @@ const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: Reque
                       }}
                       variant="text"
                     />
+
                     <Styled.StubDescription
                       appearance={{
                         height: 'small',
@@ -131,6 +137,7 @@ const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: Reque
                       }}
                       variant="text"
                     />
+
                     <Flex>
                       <Placeholder
                         appearance={{
@@ -139,6 +146,7 @@ const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: Reque
                         }}
                         variant="text"
                       />
+
                       <Styled.StubClassificationDescription
                         appearance={{
                           height: 'small',
@@ -150,7 +158,7 @@ const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: Reque
                   </Styled.BaseCard>
                 ))}
 
-              {!isLoading &&
+              {!loading &&
                 fullCategories?.map(category =>
                   category?.data ? (
                     <Link
@@ -161,7 +169,9 @@ const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: Reque
                       <Styled.Link>
                         <Styled.Card direction="column">
                           <Styled.CardTitle variant="h5">{category.data.title}</Styled.CardTitle>
+
                           <Styled.CardDescription variant="small">{category.data.description}</Styled.CardDescription>
+
                           <Classification
                             id={category.data.classification.id}
                             description={category.data.classification.description}
@@ -186,9 +196,9 @@ const Categories: NextPage<{ categoriesList?: ShortCategoryInfo[]; error?: Reque
 };
 
 Categories.getInitialProps = async () => {
-  const { data: shortCategories, error } = await requestData<ShortCategoryInfo[]>(getCategoriesConfig());
+  const { data: categoriesList, error } = await requestData<CategoriesListEntity[]>(getCategoriesConfig());
 
-  return { categoriesList: shortCategories, error };
+  return { categoriesList, error };
 };
 
 export default Categories;
