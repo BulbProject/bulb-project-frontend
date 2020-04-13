@@ -3,13 +3,13 @@ import { RequestError } from '../types';
 
 const requestData = async <Response>(
   requestConfig: AxiosRequestConfig
-): Promise<{ data?: Response; error?: RequestError }> => {
+): Promise<{ data: Response | null; error: RequestError | null }> => {
   try {
     const { data } = await axios(requestConfig);
 
-    return { data };
+    return { data, error: null };
   } catch (error) {
-    return { error: { message: error.message, statusCode: error.response.status } };
+    return { data: null, error: { message: error.message, statusCode: error.response.status } };
   }
 };
 

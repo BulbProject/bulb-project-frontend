@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Cell, Flex, Grid, Text } from 'ustudio-ui';
 
@@ -8,41 +8,50 @@ import { getCategoryVersionConfig } from '../../../../config';
 import { RequestError } from '../../../../types';
 import { CategoryVersion } from '../../../../types/data';
 import { requestData } from '../../../../utils';
+import { Stepper } from '../../../../components/category-version';
 
 import Styled from './styles';
+
+const headerCellProps = { offset: { before: 2, after: 2 }, size: 8 };
 
 const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: RequestError }> = ({
   categoryVersion = {},
   error,
 }) => {
-  const { category: { title, description, classification } = {} } = categoryVersion;
+  const { category: { title, description, classification, criteria } = {} } = categoryVersion;
   const { reload, back } = useRouter();
 
-  return (
+  return error ? (
     <Styled.Wrapper>
-      <Styled.Container isContainer>
-        <Cell xs={{ offset: { before: 2, after: 2 }, size: 8 }}>
-          {error ? (
-            <Flex direction="column" alignment={{ horizontal: 'center' }}>
-              <Text>Sorry, we could not get this category to load.</Text>
+      <Styled.Container>
+        <Cell xs={headerCellProps}>
+          <Flex direction="column" alignment={{ horizontal: 'center' }}>
+            <Text>Sorry, we could not get this category to load.</Text>
 
-              <Grid xs={{ gap: 32 }}>
-                <Cell>
-                  <Flex alignment={{ horizontal: 'end' }}>
-                    <Styled.RetryButton onClick={() => back()}>Go back</Styled.RetryButton>
-                  </Flex>
-                </Cell>
+            <Grid xs={{ gap: 32 }}>
+              <Cell>
+                <Flex alignment={{ horizontal: 'end' }}>
+                  <Styled.RetryButton onClick={() => back()}>Go back</Styled.RetryButton>
+                </Flex>
+              </Cell>
 
-                <Cell>
-                  <Flex alignment={{ horizontal: 'start' }}>
-                    <Styled.RetryButton intent="positive" onClick={() => reload()}>
-                      Try again
-                    </Styled.RetryButton>
-                  </Flex>
-                </Cell>
-              </Grid>
-            </Flex>
-          ) : (
+              <Cell>
+                <Flex alignment={{ horizontal: 'start' }}>
+                  <Styled.RetryButton intent="positive" onClick={() => reload()}>
+                    Try again
+                  </Styled.RetryButton>
+                </Flex>
+              </Cell>
+            </Grid>
+          </Flex>
+        </Cell>
+      </Styled.Container>
+    </Styled.Wrapper>
+  ) : (
+    <>
+      <Styled.Wrapper>
+        <Styled.Container>
+          <Cell xs={headerCellProps}>
             <Flex direction="column">
               <Text variant="h3">{title}</Text>
 
@@ -50,21 +59,26 @@ const CategoryPage: NextPage<{ categoryVersion?: CategoryVersion; error?: Reques
 
               <Styled.Classification id={classification?.id} description={classification?.description} />
             </Flex>
-          )}
-        </Cell>
-      </Styled.Container>
-    </Styled.Wrapper>
+          </Cell>
+        </Styled.Container>
+      </Styled.Wrapper>
+
+      <Stepper
+        steps={criteria?.map(criterion => criterion.title) as string[]}
+        activeStep={criteria?.[2]?.title || ''}
+      />
+    </>
   );
 };
 
-CategoryPage.getInitialProps = async context => {
-  const { categoryId, version } = context.query;
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { categoryId, version } = query;
 
   const { data: categoryVersion, error } = await requestData<CategoryVersion>(
     getCategoryVersionConfig(categoryId as string, version as string)
   );
 
-  return { categoryVersion, error };
+  return { props: { categoryVersion, error } };
 };
 
 export default CategoryPage;
