@@ -1,6 +1,7 @@
-import styled, { css } from 'styled-components';
-import { Flex, Text, Grid } from 'ustudio-ui';
-import { Mixin } from 'ustudio-ui/theme';
+import styled, {css} from 'styled-components';
+import {Flex, Text, Grid, Placeholder} from 'ustudio-ui';
+import {Mixin} from 'ustudio-ui/theme';
+import {ReactComponent as ReloadIconEl} from "../public/assets/icons/reload.svg";
 
 const Wrapper = styled.div`
   padding: var(--i-large) 0;
@@ -9,10 +10,10 @@ const Wrapper = styled.div`
 const Container = styled(Grid)`
   padding: 0 var(--i-large);
   ${Mixin.Screen.xs(
-    css`
+  css`
       padding: 0;
     `
-  )}
+)}
 `;
 
 const ListTitle = styled(Text)`
@@ -25,7 +26,7 @@ const Link = styled.a`
   }
 `;
 
-const Card = styled(Flex)`
+const BaseCard = styled(Flex)`
   margin-bottom: var(--i-large);
   padding: var(--i-regular);
 
@@ -34,7 +35,19 @@ const Card = styled(Flex)`
   border-radius: var(--border-radius);
 
   transition: var(--transition);
+`;
 
+const StubTitle = styled(Placeholder)`
+  margin-bottom: var(--i-medium);
+  `
+const StubDescription = styled(Placeholder)`
+  margin-bottom: var(--i-regular);
+  `
+const StubClassificationDescription = styled(Placeholder)`
+ margin-left: var(--i-regular);
+  `
+
+const Card = styled(BaseCard)`
   &:hover {
     border: 1px solid var(--c-primary);
     box-shadow: var(--s-primary);
@@ -44,8 +57,10 @@ const Card = styled(Flex)`
   }
 `;
 
+
 const CardTitle = styled(Text)`
   margin-bottom: var(--i-medium);
+
   color: var(--c-darkest);
 `;
 
@@ -55,13 +70,23 @@ const CardDescription = styled(Text)`
   color: var(--c-dark);
 `;
 
-const ClassificationDescription = styled(Text)`
-  margin-left: 6px;
-  color: var(--c-dark);
+const ButtonContainer = styled(Flex)`
+  margin-top: var(--i-large);
 `;
-const ClassificationId = styled(Text)`
-  color: var(--c-darkest);
+const ReloadIcon = styled(ReloadIconEl)`
+  width: 40px;
+  height: 40px;
+
+  display: inline-block;
+
+  color: var(--c-primary);
+  transition: var(--transition);
+
+  &:hover{
+    transform: rotate(90deg);
+  }
 `;
+
 
 export default {
   Wrapper,
@@ -69,8 +94,12 @@ export default {
   ListTitle,
   Link,
   Card,
+  BaseCard,
+  StubTitle,
+  StubDescription,
+  StubClassificationDescription,
   CardTitle,
   CardDescription,
-  ClassificationId,
-  ClassificationDescription,
+  ButtonContainer,
+  ReloadIcon
 };
