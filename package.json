@@ -43,6 +43,7 @@
     "ts4ocds": "^1.0.0-beta.5",
     "typescript": "^3.8.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^4.1.0",
     "ustudio-ui": "^1.1.4",
     "webpack": "^4.42.1",
     "webpack-bundle-analyzer": "^3.7.0",

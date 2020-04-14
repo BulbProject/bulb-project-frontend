@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { Category, CategoryVersion } from '../types/data';
+import { Category, CategoryVersion } from 'types/data';
 
 const serviceProtocol = 'http';
 const serviceIP = '185.25.116.133';

@@ -51,13 +51,21 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(jpg|png|svg)$/,
+        test: /\.(jpe?g|png|svg)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 25000,
+        },
+        include: [path.resolve(__dirname, 'public/assets')],
+      },
+      {
+        test: /\.(jpe?g|png|svg)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[hash].[ext]',
           outputPath: 'images/',
         },
-        include: [path.resolve(__dirname, 'src/assets')],
+        include: [path.resolve(__dirname, 'public/assets')],
       },
       {
         test: /\.eot|ttf|woff|woff2$/i,

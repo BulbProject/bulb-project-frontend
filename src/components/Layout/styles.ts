@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
 
 import { Drawer as LibDrawer, Text } from 'ustudio-ui';
@@ -23,7 +24,7 @@ const Header = styled.header`
   box-shadow: var(--s-light);
 `;
 
-const LogoLink = styled.a`
+const LogoLink = styled(Link)`
   max-height: 3rem;
 
   display: flex;
@@ -167,7 +168,7 @@ const Nav = styled.nav`
   align-items: flex-start;
 `;
 
-const NavLink = styled.a`
+const NavLink = styled(Link)`
   margin-bottom: var(--i-large);
 `;
 

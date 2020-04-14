@@ -1,8 +1,9 @@
 import React, { FC, useState } from 'react';
 
-import Link from 'next/link';
-
 import Styled from './styles';
+
+// @ts-ignore
+import logo from '../../../public/assets/images/logo.svg';
 
 const Layout: FC = ({ children }) => {
   const [drawerIsOpen, setDrawerOpen] = useState(false);
@@ -10,12 +11,10 @@ const Layout: FC = ({ children }) => {
   return (
     <Styled.Layout>
       <Styled.Header>
-        <Link href="/" passHref>
-          <Styled.LogoLink>
-            <Styled.LogoImage src="/assets/images/logo.svg" alt="Bulb Project Logo" />
-            <Styled.LogoText>Bulb Project</Styled.LogoText>
-          </Styled.LogoLink>
-        </Link>
+        <Styled.LogoLink to="/">
+          <Styled.LogoImage src={logo} alt="Bulb Project Logo" />
+          <Styled.LogoText>Bulb Project</Styled.LogoText>
+        </Styled.LogoLink>
 
         <Styled.DrawerButton drawerIsOpen={drawerIsOpen} onClick={() => setDrawerOpen(!drawerIsOpen)} />
       </Styled.Header>
@@ -24,17 +23,11 @@ const Layout: FC = ({ children }) => {
         <Styled.DrawerTitle variant="h3">Resources</Styled.DrawerTitle>
 
         <Styled.Nav>
-          <Link href="/" passHref>
-            <Styled.NavLink>Handbook</Styled.NavLink>
-          </Link>
-
-          <Link href="/" passHref>
-            <Styled.NavLink>Contacts</Styled.NavLink>
-          </Link>
-
-          <Link href="/" passHref>
-            <Styled.NavLink>How to use?</Styled.NavLink>
-          </Link>
+          {['Handbook', 'Contacts', 'How to use?'].map(page => (
+            <Styled.NavLink to="/" key={page}>
+              {page}
+            </Styled.NavLink>
+          ))}
         </Styled.Nav>
       </Styled.Drawer>
 
