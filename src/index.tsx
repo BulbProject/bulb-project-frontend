@@ -11,13 +11,13 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <BrowserRouter>
-        <Switch>
-          <Layout>
+        <Layout>
+          <Switch>
             {routes.map(route => (
               <Route {...route} key={route.path as string} />
             ))}
-          </Layout>
-        </Switch>
+          </Switch>
+        </Layout>
       </BrowserRouter>
     </ThemeProvider>
   );

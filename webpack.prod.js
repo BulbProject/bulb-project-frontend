@@ -18,7 +18,7 @@ module.exports = merge(common, {
     new CleanWebpackPlugin(),
     new UglifyJSPlugin(),
     new FaviconsWebpackPlugin({
-      logo: path.resolve(__dirname, 'public/favicon.ico'),
+      logo: path.resolve(__dirname, 'src/public/favicon.ico'),
       favicons: {
         appName: 'Bulb Project',
         appShortName: 'Bulb Project',

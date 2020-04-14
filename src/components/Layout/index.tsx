@@ -1,9 +1,7 @@
 import React, { FC, useState } from 'react';
 
+import logo from 'public/assets/images/logo.svg';
 import Styled from './styles';
-
-// @ts-ignore
-import logo from '../../../public/assets/images/logo.svg';
 
 const Layout: FC = ({ children }) => {
   const [drawerIsOpen, setDrawerOpen] = useState(false);
