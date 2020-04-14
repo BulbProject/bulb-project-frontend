@@ -1,35 +1,41 @@
-import { containerCellProps } from 'pages/categories/[categoryId]/[version]/config';
-import React, { useState } from 'react';
-import { Grid, Cell, Flex } from 'ustudio-ui';
+import React, { Dispatch, SetStateAction } from 'react';
+import { Criterion } from 'types/data';
+import { Grid, Cell, Flex, Text } from 'ustudio-ui';
+import { containerCellProps } from '../../config';
 
 import { Step, StepperButton } from './components';
-import { StepProps } from './components/Step';
 
 import Styled from './styles';
 
 export interface StepperProps {
-  steps: StepProps['title'][];
+  steps: Criterion[];
+  currentStep: Criterion;
+  setCurrentStep: Dispatch<SetStateAction<Criterion>>;
 }
 
-const Stepper: React.FC<StepperProps> = ({ steps, children }) => {
-  const [currentStep, setCurrentStep] = useState(steps[0]);
+const Stepper = ({ steps, currentStep, setCurrentStep }: StepperProps) => {
+  const { title } = currentStep;
 
-  const isStepActive = (title: string): boolean => steps.indexOf(title) <= steps.indexOf(currentStep);
-  const isLastStep = (): boolean => steps.indexOf(currentStep) === steps.length - 1;
-  const isFirstStep = (): boolean => steps.indexOf(currentStep) === 0;
+  const titles = steps.map(step => step.title);
+
+  const isStepActive = (stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(currentStep.title);
+  const isLastStep = (): boolean => titles.indexOf(title) === steps.length - 1;
+  const isFirstStep = (): boolean => titles.indexOf(title) === 0;
 
   return (
     <Flex direction="column">
       <Styled.Stepper length={steps.length}>
         {steps.map((step, index) => (
-          <Step title={step} key={step} isActive={isStepActive(step)} index={index} />
+          <Step title={step.title} key={step.id} isActive={isStepActive(step.title)} index={index} />
         ))}
       </Styled.Stepper>
 
       <Grid isContainer>
         <Cell xs={containerCellProps}>
           <Flex direction="column">
-            {children}
+            <Text align="center" variant="h3">
+              {title}
+            </Text>
 
             <Flex alignment={{ horizontal: 'space-between' }}>
               <StepperButton

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 
 import { Cell, Flex, Grid, Spinner, Text } from 'ustudio-ui';
 
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
-import { CategoryVersion } from 'types/data';
+import { CategoryVersion, Criterion } from 'types/data';
 
 import { Stepper } from './components';
 
@@ -23,6 +23,20 @@ const CategoryPage: React.FC = () => {
 
   const { category: { title, description, criteria, classification } = {} } = (categoryVersion ||
     {}) as CategoryVersion;
+
+  const [steps, setSteps] = useState<Criterion[]>([]);
+  const [currentStep, setCurrentStep] = useState<Criterion>({} as Criterion);
+
+  useEffect(() => {
+    if (criteria) {
+      const sortedCriteria = criteria
+        // @ts-ignore
+        .sort(({ id: firstId }, { id: secondId }) => (0 - (firstId > secondId) ? 1 : -1));
+
+      setSteps(sortedCriteria);
+      setCurrentStep(sortedCriteria[0]);
+    }
+  }, [criteria]);
 
   return error || isLoading ? (
     <Styled.Wrapper>
@@ -72,14 +86,7 @@ const CategoryPage: React.FC = () => {
         </Styled.Container>
       </Styled.Wrapper>
 
-      <Stepper
-        steps={
-          criteria
-            // @ts-ignore
-            ?.sort(({ id: firstId }, { id: secondId }) => (0 - (firstId > secondId) ? 1 : -1))
-            ?.map(criterion => criterion.title) as string[]
-        }
-      />
+      <Stepper steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep} />
     </>
   );
 };
