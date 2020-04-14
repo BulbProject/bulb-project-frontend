@@ -23,7 +23,9 @@ const Categories: NextPage<{ categoriesList?: CategoriesListEntity[]; error?: Re
           ) : (
             <Flex direction="column">
               <Styled.ListTitle variant="h1">Select category for future calculation</Styled.ListTitle>
+
               {!categoriesList?.length && <Text variant="h3">There are no categories yet</Text>}
+
               {categoriesList?.map(category => (
                 <Card key={category.id} id={category.id} version={category.version} date={category.date} />
               ))}

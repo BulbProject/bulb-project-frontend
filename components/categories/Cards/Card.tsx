@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-import { CategoriesListEntity, CategoryCard, CategoryVersion } from '../../../types/data';
+import { CategoriesListEntity, CategoryVersion } from '../../../types/data';
 import { RequestError } from '../../../types';
 import BaseCard from './BaseCard';
 import StubCard from './StubCard';
 import { requestData } from '../../../utils';
 import { getCategoryVersionConfig } from '../../../config';
 import ErrorCard from './ErrorCard';
+import { CategoryCard } from './props';
 
 type Error = RequestError | undefined;
 
 const Card = ({ id, version }: CategoriesListEntity) => {
-
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(undefined as Error);
   const [category, setCategory] = useState((null as unknown) as CategoryCard);
