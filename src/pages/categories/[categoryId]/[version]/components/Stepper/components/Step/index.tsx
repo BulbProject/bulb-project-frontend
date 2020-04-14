@@ -1,8 +1,12 @@
 import React from 'react';
 
-import { StepProps } from './props';
-
 import Styled from './styles';
+
+export interface StepProps {
+  title: string;
+  index: number;
+  isActive: boolean;
+}
 
 const Step = ({ title, index, isActive }: StepProps) => {
   return (
