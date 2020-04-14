@@ -40,7 +40,7 @@ const Categories = () => {
             <Flex direction="column">
               <Styled.ListTitle variant="h1">Select category for future calculation</Styled.ListTitle>
 
-              {!isLoading ? (
+              {isLoading ? (
                 <Flex alignment={{ vertical: 'center', horizontal: 'center' }}>
                   <Spinner appearance={{ size: 52 }} />
                 </Flex>
