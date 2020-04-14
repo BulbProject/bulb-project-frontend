@@ -10,8 +10,7 @@ import { CategoryVersion } from 'types/data';
 import { Stepper } from './components';
 
 import Styled from './styles';
-
-const headerCellProps = { offset: { before: 2, after: 2 }, size: 8 };
+import { containerCellProps } from './config';
 
 const CategoryPage: React.FC = () => {
   const { categoryId, version } = useParams();
@@ -25,10 +24,10 @@ const CategoryPage: React.FC = () => {
   const { category: { title, description, criteria, classification } = {} } = (categoryVersion ||
     {}) as CategoryVersion;
 
-  return error || !categoryVersion || isLoading ? (
+  return error || isLoading ? (
     <Styled.Wrapper>
       <Styled.Container>
-        <Cell xs={headerCellProps}>
+        <Cell xs={containerCellProps}>
           <Flex direction="column" alignment={{ horizontal: 'center' }}>
             {isLoading && <Spinner />}
 
@@ -61,7 +60,7 @@ const CategoryPage: React.FC = () => {
     <>
       <Styled.Wrapper>
         <Styled.Container>
-          <Cell xs={headerCellProps}>
+          <Cell xs={containerCellProps}>
             <Flex direction="column">
               <Text variant="h3">{title}</Text>
 
@@ -74,8 +73,12 @@ const CategoryPage: React.FC = () => {
       </Styled.Wrapper>
 
       <Stepper
-        steps={criteria?.map(criterion => criterion.title) as string[]}
-        activeStep={criteria?.[2]?.title || ''}
+        steps={
+          criteria
+            // @ts-ignore
+            ?.sort(({ id: firstId }, { id: secondId }) => (0 - (firstId > secondId) ? 1 : -1))
+            ?.map(criterion => criterion.title) as string[]
+        }
       />
     </>
   );
