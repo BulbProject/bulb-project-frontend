@@ -18,8 +18,19 @@
     },
     "import/resolver": {
       "typescript": {},
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx", ".md"]
+      "webpack": {
+        "config": "webpack.common.js"
+      },
+      "alias": {
+        "map": [
+          ["components", "./src/components"],
+          ["config", "./src/config"],
+          ["pages", "./src/pages"],
+          ["types", "./src/types"],
+          ["utils", "./src/utils"],
+          ["hooks", "./src/hooks"]
+        ],
+        "extensions": [".ts", ".tsx", ".js", ".jsx", ".json", ".md"]
       }
     }
   },
