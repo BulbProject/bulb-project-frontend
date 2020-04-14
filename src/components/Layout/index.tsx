@@ -1,6 +1,9 @@
 import React, { FC, useState } from 'react';
 
 import logo from 'assets/images/logo.svg';
+
+import { Aside } from './components';
+
 import Styled from './styles';
 
 const Layout: FC = ({ children }) => {
@@ -18,15 +21,7 @@ const Layout: FC = ({ children }) => {
       </Styled.Header>
 
       <Styled.Drawer position="right" showOverlay isOpen={drawerIsOpen} onChange={() => setDrawerOpen(false)}>
-        <Styled.DrawerTitle variant="h3">Resources</Styled.DrawerTitle>
-
-        <Styled.Nav>
-          {['Handbook', 'Contacts', 'How to use?'].map(page => (
-            <Styled.NavLink to="/" key={page}>
-              {page}
-            </Styled.NavLink>
-          ))}
-        </Styled.Nav>
+        <Aside />
       </Styled.Drawer>
 
       <Styled.Main>{children}</Styled.Main>
