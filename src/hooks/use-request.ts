@@ -10,15 +10,13 @@ const useRequest = <D>(
   config: AxiosRequestConfig,
   dependencies: unknown[] = []
 ): { isLoading: boolean; data: D | null; error: RequestError | null } => {
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const [data, setData] = useState<D | null>(null);
   const [error, setError] = useState<RequestError | null>(null);
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
-
       try {
         const { data: requestData } = await axios(config);
 

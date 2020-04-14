@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 
 import { Cell, Flex, Grid, Spinner, Text } from 'ustudio-ui';
 
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
-import { CategoryVersion } from 'types/data';
+import { CategoryVersion, Criterion } from 'types/data';
 
 import { Stepper } from './components';
 
 import Styled from './styles';
-
-const headerCellProps = { offset: { before: 2, after: 2 }, size: 8 };
+import { containerCellProps } from './config';
 
 const CategoryPage: React.FC = () => {
   const { categoryId, version } = useParams();
@@ -25,10 +24,24 @@ const CategoryPage: React.FC = () => {
   const { category: { title, description, criteria, classification } = {} } = (categoryVersion ||
     {}) as CategoryVersion;
 
-  return error || !categoryVersion || isLoading ? (
+  const [steps, setSteps] = useState<Criterion[]>([]);
+  const [currentStep, setCurrentStep] = useState<Criterion>({} as Criterion);
+
+  useEffect(() => {
+    if (criteria) {
+      const sortedCriteria = criteria.sort(({ id: firstId }, { id: secondId }) => {
+        return (firstId as string).localeCompare(secondId as string);
+      });
+
+      setSteps(sortedCriteria);
+      setCurrentStep(sortedCriteria[0]);
+    }
+  }, [criteria]);
+
+  return error || isLoading ? (
     <Styled.Wrapper>
       <Styled.Container>
-        <Cell xs={headerCellProps}>
+        <Cell xs={containerCellProps}>
           <Flex direction="column" alignment={{ horizontal: 'center' }}>
             {isLoading && <Spinner />}
 
@@ -61,7 +74,7 @@ const CategoryPage: React.FC = () => {
     <>
       <Styled.Wrapper>
         <Styled.Container>
-          <Cell xs={headerCellProps}>
+          <Cell xs={containerCellProps}>
             <Flex direction="column">
               <Text variant="h3">{title}</Text>
 
@@ -73,10 +86,7 @@ const CategoryPage: React.FC = () => {
         </Styled.Container>
       </Styled.Wrapper>
 
-      <Stepper
-        steps={criteria?.map(criterion => criterion.title) as string[]}
-        activeStep={criteria?.[2]?.title || ''}
-      />
+      <Stepper steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep} />
     </>
   );
 };
