@@ -29,9 +29,9 @@ const CategoryPage: React.FC = () => {
 
   useEffect(() => {
     if (criteria) {
-      const sortedCriteria = criteria
-        // @ts-ignore
-        .sort(({ id: firstId }, { id: secondId }) => (0 - (firstId > secondId) ? 1 : -1));
+      const sortedCriteria = criteria.sort(({ id: firstId }, { id: secondId }) =>
+        (firstId as string).localeCompare(secondId as string)
+      );
 
       setSteps(sortedCriteria);
       setCurrentStep(sortedCriteria[0]);
