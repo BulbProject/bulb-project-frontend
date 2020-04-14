@@ -4,7 +4,7 @@
     "browser": true
   },
   "extends": ["airbnb", "plugin:prettier/recommended", "prettier/@typescript-eslint"],
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "import"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "sourceType": "module",
@@ -16,10 +16,25 @@
     "react": {
       "version": "detect"
     },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
     "import/resolver": {
       "typescript": {},
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx", ".md"]
+      "webpack": {
+        "config": "webpack.common.js"
+      },
+      "alias": {
+        "map": [
+          ["components", "./src/components"],
+          ["config", "./src/config"],
+          ["pages", "./src/pages"],
+          ["types", "./src/types"],
+          ["utils", "./src/utils"],
+          ["hooks", "./src/hooks"],
+          ["assets", "./src/assets"]
+        ],
+        "extensions": [".ts", ".tsx", ".js", ".jsx", ".json", ".md"]
       }
     }
   },
