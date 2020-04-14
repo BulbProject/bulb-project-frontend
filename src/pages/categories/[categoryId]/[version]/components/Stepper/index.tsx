@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Criterion } from 'types/data';
-import { Grid, Cell, Flex, Text } from 'ustudio-ui';
+import { Cell, Flex, Text } from 'ustudio-ui';
 import { containerCellProps } from '../../config';
 
 import { Step, StepperButton } from './components';
@@ -30,7 +30,7 @@ const Stepper = ({ steps, currentStep, setCurrentStep }: StepperProps) => {
         ))}
       </Styled.Stepper>
 
-      <Grid isContainer>
+      <Styled.Container isContainer>
         <Cell xs={containerCellProps}>
           <Flex direction="column">
             <Text align="center" variant="h3">
@@ -54,7 +54,7 @@ const Stepper = ({ steps, currentStep, setCurrentStep }: StepperProps) => {
             </Flex>
           </Flex>
         </Cell>
-      </Grid>
+      </Styled.Container>
     </Flex>
   );
 };

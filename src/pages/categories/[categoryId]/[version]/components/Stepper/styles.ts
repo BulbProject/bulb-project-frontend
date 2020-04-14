@@ -31,4 +31,9 @@ const Stepper = styled(Flex)<{ length: number }>(
   `
 );
 
-export default { Stepper };
+const Container = styled(Grid)`
+  flex: 1;
+  margin-top: var(--i-large);
+`;
+
+export default { Stepper, Container };
