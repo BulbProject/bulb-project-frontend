@@ -4,12 +4,11 @@
   "author": "uStudio Front-end Crew",
   "repository": "https://github.com/BulbProject/bulb-project-frontend.git",
   "scripts": {
-    "clean": "rimraf .next",
+    "clean": "rimraf dist",
     "lint": "eslint --fix --quiet --ext .ts --ext .tsx .",
     "format": "prettier --write ./**/*",
-    "dev": "yarn clean && next --port ${APP_PORT:-3000}",
-    "build": "next build",
-    "start": "next start --port ${APP_PORT:-3000}"
+    "dev": "yarn clean && NODE_ENV=development webpack-dev-server --color --mode development --config webpack.dev.js",
+    "build": "NODE_ENV=production webpack --mode production --progress --config webpack.prod.js"
   },
   "dependencies": {
     "@babel/core": "^7.9.0",
@@ -44,7 +43,6 @@
     "ts4ocds": "^1.0.0-beta.5",
     "typescript": "^3.8.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
-    "url-loader": "^4.1.0",
     "ustudio-ui": "^1.1.4",
     "webpack": "^4.42.1",
     "webpack-bundle-analyzer": "^3.7.0",

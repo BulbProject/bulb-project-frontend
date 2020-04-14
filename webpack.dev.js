@@ -12,7 +12,7 @@ module.exports = merge(common, {
   devtool: 'cheap-module-source-map',
   devServer: {
     host: '127.0.0.1',
-    port: 3030,
+    port: 3000,
     publicPath: '/',
     contentBase: path.resolve(__dirname, 'dist/'),
     historyApiFallback: true,
