@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import Styled from '../../../styles/categories';
 import Classification from '../../../components/Classification';
-import { CategoryCard } from '../../../types/data';
+import { CategoryCard } from './props';
 
 const BaseCard = ({ id, version, title, description, classification }: CategoryCard) => {
   return (
