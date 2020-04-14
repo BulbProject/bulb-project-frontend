@@ -56,7 +56,7 @@ module.exports = {
         options: {
           limit: 25000,
         },
-        include: [path.resolve(__dirname, 'src/public/assets')],
+        include: [path.resolve(__dirname, 'src/assets')],
       },
       {
         test: /\.(jpe?g|png|svg)$/,
@@ -65,16 +65,16 @@ module.exports = {
           name: '[name].[hash].[ext]',
           outputPath: 'images/',
         },
-        include: [path.resolve(__dirname, 'src/public/assets')],
+        include: [path.resolve(__dirname, 'public/assets')],
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src/public/index.html'),
+      template: path.resolve(__dirname, 'public/index.html'),
       title: 'Bulb Project',
       description: 'Brings light to the e-procurement',
-      favicon: path.resolve(__dirname, 'src/public/favicon.ico'),
+      favicon: path.resolve(__dirname, 'public/favicon.svg'),
       buildDatetime: new Date(Date.now()).toLocaleString(),
       minify: {
         collapseWhitespace: true,

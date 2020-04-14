@@ -32,7 +32,7 @@
           ["types", "./src/types"],
           ["utils", "./src/utils"],
           ["hooks", "./src/hooks"],
-          ["public", "./src/public"]
+          ["assets", "./src/assets"]
         ],
         "extensions": [".ts", ".tsx", ".js", ".jsx", ".json", ".md"]
       }

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 
-import logo from 'public/assets/images/logo.svg';
+import logo from 'assets/images/logo.svg';
 import Styled from './styles';
 
 const Layout: FC = ({ children }) => {
