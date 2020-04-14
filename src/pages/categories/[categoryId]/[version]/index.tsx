@@ -7,7 +7,11 @@ import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
 import { CategoryVersion } from 'types/data';
 
+import { Stepper } from './components';
+
 import Styled from './styles';
+
+const headerCellProps = { offset: { before: 2, after: 2 }, size: 8 };
 
 const CategoryPage: React.FC = () => {
   const { categoryId, version } = useParams();
@@ -18,35 +22,46 @@ const CategoryPage: React.FC = () => {
     getCategoryVersionConfig(categoryId as string, version as string)
   );
 
-  const { category: { title, description, classification } = {} } = (categoryVersion || {}) as CategoryVersion;
+  const { category: { title, description, criteria, classification } = {} } = (categoryVersion ||
+    {}) as CategoryVersion;
 
-  return isLoading ? (
-    <Spinner />
-  ) : (
+  return error || !categoryVersion || isLoading ? (
     <Styled.Wrapper>
-      <Styled.Container isContainer>
-        <Cell xs={{ offset: { before: 2, after: 2 }, size: 8 }}>
-          {error || !categoryVersion ? (
-            <Flex direction="column" alignment={{ horizontal: 'center' }}>
-              <Text>Sorry, we could not get this category to load.</Text>
+      <Styled.Container>
+        <Cell xs={headerCellProps}>
+          <Flex direction="column" alignment={{ horizontal: 'center' }}>
+            {isLoading && <Spinner />}
 
-              <Grid xs={{ gap: 32 }}>
-                <Cell>
-                  <Flex alignment={{ horizontal: 'end' }}>
-                    <Styled.RetryButton onClick={() => goBack()}>Go back</Styled.RetryButton>
-                  </Flex>
-                </Cell>
+            {error && (
+              <>
+                <Text>Sorry, we could not get this category to load.</Text>
 
-                <Cell>
-                  <Flex alignment={{ horizontal: 'start' }}>
-                    <Styled.RetryButton intent="positive" onClick={() => replace(location)}>
-                      Try again
-                    </Styled.RetryButton>
-                  </Flex>
-                </Cell>
-              </Grid>
-            </Flex>
-          ) : (
+                <Grid xs={{ gap: 32 }}>
+                  <Cell>
+                    <Flex alignment={{ horizontal: 'end' }}>
+                      <Styled.RetryButton onClick={() => goBack()}>Go back</Styled.RetryButton>
+                    </Flex>
+                  </Cell>
+
+                  <Cell>
+                    <Flex alignment={{ horizontal: 'start' }}>
+                      <Styled.RetryButton intent="positive" onClick={() => replace(location)}>
+                        Try again
+                      </Styled.RetryButton>
+                    </Flex>
+                  </Cell>
+                </Grid>
+              </>
+            )}
+          </Flex>
+        </Cell>
+      </Styled.Container>
+    </Styled.Wrapper>
+  ) : (
+    <>
+      <Styled.Wrapper>
+        <Styled.Container>
+          <Cell xs={headerCellProps}>
             <Flex direction="column">
               <Text variant="h3">{title}</Text>
 
@@ -54,10 +69,15 @@ const CategoryPage: React.FC = () => {
 
               <Styled.Classification {...classification} />
             </Flex>
-          )}
-        </Cell>
-      </Styled.Container>
-    </Styled.Wrapper>
+          </Cell>
+        </Styled.Container>
+      </Styled.Wrapper>
+
+      <Stepper
+        steps={criteria?.map(criterion => criterion.title) as string[]}
+        activeStep={criteria?.[2]?.title || ''}
+      />
+    </>
   );
 };
 
