@@ -37,7 +37,7 @@ const Stepper = ({ steps, currentStep, setCurrentStep }: StepperProps) => {
               {title}
             </Text>
 
-            <Flex alignment={{ horizontal: 'space-between' }}>
+            <Styled.ButtonsContainer alignment={{ horizontal: 'space-between' }}>
               <StepperButton
                 isActive={!isFirstStep()}
                 onClick={() => setCurrentStep(steps[steps.indexOf(currentStep) - 1])}
@@ -51,7 +51,7 @@ const Stepper = ({ steps, currentStep, setCurrentStep }: StepperProps) => {
               >
                 Next
               </StepperButton>
-            </Flex>
+            </Styled.ButtonsContainer>
           </Flex>
         </Cell>
       </Styled.Container>
