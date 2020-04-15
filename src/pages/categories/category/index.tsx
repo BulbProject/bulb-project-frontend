@@ -6,8 +6,10 @@ import { Cell, Flex, Grid, Spinner, Text } from 'ustudio-ui';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
 import { CategoryVersion, Criterion } from 'types/data';
+import { sortById } from 'utils';
 
-import { Stepper } from './components';
+import { Stepper, Criteria } from './components';
+import CategoryContextProvider from './context';
 
 import Styled from './styles';
 import { containerCellProps } from './config';
@@ -25,16 +27,12 @@ const CategoryPage: React.FC = () => {
     {}) as CategoryVersion;
 
   const [steps, setSteps] = useState<Criterion[]>([]);
-  const [currentStep, setCurrentStep] = useState<Criterion>({} as Criterion);
 
   useEffect(() => {
     if (criteria) {
-      const sortedCriteria = criteria.sort(({ id: firstId }, { id: secondId }) => {
-        return (firstId as string).localeCompare(secondId as string);
-      });
+      const sortedCriteria = criteria.sort(sortById);
 
       setSteps(sortedCriteria);
-      setCurrentStep(sortedCriteria[0]);
     }
   }, [criteria]);
 
@@ -86,7 +84,11 @@ const CategoryPage: React.FC = () => {
         </Styled.Container>
       </Styled.Wrapper>
 
-      <Stepper steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep} />
+      <CategoryContextProvider criteria={steps}>
+        <Stepper>
+          <Criteria />
+        </Stepper>
+      </CategoryContextProvider>
     </>
   );
 };

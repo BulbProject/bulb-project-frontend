@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Progress, Text } from 'ustudio-ui';
 
-import { StepProps } from './index';
+import { StepProps } from './Step';
 import { stepCircleDimension, stepHeight, stepProgressHeight } from '../../../../config';
 
 const StepCircle = styled.div`

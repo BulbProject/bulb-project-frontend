@@ -1,19 +1,19 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface RequestError {
   message: string;
   statusCode: number;
 }
 
-const useRequest = <D>(
+export const useRequest = <D>(
   config: AxiosRequestConfig,
   dependencies: unknown[] = []
 ): {
   isLoading: boolean;
   data: D | null;
   error: RequestError | null;
-  triggerRequest?: Dispatch<SetStateAction<boolean>>;
+  triggerRequest(): void;
 } => {
   const [_, triggerRequest] = useState(false);
 
@@ -40,5 +40,3 @@ const useRequest = <D>(
 
   return { isLoading, data, error, triggerRequest: () => triggerRequest(!_) };
 };
-
-export default useRequest;

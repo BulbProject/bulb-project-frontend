@@ -3,7 +3,7 @@ import { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
 
 const Index = lazy(() => import('./pages'));
-const CategoryPage = lazy(() => import('./pages/categories/[categoryId]/[version]'));
+const CategoryPage = lazy(() => import('./pages/categories/category'));
 const InfoPage = lazy(() => import('./pages/info/infoPage'));
 
 const routes: RouteProps[] = [
