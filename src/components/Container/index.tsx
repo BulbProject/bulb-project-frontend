@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { Cell } from 'ustudio-ui';
 
 import { containerCellProps } from './config';
-import Styled from '../../styles/categories';
+import Styled from './styles';
 
 const Container: FC = ({ children }) => (
   <Styled.Wrapper>

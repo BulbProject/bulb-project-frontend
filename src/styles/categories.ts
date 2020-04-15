@@ -1,4 +1,4 @@
-import styled  from 'styled-components';
+import styled from 'styled-components';
 import { Flex, Text, Placeholder } from 'ustudio-ui';
 
 import { Link as RouterLink } from 'react-router-dom';
@@ -35,24 +35,32 @@ const StubClassificationDescription = styled(Placeholder)`
   margin-left: var(--i-regular);
 `;
 
-const Card = styled(BaseCard)`
-  &:hover {
-    border: 1px solid var(--c-primary);
-    box-shadow: var(--s-primary);
-  }
-  &:focus {
-    border: 1px solid var(--c-primary);
-  }
-`;
-
 const CardTitle = styled(Text)`
   margin-bottom: var(--i-medium);
+
   color: var(--c-darkest);
+  transition(var--transition)
 `;
 
 const CardDescription = styled(Text)`
   margin-bottom: var(--i-regular);
   color: var(--c-dark);
+`;
+
+const Card = styled(BaseCard)`
+  &:hover {
+    border: 1px solid var(--c-primary);
+    box-shadow: var(--s-primary);
+  }
+
+  &:focus {
+    border: 1px solid var(--c-primary);
+  }
+  &:active {
+    ${CardTitle} {
+      color: var(--c-primary);
+    }
+  }
 `;
 
 const ButtonContainer = styled(Flex)`
