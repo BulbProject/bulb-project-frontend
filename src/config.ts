@@ -35,6 +35,7 @@ export const getCategoryVersionConfig = (
 };
 
 const githubBaseUrl = 'https://api.github.com/repos/BulbProject/bulb-project-frontend/contents';
+const githubRawBaseUrl = 'https://raw.githubusercontent.com/BulbProject/bulb-project-frontend';
 const githubBranch = 'info-pages';
 const githubInfoPath = 'info';
 
@@ -42,6 +43,11 @@ export const getInfoFiles = () => {
   return createRequestConfig({
     baseUrl: githubBaseUrl,
     method: 'get',
-    path: `2${githubInfoPath}?ref=${githubBranch}`,
+    path: `${githubInfoPath}?ref=${githubBranch}`,
   });
 };
+
+export const getInfoFile = (fileName: string): AxiosRequestConfig => ({
+  method: 'get',
+  url: `${githubRawBaseUrl}/${githubBranch}/${githubInfoPath}/${fileName}.md`,
+});
