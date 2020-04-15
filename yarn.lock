@@ -4536,6 +4536,16 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
+formfish@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/formfish/-/formfish-0.6.0.tgz#25fa129f6c521d3116a6e081ebbc2012a0f9be00"
+  integrity sha512-ATVmcnrT1l+acERhkCvUJTrJdVTJTtFwo1SmLYG0G0QSH+EANt36EhuBRHPpQPTpacILQzFVxoO4GemUp+gqVA==
+  dependencies:
+    lodash.get "^4.4.2"
+    lodash.set "^4.3.2"
+    lodash.unset "^4.5.2"
+    prop-types "^15.7.2"
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
@@ -6059,6 +6069,11 @@ lodash.defaultsdeep@^4.6.1:
   resolved "https://registry.yarnpkg.com/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.1.tgz#512e9bd721d272d94e3d3a63653fa17516741ca6"
   integrity sha512-3j8wdDzYuWO3lM3Reg03MuQR957t287Rpcxp1njpEa8oDrikb+FwGdW3n+FELh/A6qib6yPit0j/pv9G/yeAqA==
 
+lodash.get@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
+  integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
+
 lodash.isplainobject@^4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
@@ -6068,6 +6083,11 @@ lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+
+lodash.set@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
+  integrity sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
 
 lodash.template@^4.5.0:
   version "4.5.0"
@@ -6083,6 +6103,11 @@ lodash.templatesettings@^4.0.0:
   integrity sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
   dependencies:
     lodash._reinterpolate "^3.0.0"
+
+lodash.unset@^4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/lodash.unset/-/lodash.unset-4.5.2.tgz#370d1d3e85b72a7e1b0cdf2d272121306f23e4ed"
+  integrity sha1-Nw0dPoW3Kn4bDN8tJyEhMG8j5O0=
 
 lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15:
   version "4.17.15"
@@ -9344,10 +9369,10 @@ use@^3.1.0:
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
 
-ustudio-ui@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/ustudio-ui/-/ustudio-ui-1.1.4.tgz#47c6708b8471bbb42c9f9249e47eb4bdf74cf599"
-  integrity sha512-Z7BTfQdUGe2i4MLEnE2EMZurO2RBBMKbsN9fCZwkgjkuWhCOasnKThT887H6aWQWDPSzWdJ0r0Xjb+qsgFqHeQ==
+ustudio-ui@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/ustudio-ui/-/ustudio-ui-1.1.5.tgz#439d296759783e1a304a08616f079586b3e85df4"
+  integrity sha512-D/zGrqCL9Q3OmMEAd2/u7ZYlwFhTU6iQjgUs5GLc7zYKbmI/xbtGP9M0fMZ9Q/ZRumxmldNgAXYoUjC84FVk3A==
   dependencies:
     lodash.merge "^4.6.2"
 
