@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { Text } from 'ustudio-ui';
 
 const RequirementGroup = styled.div`
-  margin: var(--i-regular) 0;
+  margin-top: var(--i-regular);
 `;
 
 const Title = styled(Text)<{ isActive: boolean }>(

@@ -24,12 +24,14 @@ const RequirementGroup: React.FC<RequirementGroupProps & {
         }
       >
         <Form onSubmit={() => {}} name={id}>
-          {requirements
-            .slice(1)
-            .sort(sortById)
-            .map(requirement => (
-              <Requirement {...requirement} key={requirement.id} />
-            ))}
+          {requirements.length > 1 ? (
+            requirements
+              .slice(1)
+              .sort(sortById)
+              .map(requirement => <Requirement {...requirement} key={requirement.id} />)
+          ) : (
+            <Requirement {...requirements[0]} />
+          )}
         </Form>
       </Dropdown>
     </Styled.RequirementGroup>
