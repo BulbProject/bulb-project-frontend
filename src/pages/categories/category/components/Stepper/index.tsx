@@ -39,9 +39,9 @@ const Stepper: React.FC<StepperProps> = ({ children, steps, currentStep, setCurr
               </Text>
             )}
 
-            <Flex direction="column">{children}</Flex>
+            <Styled.ContentContainer direction="column">{children}</Styled.ContentContainer>
 
-            <Styled.ButtonsContainer alignment={{ horizontal: 'space-between' }}>
+            <Flex alignment={{ horizontal: 'space-between' }}>
               <StepperButton
                 isActive={!isFirstStep()}
                 onClick={() => setCurrentStep(steps[steps.indexOf(currentStep) - 1])}
@@ -55,7 +55,7 @@ const Stepper: React.FC<StepperProps> = ({ children, steps, currentStep, setCurr
               >
                 Next
               </StepperButton>
-            </Styled.ButtonsContainer>
+            </Flex>
           </Flex>
         </Cell>
       </Styled.Container>
