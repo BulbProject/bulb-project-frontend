@@ -38,7 +38,7 @@ const Stepper: React.FC = ({ children }) => {
               </Text>
             )}
 
-            <Styled.ContentContainer direction="column">{children}</Styled.ContentContainer>
+            {children}
 
             <Flex alignment={{ horizontal: 'space-between' }}>
               <StepperButton

@@ -8,7 +8,7 @@ import { useRequest } from 'hooks';
 import { CategoryVersion, Criterion } from 'types/data';
 import { sortById } from 'utils';
 
-import { RequirementGroup, Stepper } from './components';
+import { Stepper, Criteria } from './components';
 import CategoryContextProvider from './context';
 
 import Styled from './styles';
@@ -27,18 +27,14 @@ const CategoryPage: React.FC = () => {
     {}) as CategoryVersion;
 
   const [steps, setSteps] = useState<Criterion[]>([]);
-  const [currentStep, setCurrentStep] = useState<Criterion>({} as Criterion);
 
   useEffect(() => {
     if (criteria) {
       const sortedCriteria = criteria.sort(sortById);
 
       setSteps(sortedCriteria);
-      setCurrentStep(sortedCriteria[0]);
     }
   }, [criteria]);
-
-  const [activeGroupId, setActiveGroupId] = useState('');
 
   return error || isLoading ? (
     <Styled.Wrapper>
@@ -90,14 +86,7 @@ const CategoryPage: React.FC = () => {
 
       <CategoryContextProvider criteria={steps}>
         <Stepper>
-          {currentStep.requirementGroups.map(requirementGroup => (
-            <RequirementGroup
-              {...requirementGroup}
-              isActive={activeGroupId === requirementGroup.id}
-              setActive={setActiveGroupId}
-              key={requirementGroup.id}
-            />
-          ))}
+          <Criteria />
         </Stepper>
       </CategoryContextProvider>
     </>

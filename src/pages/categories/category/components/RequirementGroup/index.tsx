@@ -1,8 +1,9 @@
 import { Form } from 'formfish';
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { RequirementGroup as RequirementGroupProps } from 'ts4ocds/extensions/requirements';
 import { Dropdown } from 'ustudio-ui';
-import { sortById } from '../../../../../utils';
+
+import { sortById } from 'utils';
 
 import Requirement from '../Requirement';
 
@@ -10,7 +11,7 @@ import Styled from './styles';
 
 const RequirementGroup: React.FC<RequirementGroupProps & {
   isActive: boolean;
-  setActive: Dispatch<SetStateAction<string>>;
+  setActive: (id: string) => void;
 }> = ({ isActive, setActive, id, description, requirements }) => {
   return (
     <Styled.RequirementGroup>
@@ -18,7 +19,8 @@ const RequirementGroup: React.FC<RequirementGroupProps & {
         isDefaultOpen={isActive}
         onChange={() => setActive(id)}
         title={
-          <Styled.Title isActive={isActive} variant="h5">
+          // @ts-ignore
+          <Styled.Title isActive={isActive} appearance="bold">
             {description || `Variant ${+id.slice(2, 4)}`}
           </Styled.Title>
         }
