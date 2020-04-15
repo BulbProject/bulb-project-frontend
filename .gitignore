@@ -7,9 +7,6 @@ node_modules
 .DS_Store
 .env
 
-.next
-
-public/*.js
-public/*.js.map
+dist
 
 *.log

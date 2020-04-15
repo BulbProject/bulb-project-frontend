@@ -24,6 +24,7 @@ const ErrorContainer = styled(Flex)`
 
 const ErrorText = styled(Text)`
   margin-bottom: var(--i-large);
+
   text-align: center;
   color: var(--c-negative);
 `;
