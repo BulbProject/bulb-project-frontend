@@ -45,7 +45,9 @@ const InfoPage = () => {
 
         {!isLoading && error && (
           <Flex direction="column" alignment={{ horizontal: 'center' }}>
-            <Styled.ErrorText variant="h3" align="center"> Hmm, something went wrong</Styled.ErrorText>
+            <Styled.ErrorText variant="h3" align="center">
+              Hmm, something went wrong
+            </Styled.ErrorText>
 
             <Flex alignment={{ horizontal: 'center' }}>
               <Button onClick={() => goBack()}>
