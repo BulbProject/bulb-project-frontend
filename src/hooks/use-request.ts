@@ -24,7 +24,7 @@ const useRequest = <D>(
 
         setData(requestData);
       } catch ({ message, response }) {
-        setError({ message, statusCode: response.status });
+        setError({ message, statusCode: response?.status });
       } finally {
         setLoading(false);
       }

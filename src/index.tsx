@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import { ThemeProvider } from 'ustudio-ui/theme';
 
@@ -10,9 +10,10 @@ import routes from './routes';
 const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter forceRefresh>
         <Layout>
           <Switch>
+            <Redirect exact from="/categories" to="/" />
             {routes.map(route => (
               <Route {...route} key={route.path as string} />
             ))}

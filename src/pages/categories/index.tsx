@@ -1,15 +1,15 @@
 import React from 'react';
 import { Text, Flex, Cell, Spinner } from 'ustudio-ui';
 
+import { useRequest } from '../../hooks';
+import { getCategoriesConfig } from '../../config';
+import Styled from '../../styles/categories';
 
-import { getCategoriesConfig } from '../config';
-import { useRequest } from '../hooks';
-import Styled from '../styles/categories';
+import Card from '../../components/Categories/Cards/Card';
+import Error from '../../components/Categories/error';
 
-import Card from '../components/Categories/Cards/Card';
-import Error from '../components/Categories/error';
+import { CategoriesListEntity } from '../../types/data';
 
-import { CategoriesListEntity } from '../types/data';
 
 const Categories = () => {
   const { data: categoriesList, isLoading } = useRequest<CategoriesListEntity[]>(getCategoriesConfig());
