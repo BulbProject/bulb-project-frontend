@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { Button, Grid, Text } from 'ustudio-ui';
 import { Mixin } from 'ustudio-ui/theme';
 
-import ClassificationComponent from '../../../components/Classification';
+import ClassificationComponent from 'components/Classification';
 
 const Wrapper = styled.div`
   background-color: var(--c-light);
