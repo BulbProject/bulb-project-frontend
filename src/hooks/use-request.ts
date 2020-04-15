@@ -6,7 +6,7 @@ interface RequestError {
   statusCode: number;
 }
 
-const useRequest = <D>(
+export const useRequest = <D>(
   config: AxiosRequestConfig,
   dependencies: unknown[] = []
 ): {
@@ -40,5 +40,3 @@ const useRequest = <D>(
 
   return { isLoading, data, error, triggerRequest: () => triggerRequest(!_) };
 };
-
-export default useRequest;
