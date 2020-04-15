@@ -1,10 +1,11 @@
 import { Reducer } from 'react';
+
 import { CategoryContextAction } from './actions';
 import { CategoryContextStateValue } from './CategoryContext';
 
 const categoryContextReducer: Reducer<CategoryContextStateValue, CategoryContextAction> = (state, action) => {
   switch (action.type) {
-    case 'set_current_criteria': {
+    case 'set_current_criterion': {
       const criterion = state.criteria[action.payload];
 
       return {

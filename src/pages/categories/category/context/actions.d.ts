@@ -1,7 +1,7 @@
 import { Requirement } from 'ts4ocds/extensions/requirements';
 
 interface SetCurrentCriteria {
-  type: 'set_current_criteria';
+  type: 'set_current_criterion';
   payload: string;
 }
 

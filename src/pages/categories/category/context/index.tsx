@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo, useReducer } from 'react';
 import { Criterion } from 'types/data';
+
 import { CategoryContextDispatchValue, CategoryContextStateValue } from './CategoryContext';
 import categoryContextReducer from './reducer';
 

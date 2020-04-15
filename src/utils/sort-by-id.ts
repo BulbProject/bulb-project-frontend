@@ -1,5 +1,5 @@
-const sortById = <E extends { id: string | number }>({ id: firstId }: E, { id: secondId }: E): number => {
-  return (firstId as string).localeCompare(secondId as string);
+const sortById = <E extends { id: string }>({ id: firstId }: E, { id: secondId }: E): number => {
+  return firstId.localeCompare(secondId);
 };
 
 export default sortById;

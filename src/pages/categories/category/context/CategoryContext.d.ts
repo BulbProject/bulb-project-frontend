@@ -1,6 +1,8 @@
 import { Dispatch } from 'react';
 import { Requirement } from 'ts4ocds/extensions/requirements';
+
 import { Criterion } from 'types/data';
+
 import { CategoryContextAction } from './actions';
 
 interface ContextCriterion extends Criterion {

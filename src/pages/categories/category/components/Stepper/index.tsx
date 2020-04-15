@@ -1,24 +1,23 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { Criterion } from 'types/data';
+import React from 'react';
 import { Cell, Flex, Text } from 'ustudio-ui';
+import { modifyId } from 'utils';
+
 import { containerCellProps } from '../../config';
+import { useCategoryContext } from '../../context';
 
 import { Step, StepperButton } from './components';
 
 import Styled from './styles';
 
-export interface StepperProps {
-  steps: Criterion[];
-  currentStep: Criterion;
-  setCurrentStep: Dispatch<SetStateAction<Criterion>>;
-}
+const Stepper: React.FC = ({ children }) => {
+  const { currentCriterion, criteria, dispatch } = useCategoryContext();
 
-const Stepper: React.FC<StepperProps> = ({ children, steps, currentStep, setCurrentStep }) => {
-  const { title, description } = currentStep;
+  const { title, description } = currentCriterion;
+  const steps = Object.values(criteria);
 
   const titles = steps.map(step => step.title);
 
-  const isStepActive = (stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(currentStep.title);
+  const isStepActive = (stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(title);
   const isLastStep = (): boolean => titles.indexOf(title) === steps.length - 1;
   const isFirstStep = (): boolean => titles.indexOf(title) === 0;
 
@@ -44,14 +43,24 @@ const Stepper: React.FC<StepperProps> = ({ children, steps, currentStep, setCurr
             <Flex alignment={{ horizontal: 'space-between' }}>
               <StepperButton
                 isActive={!isFirstStep()}
-                onClick={() => setCurrentStep(steps[steps.indexOf(currentStep) - 1])}
+                onClick={() =>
+                  dispatch({
+                    type: 'set_current_criterion',
+                    payload: modifyId(currentCriterion.id, 1, id => id - 1),
+                  })
+                }
               >
                 Previous
               </StepperButton>
 
               <StepperButton
                 isActive={!isLastStep()}
-                onClick={() => setCurrentStep(steps[steps.indexOf(currentStep) + 1])}
+                onClick={() => {
+                  dispatch({
+                    type: 'set_current_criterion',
+                    payload: modifyId(currentCriterion.id, 1, id => id + 1),
+                  });
+                }}
               >
                 Next
               </StepperButton>
