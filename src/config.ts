@@ -18,7 +18,7 @@ const createRequestConfig = ({
   params?: string[];
 }): AxiosRequestConfig => ({
   method,
-  url: `${baseUrl}/${path}${params?.length ? params.join('/') : ''}`,
+  url: `${baseUrl}/${path}${params?.length ? `/${params.join('/')}` : ''}`,
   responseType: 'json',
 });
 
@@ -36,6 +36,7 @@ export const getCategoryVersionConfig = (
 
 const githubBaseUrl = 'https://api.github.com/repos/BulbProject/bulb-project-frontend/contents';
 const githubRawBaseUrl = 'https://raw.githubusercontent.com/BulbProject/bulb-project-frontend';
+// @TODO need change branch to "master" for production
 const githubBranch = 'info-pages';
 const githubInfoPath = 'info';
 
