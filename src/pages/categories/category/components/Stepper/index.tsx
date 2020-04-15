@@ -13,8 +13,8 @@ export interface StepperProps {
   setCurrentStep: Dispatch<SetStateAction<Criterion>>;
 }
 
-const Stepper = ({ steps, currentStep, setCurrentStep }: StepperProps) => {
-  const { title } = currentStep;
+const Stepper: React.FC<StepperProps> = ({ children, steps, currentStep, setCurrentStep }) => {
+  const { title, description } = currentStep;
 
   const titles = steps.map(step => step.title);
 
@@ -33,9 +33,13 @@ const Stepper = ({ steps, currentStep, setCurrentStep }: StepperProps) => {
       <Styled.Container isContainer>
         <Cell xs={containerCellProps}>
           <Flex direction="column">
-            <Text align="center" variant="h3">
-              {title}
-            </Text>
+            {description && (
+              <Text align="center" variant="h3">
+                {description}
+              </Text>
+            )}
+
+            <Flex direction="column">{children}</Flex>
 
             <Styled.ButtonsContainer alignment={{ horizontal: 'space-between' }}>
               <StepperButton

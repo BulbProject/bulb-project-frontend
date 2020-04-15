@@ -6,8 +6,9 @@ import { Cell, Flex, Grid, Spinner, Text } from 'ustudio-ui';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
 import { CategoryVersion, Criterion } from 'types/data';
+import { sortById } from '../../../utils';
 
-import { Stepper } from './components';
+import { RequirementGroup, Stepper } from './components';
 
 import Styled from './styles';
 import { containerCellProps } from './config';
@@ -29,14 +30,14 @@ const CategoryPage: React.FC = () => {
 
   useEffect(() => {
     if (criteria) {
-      const sortedCriteria = criteria.sort(({ id: firstId }, { id: secondId }) => {
-        return (firstId as string).localeCompare(secondId as string);
-      });
+      const sortedCriteria = criteria.sort(sortById);
 
       setSteps(sortedCriteria);
       setCurrentStep(sortedCriteria[0]);
     }
   }, [criteria]);
+
+  const [activeGroupId, setActiveGroupId] = useState('');
 
   return error || isLoading ? (
     <Styled.Wrapper>
@@ -86,7 +87,16 @@ const CategoryPage: React.FC = () => {
         </Styled.Container>
       </Styled.Wrapper>
 
-      <Stepper steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep} />
+      <Stepper steps={steps} currentStep={currentStep} setCurrentStep={setCurrentStep}>
+        {currentStep.requirementGroups.map(requirementGroup => (
+          <RequirementGroup
+            {...requirementGroup}
+            isActive={activeGroupId === requirementGroup.id}
+            setActive={setActiveGroupId}
+            key={requirementGroup.id}
+          />
+        ))}
+      </Stepper>
     </>
   );
 };

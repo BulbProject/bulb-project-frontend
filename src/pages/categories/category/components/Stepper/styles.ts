@@ -37,7 +37,7 @@ const Container = styled(Grid)`
 `;
 
 const ButtonsContainer = styled(Flex)`
-  margin-top: var(--i-large);
+  margin: var(--i-large) 0;
 `;
 
 export default { Stepper, Container, ButtonsContainer };
