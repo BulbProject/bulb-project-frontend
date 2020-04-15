@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 
 import { useRequest } from '../../../hooks';
 import { getCategoryVersionConfig } from '../../../config';
@@ -11,15 +10,10 @@ import ErrorCard from './ErrorCard';
 import { CategoriesListEntity, CategoryVersion } from '../../../types/data';
 
 const Card = ({ id, version }: CategoriesListEntity) => {
-  const [updateCategoryCount, setUpdateCategoryCount] = useState(0);
 
-  const updateCategoryData = () => {
-    setUpdateCategoryCount(updateCategoryCount + 1);
-  };
-
-  const { data: categoryVersion, isLoading } = useRequest<CategoryVersion>(getCategoryVersionConfig(id, version), [
-    updateCategoryCount,
-  ]);
+  const { data: categoryVersion, isLoading, triggerRequest } = useRequest<CategoryVersion>(
+    getCategoryVersionConfig(id, version)
+  );
 
   const { category: { title, description, classification } = {} } = (categoryVersion || {}) as CategoryVersion;
 
@@ -38,7 +32,7 @@ const Card = ({ id, version }: CategoriesListEntity) => {
               version={version}
             />
           ) : (
-            <ErrorCard updateCategoryData={updateCategoryData} />
+            <ErrorCard updateCategoryData={triggerRequest} />
           )}
         </>
       )}

@@ -3,8 +3,7 @@ import { Flex, Text, Grid, Placeholder } from 'ustudio-ui';
 import { Mixin } from 'ustudio-ui/theme';
 import { Link as RouterLink } from 'react-router-dom';
 
-//@TODO add SVG
-//import { ReactComponent as ReloadIconEl } from '../assets/icons/reload.svg';
+import ReloadIconEl from '../assets/icons/reload.inline.svg';
 
 const Wrapper = styled.div`
   padding: var(--i-large) 0;
@@ -71,7 +70,7 @@ const CardDescription = styled(Text)`
 const ButtonContainer = styled(Flex)`
   margin-top: var(--i-large);
 `;
-const ReloadIcon = styled.div`
+const ReloadIcon = styled(ReloadIconEl)`
   width: 2rem;
   height: 2rem;
   display: inline-block;

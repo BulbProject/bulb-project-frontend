@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import Styled from '../../styles/categories';
-
 import { Button, Flex, Text } from 'ustudio-ui';
+
+import Styled from '../../styles/categories';
 
 const Error = () => {
   const location = useLocation();

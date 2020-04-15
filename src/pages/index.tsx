@@ -12,6 +12,7 @@ import Error from '../components/Categories/error';
 import { CategoriesListEntity } from '../types/data';
 
 const Categories = () => {
+
   const { data: categoriesList, isLoading } = useRequest<CategoriesListEntity[]>(getCategoriesConfig());
 
   return (
