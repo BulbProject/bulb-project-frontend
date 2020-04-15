@@ -12,9 +12,8 @@ import refreshIcon from 'assets/icons/refresh.svg';
 
 import Styled from './styles';
 
-export const Aside = () => {
-  const [trigger, setTrigger] = React.useState(false);
-  const { isLoading, data: filesList, error } = useRequest<{ name: string }[]>(getInfoFiles(), [trigger]);
+const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
+  const { isLoading, data: filesList, error, triggerRequest } = useRequest<{ name: string }[]>(getInfoFiles());
 
   return (
     <>
@@ -33,7 +32,13 @@ export const Aside = () => {
             const infoPageUrl = stringToKebabCase(name.replace(/\.md/, ''));
 
             return (
-              <Styled.NavLink to={`/info/${infoPageUrl}`} key={name}>
+              <Styled.NavLink
+                to={`/info/${infoPageUrl}`}
+                key={name}
+                onClick={() => {
+                  closeDrawer();
+                }}
+              >
                 {kebabCaseToSentenceCase(infoPageUrl)}
               </Styled.NavLink>
             );
@@ -42,7 +47,7 @@ export const Aside = () => {
         {!isLoading && error && (
           <Styled.ErrorContainer alignment={{ horizontal: 'center' }} direction="column">
             <Styled.ErrorText>Hmm, something went wrong, please try again</Styled.ErrorText>
-            <Button onClick={() => setTrigger(!trigger)}>
+            <Button onClick={() => triggerRequest()}>
               <Styled.RefreshIcon src={refreshIcon} alt="Refresh icon" />
             </Button>
           </Styled.ErrorContainer>
@@ -51,3 +56,5 @@ export const Aside = () => {
     </>
   );
 };
+
+export default Aside;

@@ -72,8 +72,6 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
-      title: 'Bulb Project',
-      description: 'Brings light to the e-procurement',
       favicon: path.resolve(__dirname, 'public/favicon.svg'),
       buildDatetime: new Date(Date.now()).toLocaleString(),
       minify: {

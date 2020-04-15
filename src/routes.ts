@@ -1,7 +1,10 @@
+import { lazy } from 'react';
+
 import { RouteProps } from 'react-router-dom';
 
-import Index from './pages';
-import CategoryPage from './pages/categories/[categoryId]/[version]';
+const Index = lazy(() => import('./pages'));
+const CategoryPage = lazy(() => import('./pages/categories/[categoryId]/[version]'));
+const InfoPage = lazy(() => import('./pages/info/infoPage'));
 
 const routes: RouteProps[] = [
   {
@@ -11,6 +14,10 @@ const routes: RouteProps[] = [
   {
     path: '/categories/:categoryId/:version',
     component: CategoryPage,
+  },
+  {
+    path: '/info/:infoFileName',
+    component: InfoPage,
   },
 ].map(route => ({ ...route, exact: true }));
 

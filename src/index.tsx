@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
@@ -12,11 +12,13 @@ const App: React.FC = () => {
     <ThemeProvider>
       <BrowserRouter>
         <Layout>
-          <Switch>
-            {routes.map(route => (
-              <Route {...route} key={route.path as string} />
-            ))}
-          </Switch>
+          <Suspense fallback={<div />}>
+            <Switch>
+              {routes.map(route => (
+                <Route {...route} key={route.path as string} />
+              ))}
+            </Switch>
+          </Suspense>
         </Layout>
       </BrowserRouter>
     </ThemeProvider>
