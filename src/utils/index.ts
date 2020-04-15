@@ -1,2 +1,2 @@
-export { default as sortById } from './sort-by-id';
-export { default as modifyId } from './modify-id';
+export * from './sort-by-id';
+export * from './modify-id';
