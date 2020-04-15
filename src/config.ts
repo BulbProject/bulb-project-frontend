@@ -37,7 +37,7 @@ export const getCategoryVersionConfig = (
 const githubBaseUrl = 'https://api.github.com/repos/BulbProject/bulb-project-frontend/contents';
 const githubRawBaseUrl = 'https://raw.githubusercontent.com/BulbProject/bulb-project-frontend';
 // @TODO need change branch to "master" for production
-const githubBranch = 'info-pages';
+const githubBranch = 'develop';
 const githubInfoPath = 'info';
 
 export const getInfoFiles = () => {
