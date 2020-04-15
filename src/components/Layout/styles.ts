@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
 
-import { Drawer as LibDrawer, Text } from 'ustudio-ui';
+import { Drawer as LibDrawer } from 'ustudio-ui';
 import { Mixin } from 'ustudio-ui/theme';
 
 const Layout = styled.div`
@@ -151,25 +151,11 @@ const DrawerButton = styled.button(
 );
 
 const Drawer = styled(LibDrawer)`
-  min-width: 320px;
+  width: 320px;
 
   flex-direction: column;
 
   padding: var(--i-regular) var(--i-large);
-`;
-
-const DrawerTitle = styled(Text)`
-  margin-bottom: 2.5rem;
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-const NavLink = styled(Link)`
-  margin-bottom: var(--i-large);
 `;
 
 const Main = styled.main`
@@ -193,9 +179,6 @@ export default {
   LogoText,
   DrawerButton,
   Drawer,
-  DrawerTitle,
-  Nav,
-  NavLink,
   Main,
   Footer,
 };
