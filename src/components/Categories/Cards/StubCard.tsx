@@ -2,8 +2,10 @@ import React from 'react';
 
 import { Flex, Placeholder } from 'ustudio-ui';
 
+import { getRandomWidth } from 'utils';
+
 import Styled from '../../../styles/categories';
-import { getRandomWidth } from '../../../utils';
+
 
 const StubCard = () => {
   return (

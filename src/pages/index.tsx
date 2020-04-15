@@ -37,7 +37,7 @@ const Categories = () => {
         </Flex>
       )}
 
-      {!isLoading && error && <Error updateCategories={triggerRequest} />}
+      {!isLoading && error && <Error reloadCategories={triggerRequest} />}
     </Container>
   );
 };
