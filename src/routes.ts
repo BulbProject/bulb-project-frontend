@@ -2,6 +2,7 @@ import { RouteProps } from 'react-router-dom';
 
 import Index from './pages';
 import CategoryPage from './pages/categories/[categoryId]/[version]';
+import NotFoundPage from './pages/notFound';
 
 const routes: RouteProps[] = [
   {
@@ -11,6 +12,10 @@ const routes: RouteProps[] = [
   {
     path: '/categories/:categoryId/:version',
     component: CategoryPage,
+  },
+  {
+    path: '*',
+    component: NotFoundPage,
   },
 ].map(route => ({ ...route, exact: true }));
 
