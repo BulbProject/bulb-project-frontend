@@ -45,6 +45,7 @@ const Stepper: React.FC = ({ children }) => {
                   type: 'add_requested_need',
                   payload: {
                     criterionId: currentCriterion.id,
+                    // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
                     // @ts-ignore
                     requirements: state[currentCriterion.id][currentCriterion.activeRequirementGroup],
                   },

@@ -4,7 +4,6 @@ import { Dropdown } from 'ustudio-ui';
 import { FieldSet } from 'formfish';
 
 import { sortById } from 'utils';
-import { useCategoryContext } from '../../context';
 
 import Requirement from '../Requirement';
 
@@ -14,13 +13,14 @@ const RequirementGroup: React.FC<RequirementGroupProps & {
   isActive: boolean;
   setActive: (id: string) => void;
   criterionId: string;
-}> = ({ isActive, setActive, criterionId, id, description, requirements }) => {
+}> = ({ isActive, setActive, id, description, requirements }) => {
   return (
     <Styled.RequirementGroup>
       <Dropdown
         isDefaultOpen={isActive}
         onChange={() => setActive(id)}
         title={
+          // `Text` props declaration is broken, so had to ignore the `appearance` error
           // @ts-ignore
           <Styled.Title isActive={isActive} appearance="bold">
             {description || `Variant ${+id.slice(2, 4)}`}
