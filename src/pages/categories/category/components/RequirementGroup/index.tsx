@@ -12,7 +12,6 @@ import Styled from './styles';
 const RequirementGroup: React.FC<RequirementGroupProps & {
   isActive: boolean;
   setActive: (id: string) => void;
-  criterionId: string;
 }> = ({ isActive, setActive, id, description, requirements }) => {
   return (
     <Styled.RequirementGroup>
