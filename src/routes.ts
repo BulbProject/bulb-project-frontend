@@ -1,7 +1,7 @@
 import { RouteProps } from 'react-router-dom';
 
 import Index from './pages';
-import CategoryPage from './pages/categories/[categoryId]/[version]';
+import CategoryPage from './pages/categories/category';
 
 const routes: RouteProps[] = [
   {
