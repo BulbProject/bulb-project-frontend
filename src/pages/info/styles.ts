@@ -13,14 +13,13 @@ const CenteredContainer = styled.div`
 const ErrorText = styled(Text)`
   margin: var(--i-large) 0 var(--i-regular);
 
-  text-align: center;
   color: var(--c-negative);
 `;
 
 const Icon = styled.img`
   width: 1rem;
 
-  margin-right: 0.5rem;
+  margin-right: var(--i-medium);
 `;
 
 const RefreshButton = styled(Button)`

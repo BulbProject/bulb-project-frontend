@@ -29,7 +29,7 @@ const InfoPage = () => {
       <Cell xs={{ offset: { before: 2, after: 2 }, size: 8 }}>
         {isLoading && !error && (
           <Styled.CenteredContainer>
-            <Spinner appearance={{ size: 80 }} />
+            <Spinner appearance={{ size: 80 }} delay={1000} />
           </Styled.CenteredContainer>
         )}
 
@@ -45,7 +45,7 @@ const InfoPage = () => {
 
         {!isLoading && error && (
           <Flex direction="column" alignment={{ horizontal: 'center' }}>
-            <Styled.ErrorText variant="h3"> Hmm, something went wrong</Styled.ErrorText>
+            <Styled.ErrorText variant="h3" align="center"> Hmm, something went wrong</Styled.ErrorText>
 
             <Flex alignment={{ horizontal: 'center' }}>
               <Button onClick={() => goBack()}>
@@ -53,7 +53,7 @@ const InfoPage = () => {
                 Go to back
               </Button>
 
-              {error.statusCode !== 404 && (
+              {error?.statusCode !== 404 && (
                 <Styled.RefreshButton onClick={() => triggerRequest()}>
                   <Styled.Icon src={refreshIcon} alt="Go back icon" />
                   Refresh

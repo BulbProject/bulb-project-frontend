@@ -46,7 +46,8 @@ const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
 
         {!isLoading && error && (
           <Styled.ErrorContainer alignment={{ horizontal: 'center' }} direction="column">
-            <Styled.ErrorText>Hmm, something went wrong, please try again</Styled.ErrorText>
+            <Styled.ErrorText align="center">Hmm, something went wrong, please try again</Styled.ErrorText>
+
             <Button onClick={() => triggerRequest()}>
               <Styled.RefreshIcon src={refreshIcon} alt="Refresh icon" />
             </Button>

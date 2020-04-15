@@ -26,6 +26,7 @@ const Quote = styled.blockquote`
   padding-left: 1rem;
   margin: 1rem 0;
   color: var(--c-dark);
+
   ${Paragraph} {
     margin: 0;
   }
@@ -33,11 +34,13 @@ const Quote = styled.blockquote`
 
 const List = styled.ul(
   ({ depth, ordered }: { depth: number; ordered: boolean }) => css`
-    margin: 0.25rem 0;
-    padding-left: ${depth ? '2rem' : 0};
     display: grid;
     grid-auto-rows: auto;
     grid-gap: 0.5rem;
+
+    margin: 0.25rem 0;
+    padding-left: ${depth ? '2rem' : 0};
+
     list-style-position: inside;
     list-style-type: ${ordered ? 'decimal' : 'circle'};
   `
