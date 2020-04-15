@@ -36,10 +36,7 @@ const categoryContextReducer: Reducer<CategoryContextStateValue, CategoryContext
         ...state,
         requestedNeed: {
           ...state.requestedNeed,
-          [criterionId]: requirements.reduce(
-            (map, requirement) => Object.assign(map, { [requirement.id]: requirement }),
-            {}
-          ),
+          [criterionId]: requirements,
         },
       };
     }

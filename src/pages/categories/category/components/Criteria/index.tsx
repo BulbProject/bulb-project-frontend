@@ -20,6 +20,7 @@ const Criteria = () => {
               payload: { requirementGroupId, criterionId: currentCriterion.id },
             })
           }
+          criterionId={currentCriterion.id}
           key={requirementGroup.id}
         />
       ))}

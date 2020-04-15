@@ -1,5 +1,3 @@
-import { Requirement } from 'ts4ocds/extensions/requirements';
-
 interface SetCurrentCriteria {
   type: 'set_current_criterion';
   payload: string;
@@ -17,7 +15,7 @@ interface AddRequestedNeed {
   type: 'add_requested_need';
   payload: {
     criterionId: string;
-    requirements: Requirement[];
+    requirements: Record<string, unknown>;
   };
 }
 

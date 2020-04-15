@@ -1,5 +1,4 @@
 import { Dispatch } from 'react';
-import { Requirement } from 'ts4ocds/extensions/requirements';
 
 import { Criterion } from 'types/data';
 
@@ -12,7 +11,7 @@ interface ContextCriterion extends Criterion {
 export interface CategoryContextStateValue {
   currentCriterion: ContextCriterion;
   criteria: Record<string, ContextCriterion>;
-  requestedNeed: Record<string, Record<string, Requirement>>;
+  requestedNeed: Record<string, Record<string, unknown>>;
 }
 
 export type CategoryContextDispatchValue = Dispatch<CategoryContextAction>;

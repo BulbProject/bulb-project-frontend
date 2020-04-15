@@ -10,16 +10,16 @@ interface InputProps {
   suffix?: ReactElement;
 }
 
-const renderInput = ({ id, dataType, props }: { id: string; dataType: DataType; props: InputProps }): ReactElement => {
+const renderInput = ({ dataType, props }: { dataType: DataType; props: InputProps }): ReactElement => {
   switch (dataType) {
     case 'string':
-      return <TextInput id={id} {...props} />;
+      return <TextInput {...props} />;
     case 'boolean':
-      return <Switch id={id} />;
+      return <Switch />;
     case 'integer':
     case 'number':
     default:
-      return <NumberInput id={id} {...props} />;
+      return <NumberInput {...props} />;
   }
 };
 
@@ -62,7 +62,12 @@ const Requirement = ({ id, title, dataType }: RequirementProps) => {
           </Styled.Title>
         )}
 
-        <Field name={id}>{renderInput({ id, dataType, props: formatProps({ title, dataType }) })}</Field>
+        <Field name={id}>
+          {renderInput({
+            dataType,
+            props: formatProps({ title, dataType }),
+          })}
+        </Field>
       </Flex>
     </Styled.Requirement>
   );

@@ -4493,10 +4493,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formfish@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/formfish/-/formfish-0.5.1.tgz#034b71f3a84474780e1ac9b3d1f99ee2861960d4"
-  integrity sha512-WQj2CgfdRnAIcDREIzKn4uvW9R+R0cxuy0STLwpngGlJ+ofWZunagwEQf5XYGSw84kv8oO8CFb1V7npb5rJg/Q==
+formfish@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/formfish/-/formfish-0.6.0.tgz#25fa129f6c521d3116a6e081ebbc2012a0f9be00"
+  integrity sha512-ATVmcnrT1l+acERhkCvUJTrJdVTJTtFwo1SmLYG0G0QSH+EANt36EhuBRHPpQPTpacILQzFVxoO4GemUp+gqVA==
   dependencies:
     lodash.get "^4.4.2"
     lodash.set "^4.3.2"

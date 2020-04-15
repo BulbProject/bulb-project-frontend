@@ -1,9 +1,10 @@
-import { Form } from 'formfish';
 import React from 'react';
 import { RequirementGroup as RequirementGroupProps } from 'ts4ocds/extensions/requirements';
 import { Dropdown } from 'ustudio-ui';
+import { FieldSet } from 'formfish';
 
 import { sortById } from 'utils';
+import { useCategoryContext } from '../../context';
 
 import Requirement from '../Requirement';
 
@@ -12,7 +13,8 @@ import Styled from './styles';
 const RequirementGroup: React.FC<RequirementGroupProps & {
   isActive: boolean;
   setActive: (id: string) => void;
-}> = ({ isActive, setActive, id, description, requirements }) => {
+  criterionId: string;
+}> = ({ isActive, setActive, criterionId, id, description, requirements }) => {
   return (
     <Styled.RequirementGroup>
       <Dropdown
@@ -25,7 +27,7 @@ const RequirementGroup: React.FC<RequirementGroupProps & {
           </Styled.Title>
         }
       >
-        <Form onSubmit={() => {}} name={id}>
+        <FieldSet name={id}>
           {requirements.length > 1 ? (
             requirements
               .slice(1)
@@ -34,7 +36,7 @@ const RequirementGroup: React.FC<RequirementGroupProps & {
           ) : (
             <Requirement {...requirements[0]} />
           )}
-        </Form>
+        </FieldSet>
       </Dropdown>
     </Styled.RequirementGroup>
   );
