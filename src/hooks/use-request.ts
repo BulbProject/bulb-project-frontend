@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface RequestError {
   message: string;
@@ -13,7 +13,7 @@ const useRequest = <D>(
   isLoading: boolean;
   data: D | null;
   error: RequestError | null;
-  triggerRequest?: Dispatch<SetStateAction<boolean>>;
+  triggerRequest(): void;
 } => {
   const [_, triggerRequest] = useState(false);
 
