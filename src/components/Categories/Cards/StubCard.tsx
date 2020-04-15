@@ -3,18 +3,15 @@ import React from 'react';
 import { Flex, Placeholder } from 'ustudio-ui';
 
 import Styled from '../../../styles/categories';
+import { getRandomWidth } from '../../../utils';
 
 const StubCard = () => {
-  const getRandomWidth = () => {
-    return `${Math.floor(Math.random() * (100 - 25)) + 25}%`;
-  };
-
   return (
     <Styled.BaseCard direction="column">
       <Styled.StubTitle
         appearance={{
           height: 'h5',
-          width: getRandomWidth(),
+          width: getRandomWidth(25, 100),
         }}
         variant="text"
       />
@@ -22,7 +19,7 @@ const StubCard = () => {
       <Styled.StubDescription
         appearance={{
           height: 'small',
-          width: getRandomWidth(),
+          width: getRandomWidth(25, 100),
         }}
         variant="text"
       />
@@ -39,7 +36,7 @@ const StubCard = () => {
         <Styled.StubClassificationDescription
           appearance={{
             height: 'small',
-            width: getRandomWidth(),
+            width: getRandomWidth(25, 100),
           }}
           variant="text"
         />

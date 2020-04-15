@@ -1,11 +1,12 @@
 import React from 'react';
 
+import Classification from 'components/Classification';
+
+import { CategoryCardProps } from './types';
+
 import Styled from '../../../styles/categories';
-import Classification from '../../Classification';
 
-import { CategoryCard } from './props';
-
-const BaseCard = ({ id, version, title, description, classification }: CategoryCard) => {
+const BaseCard = ({ id, version, title, description, classification }: CategoryCardProps) => {
   return (
     <Styled.Link key={`${id}-${version}`} to={`/categories/${id}/${version}`}>
       <Styled.Card direction="column">
@@ -13,7 +14,7 @@ const BaseCard = ({ id, version, title, description, classification }: CategoryC
 
         <Styled.CardDescription variant="small">{description}</Styled.CardDescription>
 
-        <Classification id={classification.id} description={classification.description} />
+        <Classification {...classification} />
       </Styled.Card>
     </Styled.Link>
   );
