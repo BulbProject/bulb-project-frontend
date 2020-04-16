@@ -9,7 +9,7 @@ const StepperButton: React.FC<{ type: 'button' | 'submit'; isActive: boolean; on
   onClick,
 }) => {
   return (
-    <Styled.StepperButton type={type} isActive={isActive} onClick={onClick}>
+    <Styled.StepperButton appearance="text" type={type} isActive={isActive} onClick={onClick}>
       {children}
     </Styled.StepperButton>
   );

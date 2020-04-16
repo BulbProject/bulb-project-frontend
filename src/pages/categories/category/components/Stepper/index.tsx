@@ -3,7 +3,6 @@ import React, { ReactElement } from 'react';
 import { Cell, Flex, Text } from 'ustudio-ui';
 import { modifyId } from 'utils';
 
-import { containerCellProps } from '../../config';
 import { useCategoryContext } from '../../context';
 
 import { Step, StepperButton } from './components';
@@ -30,15 +29,30 @@ const Stepper: React.FC = ({ children }) => {
         ))}
       </Styled.Stepper>
 
-      <Styled.Container isContainer>
-        <Cell xs={containerCellProps}>
-          <Flex direction="column">
-            {description && (
-              <Text align="center" variant="h3">
-                {description}
-              </Text>
-            )}
+      {description && (
+        <Text align="center" variant="h3">
+          {description}
+        </Text>
+      )}
 
+      <Styled.Container isContainer>
+        <Cell xs={{ size: 2 }}>
+          <StepperButton
+            type="button"
+            isActive={!isFirstStep()}
+            onClick={() =>
+              dispatch({
+                type: 'set_current_criterion',
+                payload: modifyId(currentCriterion.id, 1, id => id - 1),
+              })
+            }
+          >
+            Previous
+          </StepperButton>
+        </Cell>
+
+        <Cell xs={{ size: 8 }}>
+          <Flex direction="column">
             <Form
               onSubmit={state => {
                 dispatch({
@@ -54,38 +68,25 @@ const Stepper: React.FC = ({ children }) => {
               name={currentCriterion.id}
             >
               {children as ReactElement}
-
-              <Flex alignment={{ horizontal: 'space-between' }}>
-                <StepperButton
-                  type="button"
-                  isActive={!isFirstStep()}
-                  onClick={() =>
-                    dispatch({
-                      type: 'set_current_criterion',
-                      payload: modifyId(currentCriterion.id, 1, id => id - 1),
-                    })
-                  }
-                >
-                  Previous
-                </StepperButton>
-
-                <StepperButton
-                  type="submit"
-                  isActive={!isLastStep()}
-                  onClick={() => {
-                    setTimeout(() => {
-                      dispatch({
-                        type: 'set_current_criterion',
-                        payload: modifyId(currentCriterion.id, 1, id => id + 1),
-                      });
-                    }, 100);
-                  }}
-                >
-                  Next
-                </StepperButton>
-              </Flex>
             </Form>
           </Flex>
+        </Cell>
+
+        <Cell xs={{ size: 2 }}>
+          <StepperButton
+            type="submit"
+            isActive={!isLastStep()}
+            onClick={() => {
+              setTimeout(() => {
+                dispatch({
+                  type: 'set_current_criterion',
+                  payload: modifyId(currentCriterion.id, 1, id => id + 1),
+                });
+              }, 100);
+            }}
+          >
+            Next
+          </StepperButton>
         </Cell>
       </Styled.Container>
     </Flex>
