@@ -1,13 +1,21 @@
 import React from 'react';
-import { RequirementGroup as RequirementGroupProps } from 'ts4ocds/extensions/requirements';
+import { RequirementGroup as OCDSRequirementGroup } from 'ts4ocds/extensions/requirements';
+import { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 import { Dropdown } from 'ustudio-ui';
 import { FieldSet } from 'formfish';
 
 import { sortById } from 'utils';
+import HiddenRequirement from '../HiddenRequirement';
 
 import Requirement from '../Requirement';
 
 import Styled from './styles';
+
+// Another incrorrectly written interface
+// @ts-ignore
+interface RequirementGroupProps extends OCDSRequirementGroup {
+  requirements: RequirementWithOptionDetails[];
+}
 
 const RequirementGroup: React.FC<RequirementGroupProps & {
   isActive: boolean;
@@ -30,10 +38,16 @@ const RequirementGroup: React.FC<RequirementGroupProps & {
       >
         <FieldSet name={id}>
           {!hasSingleRequirement() ? (
-            requirements
-              .slice(1)
-              .sort(sortById)
-              .map(requirement => <Requirement {...requirement} key={requirement.id} />)
+            <>
+              <HiddenRequirement {...requirements[0]} />
+
+              {requirements
+                .slice(1)
+                .sort(sortById)
+                .map(requirement => (
+                  <Requirement {...requirement} key={requirement.id} />
+                ))}
+            </>
           ) : (
             // Component here seems to think it's a NumberRequirement only
             // @ts-ignore
