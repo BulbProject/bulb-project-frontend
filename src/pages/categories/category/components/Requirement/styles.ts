@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Text } from 'ustudio-ui';
+import { RadioGroup as UIRadioGroup, Text } from 'ustudio-ui';
 
 const Requirement = styled.label`
   display: block;
@@ -20,4 +20,14 @@ const Title = styled(Text)<{ isBoolean: boolean }>(({ isBoolean }) =>
       `
 );
 
-export default { Requirement, Title };
+const RadioGroup = styled(UIRadioGroup)`
+  margin-top: var(--i-medium);
+
+  li > label {
+    span {
+      margin-right: var(--i-medium) !important;
+    }
+  }
+`;
+
+export default { Requirement, Title, RadioGroup };

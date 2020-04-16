@@ -4524,10 +4524,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formfish@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/formfish/-/formfish-0.6.0.tgz#25fa129f6c521d3116a6e081ebbc2012a0f9be00"
-  integrity sha512-ATVmcnrT1l+acERhkCvUJTrJdVTJTtFwo1SmLYG0G0QSH+EANt36EhuBRHPpQPTpacILQzFVxoO4GemUp+gqVA==
+formfish@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/formfish/-/formfish-0.6.2.tgz#4d79a77644cca31d6260e101c3e4255bbb8c4405"
+  integrity sha512-kJyW107KwZYnlv3A1XMc7OZjmAhD6qFJuch74Nf66DWjNAxgVUklwSq4naEMkLBh2mYHvW84LaXcRy8QgNlarg==
   dependencies:
     lodash.get "^4.4.2"
     lodash.set "^4.3.2"
@@ -9294,10 +9294,10 @@ tryer@^1.0.1:
   resolved "https://registry.yarnpkg.com/tryer/-/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
   integrity sha512-c3zayb8/kWWpycWYg87P71E1S1ZL6b6IJxfb5fvsUgsf0S2MVGaDhDXXjDMpdCpfWXqptc+4mXwmiy1ypXqRAA==
 
-ts4ocds@^1.0.0-beta.5:
-  version "1.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/ts4ocds/-/ts4ocds-1.0.0-beta.5.tgz#8c20d79b5489ec3092037c4ce1f5be5a7ba0aedd"
-  integrity sha512-NovK29wLEjBNfCA3mPz3B/0OSsWCgAGh+XvPDNk2QQhxNYt6ASMrWpDf39WeU/pBWPbXD3ZIlOQrjb7WBRwOjg==
+ts4ocds@^1.0.0-beta.7:
+  version "1.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/ts4ocds/-/ts4ocds-1.0.0-beta.7.tgz#4b933a9c47fc2ea5584a3dfe109205b1f1767c78"
+  integrity sha512-vXdiPpYve1LEFhyDhOQZdturFoFEi80QUodi2uBjhaK53KlrEh0EQ+cdHflWifsSj8iuYcZqjQk4tl/BNP6UYQ==
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"
@@ -9592,10 +9592,10 @@ use@^3.1.0:
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
 
-ustudio-ui@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/ustudio-ui/-/ustudio-ui-1.1.5.tgz#439d296759783e1a304a08616f079586b3e85df4"
-  integrity sha512-D/zGrqCL9Q3OmMEAd2/u7ZYlwFhTU6iQjgUs5GLc7zYKbmI/xbtGP9M0fMZ9Q/ZRumxmldNgAXYoUjC84FVk3A==
+ustudio-ui@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/ustudio-ui/-/ustudio-ui-1.1.7.tgz#b8f89bb4a2e18b5c3d14a290eac7cb715633fed7"
+  integrity sha512-HLHhlIuIL2EgoDx9BGeFI/EWgT0QJ6AdrtPbB2oPSzcuBk9pXLPi3uflu+QBR2taqAWMXw/m+tRQGaVNq+oiMg==
   dependencies:
     lodash.merge "^4.6.2"
 

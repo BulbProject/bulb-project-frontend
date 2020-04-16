@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
-import { Requirement as RequirementProps, DataType } from 'ts4ocds/extensions/requirements';
+import { RequirementWithOptionDetails as RequirementProps, Option } from 'ts4ocds/extensions/options';
+import { DataType } from 'ts4ocds/extensions/requirements';
 import { NumberInput, Switch, TextInput, Text, Flex, Checkbox } from 'ustudio-ui';
 import { Field } from 'formfish';
 
@@ -12,13 +13,30 @@ interface InputProps {
 
 const renderInput = ({
   dataType,
+  options,
   expectedValue,
   props,
 }: {
   dataType: DataType;
+  options?: Option[];
   expectedValue?: unknown;
   props: InputProps;
 }): ReactElement => {
+  if (options) {
+    const optionsMap: Record<string, Option> = options.reduce(
+      (map, option) => Object.assign(map, { [option.description as string]: { value: option.description } }),
+      {}
+    );
+
+    return (
+      <Styled.RadioGroup
+        name={`${(options[0].id as string).slice(0, 9)}${'0'.repeat(2)}`}
+        defaultValue={Object.values(optionsMap)[0]}
+        options={optionsMap}
+      />
+    );
+  }
+
   switch (dataType) {
     case 'string':
       return <TextInput {...props} />;
@@ -60,7 +78,7 @@ const formatProps = ({ title, dataType }: { title?: string; dataType: DataType }
 
 const isBoolean = (dataType: DataType): dataType is 'boolean' => dataType === 'boolean';
 
-const Requirement = ({ id, title, expectedValue, dataType }: RequirementProps) => {
+const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: RequirementProps) => {
   return (
     <Styled.Requirement htmlFor={id}>
       <Flex
@@ -74,11 +92,31 @@ const Requirement = ({ id, title, expectedValue, dataType }: RequirementProps) =
           </Styled.Title>
         )}
 
-        <Field name={id}>
+        <Field
+          name={id}
+          getValue={optionDetails ? (value: { value: string }) => value.value : undefined}
+          setValue={
+            optionDetails
+              ? (value: { value: string } | string) => {
+                  if (typeof value === 'object') {
+                    return value;
+                  }
+
+                  return { value };
+                }
+              : undefined
+          }
+        >
           {renderInput({
             dataType,
             expectedValue,
             props: formatProps({ title, dataType }),
+            // eslint-disable-next-line no-nested-ternary
+            options: optionDetails
+              ? 'optionGroups' in optionDetails
+                ? optionDetails.optionGroups?.[0].options
+                : []
+              : undefined,
           })}
         </Field>
       </Flex>
