@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Requirement as RequirementProps, DataType } from 'ts4ocds/extensions/requirements';
-import { NumberInput, Switch, TextInput, Text, Flex } from 'ustudio-ui';
+import { NumberInput, Switch, TextInput, Text, Flex, Checkbox } from 'ustudio-ui';
 import { Field } from 'formfish';
 
 import Styled from './styles';
@@ -10,11 +10,23 @@ interface InputProps {
   suffix?: ReactElement;
 }
 
-const renderInput = ({ dataType, props }: { dataType: DataType; props: InputProps }): ReactElement => {
+const renderInput = ({
+  dataType,
+  expectedValue,
+  props,
+}: {
+  dataType: DataType;
+  expectedValue?: unknown;
+  props: InputProps;
+}): ReactElement => {
   switch (dataType) {
     case 'string':
       return <TextInput {...props} />;
     case 'boolean':
+      if (expectedValue !== undefined) {
+        return <Checkbox defaultValue={expectedValue as boolean} isDisabled={Boolean(expectedValue)} />;
+      }
+
       return <Switch />;
     case 'integer':
     case 'number':
@@ -48,7 +60,7 @@ const formatProps = ({ title, dataType }: { title?: string; dataType: DataType }
 
 const isBoolean = (dataType: DataType): dataType is 'boolean' => dataType === 'boolean';
 
-const Requirement = ({ id, title, dataType }: RequirementProps) => {
+const Requirement = ({ id, title, expectedValue, dataType }: RequirementProps) => {
   return (
     <Styled.Requirement htmlFor={id}>
       <Flex
@@ -65,6 +77,7 @@ const Requirement = ({ id, title, dataType }: RequirementProps) => {
         <Field name={id}>
           {renderInput({
             dataType,
+            expectedValue,
             props: formatProps({ title, dataType }),
           })}
         </Field>
