@@ -1,5 +1,5 @@
-import { Field } from 'formfish';
 import React from 'react';
+import { Field } from 'formfish';
 import { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 
 import Styled from './styles';
