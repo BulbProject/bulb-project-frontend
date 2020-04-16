@@ -6,7 +6,6 @@ import { getRandomWidth } from 'utils';
 
 import Styled from '../../../styles/categories';
 
-
 const StubCard = () => {
   return (
     <Styled.BaseCard direction="column">
