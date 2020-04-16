@@ -79,6 +79,28 @@ const formatProps = ({ title, dataType }: { title?: string; dataType: DataType }
 const isBoolean = (dataType: DataType): dataType is 'boolean' => dataType === 'boolean';
 
 const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: RequirementProps) => {
+  const getValue = () => {
+    if (optionDetails) {
+      return (value: { value: string }) => value.value;
+    }
+
+    if (expectedValue !== undefined) {
+      return (value: boolean) => expectedValue;
+    }
+
+    return undefined;
+  };
+
+  const setValue = optionDetails
+    ? (value: { value: string } | string) => {
+        if (typeof value === 'object') {
+          return value;
+        }
+
+        return { value };
+      }
+    : undefined;
+
   return (
     <Styled.Requirement htmlFor={id}>
       <Flex
@@ -92,21 +114,7 @@ const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: Requ
           </Styled.Title>
         )}
 
-        <Field
-          name={id}
-          getValue={optionDetails ? (value: { value: string }) => value.value : undefined}
-          setValue={
-            optionDetails
-              ? (value: { value: string } | string) => {
-                  if (typeof value === 'object') {
-                    return value;
-                  }
-
-                  return { value };
-                }
-              : undefined
-          }
-        >
+        <Field name={id} getValue={getValue} setValue={setValue}>
           {renderInput({
             dataType,
             expectedValue,
