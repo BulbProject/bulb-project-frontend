@@ -10,5 +10,6 @@ module.exports = {
       },
     ],
     ['styled-components', { displayName: true, preprocess: false }],
+    ['inline-react-svg', { ignorePattern: /^((?![.]inline[.]svg).)*$/ }],
   ],
 };
