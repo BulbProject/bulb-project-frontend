@@ -15,7 +15,7 @@ const ErrorDescription = styled(Text)`
 `;
 
 const ButtonsContainer = styled(Flex)`
-  margin: 2rem 0;
+  margin: var(--i-large) 0;
 `;
 
 export default { Content, ErrorDescription, Logo, ButtonsContainer };
