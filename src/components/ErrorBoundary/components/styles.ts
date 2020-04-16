@@ -7,7 +7,7 @@ const Content = styled(Flex)`
 
 const Logo = styled.img`
   width: 4rem;
-  margin-bottom: 2rem;
+  margin-bottom: var(--i-large);
 `;
 
 const ErrorDescription = styled(Text)`
