@@ -1,13 +1,32 @@
 import { Form } from 'formfish';
-import React, { ReactElement } from 'react';
+import { FieldSet } from 'formfish/context/form/FormContext';
+import React, { ReactElement, useState } from 'react';
 import { Cell, Flex, Text } from 'ustudio-ui';
 import { modifyId } from 'utils';
 
 import { useCategoryContext } from '../../context';
+import { CategoryContextStateValue } from '../../context/CategoryContext';
 
 import { Step, StepperButton } from './components';
 
 import Styled from './styles';
+
+const isRequirementGroupFilled = ({
+  state,
+  currentCriterion,
+}: {
+  state: FieldSet;
+  currentCriterion: CategoryContextStateValue['currentCriterion'];
+}): boolean => {
+  const criterion = state[currentCriterion.id] as FieldSet;
+  const requirementGroup = criterion?.[currentCriterion.activeRequirementGroup];
+
+  if (requirementGroup) {
+    return Object.values(requirementGroup).findIndex(requirement => requirement.value === undefined) === -1;
+  }
+
+  return false;
+};
 
 const Stepper: React.FC = ({ children }) => {
   const { currentCriterion, criteria, dispatch } = useCategoryContext();
@@ -20,6 +39,8 @@ const Stepper: React.FC = ({ children }) => {
   const isStepActive = (stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(title);
   const isLastStep = (): boolean => titles.indexOf(title) === steps.length - 1;
   const isFirstStep = (): boolean => titles.indexOf(title) === 0;
+
+  const [isNextStepAvailable, setNextStepAvailable] = useState(false);
 
   return (
     <Flex direction="column">
@@ -54,6 +75,13 @@ const Stepper: React.FC = ({ children }) => {
         <Cell xs={{ size: 8 }}>
           <Flex direction="column">
             <Form
+              watch={state => {
+                if (isRequirementGroupFilled({ state, currentCriterion })) {
+                  setNextStepAvailable(true);
+                } else {
+                  setNextStepAvailable(false);
+                }
+              }}
               onSubmit={state => {
                 dispatch({
                   type: 'add_requested_need',
@@ -84,6 +112,7 @@ const Stepper: React.FC = ({ children }) => {
                 });
               }, 100);
             }}
+            isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
           >
             Next
           </StepperButton>
