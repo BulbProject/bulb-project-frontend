@@ -1,24 +1,14 @@
-import styled, { css } from 'styled-components';
-import { Grid, Text } from 'ustudio-ui';
+import styled from 'styled-components';
+import { Text, Flex } from 'ustudio-ui';
 import { Mixin } from 'ustudio-ui/theme';
 
-const Wrapper = styled.div`
-  padding: var(--i-large) 0;
-`;
-
-const Container = styled(Grid).attrs(() => ({
-  isContainer: true,
-}))`
-  padding: 0 var(--i-large);
-
-  ${Mixin.Screen.xs(
-    css`
-      padding: 0;
-    `
-  )}
+const Content = styled(Flex)`
+  margin-top: 4rem;
 `;
 
 const ErrorStatus = styled(Text)`
+  ${Mixin.Font.h1()}
+
   font-size: 6rem;
 `;
 
@@ -30,4 +20,8 @@ const ErrorDescription = styled(Text)`
   color: var(--c-dark);
 `;
 
-export default { Wrapper, Container, ErrorStatus, ErrorDescription, Logo };
+const ButtonsContainer = styled(Flex)`
+  margin: 2rem 0;
+`;
+
+export default { Content, ErrorStatus, ErrorDescription, Logo, ButtonsContainer };

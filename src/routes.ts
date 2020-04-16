@@ -5,7 +5,7 @@ import { RouteProps } from 'react-router-dom';
 const Index = lazy(() => import('./pages'));
 const CategoryPage = lazy(() => import('./pages/categories/category'));
 const InfoPage = lazy(() => import('./pages/info/infoPage'));
-import NotFoundPage from './pages/notFound';
+const NotFoundPage = lazy(() => import('./pages/notFound'));
 
 const routes: RouteProps[] = [
   {
@@ -17,12 +17,12 @@ const routes: RouteProps[] = [
     component: CategoryPage,
   },
   {
-    path: '*',
-    component: NotFoundPage,
-  },
-  {
     path: '/info/:infoFileName',
     component: InfoPage,
+  },
+  {
+    path: '*',
+    component: NotFoundPage,
   },
 ].map(route => ({ ...route, exact: true }));
 
