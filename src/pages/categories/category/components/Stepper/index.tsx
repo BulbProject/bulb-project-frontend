@@ -1,6 +1,6 @@
+import React, { ReactElement, useState } from 'react';
 import { Form } from 'formfish';
 import { FieldSet } from 'formfish/context/form/FormContext';
-import React, { ReactElement, useState } from 'react';
 import { Cell, Flex, Text } from 'ustudio-ui';
 import { modifyId } from 'utils';
 
@@ -42,6 +42,13 @@ const Stepper: React.FC = ({ children }) => {
 
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
 
+  const setStep = (modify: (id: number) => number) => {
+    dispatch({
+      type: 'set_current_criterion',
+      payload: modifyId(currentCriterion.id, 1, modify),
+    });
+  };
+
   return (
     <Flex direction="column">
       <Styled.Stepper length={steps.length}>
@@ -58,16 +65,7 @@ const Stepper: React.FC = ({ children }) => {
 
       <Styled.Container isContainer>
         <Cell xs={{ size: 2 }}>
-          <StepperButton
-            type="button"
-            isActive={!isFirstStep()}
-            onClick={() =>
-              dispatch({
-                type: 'set_current_criterion',
-                payload: modifyId(currentCriterion.id, 1, id => id - 1),
-              })
-            }
-          >
+          <StepperButton type="button" isActive={!isFirstStep()} onClick={() => setStep(id => id - 1)}>
             Previous
           </StepperButton>
         </Cell>
@@ -106,10 +104,7 @@ const Stepper: React.FC = ({ children }) => {
             isActive={!isLastStep()}
             onClick={() => {
               setTimeout(() => {
-                dispatch({
-                  type: 'set_current_criterion',
-                  payload: modifyId(currentCriterion.id, 1, id => id + 1),
-                });
+                setStep(id => id + 1);
               }, 100);
             }}
             isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}

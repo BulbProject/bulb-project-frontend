@@ -114,7 +114,7 @@ const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: Requ
           </Styled.Title>
         )}
 
-        <Field name={id} getValue={getValue} setValue={setValue}>
+        <Field name={id} getValue={getValue()} setValue={setValue}>
           {renderInput({
             dataType,
             expectedValue,
