@@ -7,6 +7,7 @@ import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
 import { CategoryVersion, Criterion } from 'types/data';
 import { sortById } from 'utils';
+import ErrorBoundary from "components/ErrorBoundary";
 
 import { Stepper, Criteria } from './components';
 import CategoryContextProvider from './context';
@@ -69,7 +70,7 @@ const CategoryPage: React.FC = () => {
       </Styled.Container>
     </Styled.Wrapper>
   ) : (
-    <>
+    <ErrorBoundary>
       <Styled.Wrapper>
         <Styled.Container>
           <Cell xs={containerCellProps}>
@@ -89,7 +90,7 @@ const CategoryPage: React.FC = () => {
           <Criteria />
         </Stepper>
       </CategoryContextProvider>
-    </>
+    </ErrorBoundary>
   );
 };
 
