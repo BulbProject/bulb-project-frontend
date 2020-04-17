@@ -6,6 +6,7 @@ import { modifyId } from 'utils';
 
 import { useCategoryContext } from '../../context';
 import { CategoryContextStateValue } from '../../context/CategoryContext';
+import { getRequestedNeed } from '../../utils';
 
 import { Step, StepperButton } from './components';
 
@@ -29,7 +30,7 @@ const isRequirementGroupFilled = ({
 };
 
 const Stepper: React.FC = ({ children }) => {
-  const { currentCriterion, criteria, dispatch } = useCategoryContext();
+  const { currentCriterion, criteria, requestedNeed, dispatch } = useCategoryContext();
 
   const { title, description } = currentCriterion;
   const steps = Object.values(criteria);
@@ -41,6 +42,7 @@ const Stepper: React.FC = ({ children }) => {
   const isFirstStep = (): boolean => titles.indexOf(title) === 0;
 
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const setStep = (modify: (id: number) => number) => () => {
     setTimeout(() => {
@@ -75,6 +77,20 @@ const Stepper: React.FC = ({ children }) => {
           }
         }}
         onSubmit={state => {
+          if (isSubmitting) {
+            dispatch({
+              type: 'add_requested_need_data',
+              payload: getRequestedNeed({
+                ...requestedNeed,
+                [currentCriterion.id]: {
+                  // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
+                  // @ts-ignore
+                  ...state[currentCriterion.id][currentCriterion.activeRequirementGroup],
+                },
+              }),
+            });
+          }
+
           dispatch({
             type: 'add_requested_need',
             payload: {
@@ -98,13 +114,25 @@ const Stepper: React.FC = ({ children }) => {
           </Cell>
 
           <Cell xs={{ size: 2 }}>
-            <StepperButton
-              isActive={!isLastStep()}
-              onClick={setStep(id => id + 1)}
-              isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-            >
-              Next
-            </StepperButton>
+            {isLastStep() ? (
+              <StepperButton
+                isActive
+                onClick={() => {
+                  setSubmitting(true);
+                }}
+                isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+              >
+                Submit
+              </StepperButton>
+            ) : (
+              <StepperButton
+                isActive
+                onClick={setStep(id => id + 1)}
+                isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+              >
+                Next
+              </StepperButton>
+            )}
           </Cell>
         </Styled.Container>
       </Form>

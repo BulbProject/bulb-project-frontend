@@ -1,3 +1,5 @@
+import { RequestedNeed } from 'types/data';
+
 interface SetCurrentCriteria {
   type: 'set_current_criterion';
   payload: string;
@@ -19,4 +21,13 @@ interface AddRequestedNeed {
   };
 }
 
-export type CategoryContextAction = SetCurrentCriteria | SetActiveRequirementGroup | AddRequestedNeed;
+interface AddRequestedNeedData {
+  type: 'add_requested_need_data';
+  payload: RequestedNeed;
+}
+
+export type CategoryContextAction =
+  | SetCurrentCriteria
+  | SetActiveRequirementGroup
+  | AddRequestedNeed
+  | AddRequestedNeedData;

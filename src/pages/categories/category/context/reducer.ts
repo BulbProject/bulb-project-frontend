@@ -40,6 +40,12 @@ const categoryContextReducer: Reducer<CategoryContextStateValue, CategoryContext
         },
       };
     }
+    case 'add_requested_need_data': {
+      return {
+        ...state,
+        requestedNeedData: action.payload,
+      };
+    }
     default: {
       return state;
     }

@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 
-import { Criterion } from 'types/data';
+import { Criterion, RequestedNeed } from 'types/data';
 
 import { CategoryContextAction } from './actions';
 
@@ -12,6 +12,7 @@ export interface CategoryContextStateValue {
   currentCriterion: ContextCriterion;
   criteria: Record<string, ContextCriterion>;
   requestedNeed: Record<string, Record<string, unknown>>;
+  requestedNeedData: RequestedNeed;
 }
 
 export type CategoryContextDispatchValue = Dispatch<CategoryContextAction>;

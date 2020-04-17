@@ -1,3 +1,4 @@
+export * from './uid';
 export * from './sort-by-id';
 export * from './modify-id';
 export * from './string-to-kebab-case';
