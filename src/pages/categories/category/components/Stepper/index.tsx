@@ -63,56 +63,54 @@ const Stepper: React.FC = ({ children }) => {
         </Text>
       )}
 
-      <Styled.Container isContainer>
-        <Cell xs={{ size: 2 }}>
-          <StepperButton type="button" isActive={!isFirstStep()} onClick={() => setStep(id => id - 1)}>
-            Previous
-          </StepperButton>
-        </Cell>
+      <Form
+        watch={state => {
+          if (isRequirementGroupFilled({ state, currentCriterion })) {
+            setNextStepAvailable(true);
+          } else {
+            setNextStepAvailable(false);
+          }
+        }}
+        onSubmit={state => {
+          dispatch({
+            type: 'add_requested_need',
+            payload: {
+              criterionId: currentCriterion.id,
+              // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
+              // @ts-ignore
+              requirements: state[currentCriterion.id][currentCriterion.activeRequirementGroup],
+            },
+          });
+        }}
+        name={currentCriterion.id}
+      >
+        <Styled.Container isContainer>
+          <Cell xs={{ size: 2 }}>
+            <StepperButton type="button" isActive={!isFirstStep()} onClick={() => setStep(id => id - 1)}>
+              Previous
+            </StepperButton>
+          </Cell>
 
-        <Cell xs={{ size: 8 }}>
-          <Flex direction="column">
-            <Form
-              watch={state => {
-                if (isRequirementGroupFilled({ state, currentCriterion })) {
-                  setNextStepAvailable(true);
-                } else {
-                  setNextStepAvailable(false);
-                }
+          <Cell xs={{ size: 8 }}>
+            <Flex direction="column">{children as ReactElement}</Flex>
+          </Cell>
+
+          <Cell xs={{ size: 2 }}>
+            <StepperButton
+              type="submit"
+              isActive={!isLastStep()}
+              onClick={() => {
+                setTimeout(() => {
+                  setStep(id => id + 1);
+                }, 100);
               }}
-              onSubmit={state => {
-                dispatch({
-                  type: 'add_requested_need',
-                  payload: {
-                    criterionId: currentCriterion.id,
-                    // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
-                    // @ts-ignore
-                    requirements: state[currentCriterion.id][currentCriterion.activeRequirementGroup],
-                  },
-                });
-              }}
-              name={currentCriterion.id}
+              isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
             >
-              {children as ReactElement}
-            </Form>
-          </Flex>
-        </Cell>
-
-        <Cell xs={{ size: 2 }}>
-          <StepperButton
-            type="submit"
-            isActive={!isLastStep()}
-            onClick={() => {
-              setTimeout(() => {
-                setStep(id => id + 1);
-              }, 100);
-            }}
-            isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-          >
-            Next
-          </StepperButton>
-        </Cell>
-      </Styled.Container>
+              Next
+            </StepperButton>
+          </Cell>
+        </Styled.Container>
+      </Form>
     </Flex>
   );
 };
