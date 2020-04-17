@@ -70,15 +70,19 @@ const Stepper: React.FC = ({ children }) => {
 
   return (
     <Flex direction="column">
-      <Overlay isActive={isLoading && isSubmitting} error={error?.message} triggerRequest={triggerRequest} />
+      {isLoading && isSubmitting && (
+        <Overlay isActive={isLoading && isSubmitting} error={error?.message} triggerRequest={triggerRequest} />
+      )}
 
-      <Styled.Modal
-        title="Success!"
-        isOpen={!isLoading && !error && Boolean(requestedNeedData)}
-        onChange={() => replace('/')}
-      >
-        <Text>Your calculation request was successfully sent :)</Text>
-      </Styled.Modal>
+      {!isLoading && !error && Boolean(requestedNeedData) && (
+        <Styled.Modal
+          title="Success!"
+          isOpen={!isLoading && !error && Boolean(requestedNeedData)}
+          onChange={() => replace('/')}
+        >
+          <Text>Your calculation request was successfully sent :)</Text>
+        </Styled.Modal>
+      )}
 
       <Styled.Stepper length={steps.length}>
         {steps.map((step, index) => (
@@ -102,6 +106,11 @@ const Stepper: React.FC = ({ children }) => {
           }
         }}
         onSubmit={state => {
+          const newRequestedNeed =
+            // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
+            // @ts-ignore
+            state[currentCriterion.id][currentCriterion.activeRequirementGroup];
+
           if (isSubmitting) {
             dispatch({
               type: 'add_requested_need_data',
@@ -110,7 +119,7 @@ const Stepper: React.FC = ({ children }) => {
                 [currentCriterion.id]: {
                   // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
                   // @ts-ignore
-                  ...state[currentCriterion.id][currentCriterion.activeRequirementGroup],
+                  ...newRequestedNeed,
                 },
               }),
             });
@@ -122,7 +131,7 @@ const Stepper: React.FC = ({ children }) => {
               criterionId: currentCriterion.id,
               // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
               // @ts-ignore
-              requirements: state[currentCriterion.id][currentCriterion.activeRequirementGroup],
+              requirements: newRequestedNeed,
             },
           });
         }}

@@ -25,19 +25,23 @@ const Overlay = ({
   }, [isActive]);
 
   return isMounted ? (
-    <Styled.Overlay alignment={{ horizontal: 'center', vertical: 'center' }} isActive={isActive}>
-      {error ? (
-        <Flex>
-          <Text variant="h4" align="center">
-            {error}
-          </Text>
+    <>
+      <Styled.Overlay alignment={{ horizontal: 'center', vertical: 'center' }} isActive={isActive}>
+        {error ? (
+          <Flex direction="column" alignment={{ horizontal: 'center' }}>
+            <Text variant="h4" align="center">
+              {error}
+            </Text>
 
-          <Styled.RetryButton onClick={triggerRequest}>Retry</Styled.RetryButton>
-        </Flex>
-      ) : (
-        <Spinner appearance={{ size: 32 }} />
-      )}
-    </Styled.Overlay>
+            <Styled.RetryButton onClick={triggerRequest}>Retry</Styled.RetryButton>
+          </Flex>
+        ) : (
+          <Spinner appearance={{ size: 32 }} />
+        )}
+      </Styled.Overlay>
+
+      <Styled.Background />
+    </>
   ) : null;
 };
 
