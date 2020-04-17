@@ -7,7 +7,7 @@ import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
 import { CategoryVersion, Criterion } from 'types/data';
 import { sortById } from 'utils';
-import ErrorBoundary from "components/ErrorBoundary";
+import ErrorBoundary from 'components/ErrorBoundary';
 
 import { Stepper, Criteria } from './components';
 import CategoryContextProvider from './context';

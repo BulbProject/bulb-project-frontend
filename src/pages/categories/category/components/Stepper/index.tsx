@@ -42,11 +42,13 @@ const Stepper: React.FC = ({ children }) => {
 
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
 
-  const setStep = (modify: (id: number) => number) => {
-    dispatch({
-      type: 'set_current_criterion',
-      payload: modifyId(currentCriterion.id, 1, modify),
-    });
+  const setStep = (modify: (id: number) => number) => () => {
+    setTimeout(() => {
+      dispatch({
+        type: 'set_current_criterion',
+        payload: modifyId(currentCriterion.id, 1, modify),
+      });
+    }, 100);
   };
 
   return (
@@ -64,6 +66,7 @@ const Stepper: React.FC = ({ children }) => {
       )}
 
       <Form
+        name={currentCriterion.id}
         watch={state => {
           if (isRequirementGroupFilled({ state, currentCriterion })) {
             setNextStepAvailable(true);
@@ -82,11 +85,10 @@ const Stepper: React.FC = ({ children }) => {
             },
           });
         }}
-        name={currentCriterion.id}
       >
         <Styled.Container isContainer>
           <Cell xs={{ size: 2 }}>
-            <StepperButton type="button" isActive={!isFirstStep()} onClick={() => setStep(id => id - 1)}>
+            <StepperButton isActive={!isFirstStep()} onClick={setStep(id => id - 1)}>
               Previous
             </StepperButton>
           </Cell>
@@ -97,13 +99,8 @@ const Stepper: React.FC = ({ children }) => {
 
           <Cell xs={{ size: 2 }}>
             <StepperButton
-              type="submit"
               isActive={!isLastStep()}
-              onClick={() => {
-                setTimeout(() => {
-                  setStep(id => id + 1);
-                }, 100);
-              }}
+              onClick={setStep(id => id + 1)}
               isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
             >
               Next

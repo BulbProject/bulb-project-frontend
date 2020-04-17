@@ -3,6 +3,7 @@ import { RequirementWithOptionDetails as RequirementProps, Option } from 'ts4ocd
 import { DataType } from 'ts4ocds/extensions/requirements';
 import { NumberInput, Switch, TextInput, Text, Flex } from 'ustudio-ui';
 import { Field } from 'formfish';
+import { useCategoryContext } from '../../context';
 
 import Styled from './styles';
 
@@ -15,11 +16,13 @@ const renderInput = ({
   dataType,
   options,
   expectedValue,
+  defaultValue,
   props,
 }: {
   dataType: DataType;
   options?: Option[];
   expectedValue?: unknown;
+  defaultValue?: unknown;
   props: InputProps;
 }): ReactElement => {
   if (options) {
@@ -31,7 +34,7 @@ const renderInput = ({
     return (
       <Styled.RadioGroup
         name={`${(options[0].id as string).slice(0, 9)}${'0'.repeat(2)}`}
-        defaultValue={Object.values(optionsMap)[0]}
+        defaultValue={defaultValue ? { value: defaultValue as string } : Object.values(optionsMap)[0]}
         options={optionsMap}
       />
     );
@@ -39,17 +42,17 @@ const renderInput = ({
 
   switch (dataType) {
     case 'string':
-      return <TextInput {...props} />;
+      return <TextInput defaultValue={defaultValue as string} {...props} />;
     case 'boolean':
       if (expectedValue !== undefined) {
         return <Styled.Checkbox defaultValue={expectedValue as boolean} isDisabled={Boolean(expectedValue)} />;
       }
 
-      return <Switch />;
+      return <Switch defaultValue={defaultValue as boolean} />;
     case 'integer':
     case 'number':
     default:
-      return <NumberInput {...props} />;
+      return <NumberInput defaultValue={defaultValue as number} {...props} />;
   }
 };
 
@@ -79,6 +82,8 @@ const formatProps = ({ title, dataType }: { title?: string; dataType: DataType }
 const isBoolean = (dataType: DataType): dataType is 'boolean' => dataType === 'boolean';
 
 const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: RequirementProps) => {
+  const { requestedNeed, currentCriterion } = useCategoryContext();
+
   const getValue = () => {
     if (optionDetails) {
       return (value: { value: string }) => value.value;
@@ -118,6 +123,7 @@ const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: Requ
           {renderInput({
             dataType,
             expectedValue,
+            defaultValue: requestedNeed[currentCriterion.id]?.[id],
             props: formatProps({ title, dataType }),
             // eslint-disable-next-line no-nested-ternary
             options: optionDetails
