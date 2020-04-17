@@ -10,7 +10,7 @@ import routes from './routes';
 const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <BrowserRouter forceRefresh>
+      <BrowserRouter>
         <Layout>
           <Suspense fallback={<div />}>
             <Switch>

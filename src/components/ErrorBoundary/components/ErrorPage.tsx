@@ -9,7 +9,7 @@ import logo from 'assets/images/logo.svg';
 import Styled from './styles';
 
 const ErrorPage = () => {
-  const { replace, location } = useHistory();
+  const { push } = useHistory();
 
   return (
     <Container>
@@ -25,11 +25,11 @@ const ErrorPage = () => {
         </Flex>
 
         <Styled.ButtonsContainer alignment={{ horizontal: 'space-around', vertical: 'center' }}>
-          <Button appearance="text" onClick={() => replace(location)}>
-            Update page
+          <Button appearance="text" onClick={() => window.location.reload()}>
+            Refresh page
           </Button>
 
-          <Button appearance="text" onClick={() => replace('/')}>
+          <Button appearance="text" onClick={() => push('/')}>
             Main page
           </Button>
         </Styled.ButtonsContainer>
