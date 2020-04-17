@@ -10,6 +10,22 @@ const common = require('./webpack.common.js');
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'cheap-module-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.ts(x)?$/,
+        use: [
+          {
+            loader: 'eslint-loader',
+            options: {
+              failOnError: true,
+              failOnWarning: false,
+            },
+          },
+        ],
+      },
+    ],
+  },
   devServer: {
     host: '127.0.0.1',
     port: 3000,
