@@ -4,7 +4,6 @@ const merge = require('webpack-merge');
 
 const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const RobotstxtPlugin = require('robotstxt-webpack-plugin');
@@ -17,15 +16,16 @@ module.exports = merge(common, {
   mode: 'production',
   optimization: {
     usedExports: true,
-    sideEffects: true,
+    sideEffects: false,
     minimize: true,
     minimizer: [new TerserPlugin({
-      parallel: true,
+      terserOptions: {
+        toplevel: true
+      }
     })],
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new UglifyJSPlugin(),
     new FaviconsWebpackPlugin({
       logo: path.resolve(__dirname, 'public/favicon.svg'),
       favicons: {
@@ -42,9 +42,12 @@ module.exports = merge(common, {
         icons: {
           android: true,
           appleIcon: true,
-          appleStartup: true,
-          coast: true,
+          appleStartup: false,
+          coast: false,
           favicons: true,
+          firefox: false,
+          windows: false,
+          yandex: false
         },
       },
     }),

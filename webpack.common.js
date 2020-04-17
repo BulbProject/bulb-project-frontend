@@ -8,7 +8,7 @@ module.exports = {
   entry: [path.resolve(__dirname, 'src/index.tsx')],
   output: {
     filename: 'js/bundle.[hash:16].min.js',
-    path: path.resolve(__dirname, 'dist/'),
+    path: path.resolve(__dirname, 'build/'),
   },
   stats: {
     colors: true,
@@ -39,13 +39,6 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-          },
-          {
-            loader: 'eslint-loader',
-            options: {
-              failOnError: true,
-              failOnWarning: false,
-            },
           },
         ],
         exclude: /node_modules/,
