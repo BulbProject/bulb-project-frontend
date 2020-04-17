@@ -2,14 +2,14 @@ import React from 'react';
 
 import Styled from './styles';
 
-const StepperButton: React.FC<{ type: 'button' | 'submit'; isActive: boolean; onClick: () => void }> = ({
-  type,
-  isActive,
-  children,
-  onClick,
-}) => {
+const StepperButton: React.FC<{
+  type: 'button' | 'submit';
+  isActive: boolean;
+  onClick: () => void;
+  isDisabled?: boolean;
+}> = ({ type, isActive, children, onClick, isDisabled = false }) => {
   return (
-    <Styled.StepperButton type={type} isActive={isActive} onClick={onClick}>
+    <Styled.StepperButton appearance="text" type={type} isActive={isActive} onClick={onClick} isDisabled={isDisabled}>
       {children}
     </Styled.StepperButton>
   );
