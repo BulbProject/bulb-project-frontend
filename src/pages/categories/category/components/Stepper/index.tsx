@@ -5,7 +5,7 @@ import { Cell, Flex, Text } from 'ustudio-ui';
 import { useHistory } from 'react-router-dom';
 
 import { modifyId } from 'utils';
-import { postCategoryVersionCalculation } from 'config';
+import { postCalculation } from 'config';
 import { useRequest } from 'hooks';
 import { RequestedNeed } from 'types/data';
 
@@ -50,7 +50,7 @@ const Stepper: React.FC = ({ children }) => {
   const [isSubmitting, setSubmitting] = useState(false);
 
   const { isLoading, error, triggerRequest } = useRequest(
-    postCategoryVersionCalculation(category.id, category.version, { requestedNeed: requestedNeedData } as {
+    postCalculation(category.id, category.version, { requestedNeed: requestedNeedData } as {
       requestedNeed: RequestedNeed;
     }),
     [requestedNeedData],

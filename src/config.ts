@@ -44,7 +44,7 @@ export const getCategoryVersionConfig = (
   });
 };
 
-export const postCategoryVersionCalculation = (
+export const postCalculation = (
   categoryId: Category['id'],
   version: CategoryVersion['version'],
   body: { requestedNeed: RequestedNeed }
