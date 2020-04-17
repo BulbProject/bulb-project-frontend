@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { Flex, Grid } from 'ustudio-ui';
+import { Flex, Grid, Modal as UIModal } from 'ustudio-ui';
 
 import Styled from './components/Step/styles';
 import { stepCircleDimension, stepProgressHeight, stepHeight } from '../../config';
@@ -36,4 +36,9 @@ const Container = styled(Grid)`
   flex: 1;
 `;
 
-export default { Stepper, Container };
+const Modal = styled(UIModal)`
+  margin: var(--i-large);
+  width: 50%;
+`;
+
+export default { Stepper, Container, Modal };

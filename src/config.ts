@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { Category, CategoryVersion } from 'types/data';
+import { Category, CategoryVersion, RequestedNeed } from 'types/data';
 
 const apiServiceProtocol = 'http';
 const apiServiceHost = '185.25.116.133';
@@ -9,15 +9,18 @@ const apiServiceBaseUrl = `${apiServiceProtocol}://${apiServiceHost}${apiService
 const createRequestConfig = ({
   baseUrl,
   method,
+  body,
   path,
   params = [],
 }: {
   baseUrl: string;
   method: AxiosRequestConfig['method'];
+  body?: any;
   path: string;
   params?: string[];
 }): AxiosRequestConfig => ({
   method,
+  data: body,
   url: `${baseUrl}/${path}${params?.length ? `/${params.join('/')}` : ''}`,
   responseType: 'json',
 });
@@ -38,6 +41,20 @@ export const getCategoryVersionConfig = (
     method: 'get',
     path: 'categories',
     params: [categoryId, version],
+  });
+};
+
+export const postCategoryVersionCalculation = (
+  categoryId: Category['id'],
+  version: CategoryVersion['version'],
+  body: { requestedNeed: RequestedNeed }
+): AxiosRequestConfig => {
+  return createRequestConfig({
+    baseUrl: apiServiceBaseUrl,
+    method: 'post',
+    path: 'do/calculation',
+    params: [categoryId, version],
+    body,
   });
 };
 

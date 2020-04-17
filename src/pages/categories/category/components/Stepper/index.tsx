@@ -2,13 +2,18 @@ import React, { ReactElement, useState } from 'react';
 import { Form } from 'formfish';
 import { FieldSet } from 'formfish/context/form/FormContext';
 import { Cell, Flex, Text } from 'ustudio-ui';
+import { useHistory } from 'react-router-dom';
+
 import { modifyId } from 'utils';
+import { postCategoryVersionCalculation } from 'config';
+import { useRequest } from 'hooks';
+import { RequestedNeed } from 'types/data';
 
 import { useCategoryContext } from '../../context';
 import { CategoryContextStateValue } from '../../context/CategoryContext';
 import { getRequestedNeed } from '../../utils';
 
-import { Step, StepperButton } from './components';
+import { Overlay, Step, StepperButton } from './components';
 
 import Styled from './styles';
 
@@ -30,7 +35,7 @@ const isRequirementGroupFilled = ({
 };
 
 const Stepper: React.FC = ({ children }) => {
-  const { currentCriterion, criteria, requestedNeed, dispatch } = useCategoryContext();
+  const { currentCriterion, criteria, requestedNeed, requestedNeedData, category, dispatch } = useCategoryContext();
 
   const { title, description } = currentCriterion;
   const steps = Object.values(criteria);
@@ -44,6 +49,14 @@ const Stepper: React.FC = ({ children }) => {
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
 
+  const { isLoading, error, triggerRequest } = useRequest(
+    postCategoryVersionCalculation(category.id, category.version, { requestedNeed: requestedNeedData } as {
+      requestedNeed: RequestedNeed;
+    }),
+    [requestedNeedData],
+    Boolean(requestedNeedData)
+  );
+
   const setStep = (modify: (id: number) => number) => () => {
     setTimeout(() => {
       dispatch({
@@ -53,8 +66,20 @@ const Stepper: React.FC = ({ children }) => {
     }, 100);
   };
 
+  const { replace } = useHistory();
+
   return (
     <Flex direction="column">
+      <Overlay isActive={isLoading && isSubmitting} error={error?.message} triggerRequest={triggerRequest} />
+
+      <Styled.Modal
+        title="Success!"
+        isOpen={!isLoading && !error && Boolean(requestedNeedData)}
+        onChange={() => replace('/')}
+      >
+        <Text>Your calculation request was successfully sent :)</Text>
+      </Styled.Modal>
+
       <Styled.Stepper length={steps.length}>
         {steps.map((step, index) => (
           <Step title={step.title} key={step.id} isActive={isStepActive(step.title)} index={index} />

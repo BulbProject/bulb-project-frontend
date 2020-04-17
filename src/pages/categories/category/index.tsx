@@ -85,7 +85,7 @@ const CategoryPage: React.FC = () => {
         </Styled.Container>
       </Styled.Wrapper>
 
-      <CategoryContextProvider criteria={steps}>
+      <CategoryContextProvider category={{ id: categoryId as string, version: version as string }} criteria={steps}>
         <Stepper>
           <Criteria />
         </Stepper>

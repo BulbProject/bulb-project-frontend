@@ -8,7 +8,8 @@ interface RequestError {
 
 export const useRequest = <D>(
   config: AxiosRequestConfig,
-  dependencies: unknown[] = []
+  dependencies: unknown[] = [],
+  isRequesting: boolean = true
 ): {
   isLoading: boolean;
   data: D | null;
@@ -23,20 +24,22 @@ export const useRequest = <D>(
   const [error, setError] = useState<RequestError | null>(null);
 
   useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
+    if (isRequesting) {
+      (async () => {
+        try {
+          setLoading(true);
 
-        const { data: requestData } = await axios(config);
+          const { data: requestData } = await axios(config);
 
-        setData(requestData);
-      } catch ({ message, response }) {
-        setError({ message, statusCode: response?.status });
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [_, ...dependencies]);
+          setData(requestData);
+        } catch ({ message, response }) {
+          setError({ message, statusCode: response?.status });
+        } finally {
+          setLoading(false);
+        }
+      })();
+    }
+  }, [_, isRequesting, ...dependencies]);
 
   return { isLoading, data, error, triggerRequest: () => triggerRequest(!_) };
 };
