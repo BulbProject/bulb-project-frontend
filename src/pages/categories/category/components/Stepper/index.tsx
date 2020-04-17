@@ -1,14 +1,32 @@
+import React, { ReactElement, useState } from 'react';
 import { Form } from 'formfish';
-import React, { ReactElement } from 'react';
+import { FieldSet } from 'formfish/context/form/FormContext';
 import { Cell, Flex, Text } from 'ustudio-ui';
 import { modifyId } from 'utils';
 
-import { containerCellProps } from '../../config';
 import { useCategoryContext } from '../../context';
+import { CategoryContextStateValue } from '../../context/CategoryContext';
 
 import { Step, StepperButton } from './components';
 
 import Styled from './styles';
+
+const isRequirementGroupFilled = ({
+  state,
+  currentCriterion,
+}: {
+  state: FieldSet;
+  currentCriterion: CategoryContextStateValue['currentCriterion'];
+}): boolean => {
+  const criterion = state[currentCriterion.id] as FieldSet;
+  const requirementGroup = criterion?.[currentCriterion.activeRequirementGroup];
+
+  if (requirementGroup) {
+    return Object.values(requirementGroup).findIndex(requirement => requirement.value === undefined) === -1;
+  }
+
+  return false;
+};
 
 const Stepper: React.FC = ({ children }) => {
   const { currentCriterion, criteria, dispatch } = useCategoryContext();
@@ -22,6 +40,15 @@ const Stepper: React.FC = ({ children }) => {
   const isLastStep = (): boolean => titles.indexOf(title) === steps.length - 1;
   const isFirstStep = (): boolean => titles.indexOf(title) === 0;
 
+  const [isNextStepAvailable, setNextStepAvailable] = useState(false);
+
+  const setStep = (modify: (id: number) => number) => {
+    dispatch({
+      type: 'set_current_criterion',
+      payload: modifyId(currentCriterion.id, 1, modify),
+    });
+  };
+
   return (
     <Flex direction="column">
       <Styled.Stepper length={steps.length}>
@@ -30,16 +57,29 @@ const Stepper: React.FC = ({ children }) => {
         ))}
       </Styled.Stepper>
 
-      <Styled.Container isContainer>
-        <Cell xs={containerCellProps}>
-          <Flex direction="column">
-            {description && (
-              <Text align="center" variant="h3">
-                {description}
-              </Text>
-            )}
+      {description && (
+        <Text align="center" variant="h3">
+          {description}
+        </Text>
+      )}
 
+      <Styled.Container isContainer>
+        <Cell xs={{ size: 2 }}>
+          <StepperButton type="button" isActive={!isFirstStep()} onClick={() => setStep(id => id - 1)}>
+            Previous
+          </StepperButton>
+        </Cell>
+
+        <Cell xs={{ size: 8 }}>
+          <Flex direction="column">
             <Form
+              watch={state => {
+                if (isRequirementGroupFilled({ state, currentCriterion })) {
+                  setNextStepAvailable(true);
+                } else {
+                  setNextStepAvailable(false);
+                }
+              }}
               onSubmit={state => {
                 dispatch({
                   type: 'add_requested_need',
@@ -54,38 +94,23 @@ const Stepper: React.FC = ({ children }) => {
               name={currentCriterion.id}
             >
               {children as ReactElement}
-
-              <Flex alignment={{ horizontal: 'space-between' }}>
-                <StepperButton
-                  type="button"
-                  isActive={!isFirstStep()}
-                  onClick={() =>
-                    dispatch({
-                      type: 'set_current_criterion',
-                      payload: modifyId(currentCriterion.id, 1, id => id - 1),
-                    })
-                  }
-                >
-                  Previous
-                </StepperButton>
-
-                <StepperButton
-                  type="submit"
-                  isActive={!isLastStep()}
-                  onClick={() => {
-                    setTimeout(() => {
-                      dispatch({
-                        type: 'set_current_criterion',
-                        payload: modifyId(currentCriterion.id, 1, id => id + 1),
-                      });
-                    }, 100);
-                  }}
-                >
-                  Next
-                </StepperButton>
-              </Flex>
             </Form>
           </Flex>
+        </Cell>
+
+        <Cell xs={{ size: 2 }}>
+          <StepperButton
+            type="submit"
+            isActive={!isLastStep()}
+            onClick={() => {
+              setTimeout(() => {
+                setStep(id => id + 1);
+              }, 100);
+            }}
+            isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+          >
+            Next
+          </StepperButton>
         </Cell>
       </Styled.Container>
     </Flex>

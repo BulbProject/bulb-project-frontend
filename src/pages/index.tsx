@@ -7,6 +7,7 @@ import { useRequest } from 'hooks';
 import Card from 'components/Categories/Cards/Card';
 import Error from 'components/Categories/error';
 import Container from 'components/Container';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 import { CategoriesListEntity } from 'types/data';
 
@@ -18,27 +19,29 @@ const Categories = () => {
   );
 
   return (
-    <Container>
-      {isLoading && (
-        <Flex alignment={{ vertical: 'center', horizontal: 'center' }}>
-          <Spinner appearance={{ size: 64 }} />
-        </Flex>
-      )}
+    <ErrorBoundary>
+      <Container>
+        {isLoading && (
+          <Flex alignment={{ vertical: 'center', horizontal: 'center' }}>
+            <Spinner appearance={{ size: 64 }} />
+          </Flex>
+        )}
 
-      {!isLoading && categoriesList && (
-        <Flex direction="column">
-          <Styled.ListTitle variant="h1">Select category for future calculation</Styled.ListTitle>
+        {!isLoading && categoriesList && (
+          <Flex direction="column">
+            <Styled.ListTitle variant="h1">Select category for future calculation</Styled.ListTitle>
 
-          {!categoriesList?.length && <Text variant="h3">There are no categories yet</Text>}
+            {!categoriesList?.length && <Text variant="h3">There are no categories yet</Text>}
 
-          {categoriesList?.map(category => (
-            <Card key={category.id} {...category} />
-          ))}
-        </Flex>
-      )}
+            {categoriesList?.map(category => (
+              <Card key={category.id} {...category} />
+            ))}
+          </Flex>
+        )}
 
-      {!isLoading && error && <Error reloadCategories={triggerRequest} />}
-    </Container>
+        {!isLoading && error && <Error reloadCategories={triggerRequest} />}
+      </Container>
+    </ErrorBoundary>
   );
 };
 

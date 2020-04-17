@@ -8,6 +8,7 @@ import { stepCircleDimension, stepProgressHeight, stepHeight } from '../../confi
 const Stepper = styled(Flex)<{ length: number }>(
   ({ length }) => css`
     height: ${`${length > stepHeight ? stepHeight * 2 : stepHeight}rem`};
+    margin-bottom: var(--i-large);
 
     ${Styled.Step} {
       width: ${`${100 / length}%`};
@@ -33,7 +34,6 @@ const Stepper = styled(Flex)<{ length: number }>(
 
 const Container = styled(Grid)`
   flex: 1;
-  margin-top: var(--i-large);
 `;
 
 export default { Stepper, Container };
