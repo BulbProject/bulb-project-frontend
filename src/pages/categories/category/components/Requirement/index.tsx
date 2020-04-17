@@ -110,7 +110,7 @@ const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: Requ
       >
         {title && (
           <Styled.Title variant="caption" isBoolean={isBoolean(dataType)}>
-            {title}
+            {optionDetails && 'optionGroups' in optionDetails ? optionDetails.optionGroups[0].description : title}
           </Styled.Title>
         )}
 
