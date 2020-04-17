@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { RadioGroup as UIRadioGroup, Text } from 'ustudio-ui';
+import { Checkbox as UICheckbox, RadioGroup as UIRadioGroup, Text } from 'ustudio-ui';
 
 const Requirement = styled.label`
   display: block;
@@ -30,4 +30,8 @@ const RadioGroup = styled(UIRadioGroup)`
   }
 `;
 
-export default { Requirement, Title, RadioGroup };
+const Checkbox = styled(UICheckbox)`
+  margin-left: var(--i-large);
+`;
+
+export default { Requirement, Title, RadioGroup, Checkbox };

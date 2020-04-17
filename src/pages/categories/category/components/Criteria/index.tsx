@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useCategoryContext } from '../../context';
-import { RequirementGroup } from '../index';
+import RequirementGroup from '../RequirementGroup';
 
 import Styled from './styles';
 

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { RequirementWithOptionDetails as RequirementProps, Option } from 'ts4ocds/extensions/options';
 import { DataType } from 'ts4ocds/extensions/requirements';
-import { NumberInput, Switch, TextInput, Text, Flex, Checkbox } from 'ustudio-ui';
+import { NumberInput, Switch, TextInput, Text, Flex } from 'ustudio-ui';
 import { Field } from 'formfish';
 
 import Styled from './styles';
@@ -42,7 +42,7 @@ const renderInput = ({
       return <TextInput {...props} />;
     case 'boolean':
       if (expectedValue !== undefined) {
-        return <Checkbox defaultValue={expectedValue as boolean} isDisabled={Boolean(expectedValue)} />;
+        return <Styled.Checkbox defaultValue={expectedValue as boolean} isDisabled={Boolean(expectedValue)} />;
       }
 
       return <Switch />;
@@ -85,7 +85,7 @@ const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: Requ
     }
 
     if (expectedValue !== undefined) {
-      return (value: boolean) => expectedValue;
+      return () => expectedValue;
     }
 
     return undefined;
