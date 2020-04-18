@@ -1,5 +1,8 @@
 export const modifyId = (id: string, position: number, modifyCallback: (id: number) => number): string => {
-  const modifiedId = modifyCallback(+id.slice((position - 1) * 2, (position - 1) * 2 + 2));
+  const actualPosition = (position - 1) * 2;
+  const modifiedId = modifyCallback(+id.slice(actualPosition, actualPosition + 2));
 
-  return `${modifiedId > 9 ? modifiedId : `0${modifiedId}`}${id.slice(2)}`;
+  return `${id.slice(0, actualPosition)}${modifiedId > 9 ? modifiedId : `0${modifiedId}`}${id.slice(
+    actualPosition + 2
+  )}`;
 };

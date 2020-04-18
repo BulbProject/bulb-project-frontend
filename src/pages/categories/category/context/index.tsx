@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useMemo, useReducer } from 'react';
-import { Criterion } from 'types/data';
+import React, { createContext, useContext, useReducer } from 'react';
+import { CategoriesListEntity, Criterion } from 'types/data';
 
 import { CategoryContextDispatchValue, CategoryContextStateValue } from './CategoryContext';
 import categoryContextReducer from './reducer';
@@ -7,8 +7,13 @@ import categoryContextReducer from './reducer';
 const CategoryContextState = createContext<CategoryContextStateValue | undefined>(undefined);
 const CategoryContextDispatch = createContext<CategoryContextDispatchValue | undefined>(undefined);
 
-const CategoryContextProvider: React.FC<{ criteria: Criterion[] }> = ({ children, criteria }) => {
-  const [categoryState, dispatch] = useReducer(categoryContextReducer, {
+const CategoryContextProvider: React.FC<{ category: Omit<CategoriesListEntity, 'date'>; criteria: Criterion[] }> = ({
+  children,
+  category,
+  criteria,
+}) => {
+  const [state, dispatch] = useReducer(categoryContextReducer, {
+    category,
     requestedNeed: {},
     criteria: criteria.reduce((map, criterion) => Object.assign(map, { [criterion.id]: criterion }), {}),
     currentCriterion: {
@@ -16,8 +21,6 @@ const CategoryContextProvider: React.FC<{ criteria: Criterion[] }> = ({ children
       activeRequirementGroup: '',
     },
   });
-
-  const state = useMemo(() => categoryState, [categoryState]);
 
   return (
     <CategoryContextState.Provider value={state}>

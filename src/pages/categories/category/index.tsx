@@ -7,7 +7,7 @@ import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
 import { CategoryVersion, Criterion } from 'types/data';
 import { sortById } from 'utils';
-import ErrorBoundary from "components/ErrorBoundary";
+import ErrorBoundary from 'components/ErrorBoundary';
 
 import { Stepper, Criteria } from './components';
 import CategoryContextProvider from './context';
@@ -37,7 +37,29 @@ const CategoryPage: React.FC = () => {
     }
   }, [criteria]);
 
-  return error || isLoading ? (
+  return !(error || isLoading) ? (
+    <ErrorBoundary>
+      <Styled.Wrapper>
+        <Styled.Container>
+          <Cell xs={containerCellProps}>
+            <Flex direction="column">
+              <Text variant="h3">{title}</Text>
+
+              {description && <Styled.CategoryDescription variant="small">{description}</Styled.CategoryDescription>}
+
+              <Styled.Classification {...classification} />
+            </Flex>
+          </Cell>
+        </Styled.Container>
+      </Styled.Wrapper>
+
+      <CategoryContextProvider category={{ id: categoryId as string, version: version as string }} criteria={steps}>
+        <Stepper>
+          <Criteria />
+        </Stepper>
+      </CategoryContextProvider>
+    </ErrorBoundary>
+  ) : (
     <Styled.Wrapper>
       <Styled.Container>
         <Cell xs={containerCellProps}>
@@ -69,28 +91,6 @@ const CategoryPage: React.FC = () => {
         </Cell>
       </Styled.Container>
     </Styled.Wrapper>
-  ) : (
-    <ErrorBoundary>
-      <Styled.Wrapper>
-        <Styled.Container>
-          <Cell xs={containerCellProps}>
-            <Flex direction="column">
-              <Text variant="h3">{title}</Text>
-
-              {description && <Styled.CategoryDescription variant="small">{description}</Styled.CategoryDescription>}
-
-              <Styled.Classification {...classification} />
-            </Flex>
-          </Cell>
-        </Styled.Container>
-      </Styled.Wrapper>
-
-      <CategoryContextProvider criteria={steps}>
-        <Stepper>
-          <Criteria />
-        </Stepper>
-      </CategoryContextProvider>
-    </ErrorBoundary>
   );
 };
 

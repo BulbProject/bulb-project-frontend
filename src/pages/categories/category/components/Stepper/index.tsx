@@ -2,12 +2,18 @@ import React, { ReactElement, useState } from 'react';
 import { Form } from 'formfish';
 import { FieldSet } from 'formfish/context/form/FormContext';
 import { Cell, Flex, Text } from 'ustudio-ui';
+import { useHistory } from 'react-router-dom';
+
 import { modifyId } from 'utils';
+import { postCalculation } from 'config';
+import { useRequest } from 'hooks';
+import { RequestedNeed } from 'types/data';
 
 import { useCategoryContext } from '../../context';
 import { CategoryContextStateValue } from '../../context/CategoryContext';
+import { getRequestedNeed } from '../../utils';
 
-import { Step, StepperButton } from './components';
+import { Overlay, Step, StepperButton } from './components';
 
 import Styled from './styles';
 
@@ -29,7 +35,7 @@ const isRequirementGroupFilled = ({
 };
 
 const Stepper: React.FC = ({ children }) => {
-  const { currentCriterion, criteria, dispatch } = useCategoryContext();
+  const { currentCriterion, criteria, requestedNeed, requestedNeedData, category, dispatch } = useCategoryContext();
 
   const { title, description } = currentCriterion;
   const steps = Object.values(criteria);
@@ -41,16 +47,43 @@ const Stepper: React.FC = ({ children }) => {
   const isFirstStep = (): boolean => titles.indexOf(title) === 0;
 
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
 
-  const setStep = (modify: (id: number) => number) => {
-    dispatch({
-      type: 'set_current_criterion',
-      payload: modifyId(currentCriterion.id, 1, modify),
-    });
+  const { isLoading, error, triggerRequest } = useRequest(
+    postCalculation(category.id, category.version, { requestedNeed: requestedNeedData } as {
+      requestedNeed: RequestedNeed;
+    }),
+    [requestedNeedData],
+    Boolean(requestedNeedData)
+  );
+
+  const setStep = (modify: (id: number) => number) => () => {
+    setTimeout(() => {
+      dispatch({
+        type: 'set_current_criterion',
+        payload: modifyId(currentCriterion.id, 1, modify),
+      });
+    }, 100);
   };
+
+  const { replace } = useHistory();
 
   return (
     <Flex direction="column">
+      {isLoading && isSubmitting && (
+        <Overlay isActive={isLoading && isSubmitting} error={error?.message} triggerRequest={triggerRequest} />
+      )}
+
+      {!isLoading && !error && Boolean(requestedNeedData) && (
+        <Styled.Modal
+          title="Success!"
+          isOpen={!isLoading && !error && Boolean(requestedNeedData)}
+          onChange={() => replace('/')}
+        >
+          <Text>Your calculation request was successfully sent :)</Text>
+        </Styled.Modal>
+      )}
+
       <Styled.Stepper length={steps.length}>
         {steps.map((step, index) => (
           <Step title={step.title} key={step.id} isActive={isStepActive(step.title)} index={index} />
@@ -63,56 +96,80 @@ const Stepper: React.FC = ({ children }) => {
         </Text>
       )}
 
-      <Styled.Container isContainer>
-        <Cell xs={{ size: 2 }}>
-          <StepperButton type="button" isActive={!isFirstStep()} onClick={() => setStep(id => id - 1)}>
-            Previous
-          </StepperButton>
-        </Cell>
+      <Form
+        name={currentCriterion.id}
+        watch={state => {
+          if (isRequirementGroupFilled({ state, currentCriterion })) {
+            setNextStepAvailable(true);
+          } else {
+            setNextStepAvailable(false);
+          }
+        }}
+        onSubmit={state => {
+          const newRequestedNeed =
+            // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
+            // @ts-ignore
+            state[currentCriterion.id][currentCriterion.activeRequirementGroup];
 
-        <Cell xs={{ size: 8 }}>
-          <Flex direction="column">
-            <Form
-              watch={state => {
-                if (isRequirementGroupFilled({ state, currentCriterion })) {
-                  setNextStepAvailable(true);
-                } else {
-                  setNextStepAvailable(false);
-                }
-              }}
-              onSubmit={state => {
-                dispatch({
-                  type: 'add_requested_need',
-                  payload: {
-                    criterionId: currentCriterion.id,
-                    // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
-                    // @ts-ignore
-                    requirements: state[currentCriterion.id][currentCriterion.activeRequirementGroup],
-                  },
-                });
-              }}
-              name={currentCriterion.id}
-            >
-              {children as ReactElement}
-            </Form>
-          </Flex>
-        </Cell>
+          if (isSubmitting) {
+            dispatch({
+              type: 'add_requested_need_data',
+              payload: getRequestedNeed({
+                ...requestedNeed,
+                [currentCriterion.id]: {
+                  // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
+                  // @ts-ignore
+                  ...newRequestedNeed,
+                },
+              }),
+            });
+          }
 
-        <Cell xs={{ size: 2 }}>
-          <StepperButton
-            type="submit"
-            isActive={!isLastStep()}
-            onClick={() => {
-              setTimeout(() => {
-                setStep(id => id + 1);
-              }, 100);
-            }}
-            isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-          >
-            Next
-          </StepperButton>
-        </Cell>
-      </Styled.Container>
+          dispatch({
+            type: 'add_requested_need',
+            payload: {
+              criterionId: currentCriterion.id,
+              // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
+              // @ts-ignore
+              requirements: newRequestedNeed,
+            },
+          });
+        }}
+      >
+        <Styled.Container isContainer>
+          <Cell xs={{ size: 2 }}>
+            <StepperButton isActive={!isFirstStep()} onClick={setStep(id => id - 1)}>
+              Previous
+            </StepperButton>
+          </Cell>
+
+          <Cell xs={{ size: 8 }}>
+            <Flex direction="column">{children as ReactElement}</Flex>
+          </Cell>
+
+          <Cell xs={{ size: 2 }}>
+            {isLastStep() ? (
+              <StepperButton
+                isActive
+                onClick={() => {
+                  setSubmitting(true);
+                }}
+                isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+              >
+                Submit
+              </StepperButton>
+            ) : (
+              <StepperButton
+                isActive
+                onClick={setStep(id => id + 1)}
+                isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+              >
+                Next
+              </StepperButton>
+            )}
+          </Cell>
+        </Styled.Container>
+      </Form>
     </Flex>
   );
 };
