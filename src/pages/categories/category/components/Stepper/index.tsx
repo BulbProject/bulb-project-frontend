@@ -9,6 +9,8 @@ import { postCalculation } from 'config';
 import { useRequest } from 'hooks';
 import { RequestedNeed } from 'types/data';
 
+import FadeIn from 'components/FadeIn';
+
 import { useCategoryContext } from '../../context';
 import { CategoryContextStateValue } from '../../context/CategoryContext';
 import { getRequestedNeed } from '../../utils';
@@ -71,7 +73,9 @@ const Stepper: React.FC = ({ children }) => {
   return (
     <Flex direction="column">
       {isLoading && isSubmitting && (
-        <Overlay isActive={isLoading && isSubmitting} error={error?.message} triggerRequest={triggerRequest} />
+        <FadeIn>
+          <Overlay isActive={isLoading && isSubmitting} error={error?.message} triggerRequest={triggerRequest} />
+        </FadeIn>
       )}
 
       {!isLoading && !error && Boolean(requestedNeedData) && (
