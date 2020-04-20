@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useParams, useHistory } from 'react-router-dom';
 
-import { Button, Cell, Flex, Grid, Spinner } from 'ustudio-ui';
+import { Button, Flex, Spinner } from 'ustudio-ui';
 
 import { Helmet } from 'react-helmet';
 
@@ -11,6 +11,9 @@ import { renderers } from 'components/markdown/renderers';
 
 import { useRequest } from 'hooks';
 import { getInfoFile } from 'config';
+
+import Container from 'components/Container';
+import FadeIn from 'components/FadeIn';
 
 import { kebabCaseToSentenceCase } from 'utils';
 
@@ -25,25 +28,29 @@ const InfoPage = () => {
   const { isLoading, data: infoFileContent, error, triggerRequest } = useRequest(getInfoFile(infoFileName as string));
 
   return (
-    <Grid isContainer>
-      <Cell xs={{ offset: { before: 2, after: 2 }, size: 8 }}>
-        {isLoading && !error && (
+    <Container>
+      {isLoading && !error && (
+        <FadeIn>
           <Styled.CenteredContainer>
-            <Spinner appearance={{ size: 80 }} delay={1000} />
+            <Spinner appearance={{ size: 64 }} delay={300} />
           </Styled.CenteredContainer>
-        )}
+        </FadeIn>
+      )}
 
-        {!isLoading && !error && (
-          <>
-            <Helmet>
-              <title>{kebabCaseToSentenceCase(infoFileName as string)}</title>
-            </Helmet>
+      {!isLoading && !error && (
+        <>
+          <Helmet>
+            <title>{kebabCaseToSentenceCase(infoFileName as string)}</title>
+          </Helmet>
 
+          <FadeIn>
             <ReactMarkdown escapeHtml={false} source={infoFileContent as string} renderers={renderers} />
-          </>
-        )}
+          </FadeIn>
+        </>
+      )}
 
-        {!isLoading && error && (
+      {!isLoading && error && (
+        <FadeIn>
           <Flex direction="column" alignment={{ horizontal: 'center' }}>
             <Styled.ErrorText variant="h3" align="center">
               Hmm, something went wrong
@@ -63,9 +70,9 @@ const InfoPage = () => {
               )}
             </Flex>
           </Flex>
-        )}
-      </Cell>
-    </Grid>
+        </FadeIn>
+      )}
+    </Container>
   );
 };
 

@@ -5,6 +5,14 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import ReloadIconEl from '../assets/icons/reload.inline.svg';
 
+const LoaderContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+`;
+
 const ListTitle = styled(Text)`
   margin-bottom: var(--i-large);
 `;
@@ -82,6 +90,7 @@ const ReloadIcon = styled(ReloadIconEl)`
 `;
 
 export default {
+  LoaderContainer,
   ListTitle,
   Link,
   Card,

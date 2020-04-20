@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Flex, Spinner, Text } from 'ustudio-ui';
 
 import Styled from './styles';
@@ -12,19 +12,7 @@ const Overlay = ({
   error?: string;
   triggerRequest: () => void;
 }) => {
-  const [isMounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-
-    if (isActive && !error) {
-      setTimeout(() => {
-        setMounted(false);
-      }, 300);
-    }
-  }, [isActive]);
-
-  return isMounted ? (
+  return (
     <>
       <Styled.Overlay alignment={{ horizontal: 'center', vertical: 'center' }} isActive={isActive}>
         {error ? (
@@ -36,13 +24,13 @@ const Overlay = ({
             <Styled.RetryButton onClick={triggerRequest}>Retry</Styled.RetryButton>
           </Flex>
         ) : (
-          <Spinner appearance={{ size: 32 }} />
+          <Spinner appearance={{ size: 64 }} />
         )}
       </Styled.Overlay>
 
       <Styled.Background />
     </>
-  ) : null;
+  );
 };
 
 export default Overlay;
