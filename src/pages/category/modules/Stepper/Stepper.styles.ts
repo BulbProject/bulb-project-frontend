@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { Flex, Grid, Modal as UIModal } from 'ustudio-ui';
 
 import { StepStyled } from './components/Step';
-import { stepCircleDimension, stepProgressHeight, stepHeight } from './Stepper.config';
+import { stepCircleDimension, stepProgressHeight, stepHeight } from './Stepper.module';
 
 const Stepper = styled(Flex)<{ length: number }>(
   ({ length }) => css`
