@@ -2,10 +2,10 @@ import { lazy } from 'react';
 
 import { RouteProps } from 'react-router-dom';
 
-const Index = lazy(() => import('./pages'));
-const CategoryPage = lazy(() => import('./pages/categories/category'));
-const InfoPage = lazy(() => import('./pages/info/infoPage'));
-const NotFoundPage = lazy(() => import('./pages/notFound'));
+const Index = lazy(() => import('./pages/main/Main.component'));
+const CategoryPage = lazy(() => import('./pages/category/Category.component'));
+const InfoPage = lazy(() => import('./pages/info/Info.component'));
+const NotFoundPage = lazy(() => import('./pages/notFound/NotFount.component'));
 
 const routes: RouteProps[] = [
   {
