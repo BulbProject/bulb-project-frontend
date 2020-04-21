@@ -6,7 +6,7 @@ import { getRandomWidth } from 'utils';
 
 import Styled from '../../Card.styles';
 
-const StubCard = () => {
+export const StubCard = () => {
   return (
     <Styled.BaseCard direction="column">
       <Styled.StubTitle
@@ -45,5 +45,3 @@ const StubCard = () => {
     </Styled.BaseCard>
   );
 };
-
-export default StubCard;

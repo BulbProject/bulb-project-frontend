@@ -1,1 +1,1 @@
-export { renderers } from './Markdown';
+export * from './Markdown';

@@ -1,1 +1,1 @@
-export { renderers } from './Markdown.component';
+export * from './Markdown.component';

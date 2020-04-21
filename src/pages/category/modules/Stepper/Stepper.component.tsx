@@ -35,7 +35,7 @@ const isRequirementGroupFilled = ({
   return false;
 };
 
-const Stepper: React.FC = ({ children }) => {
+export const Stepper: React.FC = ({ children }) => {
   const { currentCriterion, criteria, requestedNeed, requestedNeedData, category, dispatch } = useCategoryContext();
 
   const { title, description } = currentCriterion;
@@ -176,5 +176,3 @@ const Stepper: React.FC = ({ children }) => {
     </Flex>
   );
 };
-
-export default Stepper;

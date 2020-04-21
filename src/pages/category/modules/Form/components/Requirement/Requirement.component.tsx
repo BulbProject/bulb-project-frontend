@@ -82,7 +82,7 @@ const formatProps = ({ title, dataType }: { title?: string; dataType: DataType }
 
 const isBoolean = (dataType: DataType): dataType is 'boolean' => dataType === 'boolean';
 
-const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: RequirementProps) => {
+export const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: RequirementProps) => {
   const { requestedNeed, currentCriterion } = useCategoryContext();
 
   const getValue = () => {
@@ -138,5 +138,3 @@ const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: Requ
     </Styled.Requirement>
   );
 };
-
-export default Requirement;

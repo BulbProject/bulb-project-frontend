@@ -2,7 +2,7 @@ import React from 'react';
 
 import Styled from './StepperButton.styles';
 
-const StepperButton: React.FC<{
+export const StepperButton: React.FC<{
   isActive: boolean;
   onClick: () => void;
   isDisabled?: boolean;
@@ -13,5 +13,3 @@ const StepperButton: React.FC<{
     </Styled.StepperButton>
   );
 };
-
-export default StepperButton;

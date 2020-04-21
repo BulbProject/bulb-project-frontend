@@ -18,8 +18,7 @@ const AsidePlaceholder = (
     <Placeholder variant="text" appearance={{ height: 'body', width: '70%' }} />
   </Flex>
 );
-
-const Layout: FC = ({ children }) => {
+export const Layout: FC = ({ children }) => {
   const [drawerIsOpen, setDrawerOpen] = useState(false);
 
   return (
@@ -55,5 +54,3 @@ const Layout: FC = ({ children }) => {
     </>
   );
 };
-
-export default Layout;

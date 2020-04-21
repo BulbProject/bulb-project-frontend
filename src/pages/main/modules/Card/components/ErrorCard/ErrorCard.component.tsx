@@ -2,7 +2,7 @@ import React from 'react';
 
 import Styled from '../../Card.styles';
 
-const ErrorCard = ({ updateCategoryData }: { updateCategoryData: () => void }) => {
+export const ErrorCard = ({ updateCategoryData }: { updateCategoryData: () => void }) => {
   return (
     <Styled.BaseCard alignment={{ horizontal: 'center' }}>
       <button type="button" onClick={updateCategoryData}>
@@ -11,5 +11,3 @@ const ErrorCard = ({ updateCategoryData }: { updateCategoryData: () => void }) =
     </Styled.BaseCard>
   );
 };
-
-export default ErrorCard;

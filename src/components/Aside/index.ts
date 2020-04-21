@@ -1,1 +1,1 @@
-export { default as Aside } from './Aside.component';
+export * from './Aside.component';

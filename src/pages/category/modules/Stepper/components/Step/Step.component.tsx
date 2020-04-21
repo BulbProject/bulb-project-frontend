@@ -3,7 +3,7 @@ import { StepProps } from './Step.types';
 
 import Styled from './Step.styles';
 
-const Step = ({ title, index, isActive }: StepProps) => {
+export const Step = ({ title, index, isActive }: StepProps) => {
   return (
     <Styled.Step isActive={isActive}>
       <Styled.StepTitle align="center">{title}</Styled.StepTitle>
@@ -14,5 +14,3 @@ const Step = ({ title, index, isActive }: StepProps) => {
     </Styled.Step>
   );
 };
-
-export default Step;

@@ -1,1 +1,1 @@
-export { default as HiddenRequirement } from './HiddenRequirement.component';
+export * from './HiddenRequirement.component';

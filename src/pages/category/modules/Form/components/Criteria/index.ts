@@ -1,1 +1,1 @@
-export { default as Criteria } from './Criteria.component';
+export * from './Criteria.component';

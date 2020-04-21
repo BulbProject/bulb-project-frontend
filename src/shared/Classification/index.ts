@@ -1,1 +1,1 @@
-export { default as Classification } from './Classification.component';
+export * from './Classification.component';

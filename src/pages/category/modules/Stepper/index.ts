@@ -1,1 +1,1 @@
-export { default as Stepper } from './Stepper.component';
+export * from './Stepper.component';

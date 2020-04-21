@@ -1,1 +1,1 @@
-export { default as FadeIn } from './FadeIn.component';
+export * from './FadeIn.component';

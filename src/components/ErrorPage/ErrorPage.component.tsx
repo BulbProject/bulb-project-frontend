@@ -8,7 +8,7 @@ import logo from 'assets/images/logo.svg';
 
 import Styled from './ErrorPage.styles';
 
-const ErrorPage = () => {
+export const ErrorPage = () => {
   const { push } = useHistory();
 
   return (
@@ -37,4 +37,3 @@ const ErrorPage = () => {
     </Container>
   );
 };
-export default ErrorPage;

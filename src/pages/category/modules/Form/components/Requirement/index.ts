@@ -1,1 +1,1 @@
-export { default as Requirement } from './Requirement.component';
+export * from './Requirement.component';

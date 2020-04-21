@@ -4,7 +4,7 @@ import { ErrorPage } from 'components/ErrorPage';
 
 import { Props, State } from './ErrorBoundary.types';
 
-class ErrorBoundary extends React.Component<Props, State> {
+export class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { error: null };
@@ -23,5 +23,3 @@ class ErrorBoundary extends React.Component<Props, State> {
     return error ? <ErrorPage /> : children;
   }
 }
-
-export default ErrorBoundary;

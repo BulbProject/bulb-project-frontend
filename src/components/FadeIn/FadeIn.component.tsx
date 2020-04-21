@@ -2,7 +2,7 @@ import React from 'react';
 
 import { motion } from 'framer-motion';
 
-const FadeIn: React.FC = ({ children }) => {
+export const FadeIn: React.FC = ({ children }) => {
   return (
     <motion.div
       variants={{
@@ -17,5 +17,3 @@ const FadeIn: React.FC = ({ children }) => {
     </motion.div>
   );
 };
-
-export default FadeIn;

@@ -1,1 +1,1 @@
-export { default as BaseCard } from './BaseCard.component';
+export * from './BaseCard.component';

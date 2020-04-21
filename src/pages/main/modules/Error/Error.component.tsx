@@ -4,7 +4,7 @@ import { Button, Flex, Text } from 'ustudio-ui';
 
 import Styled from './Error.styles';
 
-const Error = ({ reloadCategories }: { reloadCategories: () => void }) => {
+export const Error = ({ reloadCategories }: { reloadCategories: () => void }) => {
   return (
     <Flex direction="column" alignment={{ horizontal: 'center' }}>
       <Text>Sorry, we could not get categories list to load.</Text>
@@ -17,5 +17,3 @@ const Error = ({ reloadCategories }: { reloadCategories: () => void }) => {
     </Flex>
   );
 };
-
-export default Error;

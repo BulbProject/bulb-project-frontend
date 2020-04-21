@@ -1,1 +1,1 @@
-export { default as ErrorCard } from './ErrorCard.component';
+export * from './ErrorCard.component';

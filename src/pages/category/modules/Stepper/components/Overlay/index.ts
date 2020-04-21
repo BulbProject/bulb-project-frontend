@@ -1,1 +1,1 @@
-export { default as Overlay } from './Overlay.component';
+export * from './Overlay.component';

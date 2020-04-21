@@ -1,1 +1,1 @@
-export { default as StubCard } from './StubCard.component';
+export * from './StubCard.component';

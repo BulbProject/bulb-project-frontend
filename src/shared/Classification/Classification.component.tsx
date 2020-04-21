@@ -4,7 +4,11 @@ import { Flex } from 'ustudio-ui';
 
 import Styled from './Classification.styles';
 
-const Classification: React.FC<OCDSClassification & { className?: string }> = ({ id, description, className = '' }) => {
+export const Classification: React.FC<OCDSClassification & { className?: string }> = ({
+  id,
+  description,
+  className = '',
+}) => {
   return (
     <Flex className={className}>
       <Styled.Id variant="small">{id}</Styled.Id>
@@ -13,5 +17,3 @@ const Classification: React.FC<OCDSClassification & { className?: string }> = ({
     </Flex>
   );
 };
-
-export default Classification;

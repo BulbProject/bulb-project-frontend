@@ -3,7 +3,7 @@ import { Flex, Spinner, Text } from 'ustudio-ui';
 
 import Styled from './Overlay.styles';
 
-const Overlay = ({
+export const Overlay = ({
   isActive,
   error,
   triggerRequest,
@@ -32,5 +32,3 @@ const Overlay = ({
     </>
   );
 };
-
-export default Overlay;

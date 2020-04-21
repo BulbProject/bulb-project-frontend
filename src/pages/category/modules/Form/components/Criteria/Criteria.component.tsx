@@ -5,7 +5,7 @@ import { RequirementGroup } from '../RequirementGroup';
 
 import Styled from './Criteria.styles';
 
-const Criteria = () => {
+export const Criteria = () => {
   const { currentCriterion, dispatch } = useCategoryContext();
 
   return (
@@ -26,5 +26,3 @@ const Criteria = () => {
     </Styled.Criteria>
   );
 };
-
-export default Criteria;

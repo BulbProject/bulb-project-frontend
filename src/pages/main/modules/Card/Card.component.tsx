@@ -7,7 +7,7 @@ import { CategoryVersion } from 'types/data';
 
 import { BaseCard, ErrorCard, StubCard } from './components';
 
-const CardComponent = ({ id, version }: { id: string; version: string }) => {
+export const Card = ({ id, version }: { id: string; version: string }) => {
   const { data: categoryVersion, isLoading, error, triggerRequest } = useRequest<CategoryVersion>(
     getCategoryVersionConfig(id, version)
   );
@@ -32,5 +32,3 @@ const CardComponent = ({ id, version }: { id: string; version: string }) => {
     </>
   );
 };
-
-export default CardComponent;

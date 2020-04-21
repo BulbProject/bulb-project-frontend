@@ -6,7 +6,7 @@ import { CategoryCardProps } from '../../Card.types';
 
 import Styled from '../../Card.styles';
 
-const BaseCard = ({ id, version, title, description, classification }: CategoryCardProps) => {
+export const BaseCard = ({ id, version, title, description, classification }: CategoryCardProps) => {
   return (
     <Styled.Link key={`${id}-${version}`} to={`/categories/${id}/${version}`}>
       <Styled.Card direction="column">
@@ -19,5 +19,3 @@ const BaseCard = ({ id, version, title, description, classification }: CategoryC
     </Styled.Link>
   );
 };
-
-export default BaseCard;

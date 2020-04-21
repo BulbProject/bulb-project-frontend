@@ -17,7 +17,7 @@ interface RequirementGroupProps extends OCDSRequirementGroup {
   requirements: RequirementWithOptionDetails[];
 }
 
-const RequirementGroup: React.FC<RequirementGroupProps & {
+export const RequirementGroup: React.FC<RequirementGroupProps & {
   isActive: boolean;
   setActive: (id: string) => void;
 }> = ({ isActive, setActive, id, description, requirements }) => {
@@ -73,5 +73,3 @@ const RequirementGroup: React.FC<RequirementGroupProps & {
     </Styled.RequirementGroup>
   );
 };
-
-export default RequirementGroup;
