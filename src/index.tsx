@@ -4,8 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import { ThemeProvider } from 'ustudio-ui/theme';
 
-import Layout from 'components/Layout';
-import FadeIn from './components/FadeIn';
+import { Layout, FadeIn } from 'components';
 
 import routes from './routes';
 

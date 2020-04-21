@@ -27,6 +27,7 @@
       "alias": {
         "map": [
           ["components", "./src/components"],
+          ["shared", "./src/shared"],
           ["config", "./src/config"],
           ["pages", "./src/pages"],
           ["types", "./src/types"],
