@@ -7,11 +7,10 @@ import categoryContextReducer from './reducer';
 const CategoryContextState = createContext<CategoryContextStateValue | undefined>(undefined);
 const CategoryContextDispatch = createContext<CategoryContextDispatchValue | undefined>(undefined);
 
-const CategoryContextProvider: React.FC<{ category: Omit<CategoriesListEntity, 'date'>; criteria: Criterion[] }> = ({
-  children,
-  category,
-  criteria,
-}) => {
+export const CategoryContextProvider: React.FC<{
+  category: Omit<CategoriesListEntity, 'date'>;
+  criteria: Criterion[];
+}> = ({ children, category, criteria }) => {
   const [state, dispatch] = useReducer(categoryContextReducer, {
     category,
     requestedNeed: {},
@@ -39,5 +38,3 @@ export const useCategoryContext = (): CategoryContextStateValue & { dispatch: Ca
 
   return { ...state, dispatch };
 };
-
-export default CategoryContextProvider;
