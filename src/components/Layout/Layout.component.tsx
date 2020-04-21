@@ -1,4 +1,4 @@
-import React, { FC, useState, lazy, Suspense } from 'react';
+import React, { FC, useState, Suspense } from 'react';
 
 import { Helmet } from 'react-helmet';
 
@@ -8,7 +8,7 @@ import logo from 'assets/images/logo.svg';
 
 import Styled from './Layout.styles';
 
-const Aside = lazy(() => import('../Aside/Aside.component'));
+import Aside from '../Aside/Aside.component';
 
 const AsidePlaceholder = (
   <Flex direction="column">

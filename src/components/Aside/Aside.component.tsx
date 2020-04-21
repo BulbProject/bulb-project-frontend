@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Spinner, Flex, Button } from 'ustudio-ui';
 
-import { FadeIn } from 'components';
-
 import { useRequest } from 'hooks';
 
 import { getInfoFiles } from 'config';
@@ -12,6 +10,7 @@ import { stringToKebabCase, kebabCaseToSentenceCase } from 'utils';
 
 import refreshIcon from 'assets/icons/refresh.svg';
 
+import { FadeIn } from '../FadeIn';
 import Styled from './Aside.styles';
 
 const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
