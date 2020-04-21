@@ -8,7 +8,7 @@ import logo from 'assets/images/logo.svg';
 
 import Styled from './Layout.styles';
 
-const Aside = lazy(() => import('./Aside.component'));
+const Aside = lazy(() => import('../Aside/Aside.component'));
 
 const AsidePlaceholder = (
   <Flex direction="column">

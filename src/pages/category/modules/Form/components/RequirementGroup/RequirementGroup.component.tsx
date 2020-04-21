@@ -6,8 +6,8 @@ import { FieldSet } from 'formfish';
 
 import { sortById } from 'utils';
 
-import HiddenRequirement from './HiddenRequirement.component';
-import Requirement from './Requirement.component';
+import { HiddenRequirement } from '../HiddenRequirement';
+import { Requirement } from '../Requirement';
 
 import Styled from './RequirementGroup.styles';
 

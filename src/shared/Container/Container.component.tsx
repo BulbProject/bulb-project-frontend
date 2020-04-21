@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { Cell } from 'ustudio-ui';
 
-import { containerCellProps } from './Container.config';
+import { containerCellProps } from './Container.module';
 import Styled from './Container.styles';
 
 const Container: FC = ({ children }) => (

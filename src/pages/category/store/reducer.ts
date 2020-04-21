@@ -1,7 +1,7 @@
 import { Reducer } from 'react';
 
 import { CategoryContextAction } from './actions';
-import { CategoryContextStateValue } from './CategoryContext';
+import { CategoryContextStateValue } from './store.types';
 
 const categoryContextReducer: Reducer<CategoryContextStateValue, CategoryContextAction> = (state, action) => {
   switch (action.type) {

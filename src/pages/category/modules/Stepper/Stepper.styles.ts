@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 import { Flex, Grid, Modal as UIModal } from 'ustudio-ui';
 
-import Styled from './components/Step.styles';
+import { StepStyled } from './components/Step';
 import { stepCircleDimension, stepProgressHeight, stepHeight } from './Stepper.config';
 
 const Stepper = styled(Flex)<{ length: number }>(
@@ -10,7 +10,7 @@ const Stepper = styled(Flex)<{ length: number }>(
     height: ${`${length > stepHeight ? stepHeight * 2 : stepHeight}rem`};
     margin-bottom: var(--i-large);
 
-    ${Styled.Step} {
+    ${StepStyled.Step} {
       width: ${`${100 / length}%`};
 
       ${length > 4
@@ -18,11 +18,11 @@ const Stepper = styled(Flex)<{ length: number }>(
             &:nth-child(2n - 1) {
               align-self: flex-end;
 
-              ${Styled.StepCircle} {
+              ${StepStyled.StepCircle} {
                 top: -${stepCircleDimension / 2}rem;
               }
 
-              ${Styled.StepProgress} {
+              ${StepStyled.StepProgress} {
                 top: -${stepProgressHeight / 2}rem;
               }
             }

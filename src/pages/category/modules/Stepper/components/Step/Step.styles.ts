@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { Progress, Text } from 'ustudio-ui';
 
 import { StepProps } from './Step.types';
-import { stepCircleDimension, stepHeight, stepProgressHeight } from '../Stepper.config';
+import { stepCircleDimension, stepHeight, stepProgressHeight } from '../../Stepper.config';
 
 const StepCircle = styled.div`
   width: ${stepCircleDimension}rem;

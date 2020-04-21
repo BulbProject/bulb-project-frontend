@@ -4,7 +4,7 @@ import { Flex, Placeholder } from 'ustudio-ui';
 
 import { getRandomWidth } from 'utils';
 
-import Styled from '../Card.styles';
+import Styled from '../../Card.styles';
 
 const StubCard = () => {
   return (

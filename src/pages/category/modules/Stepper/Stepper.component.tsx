@@ -11,8 +11,7 @@ import { RequestedNeed } from 'types/data';
 
 import { FadeIn } from 'components';
 
-import { useCategoryContext } from '../../store';
-import { CategoryContextStateValue } from '../../store/CategoryContext';
+import { useCategoryContext, CategoryContextStateValue } from '../../store';
 import { getRequestedNeed } from './Stepper.module';
 
 import { Overlay, Step, StepperButton } from './components';

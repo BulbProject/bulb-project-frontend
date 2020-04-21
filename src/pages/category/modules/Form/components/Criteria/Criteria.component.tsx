@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useCategoryContext } from 'pages/category/store';
-import RequirementGroup from './RequirementGroup.component';
+import { RequirementGroup } from '../RequirementGroup';
 
 import Styled from './Criteria.styles';
 

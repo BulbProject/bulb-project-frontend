@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Classification } from 'shared';
 
-import { CategoryCardProps } from '../Card.types';
+import { CategoryCardProps } from '../../Card.types';
 
-import Styled from '../Card.styles';
+import Styled from '../../Card.styles';
 
 const BaseCard = ({ id, version, title, description, classification }: CategoryCardProps) => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ErrorPage from './ErrorPage.component';
+import { ErrorPage } from 'components/ErrorPage';
 
 import { Props, State } from './ErrorBoundary.types';
 

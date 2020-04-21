@@ -1,2 +1,2 @@
-export { default as Container } from './Container.component';
-export { default as Classification } from './Classification.component';
+export * from './Container';
+export * from './Classification';

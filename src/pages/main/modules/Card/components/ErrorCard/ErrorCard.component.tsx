@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Styled from '../Card.styles';
+import Styled from '../../Card.styles';
 
 const ErrorCard = ({ updateCategoryData }: { updateCategoryData: () => void }) => {
   return (

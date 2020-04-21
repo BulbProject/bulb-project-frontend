@@ -11,7 +11,7 @@ import { FadeIn, ErrorBoundary } from 'components';
 import { Container } from 'shared';
 
 import { Stepper, Criteria } from './modules';
-import CategoryContextProvider from './store';
+import { CategoryContextProvider } from './store';
 
 import Styled from './Category.styles';
 
