@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { Flex, Text, Placeholder } from 'ustudio-ui';
+
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
 
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -19,28 +21,11 @@ const BaseCard = styled(Flex)`
   transition: var(--transition);
 `;
 
-const StubTitle = styled(Placeholder)`
-  margin-bottom: var(--i-medium);
-`;
-
-const StubDescription = styled(Placeholder)`
-  margin-bottom: var(--i-regular);
-`;
-
-const StubClassificationDescription = styled(Placeholder)`
-  margin-left: var(--i-regular);
-`;
-
 const CardTitle = styled(Text)`
   margin-bottom: var(--i-medium);
 
   color: var(--c-darkest);
   transition(var--transition)
-`;
-
-const CardDescription = styled(Text)`
-  margin-bottom: var(--i-regular);
-  color: var(--c-dark);
 `;
 
 const Card = styled(BaseCard)`
@@ -77,10 +62,6 @@ export default {
   Link,
   Card,
   BaseCard,
-  StubTitle,
-  StubDescription,
-  StubClassificationDescription,
   CardTitle,
-  CardDescription,
   ReloadIcon,
 };

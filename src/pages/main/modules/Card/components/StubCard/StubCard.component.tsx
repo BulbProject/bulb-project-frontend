@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Flex, Placeholder } from 'ustudio-ui';
+import Flex from 'ustudio-ui/components/Flex';
+import Placeholder from 'ustudio-ui/components/Placeholder';
 
 import { getRandomWidth } from 'utils';
 
@@ -9,21 +10,25 @@ import Styled from '../../Card.styles';
 export const StubCard = () => {
   return (
     <Styled.BaseCard direction="column">
-      <Styled.StubTitle
-        appearance={{
-          height: 'h5',
-          width: getRandomWidth(25, 100),
-        }}
-        variant="text"
-      />
+      <Flex margin={{ bottom: 'medium' }}>
+        <Placeholder
+          appearance={{
+            height: 'h5',
+            width: getRandomWidth(25, 100),
+          }}
+          variant="text"
+        />
+      </Flex>
 
-      <Styled.StubDescription
-        appearance={{
-          height: 'small',
-          width: getRandomWidth(25, 100),
-        }}
-        variant="text"
-      />
+      <Flex margin={{ bottom: 'regular' }}>
+        <Placeholder
+          appearance={{
+            height: 'small',
+            width: getRandomWidth(25, 100),
+          }}
+          variant="text"
+        />
+      </Flex>
 
       <Flex>
         <Placeholder
@@ -33,14 +38,15 @@ export const StubCard = () => {
           }}
           variant="text"
         />
-
-        <Styled.StubClassificationDescription
-          appearance={{
-            height: 'small',
-            width: getRandomWidth(25, 100),
-          }}
-          variant="text"
-        />
+        <Flex margin={{ left: 'regular' }}>
+          <Placeholder
+            appearance={{
+              height: 'small',
+              width: getRandomWidth(25, 100),
+            }}
+            variant="text"
+          />
+        </Flex>
       </Flex>
     </Styled.BaseCard>
   );

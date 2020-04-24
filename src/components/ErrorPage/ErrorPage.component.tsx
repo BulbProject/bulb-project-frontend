@@ -1,7 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Button, Flex } from 'ustudio-ui';
+import Button from 'ustudio-ui/components/Button';
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
 
 import { Container } from 'shared';
 import logo from 'assets/images/logo.svg';
@@ -19,12 +21,12 @@ export const ErrorPage = () => {
         </Flex>
 
         <Flex alignment={{ horizontal: 'center', vertical: 'center' }}>
-          <Styled.ErrorDescription align="center" variant="h1">
+          <Text color="var(--c-dark)" align="center" variant="h1">
             Ooops... Something went wrong
-          </Styled.ErrorDescription>
+          </Text>
         </Flex>
 
-        <Styled.ButtonsContainer alignment={{ horizontal: 'space-around', vertical: 'center' }}>
+        <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'space-around', vertical: 'center' }}>
           <Button appearance="text" onClick={() => window.location.reload()}>
             Refresh page
           </Button>
@@ -32,7 +34,7 @@ export const ErrorPage = () => {
           <Button appearance="text" onClick={() => push('/')}>
             Main page
           </Button>
-        </Styled.ButtonsContainer>
+        </Flex>
       </Styled.Content>
     </Container>
   );

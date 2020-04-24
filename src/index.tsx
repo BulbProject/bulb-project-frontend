@@ -17,7 +17,7 @@ const App: React.FC = () => {
             <Suspense fallback={<div />}>
               <Switch>
                 <Redirect exact from="/categories" to="/" />
-                {routes.map(route => (
+                {routes.map((route) => (
                   <Route {...route} key={route.path as string} />
                 ))}
               </Switch>

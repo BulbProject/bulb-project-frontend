@@ -1,5 +1,8 @@
 import React from 'react';
 
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
+
 import { Classification } from 'shared';
 
 import { CategoryCardProps } from '../../Card.types';
@@ -12,7 +15,11 @@ export const BaseCard = ({ id, version, title, description, classification }: Ca
       <Styled.Card direction="column">
         <Styled.CardTitle variant="h5">{title}</Styled.CardTitle>
 
-        <Styled.CardDescription variant="small">{description}</Styled.CardDescription>
+        <Flex margin={{ bottom: 'regular' }}>
+          <Text color="var(--c-dark)" variant="small">
+            {description}
+          </Text>
+        </Flex>
 
         <Classification {...classification} />
       </Styled.Card>
