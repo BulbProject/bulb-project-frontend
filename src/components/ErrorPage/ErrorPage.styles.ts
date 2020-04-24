@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Flex } from 'ustudio-ui';
+import Flex from 'ustudio-ui/components/Flex';
 
 const Content = styled(Flex)`
   margin-top: 4rem;

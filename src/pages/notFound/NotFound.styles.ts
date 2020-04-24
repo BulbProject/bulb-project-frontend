@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { Text, Flex } from 'ustudio-ui';
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
 
 const Content = styled(Flex)`

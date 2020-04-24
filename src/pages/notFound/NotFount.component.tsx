@@ -1,7 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Button, Flex, Text } from 'ustudio-ui';
+import Button from 'ustudio-ui/components/Button';
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
 
 import { Container } from 'shared';
 import logo from 'assets/images/logo.svg';
