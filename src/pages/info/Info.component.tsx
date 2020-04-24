@@ -2,7 +2,9 @@ import React from 'react';
 
 import { useParams, useHistory } from 'react-router-dom';
 
-import { Button, Flex, Spinner } from 'ustudio-ui';
+import Flex from 'ustudio-ui/components/Flex';
+import Spinner from 'ustudio-ui/components/Spinner';
+import Text from 'ustudio-ui/components/Text';
 
 import { Helmet } from 'react-helmet';
 
@@ -16,8 +18,8 @@ import { FadeIn } from 'components';
 
 import { kebabCaseToSentenceCase } from 'utils';
 
-import arrowIcon from 'assets/icons/arrow.svg';
-import refreshIcon from 'assets/icons/refresh.svg';
+import ArrowIcon from '../../assets/icons/arrow.inline.svg';
+import ReloadIcon from '../../assets/icons/reload.inline.svg';
 
 import { renderers } from './modules';
 import Styled from './Info.styles';
@@ -50,27 +52,31 @@ const InfoComponent = () => {
       )}
 
       {!isLoading && error && (
-        <FadeIn>
-          <Flex direction="column" alignment={{ horizontal: 'center' }}>
-            <Styled.ErrorText variant="h3" align="center">
-              Hmm, something went wrong
-            </Styled.ErrorText>
+        <Flex direction="column" alignment={{ horizontal: 'center' }}>
+          <FadeIn>
+            <Flex margin={{ top: 'large', bottom: 'regular' }}>
+              <Text variant="h3" align="center" color="var(--c-negative)">
+                Hmm, something went wrong
+              </Text>
+            </Flex>
 
             <Flex alignment={{ horizontal: 'center' }}>
-              <Button onClick={() => goBack()}>
-                <Styled.Icon src={arrowIcon} alt="Go back icon" />
+              <Styled.ActionButton onClick={() => goBack()}>
+                <ArrowIcon />
                 Go to back
-              </Button>
+              </Styled.ActionButton>
 
               {error?.statusCode !== 404 && (
-                <Styled.RefreshButton onClick={() => triggerRequest()}>
-                  <Styled.Icon src={refreshIcon} alt="Go back icon" />
-                  Refresh
-                </Styled.RefreshButton>
+                <Flex isInline margin={{ left: 'regular' }}>
+                  <Styled.ActionButton onClick={() => triggerRequest()}>
+                    <ReloadIcon />
+                    Refresh
+                  </Styled.ActionButton>
+                </Flex>
               )}
             </Flex>
-          </Flex>
-        </FadeIn>
+          </FadeIn>
+        </Flex>
       )}
     </Container>
   );
