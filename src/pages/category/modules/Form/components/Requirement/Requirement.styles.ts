@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Checkbox as UICheckbox, RadioGroup as UIRadioGroup, Text } from 'ustudio-ui';
+import Text from 'ustudio-ui/components/Text';
 
 const Requirement = styled.label`
   display: block;
@@ -20,18 +20,4 @@ const Title = styled(Text)<{ isBoolean: boolean }>(({ isBoolean }) =>
       `
 );
 
-const RadioGroup = styled(UIRadioGroup)`
-  margin-top: var(--i-medium);
-
-  li > label {
-    span {
-      margin-right: var(--i-medium) !important;
-    }
-  }
-`;
-
-const Checkbox = styled(UICheckbox)`
-  margin-left: var(--i-large);
-`;
-
-export default { Requirement, Title, RadioGroup, Checkbox };
+export default { Requirement, Title };

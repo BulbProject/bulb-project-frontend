@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
-import { Progress, Text } from 'ustudio-ui';
+import Progress from 'ustudio-ui/components/Progress';
+import Text from 'ustudio-ui/components/Text';
 
 import { StepProps } from './Step.types';
 import { stepCircleDimension, stepHeight, stepProgressHeight } from '../../Stepper.module';
