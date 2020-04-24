@@ -10,7 +10,19 @@ import routes from './routes';
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider>
+    <ThemeProvider
+      override={{
+        font: { body: 'Roboto' },
+        palette: {
+          lightest: '#f5f5f5',
+          light: '#eee',
+          primary: '#599a4f',
+          'primary-light': '#98db8e',
+          negative: '#f69378',
+          'negative-light': '#fbab95',
+        },
+      }}
+    >
       <BrowserRouter>
         <FadeIn>
           <Layout>

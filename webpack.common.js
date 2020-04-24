@@ -44,7 +44,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(jpe?g|png|svg)$/,
+        test: /\.(jpe?g|png|svg|webp)$/,
         loader: 'url-loader',
         options: {
           limit: 25000,
@@ -52,7 +52,7 @@ module.exports = {
         include: [path.resolve(__dirname, 'src/assets')],
       },
       {
-        test: /\.(jpe?g|png|svg)$/,
+        test: /\.(jpe?g|png|svg|webp)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[hash].[ext]',
@@ -65,7 +65,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
-      favicon: path.resolve(__dirname, 'public/favicon.svg'),
+      favicon: path.resolve(__dirname, 'public/favicon.webp'),
       buildDatetime: new Date(Date.now()).toLocaleString(),
       minify: {
         collapseWhitespace: true,

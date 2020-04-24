@@ -22,6 +22,8 @@ const Header = styled.header`
 
   padding: var(--i-regular) var(--i-large);
 
+  background-image: linear-gradient(to top, #f6f6f6, #fff);
+
   box-shadow: var(--s-light);
 `;
 
@@ -37,8 +39,8 @@ const LogoLink = styled(Link)`
 `;
 
 const LogoImage = styled.img`
-  width: 2rem;
-  margin-right: var(--i-medium);
+  width: 4rem;
+  margin-right: var(--i-regular);
 `;
 
 const LogoText = styled.span`

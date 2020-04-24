@@ -23,4 +23,5 @@ export const renderers = {
       {children}
     </Styled.List>
   ),
+  link: Styled.Link,
 };

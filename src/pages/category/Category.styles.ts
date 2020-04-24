@@ -5,7 +5,7 @@ import Text from 'ustudio-ui/components/Text';
 import { Classification as ClassificationComponent } from 'shared';
 
 const Wrapper = styled.div`
-  background-color: var(--c-light);
+  background-color: #f0f5f2;
 
   padding: var(--i-large) 0;
 `;
