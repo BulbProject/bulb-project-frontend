@@ -16,7 +16,7 @@ import { stringToKebabCase, kebabCaseToSentenceCase } from 'utils';
 import { FadeIn } from '../FadeIn';
 import Styled from './Aside.styles';
 
-const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
+export const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
   const { isLoading, data: filesList, error, triggerRequest } = useRequest<{ name: string }[]>(getInfoFiles());
 
   return (
@@ -72,5 +72,3 @@ const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
     </>
   );
 };
-
-export default Aside;
