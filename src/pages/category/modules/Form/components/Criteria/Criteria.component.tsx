@@ -1,7 +1,7 @@
 import React from 'react';
+import Flex from 'ustudio-ui/components/Flex';
 
 import { useCategoryContext } from 'pages/category/store';
-import { Flex } from 'ustudio-ui';
 import { RequirementGroup } from '../RequirementGroup';
 
 export const Criteria = () => {
