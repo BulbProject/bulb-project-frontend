@@ -1,8 +1,11 @@
 import React from 'react';
-import { Classification as OCDSClassification } from 'ts4ocds';
-import { Flex } from 'ustudio-ui';
 
-import Styled from './Classification.styles';
+import { css } from 'styled-components';
+
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
+
+import { Classification as OCDSClassification } from 'ts4ocds';
 
 export const Classification: React.FC<OCDSClassification & { className?: string }> = ({
   id,
@@ -11,9 +14,25 @@ export const Classification: React.FC<OCDSClassification & { className?: string 
 }) => {
   return (
     <Flex className={className}>
-      <Styled.Id variant="small">{id}</Styled.Id>
+      <Text
+        variant="small"
+        color="var(--c-darkest)"
+        styled={{
+          Text: css`
+            white-space: nowrap;
+          `,
+        }}
+      >
+        {id}
+      </Text>
 
-      {description && <Styled.Description variant="small">{description}</Styled.Description>}
+      {description && (
+        <Flex margin={{ left: 'regular' }}>
+          <Text variant="small" color="var(--c-dark)">
+            {description}
+          </Text>
+        </Flex>
+      )}
     </Flex>
   );
 };

@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 
-import { Cell } from 'ustudio-ui';
+import Cell from 'ustudio-ui/components/Grid/Cell';
 
 import { containerCellProps } from './Container.module';
+
 import Styled from './Container.styles';
 
 export const Container: FC = ({ children }) => (
