@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
 
-import { Drawer as LibDrawer } from 'ustudio-ui';
+import LibDrawer from 'ustudio-ui/components/Drawer';
+
 import { Mixin } from 'ustudio-ui/theme';
 
 const Layout = styled.div`
