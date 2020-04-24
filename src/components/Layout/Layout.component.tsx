@@ -1,23 +1,13 @@
-import React, { FC, useState, Suspense } from 'react';
+import React, { FC, useState } from 'react';
 
 import { Helmet } from 'react-helmet';
 
-import { Flex, Placeholder } from 'ustudio-ui';
-
 import logo from 'assets/images/logo.svg';
-
-import Styled from './Layout.styles';
 
 import Aside from '../Aside/Aside.component';
 
-const AsidePlaceholder = (
-  <Flex direction="column">
-    <Placeholder variant="text" appearance={{ height: 'body', width: '60%' }} />
-    <Placeholder variant="text" appearance={{ height: 'body', width: '40%' }} />
-    <Placeholder variant="text" appearance={{ height: 'body', width: '30%' }} />
-    <Placeholder variant="text" appearance={{ height: 'body', width: '70%' }} />
-  </Flex>
-);
+import Styled from './Layout.styles';
+
 export const Layout: FC = ({ children }) => {
   const [drawerIsOpen, setDrawerOpen] = useState(false);
 
@@ -36,9 +26,7 @@ export const Layout: FC = ({ children }) => {
         </Styled.Header>
 
         <Styled.Drawer position="right" showOverlay isOpen={drawerIsOpen} onChange={() => setDrawerOpen(false)}>
-          <Suspense fallback={AsidePlaceholder}>
-            <Aside closeDrawer={() => setDrawerOpen(false)} />
-          </Suspense>
+          <Aside closeDrawer={() => setDrawerOpen(false)} />
         </Styled.Drawer>
 
         <Styled.Main>{children}</Styled.Main>

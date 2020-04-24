@@ -1,14 +1,17 @@
 import React from 'react';
 
-import { Spinner, Flex, Button } from 'ustudio-ui';
+import { Link } from 'react-router-dom';
+
+import Button from 'ustudio-ui/components/Button';
+import Flex from 'ustudio-ui/components/Flex';
+import Spinner from 'ustudio-ui/components/Spinner';
+import Text from 'ustudio-ui/components/Text';
 
 import { useRequest } from 'hooks';
 
 import { getInfoFiles } from 'config';
 
 import { stringToKebabCase, kebabCaseToSentenceCase } from 'utils';
-
-import refreshIcon from 'assets/icons/refresh.svg';
 
 import { FadeIn } from '../FadeIn';
 import Styled from './Aside.styles';
@@ -18,49 +21,54 @@ const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
 
   return (
     <>
-      <Styled.AsideTitle variant="h3">Resources</Styled.AsideTitle>
+      <Text variant="h3">Resources</Text>
 
-      <Styled.Nav>
-        {isLoading && (
-          <FadeIn>
+      <Flex margin={{ top: 'large' }}>
+        <Flex as="nav" direction="column" alignment={{ horizontal: 'start', vertical: 'start' }}>
+          {isLoading && (
             <Flex alignment={{ horizontal: 'center' }}>
-              <Spinner appearance={{ size: 48 }} />
+              <FadeIn>
+                <Spinner appearance={{ size: 48 }} delay={300} />
+              </FadeIn>
             </Flex>
-          </FadeIn>
-        )}
+          )}
 
-        {!isLoading && !error && (
-          <FadeIn>
-            {filesList?.map(({ name }) => {
+          {!isLoading &&
+            !error &&
+            filesList?.map(({ name }) => {
               const infoPageUrl = stringToKebabCase(name.replace(/\.md/, ''));
 
               return (
-                <Styled.NavLink
-                  to={`/info/${infoPageUrl}`}
+                <Flex
                   key={name}
+                  margin={{ bottom: 'large' }}
+                  isInline
                   onClick={() => {
                     closeDrawer();
                   }}
                 >
-                  {kebabCaseToSentenceCase(infoPageUrl)}
-                </Styled.NavLink>
+                  <Link to={`/info/${infoPageUrl}`}>{kebabCaseToSentenceCase(infoPageUrl)}</Link>
+                </Flex>
               );
             })}
-          </FadeIn>
-        )}
 
-        {!isLoading && error && (
-          <FadeIn>
-            <Styled.ErrorContainer alignment={{ horizontal: 'center' }} direction="column">
-              <Styled.ErrorText align="center">Hmm, something went wrong, please try again</Styled.ErrorText>
+          {!isLoading && error && (
+            <FadeIn>
+              <Flex alignment={{ horizontal: 'center' }} direction="column">
+                <Flex margin={{ bottom: 'large' }}>
+                  <Text align="center" color="var(--c-negative)">
+                    Hmm, something went wrong, please try again
+                  </Text>
+                </Flex>
 
-              <Button onClick={() => triggerRequest()}>
-                <Styled.RefreshIcon src={refreshIcon} alt="Refresh icon" />
-              </Button>
-            </Styled.ErrorContainer>
-          </FadeIn>
-        )}
-      </Styled.Nav>
+                <Button onClick={() => triggerRequest()}>
+                  <Styled.ReloadIcon />
+                </Button>
+              </Flex>
+            </FadeIn>
+          )}
+        </Flex>
+      </Flex>
     </>
   );
 };
