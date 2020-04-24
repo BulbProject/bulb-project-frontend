@@ -1,5 +1,8 @@
 import React from 'react';
-import { Text, Flex, Spinner } from 'ustudio-ui';
+
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
+import Spinner from 'ustudio-ui/components/Spinner';
 
 import { motion } from 'framer-motion';
 
@@ -34,7 +37,9 @@ const Categories = () => {
         {!isLoading && categoriesList && (
           <FadeIn>
             <Flex direction="column">
-              <Styled.ListTitle variant="h1">Select category for future calculation</Styled.ListTitle>
+              <Flex margin={{ bottom: 'large' }}>
+                <Text variant="h1">Select category for future calculation</Text>
+              </Flex>
 
               {!categoriesList?.length && <Text variant="h3">There are no categories yet</Text>}
 

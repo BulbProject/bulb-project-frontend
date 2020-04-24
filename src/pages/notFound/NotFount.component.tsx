@@ -1,7 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Button, Flex } from 'ustudio-ui';
+import Button from 'ustudio-ui/components/Button';
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
 
 import { Container } from 'shared';
 import logo from 'assets/images/logo.svg';
@@ -23,12 +25,12 @@ const NotFoundPage = () => {
         </Flex>
 
         <Flex alignment={{ horizontal: 'center', vertical: 'center' }}>
-          <Styled.ErrorDescription align="center" variant="h1">
+          <Text color="var(--c-dark)" align="center" variant="h1">
             We could not find this page
-          </Styled.ErrorDescription>
+          </Text>
         </Flex>
 
-        <Styled.ButtonsContainer alignment={{ horizontal: 'space-around', vertical: 'center' }}>
+        <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'space-around', vertical: 'center' }}>
           <Button appearance="text" onClick={() => goBack()}>
             Go Back
           </Button>
@@ -36,7 +38,7 @@ const NotFoundPage = () => {
           <Button appearance="text" onClick={() => replace('/')}>
             Main page
           </Button>
-        </Styled.ButtonsContainer>
+        </Flex>
       </Styled.Content>
     </Container>
   );

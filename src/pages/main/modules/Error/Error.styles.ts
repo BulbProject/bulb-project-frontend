@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import { Flex } from 'ustudio-ui';
 
-const ButtonContainer = styled(Flex)`
-  margin-top: var(--i-large);
+const ErrorContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
 `;
 
 export default {
-  ButtonContainer,
+  ErrorContainer,
 };

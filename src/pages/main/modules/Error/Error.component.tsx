@@ -1,19 +1,23 @@
 import React from 'react';
 
-import { Button, Flex, Text } from 'ustudio-ui';
+import Button from 'ustudio-ui/components/Button';
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
 
 import Styled from './Error.styles';
 
 export const Error = ({ reloadCategories }: { reloadCategories: () => void }) => {
   return (
-    <Flex direction="column" alignment={{ horizontal: 'center' }}>
-      <Text>Sorry, we could not get categories list to load.</Text>
+    <Styled.ErrorContainer>
+      <Flex direction="column" alignment={{ horizontal: 'center' }}>
+        <Text>Sorry, we could not get categories list to load.</Text>
 
-      <Styled.ButtonContainer alignment={{ horizontal: 'center' }}>
-        <Button intent="positive" onClick={reloadCategories}>
-          Try again
-        </Button>
-      </Styled.ButtonContainer>
-    </Flex>
+        <Flex alignment={{ horizontal: 'center' }} margin={{ top: 'large' }}>
+          <Button intent="positive" onClick={reloadCategories}>
+            Try again
+          </Button>
+        </Flex>
+      </Flex>
+    </Styled.ErrorContainer>
   );
 };
