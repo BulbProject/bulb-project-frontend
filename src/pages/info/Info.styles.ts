@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Button, Text } from 'ustudio-ui';
+import Button from 'ustudio-ui/components/Button';
 
 const CenteredContainer = styled.div`
   position: fixed;
@@ -10,20 +10,12 @@ const CenteredContainer = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const ErrorText = styled(Text)`
-  margin: var(--i-large) 0 var(--i-regular);
+const ActionButton = styled(Button)`
+  svg {
+    width: var(--i-regular);
 
-  color: var(--c-negative);
+    margin-right: var(--i-medium);
+  }
 `;
 
-const Icon = styled.img`
-  width: 1rem;
-
-  margin-right: var(--i-medium);
-`;
-
-const RefreshButton = styled(Button)`
-  margin-left: var(--i-regular);
-`;
-
-export default { CenteredContainer, ErrorText, Icon, RefreshButton };
+export default { CenteredContainer, ActionButton };
