@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import ReloadIconEl from '../../assets/icons/reload.inline.svg';
+import ReloadIconElement from '../../assets/icons/reload.inline.svg';
 
-const ReloadIcon = styled(ReloadIconEl)`
+const ReloadIcon = styled(ReloadIconElement)`
   width: var(--i-large);
   height: var(--i-large);
 `;
