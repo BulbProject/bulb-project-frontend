@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Button } from 'ustudio-ui';
+import Button from 'ustudio-ui/components/Button';
 
 const StepperButton = styled(Button)<{ isActive: boolean }>(
   ({ isActive }) => css`

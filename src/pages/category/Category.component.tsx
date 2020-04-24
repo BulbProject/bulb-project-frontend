@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import { Cell, Flex, Grid, Spinner, Text } from 'ustudio-ui';
+import Grid from 'ustudio-ui/components/Grid/Grid';
+import Cell from 'ustudio-ui/components/Grid/Cell';
+import Flex from 'ustudio-ui/components/Flex';
+import Spinner from 'ustudio-ui/components/Spinner';
+import Text from 'ustudio-ui/components/Text';
 
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';

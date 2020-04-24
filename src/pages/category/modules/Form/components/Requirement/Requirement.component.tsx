@@ -1,10 +1,17 @@
 import React, { ReactElement } from 'react';
+import { css } from 'styled-components';
 import { RequirementWithOptionDetails as RequirementProps, Option } from 'ts4ocds/extensions/options';
 import { DataType } from 'ts4ocds/extensions/requirements';
-import { NumberInput, Switch, TextInput, Text, Flex } from 'ustudio-ui';
 import { Field } from 'formfish';
 
 import { useCategoryContext } from 'pages/category/store';
+import Flex from 'ustudio-ui/components/Flex';
+import NumberInput from 'ustudio-ui/components/Input/NumberInput';
+import Switch from 'ustudio-ui/components/Switch';
+import TextInput from 'ustudio-ui/components/Input/TextInput';
+import Checkbox from 'ustudio-ui/components/Checkbox';
+import RadioGroup from 'ustudio-ui/components/RadioGroup';
+import Text from 'ustudio-ui/components/Text';
 
 import Styled from './Requirement.styles';
 
@@ -33,10 +40,18 @@ const renderInput = ({
     );
 
     return (
-      <Styled.RadioGroup
+      <RadioGroup
         name={`${(options[0].id as string).slice(0, 9)}${'0'.repeat(2)}`}
         defaultValue={defaultValue ? { value: defaultValue as string } : Object.values(optionsMap)[0]}
         options={optionsMap}
+        styled={{
+          RadioGroup: css`
+            margin-top: var(--i-medium);
+          `,
+          RadioButton: css`
+            margin-right: var(--i-medium);
+          `,
+        }}
       />
     );
   }
@@ -46,7 +61,17 @@ const renderInput = ({
       return <TextInput defaultValue={defaultValue as string} {...props} />;
     case 'boolean':
       if (expectedValue !== undefined) {
-        return <Styled.Checkbox defaultValue={expectedValue as boolean} isDisabled={Boolean(expectedValue)} />;
+        return (
+          <Checkbox
+            defaultValue={expectedValue as boolean}
+            isDisabled={Boolean(expectedValue)}
+            styled={{
+              CheckboxContainer: css`
+                margin-left: var(--i-large);
+              `,
+            }}
+          />
+        );
       }
 
       return <Switch defaultValue={defaultValue as boolean} />;

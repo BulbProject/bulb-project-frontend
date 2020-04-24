@@ -1,7 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 import { Form } from 'formfish';
 import { FieldSet } from 'formfish/context/form/FormContext';
-import { Cell, Flex, Text } from 'ustudio-ui';
+import Cell from 'ustudio-ui/components/Grid/Cell';
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
 import { useHistory } from 'react-router-dom';
 
 import { modifyId } from 'utils';

@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
-import { Button, Flex } from 'ustudio-ui';
+import Button from 'ustudio-ui/components/Button';
+import Flex from 'ustudio-ui/components/Flex';
 
 const Background = styled.div`
   background-color: var(--c-lightest);

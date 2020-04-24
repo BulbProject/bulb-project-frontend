@@ -1,7 +1,9 @@
 import React from 'react';
 import { RequirementGroup as OCDSRequirementGroup } from 'ts4ocds/extensions/requirements';
 import { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
-import { Dropdown, Flex, Text } from 'ustudio-ui';
+import Dropdown from 'ustudio-ui/components/Dropdown';
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
 import { FieldSet } from 'formfish';
 
 import { sortById } from 'utils';
@@ -9,30 +11,31 @@ import { sortById } from 'utils';
 import { HiddenRequirement } from '../HiddenRequirement';
 import { Requirement } from '../Requirement';
 
-import Styled from './RequirementGroup.styles';
-
 // Another incrorrectly written interface
 // @ts-ignore
 interface RequirementGroupProps extends OCDSRequirementGroup {
   requirements: RequirementWithOptionDetails[];
 }
 
-export const RequirementGroup: React.FC<RequirementGroupProps & {
-  isActive: boolean;
-  setActive: (id: string) => void;
-}> = ({ isActive, setActive, id, description, requirements }) => {
+export const RequirementGroup: React.FC<
+  RequirementGroupProps & {
+    isActive: boolean;
+    setActive: (id: string) => void;
+  }
+> = ({ isActive, setActive, id, description, requirements }) => {
   const hasSingleRequirement = () => requirements.length === 1;
 
   const Title = (
     <Flex alignment={{ vertical: 'center' }}>
-      <Styled.Title
+      <Text
+        color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'}
         isActive={isActive}
         // `Text` props declaration is broken, so had to ignore the `appearance` error
         // @ts-ignore
         appearance="bold"
       >
         {description || requirements[0].title}
-      </Styled.Title>
+      </Text>
 
       {hasSingleRequirement() && isActive && (
         // Component here seems to think it's a NumberRequirement only
@@ -51,7 +54,7 @@ export const RequirementGroup: React.FC<RequirementGroupProps & {
   );
 
   return (
-    <Styled.RequirementGroup>
+    <Flex margin={{ top: 'regular' }}>
       <Dropdown isDefaultOpen={isActive} onChange={() => setActive(id)} title={Title}>
         <FieldSet name={id}>
           {!hasSingleRequirement() ? (
@@ -61,7 +64,7 @@ export const RequirementGroup: React.FC<RequirementGroupProps & {
               {requirements
                 .slice(1)
                 .sort(sortById)
-                .map(requirement => (
+                .map((requirement) => (
                   <Requirement {...requirement} key={requirement.id} />
                 ))}
             </>
@@ -70,6 +73,6 @@ export const RequirementGroup: React.FC<RequirementGroupProps & {
           )}
         </FieldSet>
       </Dropdown>
-    </Styled.RequirementGroup>
+    </Flex>
   );
 };

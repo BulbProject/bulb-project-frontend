@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { Button, Text } from 'ustudio-ui';
+import Button from 'ustudio-ui/components/Button';
+import Text from 'ustudio-ui/components/Text';
 
 import { Classification as ClassificationComponent } from 'shared';
 

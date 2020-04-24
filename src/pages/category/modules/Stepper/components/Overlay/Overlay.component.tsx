@@ -1,5 +1,7 @@
 import React from 'react';
-import { Flex, Spinner, Text } from 'ustudio-ui';
+import Flex from 'ustudio-ui/components/Flex';
+import Spinner from 'ustudio-ui/components/Spinner';
+import Text from 'ustudio-ui/components/Text';
 
 import Styled from './Overlay.styles';
 
