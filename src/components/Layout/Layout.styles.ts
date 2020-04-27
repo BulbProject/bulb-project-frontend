@@ -4,6 +4,7 @@ import styled, { css, keyframes } from 'styled-components';
 import LibDrawer from 'ustudio-ui/components/Drawer';
 
 import { Mixin } from 'ustudio-ui/theme';
+import Flex from 'ustudio-ui/components/Flex';
 
 const Layout = styled.div`
   height: 100%;
@@ -49,6 +50,23 @@ const LogoText = styled.span`
   font-weight: 700;
   color: var(--c-darkest);
   user-select: none;
+  white-space: nowrap;
+`;
+
+const LinksHeaderContainer = styled.div`
+  display: none;
+
+  ${Mixin.Screen.xs(css`
+    display: block;
+  `)};
+`;
+
+const LinksFooterContainer = styled.div`
+  margin: var(--i-regular) 0;
+
+  ${Mixin.Screen.xs(css`
+    margin: 0 var(--i-regular);
+  `)};
 `;
 
 const OpenDrawerButtonAnimation = keyframes`
@@ -93,6 +111,8 @@ const DrawerButton = styled.button(
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    margin-left: var(--i-large);
 
     border: none;
 
@@ -168,12 +188,48 @@ const Main = styled.main`
 `;
 
 const Footer = styled.footer`
-  padding: var(--i-small) 0;
+  padding: var(--i-regular) 0;
 
   background-color: var(--c-light);
+`;
 
-  ${Mixin.Font.bodySmall()};
+const FooterContent = styled(Flex)`
+  flex-direction: column;
+  justify-content: center;
+
+  ${Mixin.Screen.xs(css`
+    flex-direction: row;
+    justify-content: space-between;
+  `)};
+`;
+
+const ContactContainer = styled(Flex)`
   text-align: center;
+
+  ${Mixin.Screen.xs(css`
+    text-align: left;
+  `)};
+`;
+
+const FooterLogoContainer = styled(Flex)`
+  flex-direction: row;
+  ${Mixin.Screen.xs(css`
+    flex-direction: column;
+  `)};
+
+  ${Mixin.Screen.lg(css`
+    flex-direction: row;
+  `)};
+
+  ${LogoImage} {
+    ${Mixin.Screen.xs(css`
+      margin: 0 0 var(--i-medium);
+    `)};
+
+    ${Mixin.Screen.lg(css`
+      margin: 0 var(--i-large) 0 0;
+    `)};
+  }
 `;
 
 export default {
@@ -182,8 +238,13 @@ export default {
   LogoLink,
   LogoImage,
   LogoText,
+  LinksHeaderContainer,
+  LinksFooterContainer,
   DrawerButton,
   Drawer,
   Main,
   Footer,
+  FooterContent,
+  ContactContainer,
+  FooterLogoContainer,
 };
