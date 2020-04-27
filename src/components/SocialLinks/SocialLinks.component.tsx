@@ -16,9 +16,11 @@ export const SocialLinks = () => {
       <Styled.SocialLink href="https://www.facebook.com/prozorro.gov.ua" target="_blank" rel="noreferrer noopener">
         <FacebookIcon />
       </Styled.SocialLink>
+
       <Styled.SocialLink href="https://www.slideshare.net/ProZorro_slides" target="_blank" rel="noreferrer noopener">
         <SlideshareIcon />
       </Styled.SocialLink>
+
       <Styled.SocialLink
         href="https://www.youtube.com/channel/UCI-2twjrz8C4dYiQXDGZf5g"
         target="_blank"
@@ -26,9 +28,11 @@ export const SocialLinks = () => {
       >
         <YoutubeIcon />
       </Styled.SocialLink>
+
       <Styled.SocialLink href="https://twitter.com/the_prozorro" target="_blank" rel="noreferrer noopener">
         <TwitterIcon />
       </Styled.SocialLink>
+
       <Styled.SocialLink href="https://www.instagram.com/prozorro_team/" target="_blank" rel="noreferrer noopener">
         <InstagramIcon />
       </Styled.SocialLink>
