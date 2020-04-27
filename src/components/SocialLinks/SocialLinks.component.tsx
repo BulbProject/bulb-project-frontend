@@ -46,15 +46,9 @@ export const SocialLinks = () => {
 
   return (
     <Flex isInline>
-      {links.map((link) => (
-        <Styled.SocialLink
-          key={link.title}
-          href={link.href}
-          target="_blank"
-          rel="noreferrer noopener"
-          color={link.color}
-        >
-          {link.icon}
+      {links.map(({ title, color, icon, href }) => (
+        <Styled.SocialLink key={title} href={href} target="_blank" rel="noreferrer noopener" color={color}>
+          {icon}
         </Styled.SocialLink>
       ))}
     </Flex>
