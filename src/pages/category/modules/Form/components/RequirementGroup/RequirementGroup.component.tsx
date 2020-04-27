@@ -4,11 +4,11 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { FieldSet } from 'formfish';
 
+import { RequirementGroup as RequirementGroupProps } from 'types/data';
 import { sortById } from 'utils';
 
 import { HiddenRequirement } from '../HiddenRequirement';
 import { Requirement } from '../Requirement';
-import { RequirementGroupProps } from './RequirementGroup.types';
 
 export const RequirementGroup: React.FC<
   RequirementGroupProps & {
