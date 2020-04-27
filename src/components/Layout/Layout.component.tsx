@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
 
 import { Helmet } from 'react-helmet';
+import Flex from 'ustudio-ui/components/Flex';
 
 import logo from 'assets/images/logo.svg';
 
 import { Aside } from '../Aside';
+import { Contacts } from '../Contacts';
 
 import Styled from './Layout.styles';
 
@@ -22,7 +24,10 @@ export const Layout: FC = ({ children }) => {
             <Styled.LogoText>Bulb Project</Styled.LogoText>
           </Styled.LogoLink>
 
-          <Styled.DrawerButton drawerIsOpen={drawerIsOpen} onClick={() => setDrawerOpen(!drawerIsOpen)} />
+          <Flex isInline>
+            <Contacts />
+            <Styled.DrawerButton drawerIsOpen={drawerIsOpen} onClick={() => setDrawerOpen(!drawerIsOpen)} />
+          </Flex>
         </Styled.Header>
 
         <Styled.Drawer position="right" showOverlay isOpen={drawerIsOpen} onChange={() => setDrawerOpen(false)}>
