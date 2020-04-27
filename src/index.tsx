@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import { ThemeProvider } from 'ustudio-ui/theme';
 
-import { Layout, FadeIn } from 'components';
+import { Layout, FadeIn, GlobalStyles } from 'components';
 
 import routes from './routes';
 
@@ -16,8 +16,8 @@ const App: React.FC = () => {
         palette: {
           lightest: '#f5f5f5',
           light: '#eee',
-          primary: '#599a4f',
-          'primary-light': '#98db8e',
+          primary: '#23a6da',
+          'primary-light': '#82C5E7',
           negative: '#f69378',
           'negative-light': '#fbab95',
         },
@@ -37,6 +37,8 @@ const App: React.FC = () => {
           </Layout>
         </FadeIn>
       </BrowserRouter>
+
+      <GlobalStyles />
     </ThemeProvider>
   );
 };
