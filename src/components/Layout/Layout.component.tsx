@@ -45,7 +45,7 @@ export const Layout: FC = ({ children }) => {
         <Styled.Footer>
           <Container>
             <Styled.FooterContent alignment={{ vertical: 'center' }}>
-              <Flex direction="column" isInline>
+              <Styled.ContactContainer direction="column" isInline>
                 <Text variant="h6">Контакти</Text>
 
                 <Text variant="small">
@@ -59,16 +59,16 @@ export const Layout: FC = ({ children }) => {
                 <Text variant="small">
                   <a href="mailto:feedback@prozorro.ua">feedback@prozorro.ua</a>
                 </Text>
-              </Flex>
+              </Styled.ContactContainer>
 
               <Styled.LinksFooterContainer>
                 <SocialLinks />
               </Styled.LinksFooterContainer>
 
-              <Flex isInline alignment={{ horizontal: 'center', vertical: 'center' }}>
+              <Styled.FooterLogoContainer isInline alignment={{ horizontal: 'center', vertical: 'center' }}>
                 <Styled.LogoImage src={logo} alt="Bulb Project Logo" />
 
-                <Flex margin={{ top: 'regular' }} direction="column">
+                <Flex direction="column">
                   <Text variant="small">Розроблено </Text>
 
                   <Text variant="small">
@@ -79,7 +79,7 @@ export const Layout: FC = ({ children }) => {
 
                   <Text variant="small">© 2020</Text>
                 </Flex>
-              </Flex>
+              </Styled.FooterLogoContainer>
             </Styled.FooterContent>
           </Container>
         </Styled.Footer>

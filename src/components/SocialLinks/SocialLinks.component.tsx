@@ -13,11 +13,21 @@ import Styled from './SocialLinks.styles';
 export const SocialLinks = () => {
   return (
     <Flex isInline>
-      <Styled.SocialLink href="https://www.facebook.com/prozorro.gov.ua" target="_blank" rel="noreferrer noopener">
+      <Styled.SocialLink
+        href="https://www.facebook.com/prozorro.gov.ua"
+        target="_blank"
+        rel="noreferrer noopener"
+        color="#3b5998"
+      >
         <FacebookIcon />
       </Styled.SocialLink>
 
-      <Styled.SocialLink href="https://www.slideshare.net/ProZorro_slides" target="_blank" rel="noreferrer noopener">
+      <Styled.SocialLink
+        href="https://www.slideshare.net/ProZorro_slides"
+        target="_blank"
+        rel="noreferrer noopener"
+        color="#067ab6"
+      >
         <SlideshareIcon />
       </Styled.SocialLink>
 
@@ -25,15 +35,26 @@ export const SocialLinks = () => {
         href="https://www.youtube.com/channel/UCI-2twjrz8C4dYiQXDGZf5g"
         target="_blank"
         rel="noreferrer noopener"
+        color="#e62117"
       >
         <YoutubeIcon />
       </Styled.SocialLink>
 
-      <Styled.SocialLink href="https://twitter.com/the_prozorro" target="_blank" rel="noreferrer noopener">
+      <Styled.SocialLink
+        href="https://twitter.com/the_prozorro"
+        target="_blank"
+        rel="noreferrer noopener"
+        color="#00aced"
+      >
         <TwitterIcon />
       </Styled.SocialLink>
 
-      <Styled.SocialLink href="https://www.instagram.com/prozorro_team/" target="_blank" rel="noreferrer noopener">
+      <Styled.SocialLink
+        href="https://www.instagram.com/prozorro_team/"
+        target="_blank"
+        rel="noreferrer noopener"
+        color="#bc2a8d"
+      >
         <InstagramIcon />
       </Styled.SocialLink>
     </Flex>

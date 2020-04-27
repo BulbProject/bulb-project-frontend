@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-const SocialLink = styled.a`
+const SocialLink = styled.a(
+  ({ color }) => `
   width: 1.3rem;
   margin: 0 0.7rem;
 
@@ -9,13 +10,14 @@ const SocialLink = styled.a`
   transition: var(--transition);
 
   &:hover {
-    color: var(--c-primary);
+    color: ${color};
   }
 
   &:after {
     display: none;
   }
-`;
+`
+);
 
 export default {
   SocialLink,

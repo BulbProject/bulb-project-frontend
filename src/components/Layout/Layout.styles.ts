@@ -50,18 +50,23 @@ const LogoText = styled.span`
   font-weight: 700;
   color: var(--c-darkest);
   user-select: none;
+  white-space: nowrap;
 `;
 
 const LinksHeaderContainer = styled.div`
-  ${Mixin.Device.mobile(css`
-    display: none;
-  `)}
+  display: none;
+
+  ${Mixin.Screen.xs(css`
+    display: block;
+  `)};
 `;
 
 const LinksFooterContainer = styled.div`
-  ${Mixin.Device.mobile(css`
-    margin: var(--i-regular) 0;
-  `)}
+  margin: var(--i-regular) 0;
+
+  ${Mixin.Screen.xs(css`
+    margin: 0 var(--i-regular);
+  `)};
 `;
 
 const OpenDrawerButtonAnimation = keyframes`
@@ -189,15 +194,42 @@ const Footer = styled.footer`
 `;
 
 const FooterContent = styled(Flex)`
-  ${Mixin.Device.desktop(css`
+  flex-direction: column;
+  justify-content: center;
+
+  ${Mixin.Screen.xs(css`
     flex-direction: row;
     justify-content: space-between;
   `)};
+`;
 
-  ${Mixin.Device.mobile(css`
-    flex-direction: column;
-    justify-content: center;
+const ContactContainer = styled(Flex)`
+  text-align: center;
+
+  ${Mixin.Screen.xs(css`
+    text-align: left;
   `)};
+`;
+
+const FooterLogoContainer = styled(Flex)`
+  flex-direction: row;
+  ${Mixin.Screen.xs(css`
+    flex-direction: column;
+  `)};
+
+  ${Mixin.Screen.lg(css`
+    flex-direction: row;
+  `)};
+
+  ${LogoImage} {
+    ${Mixin.Screen.xs(css`
+      margin: 0 0 var(--i-medium);
+    `)};
+
+    ${Mixin.Screen.lg(css`
+      margin: 0 var(--i-large) 0 0;
+    `)};
+  }
 `;
 
 export default {
@@ -213,4 +245,6 @@ export default {
   Main,
   Footer,
   FooterContent,
+  ContactContainer,
+  FooterLogoContainer,
 };
