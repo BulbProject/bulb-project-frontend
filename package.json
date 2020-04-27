@@ -45,7 +45,7 @@
     "robotstxt-webpack-plugin": "^7.0.0",
     "styled-components": "^5.0.1",
     "terser-webpack-plugin": "^2.3.5",
-    "ts4ocds": "^1.0.0-beta.7",
+    "ts4ocds": "^1.0.0-rc.0",
     "typescript": "^3.8.3",
     "url-loader": "^4.1.0",
     "ustudio-ui": "^1.2.1",
