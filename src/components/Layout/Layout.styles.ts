@@ -4,6 +4,7 @@ import styled, { css, keyframes } from 'styled-components';
 import LibDrawer from 'ustudio-ui/components/Drawer';
 
 import { Mixin } from 'ustudio-ui/theme';
+import Flex from 'ustudio-ui/components/Flex';
 
 const Layout = styled.div`
   height: 100%;
@@ -39,8 +40,8 @@ const LogoLink = styled(Link)`
 `;
 
 const LogoImage = styled.img`
-  width: 3rem;
   margin-right: var(--i-large);
+  width: 3rem;
 `;
 
 const LogoText = styled.span`
@@ -49,6 +50,17 @@ const LogoText = styled.span`
   font-weight: 700;
   color: var(--c-darkest);
   user-select: none;
+`;
+
+const LinksHeaderContainer = styled.div`
+  ${Mixin.Device.mobile(css`
+    display: none;
+  `)}
+`;
+const LinksFooterContainer = styled.div`
+  ${Mixin.Device.mobile(css`
+    margin: var(--i-regular) 0;
+  `)}
 `;
 
 const OpenDrawerButtonAnimation = keyframes`
@@ -93,6 +105,8 @@ const DrawerButton = styled.button(
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    margin-left: var(--i-large);
 
     border: none;
 
@@ -168,12 +182,20 @@ const Main = styled.main`
 `;
 
 const Footer = styled.footer`
-  padding: var(--i-small) 0;
+  padding: var(--i-regular) 0;
 
   background-color: var(--c-light);
+`;
+const FooterContent = styled(Flex)`
+  ${Mixin.Device.desktop(css`
+    flex-direction: row;
+    justify-content: space-between;
+  `)};
 
-  ${Mixin.Font.bodySmall()};
-  text-align: center;
+  ${Mixin.Device.mobile(css`
+    flex-direction: column;
+    justify-content: center;
+  `)};
 `;
 
 export default {
@@ -182,8 +204,11 @@ export default {
   LogoLink,
   LogoImage,
   LogoText,
+  LinksHeaderContainer,
+  LinksFooterContainer,
   DrawerButton,
   Drawer,
   Main,
   Footer,
+  FooterContent,
 };

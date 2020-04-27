@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ContactLink = styled.a`
+const SocialLink = styled.a`
   width: 1.3rem;
 
   margin: 0 0.7rem;
@@ -19,5 +19,5 @@ const ContactLink = styled.a`
 `;
 
 export default {
-  ContactLink,
+  SocialLink,
 };

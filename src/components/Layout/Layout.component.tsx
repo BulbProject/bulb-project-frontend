@@ -2,13 +2,15 @@ import React, { FC, useState } from 'react';
 
 import { Helmet } from 'react-helmet';
 import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
 
 import logo from 'assets/images/logo.svg';
 
 import { Aside } from '../Aside';
-import { Contacts } from '../Contacts';
+import { SocialLinks } from '../SocialLinks';
 
 import Styled from './Layout.styles';
+import { Container } from '../../shared/Container';
 
 export const Layout: FC = ({ children }) => {
   const [drawerIsOpen, setDrawerOpen] = useState(false);
@@ -25,7 +27,9 @@ export const Layout: FC = ({ children }) => {
           </Styled.LogoLink>
 
           <Flex isInline>
-            <Contacts />
+            <Styled.LinksHeaderContainer>
+              <SocialLinks />
+            </Styled.LinksHeaderContainer>
             <Styled.DrawerButton drawerIsOpen={drawerIsOpen} onClick={() => setDrawerOpen(!drawerIsOpen)} />
           </Flex>
         </Styled.Header>
@@ -37,11 +41,39 @@ export const Layout: FC = ({ children }) => {
         <Styled.Main>{children}</Styled.Main>
 
         <Styled.Footer>
-          © 2020{' '}
-          <a href="https://ustudio.company" target="_blank" rel="noreferrer noopener">
-            uStudio LLC
-          </a>{' '}
-          ❤️
+          <Container>
+            <Styled.FooterContent alignment={{ vertical: 'center' }}>
+              <Flex direction="column" isInline>
+                <Text variant="h6">Контакти:</Text>
+                <Text variant="small">
+                  <a href="tel:+38 (044) 281-42-87">+38 (044) 281-42-87</a>,{' '}
+                  <a href="tel: 0-800-503-400">0-800-503-400</a>
+                </Text>
+                <Text variant="small">вул. Бульварно-Кудрявська, 22,</Text>
+                <Text variant="small">м. Київ, 01601</Text>
+                <Text variant="small">
+                  <a href="mailto:feedback@prozorro.ua">feedback@prozorro.ua</a>
+                </Text>
+              </Flex>
+
+              <Styled.LinksFooterContainer>
+                <SocialLinks />
+              </Styled.LinksFooterContainer>
+
+              <Flex isInline alignment={{ horizontal: 'center', vertical: 'center' }}>
+                <Styled.LogoImage src={logo} alt="Bulb Project Logo" />
+                <Flex margin={{ top: 'regular' }} direction="column">
+                  <Text variant="small">Розроблено </Text>
+                  <Text variant="small">
+                    <a href="https://ustudio.company" target="_blank" rel="noreferrer noopener">
+                      uStudio LLC
+                    </a>
+                  </Text>
+                  <Text variant="small">© 2020</Text>
+                </Flex>
+              </Flex>
+            </Styled.FooterContent>
+          </Container>
         </Styled.Footer>
       </Styled.Layout>
     </>
