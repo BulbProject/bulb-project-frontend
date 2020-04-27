@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 
 import logo from 'assets/images/logo.svg';
 
-import Aside from '../Aside/Aside.component';
+import { Aside } from '../Aside';
 
 import Styled from './Layout.styles';
 

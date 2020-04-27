@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import Text from 'ustudio-ui/components/Text';
+
 import { Mixin } from 'ustudio-ui/theme';
 
 const Root = styled.article`
@@ -16,8 +18,7 @@ const Heading = styled.h1`
   scroll-margin: calc(54px + 2rem) 0 0;
 `;
 
-const Paragraph = styled.div`
-  ${Mixin.Font.bodyRegular};
+const Paragraph = styled(Text).attrs(() => ({ variant: 'article' }))`
   margin: var(--i-medium) 0;
 `;
 
@@ -46,4 +47,8 @@ const List = styled.ul(
   `
 );
 
-export const Styled = { Paragraph, Quote, Heading, Root, List, Divider };
+const Link = styled.a`
+  ${Mixin.Font.bodyRegular};
+`;
+
+export const Styled = { Paragraph, Quote, Heading, Root, List, Divider, Link };

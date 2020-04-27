@@ -24,8 +24,8 @@ const BaseCard = styled(Flex)`
 const CardTitle = styled(Text)`
   margin-bottom: var(--i-medium);
 
-  color: var(--c-darkest);
-  transition(var--transition)
+  color: var(--c-secondary);
+  transition: var(--transition);
 `;
 
 const Card = styled(BaseCard)`

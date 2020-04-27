@@ -44,7 +44,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(jpe?g|png|svg)$/,
+        test: /\.(jpe?g|png|svg|webp)$/,
         loader: 'url-loader',
         options: {
           limit: 25000,
@@ -52,7 +52,7 @@ module.exports = {
         include: [path.resolve(__dirname, 'src/assets')],
       },
       {
-        test: /\.(jpe?g|png|svg)$/,
+        test: /\.(jpe?g|png|svg|webp)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[hash].[ext]',

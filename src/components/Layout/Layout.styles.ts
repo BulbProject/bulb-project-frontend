@@ -22,6 +22,8 @@ const Header = styled.header`
 
   padding: var(--i-regular) var(--i-large);
 
+  background-image: linear-gradient(to top, #f6f6f6, #fff);
+
   box-shadow: var(--s-light);
 `;
 
@@ -37,8 +39,8 @@ const LogoLink = styled(Link)`
 `;
 
 const LogoImage = styled.img`
-  width: 2rem;
-  margin-right: var(--i-medium);
+  width: 3rem;
+  margin-right: var(--i-large);
 `;
 
 const LogoText = styled.span`
@@ -161,6 +163,8 @@ const Drawer = styled(LibDrawer)`
 
 const Main = styled.main`
   flex-grow: 1;
+
+  padding: var(--i-large) 0;
 `;
 
 const Footer = styled.footer`

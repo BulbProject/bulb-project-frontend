@@ -5,9 +5,16 @@ import Text from 'ustudio-ui/components/Text';
 import { Classification as ClassificationComponent } from 'shared';
 
 const Wrapper = styled.div`
-  background-color: var(--c-light);
+  background-color: #f0f5f2;
 
-  padding: var(--i-large) 0;
+  margin-top: calc(var(--i-large) * -1);
+  padding: var(--i-large);
+`;
+
+const CategoryTitle = styled(Text)`
+  font-weight: 300;
+
+  margin-bottom: var(--i-large);
 `;
 
 const CategoryDescription = styled(Text)`
@@ -24,4 +31,4 @@ const RetryButton = styled(Button)`
   margin-top: var(--i-large);
 `;
 
-export default { Wrapper, CategoryDescription, Classification, RetryButton };
+export default { Wrapper, CategoryTitle, CategoryDescription, Classification, RetryButton };
