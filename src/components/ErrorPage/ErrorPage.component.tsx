@@ -22,17 +22,17 @@ export const ErrorPage = () => {
 
         <Flex alignment={{ horizontal: 'center', vertical: 'center' }}>
           <Text color="var(--c-dark)" align="center" variant="h1">
-            Ooops... Something went wrong
+            Упс, щось пішло не так :(
           </Text>
         </Flex>
 
         <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'space-around', vertical: 'center' }}>
           <Button appearance="text" onClick={() => window.location.reload()}>
-            Refresh page
+            Оновити сторінку
           </Button>
 
           <Button appearance="text" onClick={() => push('/')}>
-            Main page
+            На головну
           </Button>
         </Flex>
       </Styled.Content>

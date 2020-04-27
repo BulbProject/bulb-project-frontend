@@ -26,17 +26,17 @@ const NotFoundPage = () => {
 
         <Flex alignment={{ horizontal: 'center', vertical: 'center' }}>
           <Text color="var(--c-dark)" align="center" variant="h1">
-            We could not find this page
+            Ця сторінка загубилась :(
           </Text>
         </Flex>
 
         <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'space-around', vertical: 'center' }}>
           <Button appearance="text" onClick={() => goBack()}>
-            Go Back
+            Назад
           </Button>
 
           <Button appearance="text" onClick={() => replace('/')}>
-            Main page
+            На головну
           </Button>
         </Flex>
       </Styled.Content>

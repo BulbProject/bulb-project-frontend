@@ -38,10 +38,10 @@ const Categories = () => {
           <FadeIn>
             <Flex direction="column">
               <Flex margin={{ bottom: 'large' }}>
-                <Text variant="h1">Select category for future calculation</Text>
+                <Text variant="h1">Виберіть категорію для проведення розрахунків</Text>
               </Flex>
 
-              {!categoriesList?.length && <Text variant="h3">There are no categories yet</Text>}
+              {!categoriesList?.length && <Text variant="h3">Тут ще немає категорій</Text>}
 
               {categoriesList?.map((category, index) => (
                 <motion.div

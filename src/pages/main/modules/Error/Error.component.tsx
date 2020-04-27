@@ -10,11 +10,11 @@ export const Error = ({ reloadCategories }: { reloadCategories: () => void }) =>
   return (
     <Styled.ErrorContainer>
       <Flex direction="column" alignment={{ horizontal: 'center' }}>
-        <Text>Sorry, we could not get categories list to load.</Text>
+        <Text>На жаль, ми не замогли завантажити список категорій.</Text>
 
         <Flex alignment={{ horizontal: 'center' }} margin={{ top: 'large' }}>
           <Button intent="positive" onClick={reloadCategories}>
-            Try again
+            Спробувати ще
           </Button>
         </Flex>
       </Flex>

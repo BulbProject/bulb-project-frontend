@@ -19,7 +19,7 @@ export const renderInput = ({
   defaultValue,
   props,
 }: {
-  dataType: DataType;
+  dataType?: DataType;
   options?: Option[];
   expectedValue?: unknown;
   defaultValue?: unknown;
@@ -71,12 +71,12 @@ export const renderInput = ({
   }
 };
 
-export const formatProps = ({ title, dataType }: { title?: string; dataType: DataType }): InputProps => {
+export const formatProps = ({ title, dataType }: { title?: string; dataType?: DataType }): InputProps => {
   if (!title) {
     return {};
   }
 
-  const formatPlaceholder = (placeholder: string) => `Enter ${placeholder.toLowerCase().replace(/,/, ' in')}`;
+  const formatPlaceholder = (placeholder: string) => `Введіть ${placeholder.toLowerCase()}`;
   const formatSuffix = (suffix: string) => <Text variant="caption">{suffix.replace(/\s/g, '')}</Text>;
 
   const format = title.match(/(.+)(?=,?).+(\(.+\))/);
@@ -94,4 +94,4 @@ export const formatProps = ({ title, dataType }: { title?: string; dataType: Dat
   };
 };
 
-export const isBoolean = (dataType: DataType): dataType is 'boolean' => dataType === 'boolean';
+export const isBoolean = (dataType?: DataType): dataType is 'boolean' => dataType === 'boolean';
