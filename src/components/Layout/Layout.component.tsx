@@ -5,10 +5,10 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 
 import logo from 'assets/images/logo.svg';
+import { Container } from 'shared/Container';
 
 import { Aside } from '../Aside';
 import { SocialLinks } from '../SocialLinks';
-import { Container } from '../../shared/Container';
 
 import Styled from './Layout.styles';
 
@@ -46,11 +46,10 @@ export const Layout: FC = ({ children }) => {
           <Container>
             <Styled.FooterContent alignment={{ vertical: 'center' }}>
               <Flex direction="column" isInline>
-                <Text variant="h6">Контакти:</Text>
+                <Text variant="h6">Контакти</Text>
 
                 <Text variant="small">
-                  <a href="tel:+38 (044) 281-42-87">+38 (044) 281-42-87</a>,{' '}
-                  <a href="tel: 0-800-503-400">0-800-503-400</a>
+                  <a href="tel:+380442814287">+38 (044) 281-42-87</a>, <a href="tel:0800503400">0-800-503-400</a>
                 </Text>
 
                 <Text variant="small">вул. Бульварно-Кудрявська, 22,</Text>
