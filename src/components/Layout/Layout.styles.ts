@@ -163,6 +163,8 @@ const Drawer = styled(LibDrawer)`
 
 const Main = styled.main`
   flex-grow: 1;
+
+  padding: var(--i-large) 0;
 `;
 
 const Footer = styled.footer`

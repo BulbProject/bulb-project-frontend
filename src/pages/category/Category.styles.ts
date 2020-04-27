@@ -7,7 +7,7 @@ import { Classification as ClassificationComponent } from 'shared';
 const Wrapper = styled.div`
   background-color: #f0f5f2;
 
-  padding: var(--i-large) 0;
+  padding-bottom: var(--i-large);
 `;
 
 const CategoryDescription = styled(Text)`

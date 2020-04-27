@@ -46,7 +46,9 @@ const CategoryPage: React.FC = () => {
         <Styled.Wrapper>
           <Container>
             <Flex direction="column">
-              <Text variant="h3">{title}</Text>
+              <Text variant="h3" color="var(--c-secondary)">
+                {title}
+              </Text>
 
               {description && <Styled.CategoryDescription variant="small">{description}</Styled.CategoryDescription>}
 

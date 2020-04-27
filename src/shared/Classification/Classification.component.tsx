@@ -16,7 +16,7 @@ export const Classification: React.FC<OCDSClassification & { className?: string 
     <Flex className={className}>
       <Text
         variant="small"
-        color="var(--c-darkest)"
+        color="var(--c-secondary)"
         styled={{
           Text: css`
             white-space: nowrap;
