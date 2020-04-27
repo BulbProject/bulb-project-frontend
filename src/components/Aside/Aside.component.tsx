@@ -21,7 +21,7 @@ export const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
 
   return (
     <>
-      <Text variant="h3">Resources</Text>
+      <Text variant="h3">Ресурси</Text>
 
       <Flex margin={{ top: 'large' }}>
         <Flex as="nav" direction="column" alignment={{ horizontal: 'start', vertical: 'start' }}>
