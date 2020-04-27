@@ -13,7 +13,7 @@ import { SocialLinks } from '../SocialLinks';
 import Styled from './Layout.styles';
 
 export const Layout: FC = ({ children }) => {
-  const [drawerIsOpen, setDrawerOpen] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <>
@@ -32,11 +32,11 @@ export const Layout: FC = ({ children }) => {
               <SocialLinks />
             </Styled.LinksHeaderContainer>
 
-            <Styled.DrawerButton drawerIsOpen={drawerIsOpen} onClick={() => setDrawerOpen(!drawerIsOpen)} />
+            <Styled.DrawerButton drawerIsOpen={isDrawerOpen} onClick={() => setDrawerOpen(!isDrawerOpen)} />
           </Flex>
         </Styled.Header>
 
-        <Styled.Drawer position="right" showOverlay isOpen={drawerIsOpen} onChange={() => setDrawerOpen(false)}>
+        <Styled.Drawer position="right" showOverlay isOpen={isDrawerOpen} onChange={() => setDrawerOpen(false)}>
           <Aside closeDrawer={() => setDrawerOpen(false)} />
         </Styled.Drawer>
 
