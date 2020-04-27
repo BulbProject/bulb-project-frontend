@@ -31,7 +31,7 @@ const isRequirementGroupFilled = ({
   const requirementGroup = criterion?.[currentCriterion.activeRequirementGroup];
 
   if (requirementGroup) {
-    return Object.values(requirementGroup).findIndex(requirement => requirement.value === undefined) === -1;
+    return Object.values(requirementGroup).findIndex((requirement) => requirement.value === undefined) === -1;
   }
 
   return false;
@@ -43,7 +43,7 @@ export const Stepper: React.FC = ({ children }) => {
   const { title, description } = currentCriterion;
   const steps = Object.values(criteria);
 
-  const titles = steps.map(step => step.title);
+  const titles = steps.map((step) => step.title);
 
   const isStepActive = (stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(title);
   const isLastStep = (): boolean => titles.indexOf(title) === steps.length - 1;
@@ -81,11 +81,11 @@ export const Stepper: React.FC = ({ children }) => {
 
       {!isLoading && !error && Boolean(requestedNeedData) && (
         <Styled.Modal
-          title="Success!"
+          title="Успіх!"
           isOpen={!isLoading && !error && Boolean(requestedNeedData)}
           onChange={() => replace('/')}
         >
-          <Text>Your calculation request was successfully sent :)</Text>
+          <Text>Ваш розрахунковий запит був успішно надісланий :)</Text>
         </Styled.Modal>
       )}
 
@@ -103,14 +103,14 @@ export const Stepper: React.FC = ({ children }) => {
 
       <Form
         name={currentCriterion.id}
-        watch={state => {
+        watch={(state) => {
           if (isRequirementGroupFilled({ state, currentCriterion })) {
             setNextStepAvailable(true);
           } else {
             setNextStepAvailable(false);
           }
         }}
-        onSubmit={state => {
+        onSubmit={(state) => {
           const newRequestedNeed =
             // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
             // @ts-ignore
@@ -143,8 +143,8 @@ export const Stepper: React.FC = ({ children }) => {
       >
         <Styled.Container isContainer>
           <Cell xs={{ size: 2 }}>
-            <StepperButton isActive={!isFirstStep()} onClick={setStep(id => id - 1)}>
-              Previous
+            <StepperButton isActive={!isFirstStep()} onClick={setStep((id) => id - 1)}>
+              Попередній
             </StepperButton>
           </Cell>
 
@@ -161,15 +161,15 @@ export const Stepper: React.FC = ({ children }) => {
                 }}
                 isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
               >
-                Submit
+                Завершити
               </StepperButton>
             ) : (
               <StepperButton
                 isActive
-                onClick={setStep(id => id + 1)}
+                onClick={setStep((id) => id + 1)}
                 isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
               >
-                Next
+                Наступний
               </StepperButton>
             )}
           </Cell>

@@ -57,7 +57,7 @@ export const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
               <Flex alignment={{ horizontal: 'center' }} direction="column">
                 <Flex margin={{ bottom: 'large' }}>
                   <Text align="center" color="var(--c-negative)">
-                    Hmm, something went wrong, please try again
+                    Упс, щось пішло не так :(
                   </Text>
                 </Flex>
 

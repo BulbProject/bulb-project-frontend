@@ -1,6 +1,4 @@
 import React from 'react';
-import { RequirementGroup as OCDSRequirementGroup } from 'ts4ocds/extensions/requirements';
-import { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 import Dropdown from 'ustudio-ui/components/Dropdown';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
@@ -10,12 +8,7 @@ import { sortById } from 'utils';
 
 import { HiddenRequirement } from '../HiddenRequirement';
 import { Requirement } from '../Requirement';
-
-// Another incrorrectly written interface
-// @ts-ignore
-interface RequirementGroupProps extends OCDSRequirementGroup {
-  requirements: RequirementWithOptionDetails[];
-}
+import { RequirementGroupProps } from './RequirementGroup.types';
 
 export const RequirementGroup: React.FC<
   RequirementGroupProps & {
@@ -27,19 +20,11 @@ export const RequirementGroup: React.FC<
 
   const Title = (
     <Flex alignment={{ vertical: 'center' }}>
-      <Text
-        color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'}
-        isActive={isActive}
-        // `Text` props declaration is broken, so had to ignore the `appearance` error
-        // @ts-ignore
-        appearance="bold"
-      >
+      <Text color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'} appearance="bold">
         {description || requirements[0].title}
       </Text>
 
       {hasSingleRequirement() && isActive && (
-        // Component here seems to think it's a NumberRequirement only
-        // @ts-ignore
         <FieldSet name={id}>
           <Requirement
             {...{
@@ -69,6 +54,7 @@ export const RequirementGroup: React.FC<
                 ))}
             </>
           ) : (
+            // Тут я обновлю перевод когда таск сделаю с булевой группой
             <Text>Proceed to the next step</Text>
           )}
         </FieldSet>

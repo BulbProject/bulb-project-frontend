@@ -56,21 +56,21 @@ const InfoComponent = () => {
           <FadeIn>
             <Flex margin={{ top: 'large', bottom: 'regular' }}>
               <Text variant="h3" align="center" color="var(--c-negative)">
-                Hmm, something went wrong
+                Хм, щось пішло не так...
               </Text>
             </Flex>
 
             <Flex alignment={{ horizontal: 'center' }}>
               <Styled.ActionButton onClick={() => goBack()}>
                 <ArrowIcon />
-                Go to back
+                Назад
               </Styled.ActionButton>
 
               {error?.statusCode !== 404 && (
                 <Flex isInline margin={{ left: 'regular' }}>
                   <Styled.ActionButton onClick={() => triggerRequest()}>
                     <ReloadIcon />
-                    Refresh
+                    Оновити сторінку
                   </Styled.ActionButton>
                 </Flex>
               )}

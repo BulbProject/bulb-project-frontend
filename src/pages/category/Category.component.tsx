@@ -71,19 +71,19 @@ const CategoryPage: React.FC = () => {
 
             {error && (
               <>
-                <Text>Sorry, we could not get this category to load.</Text>
+                <Text>Нажаль, ми не змогли завантажити цю категорію.</Text>
 
                 <Grid xs={{ gap: 32 }}>
                   <Cell>
                     <Flex alignment={{ horizontal: 'end' }}>
-                      <Styled.RetryButton onClick={() => goBack()}>Go back</Styled.RetryButton>
+                      <Styled.RetryButton onClick={() => goBack()}>Назад</Styled.RetryButton>
                     </Flex>
                   </Cell>
 
                   <Cell>
                     <Flex alignment={{ horizontal: 'start' }}>
                       <Styled.RetryButton intent="positive" onClick={() => window.location.reload()}>
-                        Try again
+                        Оновити сторінку
                       </Styled.RetryButton>
                     </Flex>
                   </Cell>
