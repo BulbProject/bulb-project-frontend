@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 
 import { Helmet } from 'react-helmet';
 
-import logo from 'assets/images/logo.webp';
+import logo from 'assets/images/logo.svg';
 
 import { Aside } from '../Aside';
 

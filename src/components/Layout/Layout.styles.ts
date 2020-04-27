@@ -39,8 +39,8 @@ const LogoLink = styled(Link)`
 `;
 
 const LogoImage = styled.img`
-  width: 4rem;
-  margin-right: var(--i-regular);
+  width: 3rem;
+  margin-right: var(--i-large);
 `;
 
 const LogoText = styled.span`
