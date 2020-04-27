@@ -8,9 +8,9 @@ import logo from 'assets/images/logo.svg';
 
 import { Aside } from '../Aside';
 import { SocialLinks } from '../SocialLinks';
+import { Container } from '../../shared/Container';
 
 import Styled from './Layout.styles';
-import { Container } from '../../shared/Container';
 
 export const Layout: FC = ({ children }) => {
   const [drawerIsOpen, setDrawerOpen] = useState(false);
