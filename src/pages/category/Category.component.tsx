@@ -71,7 +71,7 @@ const CategoryPage: React.FC = () => {
 
             {error && (
               <>
-                <Text>Нажаль, ми не змогли завантажити цю категорію.</Text>
+                <Text>На жаль, ми не змогли завантажити цю категорію.</Text>
 
                 <Grid xs={{ gap: 32 }}>
                   <Cell>
