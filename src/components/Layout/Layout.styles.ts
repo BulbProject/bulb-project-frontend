@@ -57,6 +57,7 @@ const LinksHeaderContainer = styled.div`
     display: none;
   `)}
 `;
+
 const LinksFooterContainer = styled.div`
   ${Mixin.Device.mobile(css`
     margin: var(--i-regular) 0;
@@ -186,6 +187,7 @@ const Footer = styled.footer`
 
   background-color: var(--c-light);
 `;
+
 const FooterContent = styled(Flex)`
   ${Mixin.Device.desktop(css`
     flex-direction: row;
