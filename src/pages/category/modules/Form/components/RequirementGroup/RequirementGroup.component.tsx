@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Dropdown from 'ustudio-ui/components/Dropdown';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
@@ -13,12 +13,12 @@ import { Requirement } from '../Requirement';
 export const RequirementGroup: React.FC<
   RequirementGroupProps & {
     isActive: boolean;
-    setActive: (id: string) => void;
+    renderRequirementGroup: (Title: React.FC, children: ReactElement) => ReactElement;
   }
-> = ({ isActive, setActive, id, description, requirements }) => {
+> = ({ isActive, id, description, requirements, renderRequirementGroup }) => {
   const hasSingleRequirement = () => requirements.length === 1;
 
-  const Title = (
+  const Title = () => (
     <Flex alignment={{ vertical: 'center' }}>
       <Text color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'} appearance="bold">
         {description || requirements[0].title}
@@ -40,25 +40,21 @@ export const RequirementGroup: React.FC<
 
   return (
     <Flex margin={{ top: 'regular' }}>
-      <Dropdown isDefaultOpen={isActive} onChange={() => setActive(id)} title={Title}>
+      {renderRequirementGroup(
+        Title,
         <FieldSet name={id}>
-          {!hasSingleRequirement() ? (
-            <>
-              <HiddenRequirement {...requirements[0]} />
+          <>
+            <HiddenRequirement {...requirements[0]} />
 
-              {requirements
-                .slice(1)
-                .sort(sortById)
-                .map((requirement) => (
-                  <Requirement {...requirement} key={requirement.id} />
-                ))}
-            </>
-          ) : (
-            // Тут я обновлю перевод когда таск сделаю с булевой группой
-            <Text>Proceed to the next step</Text>
-          )}
+            {requirements
+              .slice(1)
+              .sort(sortById)
+              .map((requirement) => (
+                <Requirement {...requirement} key={requirement.id} />
+              ))}
+          </>
         </FieldSet>
-      </Dropdown>
+      )}
     </Flex>
   );
 };

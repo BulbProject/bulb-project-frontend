@@ -4554,14 +4554,13 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formfish@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/formfish/-/formfish-0.6.2.tgz#4d79a77644cca31d6260e101c3e4255bbb8c4405"
-  integrity sha512-kJyW107KwZYnlv3A1XMc7OZjmAhD6qFJuch74Nf66DWjNAxgVUklwSq4naEMkLBh2mYHvW84LaXcRy8QgNlarg==
+formfish@^0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/formfish/-/formfish-0.6.6.tgz#f48385dcbbfbb2cc6bae3e571e5c37edec086722"
+  integrity sha512-xh73E6Tx/+0Fl+DQtlhZiwGRPan51nl9vtLY6nDN5s+F3Cb1VBaFANPFZY1ogrN5mte5ebBb4DM/0yft//pvDg==
   dependencies:
     lodash.get "^4.4.2"
     lodash.set "^4.3.2"
-    lodash.unset "^4.5.2"
     prop-types "^15.7.2"
 
 forwarded@~0.1.2:
@@ -6216,11 +6215,6 @@ lodash.templatesettings@^4.0.0:
   integrity sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
   dependencies:
     lodash._reinterpolate "^3.0.0"
-
-lodash.unset@^4.5.2:
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/lodash.unset/-/lodash.unset-4.5.2.tgz#370d1d3e85b72a7e1b0cdf2d272121306f23e4ed"
-  integrity sha1-Nw0dPoW3Kn4bDN8tJyEhMG8j5O0=
 
 lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15:
   version "4.17.15"

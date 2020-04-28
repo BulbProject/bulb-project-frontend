@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Form } from 'formfish';
-import { FieldSet } from 'formfish/context/form/FormContext';
+import { Form, FormFieldSet } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
@@ -24,14 +23,14 @@ const isRequirementGroupFilled = ({
   state,
   currentCriterion,
 }: {
-  state: FieldSet;
+  state: FormFieldSet;
   currentCriterion: CategoryContextStateValue['currentCriterion'];
 }): boolean => {
-  const criterion = state[currentCriterion.id] as FieldSet;
+  const criterion = state[currentCriterion.id] as FormFieldSet;
   const requirementGroup = criterion?.[currentCriterion.activeRequirementGroup];
 
   if (requirementGroup) {
-    return Object.values(requirementGroup).findIndex((requirement) => requirement.value === undefined) === -1;
+    return Object.values(requirementGroup).findIndex((requirement) => requirement === undefined) === -1;
   }
 
   return false;
@@ -111,10 +110,7 @@ export const Stepper: React.FC = ({ children }) => {
           }
         }}
         onSubmit={(state) => {
-          const newRequestedNeed =
-            // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
-            // @ts-ignore
-            state[currentCriterion.id][currentCriterion.activeRequirementGroup];
+          const newRequestedNeed = state[currentCriterion.id][currentCriterion.activeRequirementGroup];
 
           if (isSubmitting) {
             dispatch({
@@ -122,8 +118,6 @@ export const Stepper: React.FC = ({ children }) => {
               payload: getRequestedNeed({
                 ...requestedNeed,
                 [currentCriterion.id]: {
-                  // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
-                  // @ts-ignore
                   ...newRequestedNeed,
                 },
               }),
@@ -134,9 +128,7 @@ export const Stepper: React.FC = ({ children }) => {
             type: 'add_requested_need',
             payload: {
               criterionId: currentCriterion.id,
-              // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
-              // @ts-ignore
-              requirements: newRequestedNeed,
+              requirements: newRequestedNeed as Record<string, unknown>,
             },
           });
         }}
