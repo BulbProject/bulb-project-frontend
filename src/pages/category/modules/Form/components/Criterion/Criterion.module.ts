@@ -16,7 +16,7 @@ export const getBooleanGroup = (requirementGroups: RequirementGroup[]): Requirem
   return filterBooleanGroups(requirementGroups)[0];
 };
 
-export const geetNonBooleanGroup = (requirementGroups: RequirementGroup[]): RequirementGroup => {
+export const getNonBooleanGroup = (requirementGroups: RequirementGroup[]): RequirementGroup => {
   return requirementGroups.filter((requirementGroup) => !isGroupBoolean(requirementGroup))[0];
 };
 

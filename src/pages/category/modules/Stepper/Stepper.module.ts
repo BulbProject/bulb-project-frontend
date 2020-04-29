@@ -9,7 +9,7 @@ export const stepHeight = 4;
 export const getRequestedNeed = (requestedNeed: Record<string, Record<string, unknown>>): RequestedNeed => {
   return {
     id: uuidv4(),
-    requirementResponses: Object.values(requestedNeed).flatMap(criterion => {
+    requirementResponses: Object.values(requestedNeed).flatMap((criterion) => {
       return Object.keys(criterion).reduce((requirementResponses: RequirementResponse[], requirementId) => {
         return [
           ...requirementResponses,

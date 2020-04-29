@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import Dropdown from 'ustudio-ui/components/Dropdown';
+import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { FieldSet } from 'formfish';
@@ -14,13 +14,23 @@ export const RequirementGroup: React.FC<
   RequirementGroupProps & {
     isActive: boolean;
     renderRequirementGroup: (Title: React.FC, children: ReactElement) => ReactElement;
+    isTitleActive?: boolean;
+    toggleGroup?(state: boolean): void;
   }
-> = ({ isActive, id, description, requirements, renderRequirementGroup }) => {
+> = ({ isActive, isTitleActive = true, toggleGroup, id, description, requirements, renderRequirementGroup }) => {
   const hasSingleRequirement = () => requirements.length === 1;
 
   const Title = () => (
     <Flex alignment={{ vertical: 'center' }}>
-      <Text color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'} appearance="bold">
+      <Text
+        appearance="bold"
+        styled={{
+          Text: css`
+            color: ${isActive && isTitleActive ? 'var(--c-primary)' : 'var(--c-darkest)'};
+            margin-right: var(--i-regular);
+          `,
+        }}
+      >
         {description || requirements[0].title}
       </Text>
 
@@ -30,8 +40,10 @@ export const RequirementGroup: React.FC<
             {...{
               ...requirements[0],
               title: '',
-              expectedValue: requirements[0].dataType === 'boolean' ? true : undefined,
+              expectedValue: requirements[0].dataType === 'boolean' ? false : undefined,
             }}
+            isActive={isActive}
+            toggleGroup={toggleGroup}
           />
         </FieldSet>
       )}
@@ -50,7 +62,7 @@ export const RequirementGroup: React.FC<
               .slice(1)
               .sort(sortById)
               .map((requirement) => (
-                <Requirement {...requirement} key={requirement.id} />
+                <Requirement {...requirement} key={requirement.id} isActive={isActive} />
               ))}
           </>
         </FieldSet>

@@ -9,15 +9,19 @@ const Requirement = styled.label`
   }
 `;
 
-const Title = styled(Text)<{ isBoolean: boolean }>(({ isBoolean }) =>
-  isBoolean
-    ? css`
-        margin-bottom: 2px;
-        margin-left: var(--i-medium);
-      `
-    : css`
-        margin-bottom: var(--i-small);
-      `
+const Title = styled(Text)<{ isBoolean: boolean }>(
+  ({ isBoolean }) => css`
+    ${isBoolean
+      ? css`
+          margin-bottom: 2px;
+          margin-left: var(--i-medium);
+        `
+      : css`
+          margin-bottom: var(--i-small);
+        `};
+
+    transition: color var(--transition);
+  `
 );
 
 export default { Requirement, Title };

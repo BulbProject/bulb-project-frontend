@@ -9,12 +9,12 @@ import Text from 'ustudio-ui/components/Text';
 
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
-import { CategoryVersion, Criterion } from 'types/data';
+import { CategoryVersion, Criterion as CriterionType } from 'types/data';
 import { sortById } from 'utils';
 import { FadeIn, ErrorBoundary } from 'components';
 import { Container } from 'shared';
 
-import { Stepper, Criteria } from './modules';
+import { Stepper, Criterion } from './modules';
 import { CategoryContextProvider } from './store';
 
 import Styled from './Category.styles';
@@ -30,7 +30,7 @@ const CategoryPage: React.FC = () => {
   const { category: { title, description, criteria, classification } = {} } = (categoryVersion ||
     {}) as CategoryVersion;
 
-  const [steps, setSteps] = useState<Criterion[]>([]);
+  const [steps, setSteps] = useState<CriterionType[]>([]);
 
   useEffect(() => {
     if (criteria) {
@@ -57,7 +57,7 @@ const CategoryPage: React.FC = () => {
 
         <CategoryContextProvider category={{ id: categoryId as string, version: version as string }} criteria={steps}>
           <Stepper>
-            <Criteria />
+            <Criterion />
           </Stepper>
         </CategoryContextProvider>
       </FadeIn>
