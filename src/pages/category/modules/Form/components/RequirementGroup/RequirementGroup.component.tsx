@@ -1,11 +1,13 @@
-import React, { ReactElement } from 'react';
+import React, { useMemo } from 'react';
 import { css } from 'styled-components';
+import Dropdown from 'ustudio-ui/components/Dropdown';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { FieldSet } from 'formfish';
 
 import { RequirementGroup as RequirementGroupProps } from 'types/data';
 import { sortById } from 'utils';
+import { useCategoryContext } from '../../../../store';
 
 import { HiddenRequirement } from '../HiddenRequirement';
 import { Requirement } from '../Requirement';
@@ -13,12 +15,24 @@ import { Requirement } from '../Requirement';
 export const RequirementGroup: React.FC<
   RequirementGroupProps & {
     isActive: boolean;
-    renderRequirementGroup: (Title: React.FC, children: ReactElement) => ReactElement;
+    hasBooleanSelection: boolean;
+    hasDropdown: boolean;
     isTitleActive?: boolean;
     toggleGroup?(state: boolean): void;
   }
-> = ({ isActive, isTitleActive = true, toggleGroup, id, description, requirements, renderRequirementGroup }) => {
-  const hasSingleRequirement = () => requirements.length === 1;
+> = ({
+  isActive,
+  isTitleActive = true,
+  hasDropdown,
+  hasBooleanSelection,
+  toggleGroup,
+  id,
+  description,
+  requirements,
+}) => {
+  const { dispatch, currentCriterion } = useCategoryContext();
+
+  const hasSingleRequirement = useMemo(() => requirements.length === 1, [id]);
 
   const Title = () => (
     <Flex alignment={{ vertical: 'center' }}>
@@ -34,7 +48,7 @@ export const RequirementGroup: React.FC<
         {description || requirements[0].title}
       </Text>
 
-      {hasSingleRequirement() && isActive && (
+      {hasSingleRequirement && isActive && (
         <FieldSet name={id}>
           <Requirement
             {...{
@@ -43,30 +57,59 @@ export const RequirementGroup: React.FC<
               expectedValue: requirements[0].dataType === 'boolean' ? false : undefined,
             }}
             isActive={isActive}
-            toggleGroup={toggleGroup}
+            hasBooleanSelection={hasBooleanSelection}
+            toggleGroup={hasBooleanSelection ? toggleGroup : undefined}
           />
         </FieldSet>
       )}
     </Flex>
   );
 
-  return (
-    <Flex margin={{ top: 'regular' }}>
-      {renderRequirementGroup(
-        Title,
-        <FieldSet name={id}>
-          <>
-            <HiddenRequirement {...requirements[0]} />
+  const Body = () => {
+    return (
+      <FieldSet name={id}>
+        <>
+          <HiddenRequirement {...requirements[0]} />
 
-            {requirements
-              .slice(1)
-              .sort(sortById)
-              .map((requirement) => (
-                <Requirement {...requirement} key={requirement.id} isActive={isActive} />
-              ))}
-          </>
-        </FieldSet>
-      )}
+          {requirements
+            .slice(1)
+            .sort(sortById)
+            .map((requirement) => (
+              <Requirement {...requirement} key={requirement.id} isActive={isActive} />
+            ))}
+        </>
+      </FieldSet>
+    );
+  };
+
+  const renderRequirementGroup = () => {
+    if (hasBooleanSelection) {
+      return <Title />;
+    }
+
+    if (hasDropdown) {
+      return (
+        <Dropdown
+          isDefaultOpen={isActive}
+          onChange={() => {
+            dispatch({
+              type: 'set_active_requirement_group',
+              payload: { requirementGroupId: id, criterionId: currentCriterion.id },
+            });
+          }}
+          title={<Title />}
+        >
+          <Body />
+        </Dropdown>
+      );
+    }
+
+    return <Body />;
+  };
+
+  return (
+    <Flex direction="column" margin={{ top: 'regular' }}>
+      {renderRequirementGroup()}
     </Flex>
   );
 };

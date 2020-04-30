@@ -17,8 +17,9 @@ export const Requirement = ({
   dataType,
   optionDetails,
   isActive,
+  hasBooleanSelection,
   toggleGroup,
-}: RequirementProps & { isActive: boolean; toggleGroup?(state: boolean): void }) => {
+}: RequirementProps & { isActive: boolean; hasBooleanSelection?: boolean; toggleGroup?(state: boolean): void }) => {
   const { requestedNeed, currentCriterion } = useCategoryContext();
 
   const getValue = () => {
@@ -65,20 +66,17 @@ export const Requirement = ({
           </Styled.Title>
         )}
 
-        {toggleGroup ? (
-          <Field
-            name={id}
-            renderInput={({ value, setValue: setInputValue }) => (
-              <Checkbox
-                value={value as boolean}
-                defaultValue={expectedValue as boolean}
-                onChange={(inputValue) => {
-                  setInputValue(inputValue);
-                  toggleGroup(inputValue);
-                }}
-              />
-            )}
-          />
+        {hasBooleanSelection ? (
+          <Field name={id} watch={toggleGroup ? (state) => toggleGroup(state as boolean) : undefined}>
+            <Checkbox
+              defaultValue={expectedValue as boolean}
+              styled={{
+                CheckboxContainer: css`
+                  margin-left: var(--i-regular);
+                `,
+              }}
+            />
+          </Field>
         ) : (
           <Field name={id} getValue={getValue()} setValue={setValue()}>
             {renderInput({
