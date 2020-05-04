@@ -13,7 +13,7 @@ import { RequestedNeed } from 'types/data';
 import { FadeIn } from 'components';
 
 import { useCategoryContext } from '../../store';
-import { Criteria } from '../Form/components/Criteria';
+import { Criteria } from '../Form/components';
 import { getRequestedNeed, isRequirementGroupFilled } from './Stepper.module';
 
 import { Overlay, Step, StepperButton } from './components';
