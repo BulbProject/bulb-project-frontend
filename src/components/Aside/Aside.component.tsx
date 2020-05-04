@@ -11,8 +11,6 @@ import { useRequest } from 'hooks';
 
 import { getInfoFiles } from 'config';
 
-import { stringToKebabCase, kebabCaseToSentenceCase } from 'utils';
-
 import { FadeIn } from '../FadeIn';
 import Styled from './Aside.styles';
 
@@ -36,7 +34,7 @@ export const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
           {!isLoading &&
             !error &&
             filesList?.map(({ name }) => {
-              const infoPageUrl = stringToKebabCase(name.replace(/\.md/, ''));
+              const infoPageUrl = name.replace(/\.md/, '');
 
               return (
                 <Flex
@@ -47,7 +45,7 @@ export const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
                     closeDrawer();
                   }}
                 >
-                  <Link to={`/info/${infoPageUrl}`}>{kebabCaseToSentenceCase(infoPageUrl)}</Link>
+                  <Link to={`/info/${encodeURI(infoPageUrl)}`}>{infoPageUrl}</Link>
                 </Flex>
               );
             })}
