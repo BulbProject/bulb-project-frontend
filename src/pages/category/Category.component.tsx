@@ -9,12 +9,12 @@ import Text from 'ustudio-ui/components/Text';
 
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
-import { CategoryVersion, Criterion as CriterionType } from 'types/data';
+import { CategoryVersion, Criterion } from 'types/data';
 import { sortById } from 'utils';
 import { FadeIn, ErrorBoundary } from 'components';
 import { Container } from 'shared';
 
-import { Stepper, Criterion } from './modules';
+import { Stepper } from './modules';
 import { CategoryContextProvider } from './store';
 
 import Styled from './Category.styles';
@@ -30,7 +30,7 @@ const CategoryPage: React.FC = () => {
   const { category: { title, description, criteria, classification } = {} } = (categoryVersion ||
     {}) as CategoryVersion;
 
-  const [steps, setSteps] = useState<CriterionType[]>([]);
+  const [steps, setSteps] = useState<Criterion[]>([]);
 
   useEffect(() => {
     if (criteria) {
@@ -39,6 +39,8 @@ const CategoryPage: React.FC = () => {
       setSteps(sortedCriteria);
     }
   }, [criteria]);
+
+  const [isBooleanGroupActive, setBooleanGroupActive] = useState(false);
 
   return !(error || isLoading) ? (
     <ErrorBoundary>
@@ -56,9 +58,7 @@ const CategoryPage: React.FC = () => {
         </Styled.Wrapper>
 
         <CategoryContextProvider category={{ id: categoryId as string, version: version as string }} criteria={steps}>
-          <Stepper>
-            <Criterion />
-          </Stepper>
+          <Stepper {...{ isBooleanGroupActive, setBooleanGroupActive }} />
         </CategoryContextProvider>
       </FadeIn>
     </ErrorBoundary>

@@ -3,11 +3,11 @@ import { css } from 'styled-components';
 import Dropdown from 'ustudio-ui/components/Dropdown';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
+import Checkbox from 'ustudio-ui/components/Checkbox';
 import { FieldSet } from 'formfish';
 
 import { RequirementGroup as RequirementGroupProps } from 'types/data';
 import { sortById } from 'utils';
-import { useCategoryContext } from '../../../../store';
 
 import { HiddenRequirement } from '../HiddenRequirement';
 import { Requirement } from '../Requirement';
@@ -15,101 +15,109 @@ import { Requirement } from '../Requirement';
 export const RequirementGroup: React.FC<
   RequirementGroupProps & {
     isActive: boolean;
-    hasBooleanSelection: boolean;
-    hasDropdown: boolean;
-    isTitleActive?: boolean;
-    toggleGroup?(state: boolean): void;
+    setActive: (value?: boolean) => void;
+    booleanState?: {
+      hasBooleanSelection: boolean;
+      isBooleanGroupActive: boolean;
+      booleanGroupId: string;
+    };
   }
-> = ({
-  isActive,
-  isTitleActive = true,
-  hasDropdown,
-  hasBooleanSelection,
-  toggleGroup,
-  id,
-  description,
-  requirements,
-}) => {
-  const { dispatch, currentCriterion } = useCategoryContext();
+> = ({ isActive, setActive, booleanState, id, description, requirements }) => {
+  const hasSingleRequirement = useMemo(() => requirements.length === 1, []);
+  const { hasBooleanSelection, isBooleanGroupActive, booleanGroupId } = booleanState || {};
 
-  const hasSingleRequirement = useMemo(() => requirements.length === 1, [id]);
+  const Title = () => {
+    if (id === booleanGroupId) {
+      return (
+        <Flex alignment={{ vertical: 'center' }}>
+          <Text color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'} appearance="bold">
+            {description || requirements[0].title}
+          </Text>
 
-  const Title = () => (
-    <Flex alignment={{ vertical: 'center' }}>
-      <Text
-        appearance="bold"
-        styled={{
-          Text: css`
-            color: ${isActive && isTitleActive ? 'var(--c-primary)' : 'var(--c-darkest)'};
-            margin-right: var(--i-regular);
-          `,
-        }}
-      >
-        {description || requirements[0].title}
-      </Text>
-
-      {hasSingleRequirement && isActive && (
-        <FieldSet name={id}>
-          <Requirement
-            {...{
-              ...requirements[0],
-              title: '',
-              expectedValue: requirements[0].dataType === 'boolean' ? false : undefined,
-            }}
-            isActive={isActive}
-            hasBooleanSelection={hasBooleanSelection}
-            toggleGroup={hasBooleanSelection ? toggleGroup : undefined}
-          />
-        </FieldSet>
-      )}
-    </Flex>
-  );
-
-  const Body = () => {
-    return (
-      <FieldSet name={id}>
-        <>
           <HiddenRequirement {...requirements[0]} />
 
-          {requirements
-            .slice(1)
-            .sort(sortById)
-            .map((requirement) => (
-              <Requirement {...requirement} key={requirement.id} isActive={isActive} />
-            ))}
-        </>
-      </FieldSet>
-    );
-  };
-
-  const renderRequirementGroup = () => {
-    if (hasBooleanSelection) {
-      return <Title />;
-    }
-
-    if (hasDropdown) {
-      return (
-        <Dropdown
-          isDefaultOpen={isActive}
-          onChange={() => {
-            dispatch({
-              type: 'set_active_requirement_group',
-              payload: { requirementGroupId: id, criterionId: currentCriterion.id },
-            });
-          }}
-          title={<Title />}
-        >
-          <Body />
-        </Dropdown>
+          <Checkbox
+            value={isBooleanGroupActive}
+            onChange={setActive}
+            styled={{
+              CheckboxContainer: css`
+                margin-left: var(--i-regular);
+              `,
+            }}
+          />
+        </Flex>
       );
     }
 
-    return <Body />;
+    return (
+      <Flex alignment={{ vertical: 'center' }}>
+        <Text color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'} appearance="bold">
+          {description || requirements[0].title}
+        </Text>
+
+        {hasSingleRequirement && isActive && (
+          <Flex margin={{ top: 'regular' }}>
+            <FieldSet name={id}>
+              <Requirement
+                {...{
+                  ...requirements[0],
+                  title: '',
+                  expectedValue: requirements[0].dataType === 'boolean' ? true : undefined,
+                }}
+                isDisabled={false}
+              />
+            </FieldSet>
+          </Flex>
+        )}
+      </Flex>
+    );
   };
 
+  if (hasBooleanSelection) {
+    if (id === booleanGroupId) {
+      return (
+        <Flex margin={{ top: 'regular' }}>
+          <FieldSet name={id}>
+            <Title />
+          </FieldSet>
+        </Flex>
+      );
+    }
+
+    return (
+      <Flex margin={{ top: 'regular' }}>
+        <FieldSet name={id}>
+          <Flex direction="column">
+            <HiddenRequirement {...requirements[0]} />
+
+            {requirements
+              .slice(1)
+              .sort(sortById)
+              .map((requirement) => (
+                <Requirement {...requirement} key={requirement.id} isDisabled={!isActive} />
+              ))}
+          </Flex>
+        </FieldSet>
+      </Flex>
+    );
+  }
+
   return (
-    <Flex direction="column" margin={{ top: 'regular' }}>
-      {renderRequirementGroup()}
+    <Flex margin={{ top: 'regular' }}>
+      <Dropdown isDefaultOpen={isActive} onChange={() => setActive()} title={<Title />}>
+        <FieldSet name={id}>
+          <Flex direction="column">
+            <HiddenRequirement {...requirements[0]} />
+
+            {requirements
+              .slice(1)
+              .sort(sortById)
+              .map((requirement) => (
+                <Requirement {...requirement} key={requirement.id} isDisabled={!isActive} />
+              ))}
+          </Flex>
+        </FieldSet>
+      </Dropdown>
     </Flex>
   );
 };

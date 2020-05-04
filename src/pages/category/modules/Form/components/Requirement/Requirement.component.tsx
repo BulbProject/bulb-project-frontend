@@ -1,10 +1,8 @@
 import React from 'react';
-import { css } from 'styled-components';
 import { RequirementWithOptionDetails as RequirementProps } from 'ts4ocds/extensions/options';
 import { Field } from 'formfish';
 
 import { useCategoryContext } from 'pages/category/store';
-import { Checkbox } from 'ustudio-ui';
 import Flex from 'ustudio-ui/components/Flex';
 import { formatProps, isBoolean, renderInput } from './Requirement.module';
 
@@ -16,10 +14,10 @@ export const Requirement = ({
   expectedValue,
   dataType,
   optionDetails,
-  isActive,
-  hasBooleanSelection,
-  toggleGroup,
-}: RequirementProps & { isActive: boolean; hasBooleanSelection?: boolean; toggleGroup?(state: boolean): void }) => {
+  isDisabled,
+}: RequirementProps & {
+  isDisabled: boolean;
+}) => {
   const { requestedNeed, currentCriterion } = useCategoryContext();
 
   const getValue = () => {
@@ -27,22 +25,22 @@ export const Requirement = ({
       return (value: { value: string }) => value.value;
     }
 
+    if (expectedValue !== undefined) {
+      return () => expectedValue;
+    }
+
     return undefined;
   };
 
-  const setValue = () => {
-    if (optionDetails) {
-      return (value: { value: string } | string) => {
+  const setValue = optionDetails
+    ? (value: { value: string } | string) => {
         if (typeof value === 'object') {
           return value;
         }
 
         return { value };
-      };
-    }
-
-    return undefined;
-  };
+      }
+    : undefined;
 
   return (
     <Styled.Requirement htmlFor={id}>
@@ -52,48 +50,26 @@ export const Requirement = ({
         alignment={{ horizontal: isBoolean(dataType) ? 'end' : 'start', vertical: 'center' }}
       >
         {title && (
-          <Styled.Title
-            variant="caption"
-            isBoolean={isBoolean(dataType)}
-            styled={{
-              Text: css`
-                color: ${isActive ? 'var(--c-darkest)' : 'var(--c-neutral)'};
-                cursor: ${isActive ? 'default' : 'not-allowed'};
-              `,
-            }}
-          >
+          <Styled.Title variant="caption" isBoolean={isBoolean(dataType)}>
             {optionDetails && 'optionGroups' in optionDetails ? optionDetails.optionGroups[0].description : title}
           </Styled.Title>
         )}
 
-        {hasBooleanSelection ? (
-          <Field name={id} watch={toggleGroup ? (state) => toggleGroup(state as boolean) : undefined}>
-            <Checkbox
-              defaultValue={expectedValue as boolean}
-              styled={{
-                CheckboxContainer: css`
-                  margin-left: var(--i-regular);
-                `,
-              }}
-            />
-          </Field>
-        ) : (
-          <Field name={id} getValue={getValue()} setValue={setValue()}>
-            {renderInput({
-              isActive,
-              dataType,
-              expectedValue,
-              defaultValue: requestedNeed[currentCriterion.id]?.[id],
-              props: formatProps({ title, dataType }),
-              // eslint-disable-next-line no-nested-ternary
-              options: optionDetails
-                ? 'optionGroups' in optionDetails
-                  ? optionDetails.optionGroups?.[0].options
-                  : []
-                : undefined,
-            })}
-          </Field>
-        )}
+        <Field name={id} getValue={getValue()} setValue={setValue}>
+          {renderInput({
+            dataType,
+            expectedValue,
+            isDisabled,
+            defaultValue: requestedNeed[currentCriterion.id]?.[id],
+            props: formatProps({ title, dataType }),
+            // eslint-disable-next-line no-nested-ternary
+            options: optionDetails
+              ? 'optionGroups' in optionDetails
+                ? optionDetails.optionGroups?.[0].options
+                : []
+              : undefined,
+          })}
+        </Field>
       </Flex>
     </Styled.Requirement>
   );
