@@ -6,7 +6,9 @@ import { DataType } from 'ts4ocds/extensions/requirements';
 import Checkbox from 'ustudio-ui/components/Checkbox';
 import NumberInput from 'ustudio-ui/components/Input/NumberInput';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
+import Select from 'ustudio-ui/components/Select/Select';
 import RadioGroup from 'ustudio-ui/components/RadioGroup';
+import { Item } from 'ustudio-ui/components/Select/select.types';
 import Switch from 'ustudio-ui/components/Switch';
 import Text from 'ustudio-ui/components/Text';
 
@@ -29,9 +31,27 @@ export const renderInput = ({
 }): ReactElement => {
   if (options) {
     const optionsMap: Record<string, Option> = options.reduce(
-      (map, option) => Object.assign(map, { [option.description as string]: { value: option.description } }),
+      (map, option) =>
+        Object.assign(map, {
+          [option.description as string]: { value: option.description, label: option.description },
+        }),
       {}
     );
+
+    if (options.length > 4) {
+      return (
+        <Select
+          items={(optionsMap as unknown) as Record<string, Item>}
+          isDisabled={isDisabled}
+          defaultValue={(defaultValue || Object.values(optionsMap)[0].value) as string}
+          styled={{
+            Dropdown: css`
+              position: static;
+            `,
+          }}
+        />
+      );
+    }
 
     return (
       <RadioGroup

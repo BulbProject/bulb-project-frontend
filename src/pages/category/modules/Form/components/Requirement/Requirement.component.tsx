@@ -22,6 +22,10 @@ export const Requirement = ({
 
   const getValue = () => {
     if (optionDetails) {
+      if ('optionGroups' in optionDetails && optionDetails.optionGroups[0].options.length > 4) {
+        return (value: string) => value;
+      }
+
       return (value: { value: string }) => value.value;
     }
 
@@ -32,15 +36,23 @@ export const Requirement = ({
     return undefined;
   };
 
-  const setValue = optionDetails
-    ? (value: { value: string } | string) => {
+  const setValue = () => {
+    if (optionDetails) {
+      if ('optionGroups' in optionDetails && optionDetails.optionGroups[0].options.length > 4) {
+        return (value: string) => value;
+      }
+
+      return (value: { value: string } | string) => {
         if (typeof value === 'object') {
           return value;
         }
 
         return { value };
-      }
-    : undefined;
+      };
+    }
+
+    return undefined;
+  };
 
   return (
     <Styled.Requirement htmlFor={id}>
@@ -55,7 +67,7 @@ export const Requirement = ({
           </Styled.Title>
         )}
 
-        <Field name={id} getValue={getValue()} setValue={setValue}>
+        <Field name={id} getValue={getValue()} setValue={setValue()}>
           {renderInput({
             dataType,
             expectedValue,

@@ -73,6 +73,19 @@ export const RequirementGroup: React.FC<
     );
   };
 
+  const Body = (
+    <Flex direction="column">
+      <HiddenRequirement {...requirements[0]} />
+
+      {requirements
+        .slice(1)
+        .sort(sortById)
+        .map((requirement) => (
+          <Requirement {...requirement} key={requirement.id} isDisabled={!isActive} />
+        ))}
+    </Flex>
+  );
+
   if (hasBooleanSelection) {
     if (id === booleanGroupId) {
       return (
@@ -86,18 +99,7 @@ export const RequirementGroup: React.FC<
 
     return (
       <Flex margin={{ top: 'regular' }}>
-        <FieldSet name={id}>
-          <Flex direction="column">
-            <HiddenRequirement {...requirements[0]} />
-
-            {requirements
-              .slice(1)
-              .sort(sortById)
-              .map((requirement) => (
-                <Requirement {...requirement} key={requirement.id} isDisabled={!isActive} />
-              ))}
-          </Flex>
-        </FieldSet>
+        <FieldSet name={id}>{Body}</FieldSet>
       </Flex>
     );
   }
@@ -105,18 +107,7 @@ export const RequirementGroup: React.FC<
   return (
     <Flex margin={{ top: 'regular' }}>
       <Dropdown isDefaultOpen={isActive} onChange={() => setActive()} title={<Title />}>
-        <FieldSet name={id}>
-          <Flex direction="column">
-            <HiddenRequirement {...requirements[0]} />
-
-            {requirements
-              .slice(1)
-              .sort(sortById)
-              .map((requirement) => (
-                <Requirement {...requirement} key={requirement.id} isDisabled={!isActive} />
-              ))}
-          </Flex>
-        </FieldSet>
+        <FieldSet name={id}>{Body}</FieldSet>
       </Dropdown>
     </Flex>
   );
