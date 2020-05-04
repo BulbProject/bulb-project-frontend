@@ -102,7 +102,7 @@ export const formatProps = ({ title, dataType }: { title?: string; dataType?: Da
   const formatPlaceholder = (placeholder: string) => `Введіть ${placeholder.toLowerCase()}`;
   const formatSuffix = (suffix: string) => <Text variant="caption">{suffix.replace(/\s/g, '')}</Text>;
 
-  const format = title.match(/(.+)(?=,?).+(\(.+\))/);
+  const format = title.match(/(.+(?=\s\())\s(\(.+\))/);
 
   if (format) {
     return {
