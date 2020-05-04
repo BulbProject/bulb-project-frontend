@@ -48,7 +48,7 @@
     "ts4ocds": "^1.0.0-rc.0",
     "typescript": "^3.8.3",
     "url-loader": "^4.1.0",
-    "ustudio-ui": "^1.2.2",
+    "ustudio-ui": "^1.2.3",
     "uuid": "^7.0.3",
     "webpack": "^4.43.0",
     "webpack-bundle-analyzer": "^3.7.0",

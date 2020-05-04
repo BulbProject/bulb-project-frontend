@@ -37,7 +37,11 @@ export const isRequirementGroupFilled = ({
   const requirementGroup = criterion?.[currentCriterion.activeRequirementGroup];
 
   if (requirementGroup) {
-    return Object.values(requirementGroup).filter((requirementValue) => requirementValue === undefined).length === 0;
+    return (
+      Object.values(requirementGroup).filter(
+        (requirementValue) => requirementValue === undefined || requirementValue === ''
+      ).length === 0
+    );
   }
 
   return requirementGroup;
