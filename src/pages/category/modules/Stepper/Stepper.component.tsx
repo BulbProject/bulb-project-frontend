@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Form } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { useHistory } from 'react-router-dom';
 
-import { modifyId } from 'utils';
+import { modifyId, sortById } from 'utils';
 import { postCalculation } from 'config';
 import { useRequest } from 'hooks';
 import { RequestedNeed } from 'types/data';
@@ -26,14 +26,16 @@ export const Stepper: React.FC<{
 }> = ({ isBooleanGroupActive, setBooleanGroupActive }) => {
   const { currentCriterion, criteria, requestedNeed, requestedNeedData, category, dispatch } = useCategoryContext();
 
-  const { title, description } = currentCriterion;
-  const steps = Object.values(criteria);
+  const { title, description } = useMemo(() => currentCriterion, [currentCriterion.id]);
 
-  const titles = steps.map((step) => step.title);
+  const steps = useMemo(() => Object.values(criteria), []);
+  const titles = useMemo(() => steps.map((step) => step.title), []);
 
-  const isStepActive = (stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(title);
-  const isLastStep = (): boolean => titles.indexOf(title) === steps.length - 1;
-  const isFirstStep = (): boolean => titles.indexOf(title) === 0;
+  const isStepActive = useCallback((stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(title), [
+    title,
+  ]);
+  const isLastStep = useMemo((): boolean => titles.indexOf(title) === steps.length - 1, [title]);
+  const isFirstStep = useMemo((): boolean => titles.indexOf(title) === 0, [title]);
 
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
@@ -76,7 +78,7 @@ export const Stepper: React.FC<{
       )}
 
       <Styled.Stepper length={steps.length}>
-        {steps.map((step, index) => (
+        {steps.sort(sortById).map((step, index) => (
           <Step title={step.title} key={step.id} isActive={isStepActive(step.title)} index={index} />
         ))}
       </Styled.Stepper>
@@ -122,7 +124,7 @@ export const Stepper: React.FC<{
       >
         <Styled.Container isContainer>
           <Cell xs={{ size: 2 }}>
-            <StepperButton isActive={!isFirstStep()} onClick={setStep((id) => id - 1)}>
+            <StepperButton isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
               Попередній
             </StepperButton>
           </Cell>
@@ -134,7 +136,7 @@ export const Stepper: React.FC<{
           </Cell>
 
           <Cell xs={{ size: 2 }}>
-            {isLastStep() ? (
+            {isLastStep ? (
               <StepperButton
                 isActive
                 onClick={() => {
