@@ -102,18 +102,11 @@ export const formatProps = ({ title, dataType }: { title?: string; dataType?: Da
   const formatPlaceholder = (placeholder: string) => `Введіть ${placeholder.toLowerCase()}`;
   const formatSuffix = (suffix: string) => <Text variant="caption">{suffix.replace(/\s/g, '')}</Text>;
 
-  const format = title.match(/(.+)(?=,?).+(\(.+\))/);
-
-  if (format) {
-    return {
-      placeholder: formatPlaceholder(format[1]),
-      suffix: formatSuffix(format[2].slice(1, -1)),
-    };
-  }
+  const suffix = title.match(/\(.+\)/);
 
   return {
-    placeholder: formatPlaceholder(title),
-    suffix: formatSuffix(dataType as string),
+    placeholder: formatPlaceholder(title.slice(0, suffix ? title.indexOf('(') : title.length)).trim(),
+    suffix: suffix ? formatSuffix(suffix[0].slice(1, -1)) : formatSuffix(dataType as string),
   };
 };
 
