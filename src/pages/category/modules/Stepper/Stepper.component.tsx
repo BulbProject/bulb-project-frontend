@@ -1,6 +1,5 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import { Form } from 'formfish';
-import { FieldSet } from 'formfish/context/form/FormContext';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
@@ -13,31 +12,18 @@ import { RequestedNeed } from 'types/data';
 
 import { FadeIn } from 'components';
 
-import { useCategoryContext, CategoryContextStateValue } from '../../store';
-import { getRequestedNeed } from './Stepper.module';
+import { useCategoryContext } from '../../store';
+import { Criteria } from '../Form/components';
+import { getRequestedNeed, isRequirementGroupFilled } from './Stepper.module';
 
 import { Overlay, Step, StepperButton } from './components';
 
 import Styled from './Stepper.styles';
 
-const isRequirementGroupFilled = ({
-  state,
-  currentCriterion,
-}: {
-  state: FieldSet;
-  currentCriterion: CategoryContextStateValue['currentCriterion'];
-}): boolean => {
-  const criterion = state[currentCriterion.id] as FieldSet;
-  const requirementGroup = criterion?.[currentCriterion.activeRequirementGroup];
-
-  if (requirementGroup) {
-    return Object.values(requirementGroup).findIndex((requirement) => requirement.value === undefined) === -1;
-  }
-
-  return false;
-};
-
-export const Stepper: React.FC = ({ children }) => {
+export const Stepper: React.FC<{
+  isBooleanGroupActive: boolean;
+  setBooleanGroupActive: (isActive: boolean) => void;
+}> = ({ isBooleanGroupActive, setBooleanGroupActive }) => {
   const { currentCriterion, criteria, requestedNeed, requestedNeedData, category, dispatch } = useCategoryContext();
 
   const { title, description } = currentCriterion;
@@ -104,17 +90,14 @@ export const Stepper: React.FC = ({ children }) => {
       <Form
         name={currentCriterion.id}
         watch={(state) => {
-          if (isRequirementGroupFilled({ state, currentCriterion })) {
+          if (isRequirementGroupFilled({ state, currentCriterion }) || isBooleanGroupActive) {
             setNextStepAvailable(true);
           } else {
             setNextStepAvailable(false);
           }
         }}
         onSubmit={(state) => {
-          const newRequestedNeed =
-            // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
-            // @ts-ignore
-            state[currentCriterion.id][currentCriterion.activeRequirementGroup];
+          const newRequestedNeed = state[currentCriterion.id][currentCriterion.activeRequirementGroup];
 
           if (isSubmitting) {
             dispatch({
@@ -122,8 +105,6 @@ export const Stepper: React.FC = ({ children }) => {
               payload: getRequestedNeed({
                 ...requestedNeed,
                 [currentCriterion.id]: {
-                  // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
-                  // @ts-ignore
                   ...newRequestedNeed,
                 },
               }),
@@ -134,9 +115,7 @@ export const Stepper: React.FC = ({ children }) => {
             type: 'add_requested_need',
             payload: {
               criterionId: currentCriterion.id,
-              // Need to fix `formfish` type declarations, as it is incorrectly says there is no index signature on the `state`
-              // @ts-ignore
-              requirements: newRequestedNeed,
+              requirements: newRequestedNeed as Record<string, unknown>,
             },
           });
         }}
@@ -149,7 +128,9 @@ export const Stepper: React.FC = ({ children }) => {
           </Cell>
 
           <Cell xs={{ size: 8 }}>
-            <Flex direction="column">{children as ReactElement}</Flex>
+            <Flex direction="column">
+              <Criteria {...{ isBooleanGroupActive, setBooleanGroupActive }} />
+            </Flex>
           </Cell>
 
           <Cell xs={{ size: 2 }}>

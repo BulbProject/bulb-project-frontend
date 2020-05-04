@@ -8,11 +8,24 @@ import { formatProps, isBoolean, renderInput } from './Requirement.module';
 
 import Styled from './Requirement.styles';
 
-export const Requirement = ({ id, title, expectedValue, dataType, optionDetails }: RequirementProps) => {
+export const Requirement = ({
+  id,
+  title,
+  expectedValue,
+  dataType,
+  optionDetails,
+  isDisabled,
+}: RequirementProps & {
+  isDisabled: boolean;
+}) => {
   const { requestedNeed, currentCriterion } = useCategoryContext();
 
   const getValue = () => {
     if (optionDetails) {
+      if ('optionGroups' in optionDetails && optionDetails.optionGroups[0].options.length > 4) {
+        return (value: string) => value;
+      }
+
       return (value: { value: string }) => value.value;
     }
 
@@ -23,15 +36,23 @@ export const Requirement = ({ id, title, expectedValue, dataType, optionDetails 
     return undefined;
   };
 
-  const setValue = optionDetails
-    ? (value: { value: string } | string) => {
+  const setValue = () => {
+    if (optionDetails) {
+      if ('optionGroups' in optionDetails && optionDetails.optionGroups[0].options.length > 4) {
+        return (value: string) => value;
+      }
+
+      return (value: { value: string } | string) => {
         if (typeof value === 'object') {
           return value;
         }
 
         return { value };
-      }
-    : undefined;
+      };
+    }
+
+    return undefined;
+  };
 
   return (
     <Styled.Requirement htmlFor={id}>
@@ -46,10 +67,11 @@ export const Requirement = ({ id, title, expectedValue, dataType, optionDetails 
           </Styled.Title>
         )}
 
-        <Field name={id} getValue={getValue()} setValue={setValue}>
+        <Field name={id} getValue={getValue()} setValue={setValue()}>
           {renderInput({
             dataType,
             expectedValue,
+            isDisabled,
             defaultValue: requestedNeed[currentCriterion.id]?.[id],
             props: formatProps({ title, dataType }),
             // eslint-disable-next-line no-nested-ternary

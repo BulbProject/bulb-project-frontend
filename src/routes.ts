@@ -24,6 +24,6 @@ const routes: RouteProps[] = [
     path: '*',
     component: NotFoundPage,
   },
-].map(route => ({ ...route, exact: true }));
+].map((route) => ({ ...route, exact: true }));
 
 export default routes;

@@ -14,7 +14,7 @@ import { sortById } from 'utils';
 import { FadeIn, ErrorBoundary } from 'components';
 import { Container } from 'shared';
 
-import { Stepper, Criteria } from './modules';
+import { Stepper } from './modules';
 import { CategoryContextProvider } from './store';
 
 import Styled from './Category.styles';
@@ -40,6 +40,8 @@ const CategoryPage: React.FC = () => {
     }
   }, [criteria]);
 
+  const [isBooleanGroupActive, setBooleanGroupActive] = useState(false);
+
   return !(error || isLoading) ? (
     <ErrorBoundary>
       <FadeIn>
@@ -56,9 +58,7 @@ const CategoryPage: React.FC = () => {
         </Styled.Wrapper>
 
         <CategoryContextProvider category={{ id: categoryId as string, version: version as string }} criteria={steps}>
-          <Stepper>
-            <Criteria />
-          </Stepper>
+          <Stepper {...{ isBooleanGroupActive, setBooleanGroupActive }} />
         </CategoryContextProvider>
       </FadeIn>
     </ErrorBoundary>

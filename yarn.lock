@@ -4554,14 +4554,13 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formfish@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/formfish/-/formfish-0.6.2.tgz#4d79a77644cca31d6260e101c3e4255bbb8c4405"
-  integrity sha512-kJyW107KwZYnlv3A1XMc7OZjmAhD6qFJuch74Nf66DWjNAxgVUklwSq4naEMkLBh2mYHvW84LaXcRy8QgNlarg==
+formfish@^0.6.11:
+  version "0.6.11"
+  resolved "https://registry.yarnpkg.com/formfish/-/formfish-0.6.11.tgz#51c30f537bb6b1691b4361f1c0980f6764cb5935"
+  integrity sha512-HDd8l0KbkLLCJOk6+9ykZ908SL1A3EXd9aNNrNRIw3KNTcqP0UdnRdGdDWYm4vqW/pqLTS98Oisw+JaQed5uuQ==
   dependencies:
     lodash.get "^4.4.2"
     lodash.set "^4.3.2"
-    lodash.unset "^4.5.2"
     prop-types "^15.7.2"
 
 forwarded@~0.1.2:
@@ -6216,11 +6215,6 @@ lodash.templatesettings@^4.0.0:
   integrity sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
   dependencies:
     lodash._reinterpolate "^3.0.0"
-
-lodash.unset@^4.5.2:
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/lodash.unset/-/lodash.unset-4.5.2.tgz#370d1d3e85b72a7e1b0cdf2d272121306f23e4ed"
-  integrity sha1-Nw0dPoW3Kn4bDN8tJyEhMG8j5O0=
 
 lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15:
   version "4.17.15"
@@ -9643,10 +9637,10 @@ use@^3.1.0:
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
 
-ustudio-ui@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/ustudio-ui/-/ustudio-ui-1.2.1.tgz#95972f2e9a354bf29eb395ac0b9c0205095c35a9"
-  integrity sha512-FIBU0Yy+bcQIrXxbbfZ/i30Q4FD8esBSv+J/wtfBJgLYQalIR6PrZUVhtRNc9uf1MLy1yLSgnHJdXnDJ9Ecvgg==
+ustudio-ui@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/ustudio-ui/-/ustudio-ui-1.2.3.tgz#b2acbf762ba24d10fcf14c496ee2600708326f3b"
+  integrity sha512-9c41tx1jEO1IXVkcrIZv+gTem6xhwoGuhXsLrq8iuOOWJ4bAYH3LgFvGlE9i9nLpIIoRMh20IqslsGWAxh9fzg==
   dependencies:
     lodash.merge "^4.6.2"
 
