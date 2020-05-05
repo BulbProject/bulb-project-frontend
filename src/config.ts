@@ -58,7 +58,7 @@ export const postCalculation = (
   });
 };
 
-const githubApiServiceUrl = 'http://185.25.116.133:3535';
+const githubApiServiceUrl = 'https://udoc.eprocurement.systems';
 // @TODO need change branch to "master" for production
 const githubBranch = 'develop';
 const githubInfoPath = 'info';

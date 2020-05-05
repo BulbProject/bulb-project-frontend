@@ -49,7 +49,7 @@ const InfoComponent = () => {
           <FadeIn>
             <ReactMarkdown
               escapeHtml={false}
-              source={data?.content || 'Не вдалось знайти документ'}
+              source={data?.content || 'Не вдалося знайти цей документ'}
               renderers={renderers}
             />
           </FadeIn>
