@@ -16,8 +16,6 @@ import { getInfoFile } from 'config';
 import { Container } from 'shared';
 import { FadeIn } from 'components';
 
-import { kebabCaseToSentenceCase } from 'utils';
-
 import ArrowIcon from '../../assets/icons/arrow.inline.svg';
 import ReloadIcon from '../../assets/icons/reload.inline.svg';
 
@@ -27,7 +25,10 @@ import Styled from './Info.styles';
 const InfoComponent = () => {
   const { goBack } = useHistory();
   const { infoFileName } = useParams();
-  const { isLoading, data: infoFileContent, error, triggerRequest } = useRequest(getInfoFile(infoFileName as string));
+  const { isLoading, data, error, triggerRequest } = useRequest<{ content: string }>(
+    getInfoFile(infoFileName as string),
+    [infoFileName]
+  );
 
   return (
     <Container>
@@ -42,11 +43,15 @@ const InfoComponent = () => {
       {!isLoading && !error && (
         <>
           <Helmet>
-            <title>{kebabCaseToSentenceCase(infoFileName as string)}</title>
+            <title>{infoFileName}</title>
           </Helmet>
 
           <FadeIn>
-            <ReactMarkdown escapeHtml={false} source={infoFileContent as string} renderers={renderers} />
+            <ReactMarkdown
+              escapeHtml={false}
+              source={data?.content || 'Не вдалося знайти цей документ'}
+              renderers={renderers}
+            />
           </FadeIn>
         </>
       )}

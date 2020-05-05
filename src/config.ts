@@ -58,21 +58,23 @@ export const postCalculation = (
   });
 };
 
-const githubBaseUrl = 'https://api.github.com/repos/BulbProject/bulb-project-frontend/contents';
-const githubRawBaseUrl = 'https://raw.githubusercontent.com/BulbProject/bulb-project-frontend';
+const githubApiServiceUrl = 'https://udoc.eprocurement.systems';
 // @TODO need change branch to "master" for production
 const githubBranch = 'develop';
 const githubInfoPath = 'info';
 
 export const getInfoFiles = () => {
   return createRequestConfig({
-    baseUrl: githubBaseUrl,
+    baseUrl: githubApiServiceUrl,
     method: 'get',
-    path: `${githubInfoPath}?ref=${githubBranch}`,
+    path: `entries/BulbProject/bulb-project-frontend/${githubBranch}/${githubInfoPath}`,
   });
 };
 
-export const getInfoFile = (fileName: string): AxiosRequestConfig => ({
-  method: 'get',
-  url: `${githubRawBaseUrl}/${githubBranch}/${githubInfoPath}/${fileName}.md`,
-});
+export const getInfoFile = (fileName: string): AxiosRequestConfig => {
+  return createRequestConfig({
+    baseUrl: githubApiServiceUrl,
+    method: 'get',
+    path: `entries/BulbProject/bulb-project-frontend/${githubBranch}/${githubInfoPath}/${fileName}.md`,
+  });
+};
