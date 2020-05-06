@@ -1,10 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 import { Category, CategoryVersion, RequestedNeed } from 'types/data';
 
-const apiServiceProtocol = 'http';
-const apiServiceHost = '185.25.116.133';
-const apiServicePort = 8989;
-const apiServiceBaseUrl = `${apiServiceProtocol}://${apiServiceHost}${apiServicePort ? `:${apiServicePort}` : ''}`;
+const apiServiceBaseUrl = 'https://bulb-api.eprocurement.systems';
 
 const createRequestConfig = ({
   baseUrl,
