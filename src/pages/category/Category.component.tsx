@@ -11,7 +11,7 @@ import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
 import { CategoryVersion, Criterion } from 'types/data';
 import { sortById } from 'utils';
-import { FadeIn, ErrorBoundary } from 'components';
+import { FadeIn, ErrorBoundary, CategoryHeader } from 'components';
 import { Container } from 'shared';
 
 import { Stepper } from './modules';
@@ -45,17 +45,7 @@ const CategoryPage: React.FC = () => {
   return !(error || isLoading) ? (
     <ErrorBoundary>
       <FadeIn>
-        <Styled.Wrapper>
-          <Container>
-            <Flex direction="column">
-              <Styled.CategoryTitle variant="h2">{title}</Styled.CategoryTitle>
-
-              {description && <Styled.CategoryDescription variant="small">{description}</Styled.CategoryDescription>}
-
-              <Styled.Classification {...classification} />
-            </Flex>
-          </Container>
-        </Styled.Wrapper>
+        <CategoryHeader {...{ title, description, classification }} />
 
         <CategoryContextProvider category={{ id: categoryId as string, version: version as string }} criteria={steps}>
           <Stepper {...{ isBooleanGroupActive, setBooleanGroupActive }} />
