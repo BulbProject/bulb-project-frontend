@@ -4,12 +4,11 @@ import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
 
-import { CategoryHeader, ErrorBoundary, FadeIn } from 'components';
+import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
 import { CategoryVersion, RequestedNeed } from 'types/data';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
-import { ErrorPage } from '../../components/ErrorPage';
 
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
