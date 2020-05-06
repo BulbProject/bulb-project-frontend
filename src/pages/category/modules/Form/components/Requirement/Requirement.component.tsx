@@ -1,6 +1,6 @@
 import React from 'react';
 import { RequirementWithOptionDetails as RequirementProps } from 'ts4ocds/extensions/options';
-import { Unit } from "ts4ocds";
+import { Unit } from 'ts4ocds';
 
 import { Field } from 'formfish';
 import { useCategoryContext } from 'pages/category/store';
