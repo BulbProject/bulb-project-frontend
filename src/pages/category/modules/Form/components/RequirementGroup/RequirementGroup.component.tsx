@@ -12,6 +12,8 @@ import { sortById } from 'utils';
 import { HiddenRequirement } from '../HiddenRequirement';
 import { Requirement } from '../Requirement';
 
+import Styled from './RequirementGroup.styles';
+
 export const RequirementGroup: React.FC<
   RequirementGroupProps & {
     isActive: boolean;
@@ -89,26 +91,26 @@ export const RequirementGroup: React.FC<
   if (hasBooleanSelection) {
     if (id === booleanGroupId) {
       return (
-        <Flex margin={{ top: 'regular' }}>
+        <Styled.RequirementGroup>
           <FieldSet name={id}>
             <Title />
           </FieldSet>
-        </Flex>
+        </Styled.RequirementGroup>
       );
     }
 
     return (
-      <Flex margin={{ top: 'regular' }}>
+      <Styled.RequirementGroup>
         <FieldSet name={id}>{Body}</FieldSet>
-      </Flex>
+      </Styled.RequirementGroup>
     );
   }
 
   return (
-    <Flex margin={{ top: 'regular' }}>
+    <Styled.RequirementGroup>
       <Dropdown isDefaultOpen={isActive} onChange={() => setActive()} title={<Title />}>
         <FieldSet name={id}>{Body}</FieldSet>
       </Dropdown>
-    </Flex>
+    </Styled.RequirementGroup>
   );
 };

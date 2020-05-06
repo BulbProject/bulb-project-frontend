@@ -125,15 +125,15 @@ export const Stepper: React.FC<{
         <Styled.Container isContainer>
           <Cell xs={{ size: 2 }}>
             <StepperButton isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
-              Попередній
+              Назад
             </StepperButton>
           </Cell>
 
-          <Cell xs={{ size: 8 }}>
+          <Styled.Step xs={{ size: 8 }}>
             <Flex direction="column">
               <Criteria {...{ isBooleanGroupActive, setBooleanGroupActive }} />
             </Flex>
-          </Cell>
+          </Styled.Step>
 
           <Cell xs={{ size: 2 }}>
             {isLastStep ? (
@@ -152,7 +152,7 @@ export const Stepper: React.FC<{
                 onClick={setStep((id) => id + 1)}
                 isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
               >
-                Наступний
+                Далі
               </StepperButton>
             )}
           </Cell>

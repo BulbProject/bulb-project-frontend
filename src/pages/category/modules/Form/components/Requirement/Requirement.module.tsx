@@ -10,7 +10,6 @@ import Select from 'ustudio-ui/components/Select/Select';
 import RadioGroup from 'ustudio-ui/components/RadioGroup';
 import { Item } from 'ustudio-ui/components/Select/select.types';
 import Switch from 'ustudio-ui/components/Switch';
-import Text from 'ustudio-ui/components/Text';
 
 import { InputProps } from './Requirement.types';
 
@@ -92,22 +91,6 @@ export const renderInput = ({
     default:
       return <NumberInput defaultValue={defaultValue as number} {...props} isDisabled={isDisabled} />;
   }
-};
-
-export const formatProps = ({ title, dataType }: { title?: string; dataType?: DataType }): InputProps => {
-  if (!title) {
-    return {};
-  }
-
-  const formatPlaceholder = (placeholder: string) => `Введіть ${placeholder.toLowerCase()}`;
-  const formatSuffix = (suffix: string) => <Text variant="caption">{suffix.replace(/\s/g, '')}</Text>;
-
-  const suffix = title.match(/\(.+\)/);
-
-  return {
-    placeholder: formatPlaceholder(title.slice(0, suffix ? title.indexOf('(') : title.length)).trim(),
-    suffix: suffix ? formatSuffix(suffix[0].slice(1, -1)) : formatSuffix(dataType as string),
-  };
 };
 
 export const isBoolean = (dataType?: DataType): dataType is 'boolean' => dataType === 'boolean';

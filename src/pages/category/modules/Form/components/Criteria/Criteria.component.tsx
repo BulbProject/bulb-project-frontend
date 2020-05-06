@@ -48,7 +48,7 @@ export const Criteria = ({
   }, [currentCriterion.id, hasBooleanSelectionState]);
 
   return (
-    <Flex direction="column" margin={{ top: 'regular', bottom: 'large' }}>
+    <Flex direction="column">
       {requirementGroups.map((requirementGroup) => (
         <RequirementGroup
           {...requirementGroup}
