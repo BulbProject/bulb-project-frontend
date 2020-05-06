@@ -10,15 +10,15 @@ const Wrapper = styled.div`
 `;
 
 const CategoryTitle = styled(Text)`
-  font-weight: 300;
-
   margin-bottom: var(--i-large);
+
+  font-weight: 300;
 `;
 
 const CategoryDescription = styled(Text)`
-  color: var(--c-dark);
-
   margin-top: var(--i-medium);
+
+  color: var(--c-dark);
 `;
 
 const Classification = styled(ClassificationComponent)`
