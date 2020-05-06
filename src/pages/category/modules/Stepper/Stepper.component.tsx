@@ -57,7 +57,7 @@ export const Stepper: React.FC<{
     }, 100);
   };
 
-  const { replace } = useHistory();
+  const { push } = useHistory();
 
   return (
     <Flex direction="column">
@@ -74,7 +74,7 @@ export const Stepper: React.FC<{
           onChange={() => {
             sessionStorage.setItem(`${category.id}/${category.version}`, JSON.stringify(calculationResponse));
 
-            replace(`/categories/${category.id}/${category.version}/calculation-result`);
+            push(`/categories/${category.id}/${category.version}/calculation-result`);
           }}
         >
           <Text>Ваш розрахунковий запит був успішно надісланий :)</Text>
