@@ -16,10 +16,13 @@ const Layout = styled.div`
 
 const Header = styled.header`
   height: 64px;
+  width: 100%;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  position: fixed;
 
   padding: var(--i-regular) var(--i-large);
 
@@ -184,6 +187,7 @@ const Drawer = styled(LibDrawer)`
 const Main = styled.main`
   flex-grow: 1;
 
+  margin-top: 64px;
   padding: var(--i-large) 0;
 `;
 
