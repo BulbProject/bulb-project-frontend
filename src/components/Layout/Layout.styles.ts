@@ -26,6 +26,8 @@ const Header = styled.header`
 
   padding: var(--i-regular) var(--i-large);
 
+  z-index: var(--l-top);
+
   background-image: linear-gradient(to top, #f6f6f6, #fff);
 
   box-shadow: var(--s-light);
