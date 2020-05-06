@@ -72,11 +72,9 @@ export const Stepper: React.FC<{
           title="Успіх!"
           isOpen={!isLoading && !error && Boolean(requestedNeedData)}
           onChange={() => {
-            if (calculationResponse) {
-              sessionStorage.setItem(calculationResponse.id, JSON.stringify(calculationResponse));
+            sessionStorage.setItem(`${category.id}/${category.version}`, JSON.stringify(calculationResponse));
 
-              replace('/');
-            }
+            replace(`/calculation-result/${category.id}/${category.version}`);
           }}
         >
           <Text>Ваш розрахунковий запит був успішно надісланий :)</Text>
