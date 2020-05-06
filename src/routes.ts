@@ -18,7 +18,7 @@ const routes: RouteProps[] = [
     component: CategoryPage,
   },
   {
-    path: '/calculation-result/:categoryId/:version',
+    path: '/categories/:categoryId/:version/calculation-result',
     component: CalculationResult,
   },
   {

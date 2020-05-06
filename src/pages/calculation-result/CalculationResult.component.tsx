@@ -23,7 +23,7 @@ const CalculationResult: React.FC = () => {
   const { category: { title, description, classification } = {} } = categoryVersion || ({} as CategoryVersion);
 
   useEffect(() => {
-    const sessionStorageData = sessionStorage.getItem('calculation');
+    const sessionStorageData = sessionStorage.getItem(`${categoryId}/${version}`);
 
     if (sessionStorageData) {
       setCalculationData(JSON.parse(sessionStorageData));

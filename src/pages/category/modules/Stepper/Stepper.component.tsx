@@ -74,7 +74,7 @@ export const Stepper: React.FC<{
           onChange={() => {
             sessionStorage.setItem(`${category.id}/${category.version}`, JSON.stringify(calculationResponse));
 
-            replace(`/calculation-result/${category.id}/${category.version}`);
+            replace(`/categories/${category.id}/${category.version}/calculation-result`);
           }}
         >
           <Text>Ваш розрахунковий запит був успішно надісланий :)</Text>
