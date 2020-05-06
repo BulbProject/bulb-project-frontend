@@ -94,22 +94,10 @@ export const renderInput = ({
   }
 };
 
-export const formatSuffix = ({
-  title,
-  dataType,
-}: {
-  title?: string;
-  dataType?: DataType;
-}): ReactElement | undefined => {
-  if (!title) {
-    return undefined;
-  }
-
+export const getSuffix = ({ unit, dataType }: { unit?: string; dataType?: DataType }): ReactElement | undefined => {
   const transformSuffix = (suffix: string) => suffix.replace(/\s/g, '');
 
-  const suffix = title.match(/\(.+\)/);
-
-  return <Text variant="caption">{transformSuffix(suffix ? suffix[0].slice(1, -1) : (dataType as string))}</Text>;
+  return <Text variant="caption">{transformSuffix(unit || (dataType as string))}</Text>;
 };
 
 export const isBoolean = (dataType?: DataType): dataType is 'boolean' => dataType === 'boolean';

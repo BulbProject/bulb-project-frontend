@@ -1,11 +1,12 @@
 import React from 'react';
 import { RequirementWithOptionDetails as RequirementProps } from 'ts4ocds/extensions/options';
-import { Field } from 'formfish';
+import { Unit } from "ts4ocds";
 
+import { Field } from 'formfish';
 import { useCategoryContext } from 'pages/category/store';
 import Flex from 'ustudio-ui/components/Flex';
-import { formatSuffix, isBoolean, renderInput } from './Requirement.module';
 
+import { getSuffix, isBoolean, renderInput } from './Requirement.module';
 import Styled from './Requirement.styles';
 
 export const Requirement = ({
@@ -13,11 +14,13 @@ export const Requirement = ({
   title,
   description,
   expectedValue,
+  unit,
   dataType,
   optionDetails,
   isDisabled,
 }: RequirementProps & {
   isDisabled: boolean;
+  unit?: Unit;
 }) => {
   const { requestedNeed, currentCriterion } = useCategoryContext();
 
@@ -74,7 +77,7 @@ export const Requirement = ({
             expectedValue,
             isDisabled,
             defaultValue: requestedNeed[currentCriterion.id]?.[id],
-            props: { suffix: formatSuffix({ title, dataType }), placeholder: description },
+            props: { suffix: getSuffix({ unit: unit?.name, dataType }), placeholder: description },
             // eslint-disable-next-line no-nested-ternary
             options: optionDetails
               ? 'optionGroups' in optionDetails
