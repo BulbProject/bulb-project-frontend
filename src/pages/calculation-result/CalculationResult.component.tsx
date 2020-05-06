@@ -41,13 +41,19 @@ const CalculationResult: React.FC = () => {
               <Text variant="code">{JSON.stringify(calculationData, null, 2)}</Text>
             )}
 
-            {isLoading && <Spinner />}
-
-            {(error || !calculationData || !categoryVersion) && (
-              <Text color="negative">
-                Нажаль, Ви ще не проводили <Link to="/">розрахунків</Link> для цієї категорії :(
-              </Text>
+            {isLoading && (
+              <Flex alignment={{ horizontal: 'center' }}>
+                <Spinner delay={500} />
+              </Flex>
             )}
+
+            {error ||
+              !calculationData ||
+              (!categoryVersion && !isLoading && (
+                <Text color="negative">
+                  Нажаль, Ви ще не проводили <Link to="/">розрахунків</Link> для цієї категорії :(
+                </Text>
+              ))}
           </Flex>
         </Container>
       </FadeIn>
