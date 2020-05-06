@@ -4,6 +4,7 @@ import { RouteProps } from 'react-router-dom';
 
 const Index = lazy(() => import('./pages/main/Main.component'));
 const CategoryPage = lazy(() => import('./pages/category/Category.component'));
+const CalculationResult = lazy(() => import('./pages/calculation-result/CalculationResult.component'));
 const InfoPage = lazy(() => import('./pages/info/Info.component'));
 const NotFoundPage = lazy(() => import('./pages/notFound/NotFount.component'));
 
@@ -15,6 +16,10 @@ const routes: RouteProps[] = [
   {
     path: '/categories/:categoryId/:version',
     component: CategoryPage,
+  },
+  {
+    path: '/categories/:categoryId/:version/calculation-result',
+    component: CalculationResult,
   },
   {
     path: '/info/:infoFileName',

@@ -6,7 +6,7 @@ import Text from 'ustudio-ui/components/Text';
 import { useHistory } from 'react-router-dom';
 
 import { modifyId, sortById } from 'utils';
-import { postCalculation } from 'config';
+import { postCalculationConfig } from 'config';
 import { useRequest } from 'hooks';
 import { RequestedNeed } from 'types/data';
 
@@ -40,8 +40,8 @@ export const Stepper: React.FC<{
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const { isLoading, error, triggerRequest } = useRequest(
-    postCalculation(category.id, category.version, { requestedNeed: requestedNeedData } as {
+  const { isLoading, error, triggerRequest, data: calculationResponse } = useRequest<RequestedNeed>(
+    postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
       requestedNeed: RequestedNeed;
     }),
     [requestedNeedData],
@@ -57,7 +57,7 @@ export const Stepper: React.FC<{
     }, 100);
   };
 
-  const { replace } = useHistory();
+  const { push } = useHistory();
 
   return (
     <Flex direction="column">
@@ -71,7 +71,11 @@ export const Stepper: React.FC<{
         <Styled.Modal
           title="Успіх!"
           isOpen={!isLoading && !error && Boolean(requestedNeedData)}
-          onChange={() => replace('/')}
+          onChange={() => {
+            sessionStorage.setItem(`${category.id}/${category.version}`, JSON.stringify(calculationResponse));
+
+            push(`/categories/${category.id}/${category.version}/calculation-result`);
+          }}
         >
           <Text>Ваш розрахунковий запит був успішно надісланий :)</Text>
         </Styled.Modal>
