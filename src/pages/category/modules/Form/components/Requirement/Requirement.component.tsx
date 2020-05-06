@@ -4,13 +4,14 @@ import { Field } from 'formfish';
 
 import { useCategoryContext } from 'pages/category/store';
 import Flex from 'ustudio-ui/components/Flex';
-import { formatProps, isBoolean, renderInput } from './Requirement.module';
+import { formatSuffix, formatTitle, isBoolean, renderInput } from './Requirement.module';
 
 import Styled from './Requirement.styles';
 
 export const Requirement = ({
   id,
   title,
+  description,
   expectedValue,
   dataType,
   optionDetails,
@@ -63,7 +64,9 @@ export const Requirement = ({
       >
         {title && (
           <Styled.Title variant="caption" isBoolean={isBoolean(dataType)}>
-            {optionDetails && 'optionGroups' in optionDetails ? optionDetails.optionGroups[0].description : title}
+            {optionDetails && 'optionGroups' in optionDetails
+              ? optionDetails.optionGroups[0].description
+              : formatTitle({ title })}
           </Styled.Title>
         )}
 
@@ -73,7 +76,7 @@ export const Requirement = ({
             expectedValue,
             isDisabled,
             defaultValue: requestedNeed[currentCriterion.id]?.[id],
-            props: formatProps({ title, dataType }),
+            props: { suffix: formatSuffix({ title, dataType }), placeholder: description },
             // eslint-disable-next-line no-nested-ternary
             options: optionDetails
               ? 'optionGroups' in optionDetails

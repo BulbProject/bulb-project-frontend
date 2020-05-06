@@ -94,20 +94,36 @@ export const renderInput = ({
   }
 };
 
-export const formatProps = ({ title, dataType }: { title?: string; dataType?: DataType }): InputProps => {
+export const formatTitle = ({ title }: { title?: string }): string | undefined => {
   if (!title) {
-    return {};
+    return undefined;
   }
-
-  const formatPlaceholder = (placeholder: string) => `Введіть ${placeholder.toLowerCase()}`;
-  const formatSuffix = (suffix: string) => <Text variant="caption">{suffix.replace(/\s/g, '')}</Text>;
 
   const suffix = title.match(/\(.+\)/);
 
-  return {
-    placeholder: formatPlaceholder(title.slice(0, suffix ? title.indexOf('(') : title.length)).trim(),
-    suffix: suffix ? formatSuffix(suffix[0].slice(1, -1)) : formatSuffix(dataType as string),
-  };
+  return title.slice(0, suffix ? title.indexOf('(') : title.length).trim();
+};
+
+export const formatSuffix = ({
+  title,
+  dataType,
+}: {
+  title?: string;
+  dataType?: DataType;
+}): ReactElement | undefined => {
+  if (!title) {
+    return undefined;
+  }
+
+  const transformSuffix = (suffix: string) => suffix.replace(/\s/g, '');
+
+  const suffix = title.match(/\(.+\)/);
+
+  return (
+    <Text variant="caption">
+      {suffix ? transformSuffix(suffix[0].slice(1, -1)) : transformSuffix(dataType as string)}
+    </Text>
+  );
 };
 
 export const isBoolean = (dataType?: DataType): dataType is 'boolean' => dataType === 'boolean';
