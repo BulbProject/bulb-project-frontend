@@ -37,13 +37,13 @@ const CalculationResult: React.FC = () => {
 
         <Container>
           <Flex margin={{ top: 'large' }}>
-            {calculationData && !isLoading && !error && (
+            {calculationData && categoryVersion && !isLoading && !error && (
               <Text variant="code">{JSON.stringify(calculationData, null, 2)}</Text>
             )}
 
             {isLoading && <Spinner />}
 
-            {(error || !calculationData) && (
+            {(error || !calculationData || !categoryVersion) && (
               <Text color="negative">
                 Нажаль, Ви ще не проводили <Link to="/">розрахунків</Link> для цієї категорії :(
               </Text>
