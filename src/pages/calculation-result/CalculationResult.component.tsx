@@ -9,6 +9,7 @@ import { Container } from 'shared';
 import { CategoryVersion, RequestedNeed } from 'types/data';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
+import { ErrorPage } from '../../components/ErrorPage';
 
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
@@ -33,27 +34,24 @@ const CalculationResult: React.FC = () => {
   return (
     <ErrorBoundary>
       <FadeIn>
-        {categoryVersion && <CategoryHeader {...{ title, description, classification }} />}
+        {categoryVersion && calculationData && <CategoryHeader {...{ title, description, classification }} />}
 
         <Container>
-          <Flex margin={{ top: 'large' }}>
+          <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
             {calculationData && categoryVersion && !isLoading && !error && (
               <Text variant="code">{JSON.stringify(calculationData, null, 2)}</Text>
             )}
 
-            {isLoading && (
-              <Flex alignment={{ horizontal: 'center' }}>
-                <Spinner delay={500} />
-              </Flex>
+            {isLoading && <Spinner delay={500} />}
+
+            {(!calculationData || !categoryVersion) && !isLoading && (
+              <Text color="negative">
+                Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для цієї
+                категорії ☹️
+              </Text>
             )}
 
-            {error ||
-              !calculationData ||
-              (!categoryVersion && !isLoading && (
-                <Text color="negative">
-                  Нажаль, Ви ще не проводили <Link to="/">розрахунків</Link> для цієї категорії :(
-                </Text>
-              ))}
+            {error && !isLoading && <ErrorPage />}
           </Flex>
         </Container>
       </FadeIn>
