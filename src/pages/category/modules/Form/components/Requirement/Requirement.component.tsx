@@ -4,7 +4,7 @@ import { Field } from 'formfish';
 
 import { useCategoryContext } from 'pages/category/store';
 import Flex from 'ustudio-ui/components/Flex';
-import { formatSuffix, formatTitle, isBoolean, renderInput } from './Requirement.module';
+import { formatSuffix, isBoolean, renderInput } from './Requirement.module';
 
 import Styled from './Requirement.styles';
 
@@ -64,9 +64,7 @@ export const Requirement = ({
       >
         {title && (
           <Styled.Title variant="caption" isBoolean={isBoolean(dataType)}>
-            {optionDetails && 'optionGroups' in optionDetails
-              ? optionDetails.optionGroups[0].description
-              : formatTitle({ title })}
+            {optionDetails && 'optionGroups' in optionDetails ? optionDetails.optionGroups[0].description : title}
           </Styled.Title>
         )}
 

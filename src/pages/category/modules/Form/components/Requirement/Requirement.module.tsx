@@ -94,16 +94,6 @@ export const renderInput = ({
   }
 };
 
-export const formatTitle = ({ title }: { title?: string }): string | undefined => {
-  if (!title) {
-    return undefined;
-  }
-
-  const suffix = title.match(/\(.+\)/);
-
-  return title.slice(0, suffix ? title.indexOf('(') : title.length).trim();
-};
-
 export const formatSuffix = ({
   title,
   dataType,
@@ -119,11 +109,7 @@ export const formatSuffix = ({
 
   const suffix = title.match(/\(.+\)/);
 
-  return (
-    <Text variant="caption">
-      {suffix ? transformSuffix(suffix[0].slice(1, -1)) : transformSuffix(dataType as string)}
-    </Text>
-  );
+  return <Text variant="caption">{transformSuffix(suffix ? suffix[0].slice(1, -1) : (dataType as string))}</Text>;
 };
 
 export const isBoolean = (dataType?: DataType): dataType is 'boolean' => dataType === 'boolean';
