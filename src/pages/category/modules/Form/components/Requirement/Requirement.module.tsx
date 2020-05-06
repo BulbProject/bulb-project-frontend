@@ -10,7 +10,6 @@ import Select from 'ustudio-ui/components/Select/Select';
 import RadioGroup from 'ustudio-ui/components/RadioGroup';
 import { Item } from 'ustudio-ui/components/Select/select.types';
 import Switch from 'ustudio-ui/components/Switch';
-import Text from 'ustudio-ui/components/Text';
 
 import { InputProps } from './Requirement.types';
 
@@ -92,12 +91,6 @@ export const renderInput = ({
     default:
       return <NumberInput defaultValue={defaultValue as number} {...props} isDisabled={isDisabled} />;
   }
-};
-
-export const getSuffix = ({ unit, dataType }: { unit?: string; dataType?: DataType }): ReactElement | undefined => {
-  const transformSuffix = (suffix: string) => suffix.replace(/\s/g, '');
-
-  return <Text variant="caption">{transformSuffix(unit || (dataType as string))}</Text>;
 };
 
 export const isBoolean = (dataType?: DataType): dataType is 'boolean' => dataType === 'boolean';
