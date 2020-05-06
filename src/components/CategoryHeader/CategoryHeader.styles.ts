@@ -3,10 +3,10 @@ import Text from 'ustudio-ui/components/Text';
 import { Classification as ClassificationComponent } from '../../shared/Classification';
 
 const Wrapper = styled.div`
-  background-color: #f0f5f2;
-
   margin-top: calc(var(--i-large) * -1);
   padding: var(--i-large);
+
+  background-color: #f0f5f2;
 `;
 
 const CategoryTitle = styled(Text)`
