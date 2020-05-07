@@ -1,0 +1,40 @@
+import React from 'react';
+import { Metric } from 'ts4ocds/extensions/metrics';
+
+import Text from 'ustudio-ui/components/Text';
+import Flex from 'ustudio-ui/components/Flex';
+import Styled from './Forecasts.styles';
+
+export const Forecasts = ({ forecasts }: { forecasts: Metric[] }) => {
+  return (
+    <Styled.Forecasts>
+      <Flex margin={{ bottom: 'regular' }}>
+        <Text appearance="bold"> Збереження</Text>
+      </Flex>
+
+      {forecasts.map((forecast) => (
+        <Flex key={forecast.id} direction="column">
+          <Flex margin={{ bottom: 'regular' }}>
+            <Text variant="caption"> {forecast.title}</Text>
+          </Flex>
+
+          {forecast.observations.map((observation) => (
+            <Flex key={forecast.id} margin={{ bottom: 'regular' }}>
+              <Styled.ObservationTitle>
+                <Text variant="small">
+                  {/*@TODO need clarification note or notes*/}
+                  {observation.note}
+                  {observation?.unit ? `, ${observation.unit.name}` : ''}
+                </Text>
+
+                <Text variant="small"> {'.'.repeat(250)}</Text>
+              </Styled.ObservationTitle>
+
+              <Text variant="small">{observation.measure}</Text>
+            </Flex>
+          ))}
+        </Flex>
+      ))}
+    </Styled.Forecasts>
+  );
+};

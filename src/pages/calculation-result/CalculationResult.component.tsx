@@ -11,6 +11,7 @@ import { Container } from 'shared';
 import { CategoryVersion, RequestedNeed } from 'types/data';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
+import { Items } from './modules/Items';
 
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
@@ -41,7 +42,9 @@ const CalculationResult: React.FC = () => {
           <Grid padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}>
             <Cell lg={{ size: 3 }}>5</Cell>
 
-            <Cell lg={{ size: 9 }}>Items</Cell>
+            <Cell lg={{ size: 9 }}>
+              <Items items={categoryVersion.category.items} documents={categoryVersion.category?.documents} />
+            </Cell>
           </Grid>
         ) : (
           <Container>

@@ -9361,10 +9361,10 @@ tryer@^1.0.1:
   resolved "https://registry.yarnpkg.com/tryer/-/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
   integrity sha512-c3zayb8/kWWpycWYg87P71E1S1ZL6b6IJxfb5fvsUgsf0S2MVGaDhDXXjDMpdCpfWXqptc+4mXwmiy1ypXqRAA==
 
-ts4ocds@^1.0.0-rc.0:
-  version "1.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/ts4ocds/-/ts4ocds-1.0.0-rc.0.tgz#bdc1c27d3980064606408d7f181d750abebcd3c0"
-  integrity sha512-R8I8d3WeZGUSePpPCa1cFwyrEmQxFahaAnh4U+mWs5+HQSv/hyRar0jiELouDzDP0mSX3MzvX9ojvLkdBCL28g==
+ts4ocds@^1.0.0-rc.1:
+  version "1.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/ts4ocds/-/ts4ocds-1.0.0-rc.1.tgz#a055590b67d7492ece7bbf87daa679e56da8ef4d"
+  integrity sha512-GiVz4DD+prUcO+VZAImBvFgHKcwZEXif/UmL1IVVvclo1cYraqQ5ugP7F/wI8hvKv652N8Yb2MKivOwh4fvxPQ==
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"

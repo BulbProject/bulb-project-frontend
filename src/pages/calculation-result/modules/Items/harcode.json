@@ -1,0 +1,177 @@
+{
+  "category": "",
+  "version": "",
+  "availableVariants": [
+    {
+      "id": "01000000",
+      "relatedItem": "item-1",
+      "quantity": "2",
+      "forecasts": [
+        {
+          "id": "01010000",
+          "title": "Payback Period",
+          "observations": [
+            {
+              "id": "01010100",
+              "note": "Unit per hours",
+              "measure": "5",
+              "unit": {
+                "id": "01010101",
+                "name": "hour"
+              }
+            }
+          ]
+        },
+        {
+          "id": "01020000",
+          "title": "Lifetime Savings / Unit",
+          "observations": [
+            {
+              "id": "01020100",
+              "note": "Electricity",
+              "measure": "2.28",
+              "unit": {
+                "id": "01020101",
+                "name": "kWh"
+              }
+            },
+            {
+              "id": "01020200",
+              "note": "Financial",
+              "measure": "148.82",
+              "unit": {
+                "id": "01020201",
+                "name": "UAH"
+              }
+            }
+          ]
+        }
+      ],
+      "targets": [
+        {
+          "id": "01010000",
+          "description": "Beautifulness",
+          "observations": [
+            {
+              "id": "01010100",
+              "notes": "Shininess",
+              "measure": "100500"
+            },
+            {
+              "id": "01010200",
+              "notes": "Glowy",
+              "measure": "Yes"
+            }
+          ]
+        },
+        {
+          "id": "01020000",
+          "description": "Item classification",
+          "observations": [
+            {
+              "id": "01020100",
+              "notes": "Bulb",
+              "measure": "Yes"
+            }
+          ]
+        }
+      ],
+      "avgValue": {},
+      "relatedProducts": []
+    },
+    {
+      "id": "02000000",
+      "relatedItem": "item-1",
+      "quantity": "2",
+      "forecasts": [
+        {
+          "id": "02010000",
+          "title": "Payback Period",
+          "observations": [
+            {
+              "id": "02010100",
+              "note": "Unit per hours",
+              "measure": "51",
+              "unit": {
+                "id": "02010101",
+                "name": "hour"
+              }
+            }
+          ]
+        },
+        {
+          "id": "02020000",
+          "title": "Lifetime Savings / Unit",
+          "observations": [
+            {
+              "id": "02020100",
+              "note": "Electricity",
+              "measure": "2.28",
+              "unit": {
+                "id": "02020101",
+                "name": "kWh"
+              }
+            },
+            {
+              "id": "02020200",
+              "note": "Financial",
+              "measure": "148.82",
+              "unit": {
+                "id": "02020201",
+                "name": "UAH"
+              }
+            }
+          ]
+        }
+      ],
+      "targets": [
+        {
+          "id": "02010000",
+          "description": "Beautifulness",
+          "observations": [
+            {
+              "id": "02010100",
+              "notes": "Shininess",
+              "measure": "100500"
+            },
+            {
+              "id": "02010200",
+              "notes": "Glowy",
+              "measure": "Yes"
+            }
+          ]
+        },
+        {
+          "id": "02020000",
+          "description": "Item classification",
+          "observations": [
+            {
+              "id": "02020100",
+              "notes": "Bulb",
+              "measure": "Yes"
+            }
+          ]
+        }
+      ],
+      "avgValue": {},
+      "relatedProducts": [
+        {
+          "id": "related-item-1",
+          "description": "One of related blabulbs",
+          "classification": {
+            "description": "Sealed-beam lamp units",
+            "id": "31511000-1",
+            "scheme": "CPV"
+          },
+          "unit": {
+            "id": "02020201",
+            "name": "UAH",
+            "value": "228"
+          },
+          "illustration": "https://smarttender.biz/ws/GetFile.ashx?file=4820118293530.png&folder=ecatalogue&nodownload=1&cache=1",
+          "url": "https://smarttender.biz/prozorro-market/product/titanum-a60-10vt-e27-4100k-tla6010274/2584/"
+        }
+      ]
+    }
+  ]
+}
