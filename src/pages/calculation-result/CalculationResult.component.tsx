@@ -3,12 +3,17 @@ import { Link, useParams } from 'react-router-dom';
 import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
+import Grid from 'ustudio-ui/components/Grid/Grid';
+import Cell from 'ustudio-ui/components/Grid/Cell';
 
 import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
 import { CategoryVersion, RequestedNeed } from 'types/data';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
+
+
+import Styled from './CalculationResult.styles';
 
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
@@ -35,24 +40,30 @@ const CalculationResult: React.FC = () => {
       <FadeIn>
         {categoryVersion && calculationData && <CategoryHeader {...{ title, description, classification }} />}
 
-        <Container>
-          <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
-            {calculationData && categoryVersion && !isLoading && !error && (
-              <Text variant="code">{JSON.stringify(calculationData, null, 2)}</Text>
-            )}
+        {calculationData && categoryVersion && !isLoading && !error ? (
+          <Grid lg={{ template: '3fr 9fr' }} padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}>
+            <Cell>5</Cell>
 
-            {isLoading && <Spinner delay={500} />}
+            <Styled.ItemsContainer>
+           Items
+            </Styled.ItemsContainer>
+          </Grid>
+        ) : (
+          <Container>
+            <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
+              {isLoading && <Spinner delay={500} />}
 
-            {(!calculationData || !categoryVersion) && !isLoading && (
-              <Text color="negative">
-                Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для цієї
-                категорії ☹️
-              </Text>
-            )}
+              {(!calculationData || !categoryVersion) && !isLoading && (
+                <Text color="negative">
+                  Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
+                  цієї категорії ☹️
+                </Text>
+              )}
 
-            {error && !isLoading && <ErrorPage />}
-          </Flex>
-        </Container>
+              {error && !isLoading && <ErrorPage />}
+            </Flex>
+          </Container>
+        )}
       </FadeIn>
     </ErrorBoundary>
   );
