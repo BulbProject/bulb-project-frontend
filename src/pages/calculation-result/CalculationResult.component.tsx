@@ -8,15 +8,18 @@ import Cell from 'ustudio-ui/components/Grid/Cell';
 
 import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
-import { CategoryVersion, RequestedNeed } from 'types/data';
+import { CategoryVersion } from 'types/data';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
+import { StoreRequestedNeed } from 'types/globals';
+
+import { CalculationContextProvider } from './store';
 
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
 
   // proper typings will come with the proper response
-  const [calculationData, setCalculationData] = useState<RequestedNeed | null>(null);
+  const [calculationData, setCalculationData] = useState<{ payload: StoreRequestedNeed } | null>(null);
 
   const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
     getCategoryVersionConfig(categoryId as string, version as string)
@@ -38,11 +41,13 @@ const CalculationResult: React.FC = () => {
         {categoryVersion && calculationData && <CategoryHeader {...{ title, description, classification }} />}
 
         {calculationData && categoryVersion && !isLoading && !error ? (
-          <Grid padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}>
-            <Cell lg={{ size: 3 }}>5</Cell>
+          <CalculationContextProvider category={categoryVersion.category} requestedNeed={calculationData.payload}>
+            <Grid padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}>
+              <Cell lg={{ size: 3 }}>5</Cell>
 
-            <Cell lg={{ size: 9 }}>Items</Cell>
-          </Grid>
+              <Cell lg={{ size: 9 }}>Items</Cell>
+            </Grid>
+          </CalculationContextProvider>
         ) : (
           <Container>
             <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
