@@ -31,8 +31,8 @@ export const RequirementGroup: React.FC<
   const Title = () => {
     if (id === booleanGroupId) {
       return (
-        <Flex alignment={{ vertical: 'center' }} margin={{ top: 'regular' }}>
-          <Text color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'} appearance="bold">
+        <Flex alignment={{ vertical: 'center', horizontal: 'end' }} margin={{ top: 'regular' }}>
+          <Text color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'} appearance="bold" variant="caption">
             {description || requirements[0].title}
           </Text>
 
