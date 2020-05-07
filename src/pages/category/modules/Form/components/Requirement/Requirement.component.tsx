@@ -51,6 +51,7 @@ export const Requirement = ({
       direction={isBoolean(dataType) ? 'row' : 'column'}
       isReversed={isBoolean(dataType)}
       alignment={{ horizontal: isBoolean(dataType) ? 'end' : 'start', vertical: 'center' }}
+      margin={{ top: 'medium' }}
     >
       <Styled.Requirement htmlFor={id}>
         {title && (

@@ -17,21 +17,14 @@ export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, requirem
 
   return (
     <FieldSet name={id}>
-      <Flex margin={{ top: hasSingleBooleanRequirement ? undefined : 'large' }}>
-        {hasSingleBooleanRequirement && <HiddenRequirement {...requirements[0]} />}
-
-        {!hasSingleBooleanRequirement && hasSingleRequirement && <Requirement {...requirements[0]} />}
-
-        {!hasSingleBooleanRequirement && !hasSingleRequirement && (
+      <Flex margin={{ top: hasSingleBooleanRequirement ? undefined : 'regular' }}>
+        {hasSingleBooleanRequirement ? (
+          <HiddenRequirement {...requirements[0]} />
+        ) : (
           <Flex direction="column">
-            <HiddenRequirement {...requirements[0]} />
-
-            {requirements
-              .slice(1)
-              .sort(sortById)
-              .map((requirement) => (
-                <Requirement {...requirement} key={requirement.id} />
-              ))}
+            {requirements.sort(sortById).map((requirement) => (
+              <Requirement {...requirement} key={requirement.id} />
+            ))}
           </Flex>
         )}
       </Flex>
