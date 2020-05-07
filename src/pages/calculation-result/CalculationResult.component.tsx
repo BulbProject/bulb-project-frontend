@@ -3,17 +3,18 @@ import { Link, useParams } from 'react-router-dom';
 import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
-import Grid from 'ustudio-ui/components/Grid/Grid';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 
 import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
-import { CategoryVersion } from 'types/data';
+import type { CategoryVersion } from 'types/data';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
-import { StoreRequestedNeed } from 'types/globals';
+import type { StoreRequestedNeed } from 'types/globals';
+import { RequestedNeed } from './modules/RequestedNeed';
 
 import { CalculationContextProvider } from './store';
+import Styled from './CalculationResult.styles';
 
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
@@ -42,11 +43,17 @@ const CalculationResult: React.FC = () => {
 
         {calculationData && categoryVersion && !isLoading && !error ? (
           <CalculationContextProvider category={categoryVersion.category} requestedNeed={calculationData.payload}>
-            <Grid padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}>
-              <Cell lg={{ size: 3 }}>5</Cell>
+            <Styled.Container
+              padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}
+              xs={{ gap: 32 }}
+              lg={{ gap: 32 }}
+            >
+              <Cell lg={{ size: 3 }}>
+                <RequestedNeed />
+              </Cell>
 
               <Cell lg={{ size: 9 }}>Items</Cell>
-            </Grid>
+            </Styled.Container>
           </CalculationContextProvider>
         ) : (
           <Container>

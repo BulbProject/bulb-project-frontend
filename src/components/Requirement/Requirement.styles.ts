@@ -15,7 +15,7 @@ const Title = styled(Text)<{ isBoolean: boolean }>(
     ${isBoolean
       ? css`
           margin-bottom: 2px;
-          margin-left: var(--i-medium);
+          margin-right: var(--i-regular);
         `
       : css`
           margin-bottom: var(--i-small);

@@ -52,17 +52,7 @@ export const renderInput = ({
     case 'string':
       return <TextInput defaultValue={defaultValue as string} {...props} />;
     case 'boolean':
-      return (
-        <Checkbox
-          isDisabled={isDisabled}
-          defaultValue={defaultValue as boolean}
-          styled={{
-            CheckboxContainer: css`
-              margin-left: var(--i-regular);
-            `,
-          }}
-        />
-      );
+      return <Checkbox isDisabled={isDisabled} defaultValue={defaultValue as boolean} />;
     case 'integer':
     case 'number':
     default:
