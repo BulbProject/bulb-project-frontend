@@ -12,9 +12,6 @@ import { CategoryVersion, RequestedNeed } from 'types/data';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
 
-
-import Styled from './CalculationResult.styles';
-
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
 
@@ -41,12 +38,10 @@ const CalculationResult: React.FC = () => {
         {categoryVersion && calculationData && <CategoryHeader {...{ title, description, classification }} />}
 
         {calculationData && categoryVersion && !isLoading && !error ? (
-          <Grid lg={{ template: '3fr 9fr' }} padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}>
-            <Cell>5</Cell>
+          <Grid padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}>
+            <Cell lg={{ size: 3 }}>5</Cell>
 
-            <Styled.ItemsContainer>
-           Items
-            </Styled.ItemsContainer>
+            <Cell lg={{ size: 9 }}>Items</Cell>
           </Grid>
         ) : (
           <Container>
