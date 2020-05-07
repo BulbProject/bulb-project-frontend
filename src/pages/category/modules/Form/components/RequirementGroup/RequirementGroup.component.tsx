@@ -4,9 +4,9 @@ import { FieldSet } from 'formfish';
 
 import { RequirementGroup as RequirementGroupProps } from 'types/data';
 import { sortById } from 'utils';
+import { Requirement } from 'components';
 
 import { HiddenRequirement } from '../HiddenRequirement';
-import { Requirement } from '../Requirement';
 
 export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, requirements }) => {
   const hasSingleRequirement = useMemo(() => requirements.length === 1, [id]);

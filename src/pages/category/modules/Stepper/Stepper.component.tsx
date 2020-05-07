@@ -72,7 +72,7 @@ export const Stepper: React.FC = () => {
             sessionStorage.setItem(
               `${category.id}/${category.version}`,
               JSON.stringify({
-                payload: requestedNeedData,
+                payload: requestedNeed,
                 response: calculationResponse,
               })
             );

@@ -17,11 +17,12 @@ export const Requirement = ({
   id,
   title,
   description,
-  expectedValue,
+  isDisabled,
   unit,
   dataType,
   optionDetails,
 }: RequirementProps & {
+  isDisabled?: boolean;
   unit?: Unit;
 }) => {
   const { requestedNeed, currentCriterion } = useCategoryContext();
@@ -29,10 +30,6 @@ export const Requirement = ({
   const getValue = () => {
     if (optionDetails) {
       return (value: string) => value;
-    }
-
-    if (expectedValue !== undefined) {
-      return () => expectedValue;
     }
 
     return undefined;
@@ -63,7 +60,7 @@ export const Requirement = ({
         <Field name={id} getValue={getValue()} setValue={setValue()}>
           {renderInput({
             dataType,
-            expectedValue,
+            isDisabled,
             defaultValue: requestedNeed[currentCriterion.id]?.[id],
             props: {
               suffix: <Text variant="caption">{unit?.name || (dataType as string)}</Text>,
