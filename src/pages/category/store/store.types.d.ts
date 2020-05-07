@@ -1,11 +1,11 @@
-import { Dispatch } from 'react';
+import type { Dispatch } from 'react';
 
-import { CategoriesListEntity, Criterion, RequestedNeed } from 'types/data';
+import type { CategoriesListEntity, Criterion, RequestedNeed, RequirementGroup } from 'types/data';
 
-import { CategoryContextAction } from './actions';
+import type { CategoryContextAction } from './actions';
 
 interface ContextCriterion extends Criterion {
-  activeRequirementGroup: string;
+  activeRequirementGroup?: RequirementGroup;
 }
 
 export interface CategoryContextStateValue {

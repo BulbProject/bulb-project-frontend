@@ -40,15 +40,13 @@ const CategoryPage: React.FC = () => {
     }
   }, [criteria]);
 
-  const [isBooleanGroupActive, setBooleanGroupActive] = useState(false);
-
   return !(error || isLoading) ? (
     <ErrorBoundary>
       <FadeIn>
         <CategoryHeader {...{ title, description, classification }} />
 
         <CategoryContextProvider category={{ id: categoryId as string, version: version as string }} criteria={steps}>
-          <Stepper {...{ isBooleanGroupActive, setBooleanGroupActive }} />
+          <Stepper />
         </CategoryContextProvider>
       </FadeIn>
     </ErrorBoundary>

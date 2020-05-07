@@ -17,7 +17,6 @@ export const CategoryContextProvider: React.FC<{
     criteria: criteria.reduce((map, criterion) => Object.assign(map, { [criterion.id]: criterion }), {}),
     currentCriterion: {
       ...criteria[0],
-      activeRequirementGroup: '',
     },
   });
 

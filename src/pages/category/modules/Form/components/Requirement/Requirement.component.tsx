@@ -21,9 +21,7 @@ export const Requirement = ({
   unit,
   dataType,
   optionDetails,
-  isDisabled,
 }: RequirementProps & {
-  isDisabled: boolean;
   unit?: Unit;
 }) => {
   const { requestedNeed, currentCriterion } = useCategoryContext();
@@ -49,18 +47,14 @@ export const Requirement = ({
   };
 
   return (
-    <Styled.Requirement htmlFor={id}>
-      <Flex
-        direction={isBoolean(dataType) ? 'row' : 'column'}
-        isReversed={isBoolean(dataType)}
-        alignment={{ horizontal: isBoolean(dataType) ? 'end' : 'start', vertical: 'center' }}
-      >
+    <Flex
+      direction={isBoolean(dataType) ? 'row' : 'column'}
+      isReversed={isBoolean(dataType)}
+      alignment={{ horizontal: isBoolean(dataType) ? 'end' : 'start', vertical: 'center' }}
+    >
+      <Styled.Requirement htmlFor={id}>
         {title && (
-          <Styled.Title
-            variant="caption"
-            isBoolean={isBoolean(dataType)}
-            color={isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'}
-          >
+          <Styled.Title variant="caption" isBoolean={isBoolean(dataType)} color="var(--c-darkest)">
             {optionDetails && 'optionGroups' in optionDetails ? optionDetails.optionGroups[0].description : title}
           </Styled.Title>
         )}
@@ -69,9 +63,7 @@ export const Requirement = ({
           {renderInput({
             dataType,
             expectedValue,
-            isDisabled,
             defaultValue: requestedNeed[currentCriterion.id]?.[id],
-
             props: {
               suffix: <Text variant="caption">{unit?.name || (dataType as string)}</Text>,
               placeholder: description,
@@ -84,7 +76,7 @@ export const Requirement = ({
               : undefined,
           })}
         </Field>
-      </Flex>
-    </Styled.Requirement>
+      </Styled.Requirement>
+    </Flex>
   );
 };
