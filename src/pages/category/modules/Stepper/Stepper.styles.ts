@@ -41,7 +41,7 @@ const Container = styled(Grid)`
 
 const Step = styled(Cell)`
   margin: var(--i-regular) 0;
-  padding: var(--i-large) var(--i-regular);
+  padding: var(--i-regular);
 
   border: 1px solid var(--c-light);
   border-radius: var(--border-radius);

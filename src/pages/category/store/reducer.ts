@@ -18,14 +18,14 @@ const categoryContextReducer: Reducer<CategoryContextStateValue, CategoryContext
       };
     }
     case 'set_active_requirement_group': {
-      const { criterionId, requirementGroupId } = action.payload;
+      const { criterionId, requirementGroup } = action.payload;
       const criterion = state.criteria[criterionId];
 
       return {
         ...state,
         currentCriterion: {
           ...criterion,
-          activeRequirementGroup: requirementGroupId,
+          activeRequirementGroup: requirementGroup,
         },
       };
     }

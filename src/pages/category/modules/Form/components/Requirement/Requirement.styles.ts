@@ -3,6 +3,7 @@ import Text from 'ustudio-ui/components/Text';
 
 const Requirement = styled.label`
   display: block;
+  width: 100%;
 
   &:not(:last-child) {
     margin-bottom: var(--i-regular);
