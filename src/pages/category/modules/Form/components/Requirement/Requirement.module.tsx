@@ -32,35 +32,24 @@ export const renderInput = ({
     const optionsMap: Record<string, Option> = options.reduce(
       (map, option) =>
         Object.assign(map, {
-          [option.description as string]: { value: option.description, label: option.description },
+          [option.value as string]: { value: option.value, label: option.description },
         }),
       {}
     );
 
-    if (options.length > 4) {
-      return (
-        <Select
-          items={(optionsMap as unknown) as Record<string, Item>}
-          isDisabled={isDisabled}
-          defaultValue={(defaultValue || Object.values(optionsMap)[0].value) as string}
-          styled={{
-            Dropdown: css`
-              position: static;
-            `,
-          }}
-        />
-      );
-    }
-
     return (
-      <RadioGroup
-        name={`${(options[0].id as string).slice(0, 9)}${'0'.repeat(2)}`}
-        defaultValue={defaultValue ? { value: defaultValue as string } : Object.values(optionsMap)[0]}
-        options={optionsMap}
+      <Select
+        items={(optionsMap as unknown) as Record<string, Item>}
         isDisabled={isDisabled}
+        defaultValue={(defaultValue || Object.values(optionsMap)[0].value) as string}
         styled={{
-          RadioGroup: css`
-            margin: var(--i-medium) 0;
+          Dropdown: css`
+            position: relative;
+          `,
+          ValuesListItem: css`
+            &:before {
+              background: var(--c-primary);
+            }
           `,
         }}
       />

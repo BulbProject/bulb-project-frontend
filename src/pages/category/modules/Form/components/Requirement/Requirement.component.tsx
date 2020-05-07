@@ -30,11 +30,7 @@ export const Requirement = ({
 
   const getValue = () => {
     if (optionDetails) {
-      if ('optionGroups' in optionDetails && optionDetails.optionGroups[0].options.length > 4) {
-        return (value: string) => value;
-      }
-
-      return (value: { value: string }) => value.value;
+      return (value: string) => value;
     }
 
     if (expectedValue !== undefined) {
@@ -46,17 +42,7 @@ export const Requirement = ({
 
   const setValue = () => {
     if (optionDetails) {
-      if ('optionGroups' in optionDetails && optionDetails.optionGroups[0].options.length > 4) {
-        return (value: string) => value;
-      }
-
-      return (value: { value: string } | string) => {
-        if (typeof value === 'object') {
-          return value;
-        }
-
-        return { value };
-      };
+      return (value: string) => value;
     }
 
     return undefined;
