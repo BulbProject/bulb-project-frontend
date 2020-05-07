@@ -31,23 +31,38 @@ export const RequirementGroup: React.FC<
   const Title = () => {
     if (id === booleanGroupId) {
       return (
-        <Flex alignment={{ vertical: 'center', horizontal: 'end' }} margin={{ top: 'regular' }}>
-          <Text color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'} appearance="bold" variant="caption">
-            {description || requirements[0].title}
-          </Text>
+        <>
+          <Styled.RequirementGroup>
+            <Flex alignment={{ vertical: 'center', horizontal: 'end' }} margin={{ top: 'large' }}>
+              <Text
+                color={isActive ? 'var(--c-primary)' : 'var(--c-darkest)'}
+                appearance="bold"
+                variant="caption"
+                styled={{
+                  Text: css`
+                    &:hover {
+                      cursor: pointer;
+                    }
+                  `,
+                }}
+              >
+                {description || requirements[0].title}
+              </Text>
+
+              <Checkbox
+                value={isBooleanGroupActive}
+                onChange={setActive}
+                styled={{
+                  CheckboxContainer: css`
+                    margin-left: var(--i-regular);
+                  `,
+                }}
+              />
+            </Flex>
+          </Styled.RequirementGroup>
 
           <HiddenRequirement {...requirements[0]} />
-
-          <Checkbox
-            value={isBooleanGroupActive}
-            onChange={setActive}
-            styled={{
-              CheckboxContainer: css`
-                margin-left: var(--i-regular);
-              `,
-            }}
-          />
-        </Flex>
+        </>
       );
     }
 

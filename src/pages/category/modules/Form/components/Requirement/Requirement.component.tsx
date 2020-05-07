@@ -70,7 +70,11 @@ export const Requirement = ({
         alignment={{ horizontal: isBoolean(dataType) ? 'end' : 'start', vertical: 'center' }}
       >
         {title && (
-          <Styled.Title variant="caption" isBoolean={isBoolean(dataType)}>
+          <Styled.Title
+            variant="caption"
+            isBoolean={isBoolean(dataType)}
+            color={isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'}
+          >
             {optionDetails && 'optionGroups' in optionDetails ? optionDetails.optionGroups[0].description : title}
           </Styled.Title>
         )}
