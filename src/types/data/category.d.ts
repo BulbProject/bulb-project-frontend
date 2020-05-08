@@ -1,8 +1,9 @@
-import { Classification } from 'ts4ocds';
-import { Conversion } from 'ts4ocds/extensions/conversions';
+import type { Classification } from 'ts4ocds';
+import type { Conversion } from 'ts4ocds/extensions/conversions';
 
-import { Criterion } from './criterion';
-import { Item } from './item';
+import type { Criterion } from './criterion';
+import type { Item } from './item';
+import type { Document } from './document';
 
 export interface Category {
   /**
@@ -36,4 +37,6 @@ export interface Category {
    * List of the types of goods available under this category.
    */
   items: Item[];
+
+  documents: Document[];
 }
