@@ -32,7 +32,8 @@ const Content = styled(Flex)`
 `;
 
 const ItemDescription = styled(Flex)`
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 
   padding-bottom: var(--i-regular);
   margin-bottom: var(--i-regular);

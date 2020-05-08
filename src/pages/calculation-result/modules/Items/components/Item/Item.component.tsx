@@ -21,11 +21,11 @@ export const Item = ({ variant, item, document }: { variant: AvailableVariant; i
       <Styled.Content direction="column">
         <Styled.ItemDescription>
           <Text variant="h3">{item.description}</Text>
-        </Styled.ItemDescription>
 
-        <Flex margin={{ bottom: 'regular', top: 'regular' }}>
-          <Text variant="h6">Кількість: {variant.quantity}</Text>
-        </Flex>
+          <Flex margin={{ top: 'regular' }} alignment={{ horizontal: 'center' }}>
+            <Text variant="h6">Кількість: {variant.quantity}</Text>
+          </Flex>
+        </Styled.ItemDescription>
 
         <Styled.Classifications direction="column">
           <Flex margin={{ bottom: 'regular' }} direction="column">
