@@ -5,7 +5,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { useHistory } from 'react-router-dom';
 
-import { modifyId, sortById } from 'utils';
+import { modifyId, sortById, prepareRequestedNeed } from 'utils';
 import { postCalculationConfig } from 'config';
 import { useRequest } from 'hooks';
 import { RequestedNeed } from 'types/data';
@@ -14,7 +14,7 @@ import { FadeIn } from 'components';
 
 import { useCategoryContext } from '../../store';
 import { Criteria } from '../Form/components';
-import { getRequestedNeed, isRequirementGroupFilled } from './Stepper.module';
+import { isRequirementGroupFilled } from './Stepper.module';
 
 import { Overlay, Step, StepperButton } from './components';
 
@@ -41,8 +41,10 @@ export const Stepper: React.FC = () => {
     postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
       requestedNeed: RequestedNeed;
     }),
-    [requestedNeedData],
-    Boolean(requestedNeedData)
+    {
+      dependencies: [requestedNeedData],
+      isRequesting: Boolean(requestedNeedData),
+    }
   );
 
   const setStep = (modify: (id: number) => number) => () => {
@@ -111,7 +113,7 @@ export const Stepper: React.FC = () => {
           if (isSubmitting) {
             dispatch({
               type: 'add_requested_need_data',
-              payload: getRequestedNeed({
+              payload: prepareRequestedNeed({
                 ...requestedNeed,
                 [currentCriterion.id]: {
                   ...newRequestedNeed,

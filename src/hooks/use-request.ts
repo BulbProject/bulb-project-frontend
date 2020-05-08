@@ -8,17 +8,22 @@ interface RequestError {
 
 export const useRequest = <D>(
   config: AxiosRequestConfig,
-  dependencies: unknown[] = [],
-  isRequesting: boolean = true
+  options: {
+    dependencies?: unknown[];
+    isRequesting?: boolean;
+    isDefaultLoading?: boolean;
+  } = {}
 ): {
   isLoading: boolean;
   data: D | null;
   error: RequestError | null;
   triggerRequest(): void;
 } => {
+  const { dependencies = [], isRequesting = true, isDefaultLoading = true } = options;
+
   const [_, triggerRequest] = useState(false);
 
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(isDefaultLoading);
 
   const [data, setData] = useState<D | null>(null);
   const [error, setError] = useState<RequestError | null>(null);
@@ -28,6 +33,7 @@ export const useRequest = <D>(
       (async () => {
         try {
           setLoading(true);
+          setError(null);
 
           const { data: requestData } = await axios(config);
 

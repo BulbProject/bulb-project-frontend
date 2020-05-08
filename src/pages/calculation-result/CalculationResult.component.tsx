@@ -10,11 +10,12 @@ import Grid from 'ustudio-ui/components/Grid/Grid';
 import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
 
-import { getCategoryVersionConfig } from 'config';
+import type { AvailableVariant, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
+import { getCategoryVersionConfig, postCalculationConfig } from 'config';
 import { useRequest } from 'hooks';
 
-import type { AvailableVariant, CategoryVersion } from 'types/data';
 import type { StoreRequestedNeed } from 'types/globals';
+import { prepareRequestedNeed } from 'utils';
 
 import { RequestedNeed } from './modules/RequestedNeed';
 import { Items } from './modules/Items';
@@ -24,11 +25,10 @@ import { CalculationContextProvider } from './store';
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
 
-  // proper typings will come with the proper response
-  const [calculationData, setCalculationData] = useState<{
-    payload: StoreRequestedNeed;
-    response: { category: string; version: string; availableVariants: AvailableVariant[] };
-  } | null>(null);
+  const [isSubmitting, setSubmitting] = useState(false);
+  const [requestedNeed, setRequestedNeed] = useState<StoreRequestedNeed | null>(null);
+  const [newRequestedNeed, setNewRequestedNeed] = useState<StoreRequestedNeed | null>(null);
+  const [availableVariants, setAvailableVariants] = useState<AvailableVariant[] | null>([]);
 
   const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
     getCategoryVersionConfig(categoryId as string, version as string)
@@ -40,20 +40,43 @@ const CalculationResult: React.FC = () => {
     const sessionStorageData = sessionStorage.getItem(`${categoryId}/${version}`);
 
     if (sessionStorageData) {
-      setCalculationData(JSON.parse(sessionStorageData));
+      const parsedData = JSON.parse(sessionStorageData);
+
+      setRequestedNeed(parsedData.payload);
+      setAvailableVariants(parsedData.response.availableVariants);
     }
   }, []);
+
+  const { isLoading: isRecalculating, error: recalculationError, triggerRequest: recalculate } = useRequest(
+    postCalculationConfig(categoryId as string, version as string, {
+      requestedNeed: newRequestedNeed ? prepareRequestedNeed(newRequestedNeed) : ({} as RequestedNeedType),
+    }),
+    {
+      dependencies: [newRequestedNeed],
+      isRequesting: isSubmitting && Boolean(newRequestedNeed),
+      isDefaultLoading: false,
+    }
+  );
+
+  useEffect(() => {
+    if (newRequestedNeed) {
+      recalculate();
+
+      setSubmitting(false);
+      setNewRequestedNeed(null);
+    }
+  }, [newRequestedNeed]);
 
   return (
     <ErrorBoundary>
       <FadeIn>
-        {categoryVersion && calculationData && <CategoryHeader {...{ title, description, classification }} />}
+        {categoryVersion && requestedNeed && <CategoryHeader {...{ title, description, classification }} />}
 
-        {calculationData && categoryVersion && !isLoading && !error ? (
+        {requestedNeed && categoryVersion && !isLoading && !error ? (
           <CalculationContextProvider
             category={categoryVersion.category}
-            requestedNeed={calculationData.payload}
-            availableVariants={calculationData.response.availableVariants}
+            requestedNeed={requestedNeed as StoreRequestedNeed}
+            availableVariants={availableVariants as AvailableVariant[]}
           >
             <Grid
               padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}
@@ -61,7 +84,14 @@ const CalculationResult: React.FC = () => {
               lg={{ gap: 32 }}
             >
               <Cell lg={{ size: 3 }}>
-                <RequestedNeed />
+                <RequestedNeed
+                  error={recalculationError?.message}
+                  isLoading={isRecalculating}
+                  setSubmitting={setSubmitting}
+                  recalculate={(state) => {
+                    setNewRequestedNeed(state);
+                  }}
+                />
               </Cell>
 
               <Cell lg={{ size: 9 }}>
@@ -74,7 +104,7 @@ const CalculationResult: React.FC = () => {
             <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
               {isLoading && <Spinner delay={500} />}
 
-              {(!calculationData || !categoryVersion) && !isLoading && (
+              {(!requestedNeed || !categoryVersion) && !isLoading && (
                 <Text color="negative">
                   Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
                   цієї категорії ☹️
