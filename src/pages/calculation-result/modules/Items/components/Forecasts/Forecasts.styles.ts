@@ -18,8 +18,6 @@ const ObservationTitle = styled(Flex)`
 `;
 
 const Dots = styled(Flex)`
-  width: 100%;
-
   border-bottom: 1px dotted var(--c-neutral);
 
   transform: translateY(-4px);
