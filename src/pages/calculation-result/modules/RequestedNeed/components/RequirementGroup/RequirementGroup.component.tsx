@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
-import Text from 'ustudio-ui/components/Text';
 
 import { RequirementGroup as RequirementGroupProps } from 'types/data';
 import { Requirement } from 'components';

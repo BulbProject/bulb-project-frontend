@@ -35,12 +35,20 @@ export const Requirement = ({
       return (value: string) => value;
     }
 
+    if (isBoolean(dataType) && isDisabled) {
+      return () => true;
+    }
+
     return undefined;
   };
 
   const setValue = () => {
     if (optionDetails) {
       return (value: string) => value;
+    }
+
+    if (isBoolean(dataType) && isDisabled) {
+      return () => true;
     }
 
     return undefined;
