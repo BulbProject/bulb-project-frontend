@@ -9637,10 +9637,10 @@ use@^3.1.0:
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
 
-ustudio-ui@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/ustudio-ui/-/ustudio-ui-1.2.3.tgz#b2acbf762ba24d10fcf14c496ee2600708326f3b"
-  integrity sha512-9c41tx1jEO1IXVkcrIZv+gTem6xhwoGuhXsLrq8iuOOWJ4bAYH3LgFvGlE9i9nLpIIoRMh20IqslsGWAxh9fzg==
+ustudio-ui@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/ustudio-ui/-/ustudio-ui-1.2.4.tgz#dd12f33326408b069c00b80103673b183156eb47"
+  integrity sha512-nECNCl9Jak5UQAx2bEtYDgfJ+t7sO30MQNGBe8/eGYfOclPPO1YnL8zrjIxtS4KDxM1zV7ZnIJHJ92gYdFsgOQ==
   dependencies:
     lodash.merge "^4.6.2"
 

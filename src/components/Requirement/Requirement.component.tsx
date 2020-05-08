@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import type { Unit } from 'ts4ocds';
 import type { RequirementWithOptionDetails as RequirementProps } from 'ts4ocds/extensions/options';
@@ -54,6 +54,14 @@ export const Requirement = ({
     return undefined;
   };
 
+  const hasSingleOptionGroup = useMemo(() => {
+    if (optionDetails && 'optionGroups' in optionDetails) {
+      return optionDetails.optionGroups.length === 1;
+    }
+
+    return false;
+  }, []);
+
   return (
     <Styled.Requirement htmlFor={id}>
       <Flex
@@ -63,7 +71,9 @@ export const Requirement = ({
       >
         {title && (
           <Styled.Title variant="caption" isBoolean={isBoolean(dataType)} color="var(--c-darkest)">
-            {optionDetails && 'optionGroups' in optionDetails ? optionDetails.optionGroups[0].description : title}
+            {optionDetails && 'optionGroups' in optionDetails && hasSingleOptionGroup
+              ? optionDetails.optionGroups[0].description
+              : title}
           </Styled.Title>
         )}
 
@@ -77,9 +87,9 @@ export const Requirement = ({
               placeholder: description,
             },
             // eslint-disable-next-line no-nested-ternary
-            options: optionDetails
+            optionGroups: optionDetails
               ? 'optionGroups' in optionDetails
-                ? optionDetails.optionGroups?.[0].options
+                ? optionDetails.optionGroups
                 : []
               : undefined,
           })}
