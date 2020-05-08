@@ -8,6 +8,7 @@ import type { CalculationContextAction } from './actions';
 export interface CalculationContextStateValue {
   category: Category;
   requestedNeed: StoreRequestedNeed;
+  availableVariants: {};
 }
 
 export type CalculationContextDispatchValue = Dispatch<CalculationContextAction>;

@@ -21,7 +21,9 @@ const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
 
   const [isSubmitting, setSubmitting] = useState(false);
-  const [requestedNeed, setRequestedNeed] = useState<StoreRequestedNeed | null>({});
+  const [requestedNeed, setRequestedNeed] = useState<StoreRequestedNeed | null>(null);
+  const [newRequestedNeed, setNewRequestedNeed] = useState<StoreRequestedNeed | null>(null);
+  const [availableVariants, setAvailableVariants] = useState<{} | null>({});
 
   const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
     getCategoryVersionConfig(categoryId as string, version as string)
@@ -33,17 +35,29 @@ const CalculationResult: React.FC = () => {
     const sessionStorageData = sessionStorage.getItem(`${categoryId}/${version}`);
 
     if (sessionStorageData) {
-      setRequestedNeed(JSON.parse(sessionStorageData).payload);
+      const parsedData = JSON.parse(sessionStorageData);
+
+      setRequestedNeed(parsedData.payload);
+      setAvailableVariants(parsedData.response.availableVariants);
     }
   }, []);
 
-  const { isLoading: isRecalculating, error: recalculationError } = useRequest(
+  const { isLoading: isRecalculating, error: recalculationError, triggerRequest: recalculate } = useRequest(
     postCalculationConfig(categoryId as string, version as string, {
-      requestedNeed: requestedNeed ? prepareRequestedNeed(requestedNeed) : ({} as RequestedNeedType),
+      requestedNeed: newRequestedNeed ? prepareRequestedNeed(newRequestedNeed) : ({} as RequestedNeedType),
     }),
-    [requestedNeed],
-    isSubmitting
+    [newRequestedNeed],
+    isSubmitting && Boolean(newRequestedNeed)
   );
+
+  useEffect(() => {
+    if (newRequestedNeed) {
+      recalculate();
+
+      setSubmitting(false);
+      setNewRequestedNeed(null);
+    }
+  }, [newRequestedNeed]);
 
   return (
     <ErrorBoundary>
@@ -54,6 +68,7 @@ const CalculationResult: React.FC = () => {
           <CalculationContextProvider
             category={categoryVersion.category}
             requestedNeed={requestedNeed as StoreRequestedNeed}
+            availableVariants={availableVariants as {}}
           >
             <Grid
               padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}
@@ -64,9 +79,10 @@ const CalculationResult: React.FC = () => {
                 <RequestedNeed
                   error={recalculationError?.message}
                   isLoading={isRecalculating && isSubmitting}
-                  isSubmitting={isSubmitting}
                   setSubmitting={setSubmitting}
-                  recalculate={setRequestedNeed}
+                  recalculate={(state) => {
+                    setNewRequestedNeed(state);
+                  }}
                 />
               </Cell>
 
