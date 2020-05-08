@@ -1,7 +1,7 @@
 import React from 'react';
-import { Document } from 'ts4ocds';
+import type { Document } from 'ts4ocds';
 
-import { Item as IItem } from 'types/data';
+import type { Item as IItem } from 'types/data';
 
 import { availableVariants } from './harcode.json';
 

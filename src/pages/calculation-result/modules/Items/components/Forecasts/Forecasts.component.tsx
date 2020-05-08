@@ -1,5 +1,5 @@
 import React from 'react';
-import { Metric } from 'ts4ocds/extensions/metrics';
+import type { Metric } from 'ts4ocds/extensions/metrics';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
@@ -22,8 +22,7 @@ export const Forecasts = ({ forecasts }: { forecasts: Metric[] }) => {
             <Flex key={forecast.id} margin={{ bottom: 'regular' }}>
               <Styled.ObservationTitle>
                 <Text variant="small">
-                  {/*@TODO need clarification note or notes*/}
-                  {observation.note}
+                  {observation.notes}
                   {observation?.unit ? `, ${observation.unit.name}` : ''}
                 </Text>
 

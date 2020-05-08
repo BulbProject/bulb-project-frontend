@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Document } from 'ts4ocds';
+import type { Document } from 'ts4ocds';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
