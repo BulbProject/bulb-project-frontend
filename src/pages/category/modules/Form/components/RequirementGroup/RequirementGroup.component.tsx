@@ -4,11 +4,14 @@ import { FieldSet } from 'formfish';
 
 import { RequirementGroup as RequirementGroupProps } from 'types/data';
 import { sortById } from 'utils';
+import { Requirement } from 'components';
+import { useCategoryContext } from '../../../../store';
 
 import { HiddenRequirement } from '../HiddenRequirement';
-import { Requirement } from '../Requirement';
 
 export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, requirements }) => {
+  const { requestedNeed, currentCriterion } = useCategoryContext();
+
   const hasSingleRequirement = useMemo(() => requirements.length === 1, [id]);
   const hasSingleBooleanRequirement = useMemo(
     () => hasSingleRequirement && requirements[0].dataType === 'boolean' && 'expectedValue' in requirements[0],
@@ -23,7 +26,12 @@ export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, requirem
         ) : (
           <Flex direction="column">
             {requirements.sort(sortById).map((requirement) => (
-              <Requirement {...requirement} key={requirement.id} />
+              <Requirement
+                {...requirement}
+                key={requirement.id}
+                requestedNeed={requestedNeed}
+                currentCriterion={currentCriterion}
+              />
             ))}
           </Flex>
         )}

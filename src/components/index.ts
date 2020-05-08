@@ -4,3 +4,4 @@ export * from './FadeIn';
 export * from './GlobalStyles';
 export * from './CategoryHeader';
 export * from './ErrorPage';
+export * from './Requirement';

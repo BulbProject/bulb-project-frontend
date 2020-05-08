@@ -69,7 +69,13 @@ export const Stepper: React.FC = () => {
           title="Успіх!"
           isOpen={!isLoading && !error && Boolean(requestedNeedData)}
           onChange={() => {
-            sessionStorage.setItem(`${category.id}/${category.version}`, JSON.stringify(calculationResponse));
+            sessionStorage.setItem(
+              `${category.id}/${category.version}`,
+              JSON.stringify({
+                payload: requestedNeed,
+                response: calculationResponse,
+              })
+            );
 
             push(`/categories/${category.id}/${category.version}/calculation-result`);
           }}

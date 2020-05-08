@@ -1,2 +1,2 @@
 export * from './store.context';
-export * from './store.types.d';
+export type { ContextCriterion, CategoryContextStateValue, CategoryContextDispatchValue } from './store.types';

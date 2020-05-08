@@ -1,6 +1,7 @@
 import type { Dispatch } from 'react';
 
 import type { CategoriesListEntity, Criterion, RequestedNeed, RequirementGroup } from 'types/data';
+import type { StoreRequestedNeed } from 'types/globals';
 
 import type { CategoryContextAction } from './actions';
 
@@ -12,7 +13,7 @@ export interface CategoryContextStateValue {
   category: Omit<CategoriesListEntity, 'date'>;
   currentCriterion: ContextCriterion;
   criteria: Record<string, ContextCriterion>;
-  requestedNeed: Record<string, Record<string, unknown>>;
+  requestedNeed: StoreRequestedNeed;
   requestedNeedData?: RequestedNeed;
 }
 

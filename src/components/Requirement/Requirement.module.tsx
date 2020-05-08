@@ -1,27 +1,26 @@
 import React, { ReactElement } from 'react';
 import { css } from 'styled-components';
-import { Option } from 'ts4ocds/extensions/options';
-import { DataType } from 'ts4ocds/extensions/requirements';
+import type { Option } from 'ts4ocds/extensions/options';
+import type { DataType } from 'ts4ocds/extensions/requirements';
 
 import Checkbox from 'ustudio-ui/components/Checkbox';
 import NumberInput from 'ustudio-ui/components/Input/NumberInput';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Select from 'ustudio-ui/components/Select/Select';
-import { Item } from 'ustudio-ui/components/Select/select.types';
-import Switch from 'ustudio-ui/components/Switch';
+import type { Item } from 'ustudio-ui/components/Select/select.types';
 
 import { InputProps } from './Requirement.types';
 
 export const renderInput = ({
   dataType,
   options,
-  expectedValue,
+  isDisabled,
   defaultValue,
   props,
 }: {
   dataType?: DataType;
   options?: Option[];
-  expectedValue?: unknown;
+  isDisabled?: boolean;
   defaultValue?: unknown;
   props: InputProps;
 }): ReactElement => {
@@ -53,20 +52,7 @@ export const renderInput = ({
     case 'string':
       return <TextInput defaultValue={defaultValue as string} {...props} />;
     case 'boolean':
-      if (expectedValue !== undefined) {
-        return (
-          <Checkbox
-            defaultValue={expectedValue as boolean}
-            styled={{
-              CheckboxContainer: css`
-                margin-left: var(--i-regular);
-              `,
-            }}
-          />
-        );
-      }
-
-      return <Switch defaultValue={defaultValue as boolean} />;
+      return <Checkbox isDisabled={isDisabled} defaultValue={defaultValue as boolean} />;
     case 'integer':
     case 'number':
     default:
