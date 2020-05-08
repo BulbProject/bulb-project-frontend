@@ -2,10 +2,10 @@ import React from 'react';
 
 import type { Item as IItem } from 'types/data';
 
-import { Item } from './components';
-
-import Styled from './Items.styles';
 import { useCalculationContext } from '../../store';
+
+import { Item } from './components';
+import Styled from './Items.styles';
 
 export const Items = () => {
   const {
