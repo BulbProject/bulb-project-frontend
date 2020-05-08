@@ -7,7 +7,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
 
 import { AvailableVariant, Item as IItem } from 'types/data';
-import { Classification } from 'shared/Classification';
+import { Classification } from 'shared';
 
 import { Forecasts } from '../Forecasts';
 
@@ -30,7 +30,7 @@ export const Item = ({ variant, item, document }: { variant: AvailableVariant; i
         <Styled.Classifications direction="column">
           <Flex margin={{ bottom: 'regular' }} direction="column">
             <Flex margin={{ bottom: 'regular' }}>
-              <Text variant="caption"> Класифікація</Text>
+              <Text variant="caption">Класифікація</Text>
             </Flex>
 
             <Classification {...item.classification} />
@@ -39,7 +39,7 @@ export const Item = ({ variant, item, document }: { variant: AvailableVariant; i
           {item.additionalClassifications && (
             <Styled.AdditionalClassification direction="column">
               <Flex margin={{ bottom: 'regular' }}>
-                <Text variant="caption"> Додаткові класифікації</Text>
+                <Text variant="caption">Додаткові класифікації</Text>
               </Flex>
 
               {item.additionalClassifications.map((additionalClassification) => (
