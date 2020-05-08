@@ -5,7 +5,8 @@ import Flex from 'ustudio-ui/components/Flex';
 const Image = styled.div<{ link?: string }>(
   ({ link }) => `
   width: 100%;
-  height: 100%;
+  padding-top: 50%;
+  padding-bottom: 50%;
 
   background-size: contain;
   background-repeat: no-repeat;
