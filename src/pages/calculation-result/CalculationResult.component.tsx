@@ -51,8 +51,11 @@ const CalculationResult: React.FC = () => {
     postCalculationConfig(categoryId as string, version as string, {
       requestedNeed: newRequestedNeed ? prepareRequestedNeed(newRequestedNeed) : ({} as RequestedNeedType),
     }),
-    [newRequestedNeed],
-    isSubmitting && Boolean(newRequestedNeed)
+    {
+      dependencies: [newRequestedNeed],
+      isRequesting: isSubmitting && Boolean(newRequestedNeed),
+      isDefaultLoading: false,
+    }
   );
 
   useEffect(() => {
@@ -83,7 +86,7 @@ const CalculationResult: React.FC = () => {
               <Cell lg={{ size: 3 }}>
                 <RequestedNeed
                   error={recalculationError?.message}
-                  isLoading={isRecalculating && isSubmitting}
+                  isLoading={isRecalculating}
                   setSubmitting={setSubmitting}
                   recalculate={(state) => {
                     setNewRequestedNeed(state);

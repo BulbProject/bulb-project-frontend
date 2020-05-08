@@ -41,8 +41,10 @@ export const Stepper: React.FC = () => {
     postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
       requestedNeed: RequestedNeed;
     }),
-    [requestedNeedData],
-    Boolean(requestedNeedData)
+    {
+      dependencies: [requestedNeedData],
+      isRequesting: Boolean(requestedNeedData),
+    }
   );
 
   const setStep = (modify: (id: number) => number) => () => {

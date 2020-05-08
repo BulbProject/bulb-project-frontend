@@ -27,7 +27,9 @@ const InfoComponent = () => {
   const { infoFileName } = useParams();
   const { isLoading, data, error, triggerRequest } = useRequest<{ content: string }>(
     getInfoFile(infoFileName as string),
-    [infoFileName]
+    {
+      dependencies: [infoFileName],
+    }
   );
 
   return (
