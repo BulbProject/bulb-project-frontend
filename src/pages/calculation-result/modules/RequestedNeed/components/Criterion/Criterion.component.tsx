@@ -1,5 +1,5 @@
-import { FieldSet } from 'formfish';
 import React from 'react';
+import { FieldSet } from 'formfish';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 
@@ -15,11 +15,7 @@ export const Criterion: React.FC<CriterionProps> = ({ id, title, requirementGrou
 
   return (
     <Flex direction="column">
-      <Text
-        // @ts-ignore
-        appearance="bold"
-        color="var(--c-secondary)"
-      >
+      <Text appearance="bold" color="var(--c-secondary)">
         {title}
       </Text>
 
