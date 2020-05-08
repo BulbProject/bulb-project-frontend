@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
 
-const Image = styled.div(
-  ({ link }: { link?: string }) => `
-  width: 340px;
-  height: 340px;
+const Image = styled.div<{ link?: string }>(
+  ({ link }) => `
+  width: 100%;
+  height: 100%;
 
   background-size: contain;
   background-repeat: no-repeat;
@@ -16,7 +16,7 @@ const Image = styled.div(
 );
 
 const Item = styled(Flex)`
-  width: 340px;
+  width: calc(100% / 3);
 
   border: 1px solid var(--c-light);
 
@@ -44,6 +44,12 @@ const Classifications = styled(Flex)`
   border-bottom: 1px solid var(--c-light);
 `;
 
+const AdditionalClassification = styled(Flex)`
+  &:not(:last-child) {
+    padding-bottom: var(--i-regular);
+  }
+`;
+
 const Link = styled.a`
   &:hover {
     &:after {
@@ -52,4 +58,4 @@ const Link = styled.a`
   }
 `;
 
-export default { Item, Image, Content, ItemDescription, Classifications, Link };
+export default { Item, Image, Content, ItemDescription, Classifications, AdditionalClassification, Link };

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { css } from 'styled-components';
+
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
@@ -21,6 +23,10 @@ export const Item = ({ variant, item, document }: { variant: AvailableVariant; i
           <Text variant="h3">{item.description}</Text>
         </Styled.ItemDescription>
 
+        <Flex margin={{ bottom: 'regular', top: 'regular' }}>
+          <Text variant="h6">Кількість: {variant.quantity}</Text>
+        </Flex>
+
         <Styled.Classifications direction="column">
           <Flex margin={{ bottom: 'regular' }} direction="column">
             <Flex margin={{ bottom: 'regular' }}>
@@ -31,7 +37,7 @@ export const Item = ({ variant, item, document }: { variant: AvailableVariant; i
           </Flex>
 
           {item.additionalClassifications && (
-            <Flex margin={{ bottom: 'regular' }} direction="column">
+            <Styled.AdditionalClassification direction="column">
               <Flex margin={{ bottom: 'regular' }}>
                 <Text variant="caption"> Додаткові класифікації</Text>
               </Flex>
@@ -39,25 +45,43 @@ export const Item = ({ variant, item, document }: { variant: AvailableVariant; i
               {item.additionalClassifications.map((additionalClassification) => (
                 <Classification key={additionalClassification.id} {...additionalClassification} />
               ))}
-            </Flex>
+            </Styled.AdditionalClassification>
           )}
         </Styled.Classifications>
 
-        <Flex margin={{ bottom: 'regular', top: 'regular' }}>
-          <Text variant="h6">Quantity: {variant.quantity}</Text>
-        </Flex>
-
         <Forecasts forecasts={variant.forecasts} />
 
-        <Flex margin={{ bottom: 'regular' }} alignment={{ horizontal: 'center' }}>
+        <Flex direction="column">
           <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
-            <Button appearance="text"> Prozorro Market Teaser</Button>
+            <Button
+              styled={{
+                Button: css`
+                   {
+                    width: 100%;
+                    padding: var(--i-regular);
+                  }
+                `,
+              }}
+              appearance="text"
+            >
+              Prozorro Market Teaser
+            </Button>
           </Styled.Link>
-        </Flex>
 
-        <Button appearance="text" intent="positive">
-          Contract Notice
-        </Button>
+          <Button
+            styled={{
+              Button: css`
+                 {
+                  padding: var(--i-regular);
+                }
+              `,
+            }}
+            appearance="text"
+            intent="positive"
+          >
+            Contract Notice
+          </Button>
+        </Flex>
       </Styled.Content>
     </Styled.Item>
   );
