@@ -34,7 +34,7 @@ export const isRequirementGroupFilled = ({
   currentCriterion: CategoryContextStateValue['currentCriterion'];
 }): boolean => {
   const criterion = state[currentCriterion.id] as FormFieldSet;
-  const requirementGroup = criterion?.[currentCriterion.activeRequirementGroup];
+  const requirementGroup = criterion?.[currentCriterion.activeRequirementGroup?.id || ''];
 
   if (requirementGroup) {
     return (

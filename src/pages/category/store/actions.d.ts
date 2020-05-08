@@ -1,4 +1,4 @@
-import { RequestedNeed } from 'types/data';
+import { RequestedNeed, RequirementGroup } from 'types/data';
 
 interface SetCurrentCriteria {
   type: 'set_current_criterion';
@@ -9,7 +9,7 @@ interface SetActiveRequirementGroup {
   type: 'set_active_requirement_group';
   payload: {
     criterionId: string;
-    requirementGroupId: string;
+    requirementGroup: RequirementGroup;
   };
 }
 

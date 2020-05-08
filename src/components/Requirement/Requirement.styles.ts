@@ -3,6 +3,7 @@ import Text from 'ustudio-ui/components/Text';
 
 const Requirement = styled.label`
   display: block;
+  width: 100%;
 
   &:not(:last-child) {
     margin-bottom: var(--i-regular);
@@ -14,7 +15,7 @@ const Title = styled(Text)<{ isBoolean: boolean }>(
     ${isBoolean
       ? css`
           margin-bottom: 2px;
-          margin-left: var(--i-medium);
+          margin-right: var(--i-regular);
         `
       : css`
           margin-bottom: var(--i-small);

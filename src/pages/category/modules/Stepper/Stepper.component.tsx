@@ -20,10 +20,7 @@ import { Overlay, Step, StepperButton } from './components';
 
 import Styled from './Stepper.styles';
 
-export const Stepper: React.FC<{
-  isBooleanGroupActive: boolean;
-  setBooleanGroupActive: (isActive: boolean) => void;
-}> = ({ isBooleanGroupActive, setBooleanGroupActive }) => {
+export const Stepper: React.FC = () => {
   const { currentCriterion, criteria, requestedNeed, requestedNeedData, category, dispatch } = useCategoryContext();
 
   const { title, description } = useMemo(() => currentCriterion, [currentCriterion.id]);
@@ -72,7 +69,13 @@ export const Stepper: React.FC<{
           title="Успіх!"
           isOpen={!isLoading && !error && Boolean(requestedNeedData)}
           onChange={() => {
-            sessionStorage.setItem(`${category.id}/${category.version}`, JSON.stringify(calculationResponse));
+            sessionStorage.setItem(
+              `${category.id}/${category.version}`,
+              JSON.stringify({
+                payload: requestedNeed,
+                response: calculationResponse,
+              })
+            );
 
             push(`/categories/${category.id}/${category.version}/calculation-result`);
           }}
@@ -96,14 +99,14 @@ export const Stepper: React.FC<{
       <Form
         name={currentCriterion.id}
         watch={(state) => {
-          if (isRequirementGroupFilled({ state, currentCriterion }) || isBooleanGroupActive) {
+          if (isRequirementGroupFilled({ state, currentCriterion })) {
             setNextStepAvailable(true);
           } else {
             setNextStepAvailable(false);
           }
         }}
         onSubmit={(state) => {
-          const newRequestedNeed = state[currentCriterion.id][currentCriterion.activeRequirementGroup];
+          const newRequestedNeed = state[currentCriterion.id][currentCriterion.activeRequirementGroup?.id || ''];
 
           if (isSubmitting) {
             dispatch({
@@ -135,7 +138,7 @@ export const Stepper: React.FC<{
 
           <Styled.Step xs={{ size: 8 }}>
             <Flex direction="column">
-              <Criteria {...{ isBooleanGroupActive, setBooleanGroupActive }} />
+              <Criteria />
             </Flex>
           </Styled.Step>
 

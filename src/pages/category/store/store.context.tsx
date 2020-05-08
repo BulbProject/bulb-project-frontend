@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { CategoriesListEntity, Criterion } from 'types/data';
+import type { CategoriesListEntity, Criterion } from 'types/data';
 
-import { CategoryContextDispatchValue, CategoryContextStateValue } from './store.types';
+import type { CategoryContextDispatchValue, CategoryContextStateValue } from './store.types';
 import categoryContextReducer from './reducer';
 
 const CategoryContextState = createContext<CategoryContextStateValue | undefined>(undefined);
@@ -17,7 +17,6 @@ export const CategoryContextProvider: React.FC<{
     criteria: criteria.reduce((map, criterion) => Object.assign(map, { [criterion.id]: criterion }), {}),
     currentCriterion: {
       ...criteria[0],
-      activeRequirementGroup: '',
     },
   });
 

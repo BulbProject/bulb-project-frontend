@@ -1,18 +1,19 @@
-import { Dispatch } from 'react';
+import type { Dispatch } from 'react';
 
-import { CategoriesListEntity, Criterion, RequestedNeed } from 'types/data';
+import type { CategoriesListEntity, Criterion, RequestedNeed, RequirementGroup } from 'types/data';
+import type { StoreRequestedNeed } from 'types/globals';
 
-import { CategoryContextAction } from './actions';
+import type { CategoryContextAction } from './actions';
 
 interface ContextCriterion extends Criterion {
-  activeRequirementGroup: string;
+  activeRequirementGroup?: RequirementGroup;
 }
 
 export interface CategoryContextStateValue {
   category: Omit<CategoriesListEntity, 'date'>;
   currentCriterion: ContextCriterion;
   criteria: Record<string, ContextCriterion>;
-  requestedNeed: Record<string, Record<string, unknown>>;
+  requestedNeed: StoreRequestedNeed;
   requestedNeedData?: RequestedNeed;
 }
 
