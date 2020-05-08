@@ -7,22 +7,26 @@ import Flex from 'ustudio-ui/components/Flex';
 import { useCalculationContext } from '../../store';
 import { Criterion } from './components';
 
+import Styled from './RequestedNeed.styles';
+
 export const RequestedNeed = () => {
   const {
     category: { criteria, id },
   } = useCalculationContext();
 
   return (
-    <Flex direction="column">
-      <Flex margin={{ bottom: 'large' }}>
-        <Text variant="h3">Ваш вибір</Text>
-      </Flex>
+    <div>
+      <Styled.RequestedNeed direction="column">
+        <Flex margin={{ bottom: 'large' }}>
+          <Text variant="h3">Ваш вибір</Text>
+        </Flex>
 
-      <Form name={id} onSubmit={console.log}>
-        {criteria.map((criterion) => (
-          <Criterion {...criterion} key={criterion.id} />
-        ))}
-      </Form>
-    </Flex>
+        <Form name={id} onSubmit={console.log}>
+          {criteria.map((criterion) => (
+            <Criterion {...criterion} key={criterion.id} />
+          ))}
+        </Form>
+      </Styled.RequestedNeed>
+    </div>
   );
 };
