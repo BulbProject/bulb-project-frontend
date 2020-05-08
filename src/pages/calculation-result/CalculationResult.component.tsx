@@ -8,10 +8,11 @@ import Grid from 'ustudio-ui/components/Grid/Grid';
 
 import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
-import type { CategoryVersion } from 'types/data';
-import { getCategoryVersionConfig } from 'config';
+import type { CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
+import { getCategoryVersionConfig, postCalculationConfig } from 'config';
 import { useRequest } from 'hooks';
 import type { StoreRequestedNeed } from 'types/globals';
+import { prepareRequestedNeed } from '../../utils';
 import { RequestedNeed } from './modules/RequestedNeed';
 
 import { CalculationContextProvider } from './store';
@@ -19,8 +20,8 @@ import { CalculationContextProvider } from './store';
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
 
-  // proper typings will come with the proper response
-  const [calculationData, setCalculationData] = useState<{ payload: StoreRequestedNeed } | null>(null);
+  const [isSubmitting, setSubmitting] = useState(false);
+  const [requestedNeed, setRequestedNeed] = useState<StoreRequestedNeed | null>({});
 
   const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
     getCategoryVersionConfig(categoryId as string, version as string)
@@ -32,24 +33,41 @@ const CalculationResult: React.FC = () => {
     const sessionStorageData = sessionStorage.getItem(`${categoryId}/${version}`);
 
     if (sessionStorageData) {
-      setCalculationData(JSON.parse(sessionStorageData));
+      setRequestedNeed(JSON.parse(sessionStorageData).payload);
     }
   }, []);
+
+  const { isLoading: isRecalculating, error: recalculationError } = useRequest(
+    postCalculationConfig(categoryId as string, version as string, {
+      requestedNeed: requestedNeed ? prepareRequestedNeed(requestedNeed) : ({} as RequestedNeedType),
+    }),
+    [requestedNeed],
+    isSubmitting
+  );
 
   return (
     <ErrorBoundary>
       <FadeIn>
-        {categoryVersion && calculationData && <CategoryHeader {...{ title, description, classification }} />}
+        {categoryVersion && requestedNeed && <CategoryHeader {...{ title, description, classification }} />}
 
-        {calculationData && categoryVersion && !isLoading && !error ? (
-          <CalculationContextProvider category={categoryVersion.category} requestedNeed={calculationData.payload}>
+        {requestedNeed && categoryVersion && !isLoading && !error ? (
+          <CalculationContextProvider
+            category={categoryVersion.category}
+            requestedNeed={requestedNeed as StoreRequestedNeed}
+          >
             <Grid
               padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}
               xs={{ gap: 32 }}
               lg={{ gap: 32 }}
             >
               <Cell lg={{ size: 3 }}>
-                <RequestedNeed />
+                <RequestedNeed
+                  error={recalculationError?.message}
+                  isLoading={isRecalculating && isSubmitting}
+                  isSubmitting={isSubmitting}
+                  setSubmitting={setSubmitting}
+                  recalculate={setRequestedNeed}
+                />
               </Cell>
 
               <Cell lg={{ size: 9 }}>Items</Cell>
@@ -60,7 +78,7 @@ const CalculationResult: React.FC = () => {
             <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
               {isLoading && <Spinner delay={500} />}
 
-              {(!calculationData || !categoryVersion) && !isLoading && (
+              {(!requestedNeed || !categoryVersion) && !isLoading && (
                 <Text color="negative">
                   Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
                   цієї категорії ☹️
