@@ -21,7 +21,7 @@ const ClassificationId = styled(Text)`
 
     position: absolute;
     right: -${circleDimension / 2}rem;
-    top: 50%;
+    top: ${circleDimension + 0.1}rem;
 
     transform: translateY(-50%);
 
