@@ -22,7 +22,7 @@ export const Item = ({ variant, item, document }: { variant: AvailableVariant; i
         <Styled.ItemDescription>
           <Text variant="h3">{item.description}</Text>
 
-          <Flex margin={{ top: 'regular' }} alignment={{ horizontal: 'center' }}>
+          <Flex margin={{ top: 'medium' }} alignment={{ horizontal: 'center' }}>
             <Text variant="h6">Кількість: {variant.quantity}</Text>
           </Flex>
         </Styled.ItemDescription>
