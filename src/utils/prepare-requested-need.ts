@@ -1,7 +1,8 @@
-import { RequirementResponse } from 'ts4ocds/extensions/requirements';
 import { v4 as uuidv4 } from 'uuid';
-import { RequestedNeed } from 'types/data';
-import { StoreRequestedNeed } from 'types/globals';
+
+import type { RequirementResponse } from 'ts4ocds/extensions/requirements';
+import type { RequestedNeed } from 'types/data';
+import type { StoreRequestedNeed } from 'types/globals';
 
 export const prepareRequestedNeed = (requestedNeed: StoreRequestedNeed): RequestedNeed => {
   return {
