@@ -28,6 +28,7 @@ export const useRequest = <D>(
       (async () => {
         try {
           setLoading(true);
+          setError(null);
 
           const { data: requestData } = await axios(config);
 
