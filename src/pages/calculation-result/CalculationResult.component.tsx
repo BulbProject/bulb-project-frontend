@@ -4,6 +4,7 @@ import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
 import Cell from 'ustudio-ui/components/Grid/Cell';
+import Grid from 'ustudio-ui/components/Grid/Grid';
 
 import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
@@ -14,7 +15,6 @@ import type { StoreRequestedNeed } from 'types/globals';
 import { RequestedNeed } from './modules/RequestedNeed';
 
 import { CalculationContextProvider } from './store';
-import Styled from './CalculationResult.styles';
 
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
@@ -43,7 +43,7 @@ const CalculationResult: React.FC = () => {
 
         {calculationData && categoryVersion && !isLoading && !error ? (
           <CalculationContextProvider category={categoryVersion.category} requestedNeed={calculationData.payload}>
-            <Styled.Container
+            <Grid
               padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}
               xs={{ gap: 32 }}
               lg={{ gap: 32 }}
@@ -53,7 +53,7 @@ const CalculationResult: React.FC = () => {
               </Cell>
 
               <Cell lg={{ size: 9 }}>Items</Cell>
-            </Styled.Container>
+            </Grid>
           </CalculationContextProvider>
         ) : (
           <Container>

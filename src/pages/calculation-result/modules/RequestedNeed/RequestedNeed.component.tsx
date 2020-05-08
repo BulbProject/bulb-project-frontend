@@ -1,9 +1,11 @@
-import { Form } from 'formfish';
 import React from 'react';
-import { useCalculationContext } from '../../store';
-import { Criterion } from './components/Criterion';
+import { Form } from 'formfish';
 
-import Styled from './RequestedNeed.styles';
+import Text from 'ustudio-ui/components/Text';
+import Flex from 'ustudio-ui/components/Flex';
+
+import { useCalculationContext } from '../../store';
+import { Criterion } from './components';
 
 export const RequestedNeed = () => {
   const {
@@ -11,14 +13,16 @@ export const RequestedNeed = () => {
   } = useCalculationContext();
 
   return (
-    <Styled.RequestedNeed direction="column">
-      <Styled.Title variant="h3">Ваш вибір</Styled.Title>
+    <Flex direction="column">
+      <Flex margin={{ bottom: 'large' }}>
+        <Text variant="h3">Ваш вибір</Text>
+      </Flex>
 
       <Form name={id} onSubmit={console.log}>
         {criteria.map((criterion) => (
           <Criterion {...criterion} key={criterion.id} />
         ))}
       </Form>
-    </Styled.RequestedNeed>
+    </Flex>
   );
 };
