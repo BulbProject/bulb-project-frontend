@@ -27,9 +27,7 @@ export const Forecasts = ({ forecasts }: { forecasts: Metric[] }) => {
                   {observation?.unit ? `, ${observation.unit.name}` : ''}
                 </Text>
 
-                <Text variant="small" color="var(--c-neutral)">
-                  {'.'.repeat(250)}
-                </Text>
+                <Styled.Dots />
               </Styled.ObservationTitle>
 
               <Text variant="small">{observation.measure}</Text>

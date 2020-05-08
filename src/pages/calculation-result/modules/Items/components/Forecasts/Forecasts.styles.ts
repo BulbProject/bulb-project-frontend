@@ -17,4 +17,12 @@ const ObservationTitle = styled(Flex)`
   overflow: hidden;
 `;
 
-export default { Forecasts, ObservationTitle };
+const Dots = styled(Flex)`
+  width: 100%;
+
+  border-bottom: 1px dotted var(--c-neutral);
+
+  transform: translateY(-4px);
+`;
+
+export default { Forecasts, ObservationTitle, Dots };
