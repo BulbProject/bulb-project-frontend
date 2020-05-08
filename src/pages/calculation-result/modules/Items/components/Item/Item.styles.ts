@@ -42,4 +42,12 @@ const Classifications = styled(Flex)`
   border-bottom: 1px solid var(--c-light);
 `;
 
-export default { Item, Image, Content, ItemDescription, Classifications };
+const Link = styled.a`
+  &:hover {
+    &:after {
+      display: none;
+    }
+  }
+`;
+
+export default { Item, Image, Content, ItemDescription, Classifications, Link };

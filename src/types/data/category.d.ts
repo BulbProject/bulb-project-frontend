@@ -3,6 +3,7 @@ import { Conversion } from 'ts4ocds/extensions/conversions';
 
 import { Criterion } from './criterion';
 import { Item } from './item';
+import { Document } from './document';
 
 export interface Category {
   /**
@@ -36,4 +37,6 @@ export interface Category {
    * List of the types of goods available under this category.
    */
   items: Item[];
+
+  documents: Document[];
 }

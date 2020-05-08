@@ -19,7 +19,7 @@ export const Forecasts = ({ forecasts }: { forecasts: Metric[] }) => {
           </Flex>
 
           {forecast.observations.map((observation) => (
-            <Flex key={forecast.id} margin={{ bottom: 'regular' }}>
+            <Flex key={observation.id} margin={{ bottom: 'regular' }}>
               <Styled.ObservationTitle>
                 <Text variant="small">
                   {observation.notes}

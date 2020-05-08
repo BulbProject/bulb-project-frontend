@@ -1,7 +1,5 @@
 import React from 'react';
 
-import type { Document } from 'ts4ocds';
-
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
@@ -13,10 +11,10 @@ import { Forecasts } from '../Forecasts';
 
 import Styled from './Item.styles';
 
-export const Item = ({ variant, item, document }: { variant: AvailableVariant; item: IItem; document?: Document }) => {
+export const Item = ({ variant, item, document }: { variant: AvailableVariant; item: IItem; document?: string }) => {
   return (
     <Styled.Item direction="column">
-      <Styled.Image link={document?.url} />
+      <Styled.Image link={document} />
 
       <Styled.Content direction="column">
         <Styled.ItemDescription>
@@ -52,7 +50,9 @@ export const Item = ({ variant, item, document }: { variant: AvailableVariant; i
         <Forecasts forecasts={variant.forecasts} />
 
         <Flex margin={{ bottom: 'regular' }} alignment={{ horizontal: 'center' }}>
-          <Button appearance="text"> Prozorro Market Teaser</Button>
+          <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
+            <Button appearance="text"> Prozorro Market Teaser</Button>
+          </Styled.Link>
         </Flex>
 
         <Button appearance="text" intent="positive">

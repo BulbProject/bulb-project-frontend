@@ -1,5 +1,5 @@
 import { Metric } from 'ts4ocds/extensions/metrics';
-import { Item } from 'ts4ocds';
+import { Value } from 'ts4ocds';
 
 export interface AvailableVariant {
   id: string;
@@ -7,7 +7,5 @@ export interface AvailableVariant {
   quantity: string;
   forecasts: Metric[];
   targets: Metric[];
-  //@TODO need clarification avgValue and relatedProducts types
-  avgValue: {};
-  relatedProducts: Item[];
+  avgValue: Value;
 }

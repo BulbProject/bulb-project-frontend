@@ -8,19 +8,23 @@ import Grid from 'ustudio-ui/components/Grid/Grid';
 
 import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
-import type { CategoryVersion } from 'types/data';
+import type { AvailableVariant, CategoryVersion } from 'types/data';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
 import type { StoreRequestedNeed } from 'types/globals';
 import { RequestedNeed } from './modules/RequestedNeed';
 
 import { CalculationContextProvider } from './store';
+import { Items } from './modules/Items';
 
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
 
   // proper typings will come with the proper response
-  const [calculationData, setCalculationData] = useState<{ payload: StoreRequestedNeed } | null>(null);
+  const [calculationData, setCalculationData] = useState<{
+    payload: StoreRequestedNeed;
+    response: { category: string; version: string; availableVariants: AvailableVariant[] };
+  } | null>(null);
 
   const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
     getCategoryVersionConfig(categoryId as string, version as string)
@@ -42,7 +46,11 @@ const CalculationResult: React.FC = () => {
         {categoryVersion && calculationData && <CategoryHeader {...{ title, description, classification }} />}
 
         {calculationData && categoryVersion && !isLoading && !error ? (
-          <CalculationContextProvider category={categoryVersion.category} requestedNeed={calculationData.payload}>
+          <CalculationContextProvider
+            category={categoryVersion.category}
+            requestedNeed={calculationData.payload}
+            availableVariants={calculationData.response.availableVariants}
+          >
             <Grid
               padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}
               xs={{ gap: 32 }}
@@ -52,7 +60,9 @@ const CalculationResult: React.FC = () => {
                 <RequestedNeed />
               </Cell>
 
-              <Cell lg={{ size: 9 }}>Items</Cell>
+              <Cell lg={{ size: 9 }}>
+                <Items />.
+              </Cell>
             </Grid>
           </CalculationContextProvider>
         ) : (
