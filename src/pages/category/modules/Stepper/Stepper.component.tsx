@@ -1,8 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Form } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
+import Alert from 'ustudio-ui/components/Alert';
 import { useHistory } from 'react-router-dom';
 
 import { modifyId, sortById, prepareRequestedNeed } from 'utils';
@@ -64,6 +65,12 @@ export const Stepper: React.FC = () => {
         <FadeIn>
           <Overlay isActive={isLoading && isSubmitting} error={error?.message} triggerRequest={triggerRequest} />
         </FadeIn>
+      )}
+
+      {error && !isLoading && (
+        <Alert onChange={triggerRequest} isOpen={Boolean(error)} horizontalPosition="center" verticalPosition="top">
+          Упс, щось пішло не так...
+        </Alert>
       )}
 
       {!isLoading && !error && Boolean(requestedNeedData) && (
