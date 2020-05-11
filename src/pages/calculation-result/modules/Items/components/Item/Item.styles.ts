@@ -44,8 +44,6 @@ const ItemDescription = styled(Flex)`
 
 const Classifications = styled(Flex)`
   padding-bottom: var(--i-regular);
-
-  border-bottom: 1px solid var(--c-light);
 `;
 
 const AdditionalClassification = styled(Flex)`
