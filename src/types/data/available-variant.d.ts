@@ -7,4 +7,5 @@ export interface AvailableVariant {
   quantity: string;
   metrics: Metric[];
   avgValue: Value;
+  relatedProducts: string[];
 }
