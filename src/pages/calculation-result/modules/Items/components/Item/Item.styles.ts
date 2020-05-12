@@ -18,7 +18,8 @@ const Image = styled.div<{ link?: string }>(
 );
 
 const Item = styled(Flex)`
-  width: calc(100% / 3);
+  flex: 1 / 4;
+  min-width: calc((1 / 2.5) * 100%);
 
   border: 1px solid var(--c-light);
 
@@ -43,8 +44,6 @@ const ItemDescription = styled(Flex)`
 
 const Classifications = styled(Flex)`
   padding-bottom: var(--i-regular);
-
-  border-bottom: 1px solid var(--c-light);
 `;
 
 const AdditionalClassification = styled(Flex)`

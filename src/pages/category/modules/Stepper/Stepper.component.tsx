@@ -1,11 +1,12 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Form } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
+import Alert from 'ustudio-ui/components/Alert';
 import { useHistory } from 'react-router-dom';
 
-import { modifyId, sortById, prepareRequestedNeed } from 'utils';
+import { modifyId, sortByValue, prepareRequestedNeed } from 'utils';
 import { postCalculationConfig } from 'config';
 import { useRequest } from 'hooks';
 import { RequestedNeed } from 'types/data';
@@ -13,7 +14,7 @@ import { RequestedNeed } from 'types/data';
 import { FadeIn } from 'components';
 
 import { useCategoryContext } from '../../store';
-import { Criteria } from '../Form/components';
+import { Criterion } from '../Form/components';
 import { isRequirementGroupFilled } from './Stepper.module';
 
 import { Overlay, Step, StepperButton } from './components';
@@ -66,6 +67,12 @@ export const Stepper: React.FC = () => {
         </FadeIn>
       )}
 
+      {error && !isLoading && (
+        <Alert onChange={triggerRequest} isOpen={Boolean(error)} horizontalPosition="center" verticalPosition="top">
+          Упс, щось пішло не так...
+        </Alert>
+      )}
+
       {!isLoading && !error && Boolean(requestedNeedData) && (
         <Styled.Modal
           title="Успіх!"
@@ -87,7 +94,7 @@ export const Stepper: React.FC = () => {
       )}
 
       <Styled.Stepper length={steps.length}>
-        {steps.sort(sortById).map((step, index) => (
+        {steps.sort(sortByValue('id')).map((step, index) => (
           <Step title={step.title} key={step.id} isActive={isStepActive(step.title)} index={index} />
         ))}
       </Styled.Stepper>
@@ -108,7 +115,8 @@ export const Stepper: React.FC = () => {
           }
         }}
         onSubmit={(state) => {
-          const newRequestedNeed = state[currentCriterion.id][currentCriterion.activeRequirementGroup?.id || ''];
+          const newRequestedNeed =
+            state?.[currentCriterion.id]?.[currentCriterion.activeRequirementGroup?.id || ''] || {};
 
           if (isSubmitting) {
             dispatch({
@@ -140,7 +148,13 @@ export const Stepper: React.FC = () => {
 
           <Styled.Step xs={{ size: 8 }}>
             <Flex direction="column">
-              <Criteria />
+              {steps.map((criterion) => {
+                if (currentCriterion.id === criterion.id) {
+                  return <Criterion key={criterion.id} {...criterion} />;
+                }
+
+                return null;
+              })}
             </Flex>
           </Styled.Step>
 

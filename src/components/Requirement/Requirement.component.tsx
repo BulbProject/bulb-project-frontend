@@ -70,7 +70,11 @@ export const Requirement = ({
         margin={{ top: 'medium' }}
       >
         {title && (
-          <Styled.Title variant="caption" isBoolean={isBoolean(dataType)} color="var(--c-darkest)">
+          <Styled.Title
+            variant="caption"
+            isBoolean={isBoolean(dataType)}
+            color={isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'}
+          >
             {optionDetails && 'optionGroups' in optionDetails && hasSingleOptionGroup
               ? optionDetails.optionGroups[0].description
               : title}
@@ -83,7 +87,11 @@ export const Requirement = ({
             isDisabled,
             defaultValue: requestedNeed[currentCriterion.id]?.[id],
             props: {
-              suffix: <Text variant="caption">{unit?.name || (dataType as string)}</Text>,
+              suffix: (
+                <Text variant="caption" align="right" color={isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'}>
+                  {unit?.name || (dataType as string)}
+                </Text>
+              ),
               placeholder: description,
             },
             // eslint-disable-next-line no-nested-ternary
