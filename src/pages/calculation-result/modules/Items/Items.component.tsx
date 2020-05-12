@@ -1,15 +1,14 @@
 import React from 'react';
 
-import type { Item as IItem } from 'types/data';
+import type { AvailableVariant, Item as IItem } from 'types/data';
 
 import { useCalculationContext } from '../../store';
 
 import { Item } from './components';
 import Styled from './Items.styles';
 
-export const Items = () => {
+export const Items = ({ availableVariants }: { availableVariants: AvailableVariant[] }) => {
   const {
-    availableVariants,
     category: { items, documents },
   } = useCalculationContext();
 

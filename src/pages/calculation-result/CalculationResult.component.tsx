@@ -35,18 +35,12 @@ const CalculationResult: React.FC = () => {
 
   const { category: { title, description, classification } = {} } = categoryVersion || ({} as CategoryVersion);
 
-  useEffect(() => {
-    const sessionStorageData = sessionStorage.getItem(`${categoryId}/${version}`);
-
-    if (sessionStorageData) {
-      const parsedData = JSON.parse(sessionStorageData);
-
-      setRequestedNeed(parsedData.payload);
-      setAvailableVariants(parsedData.response.availableVariants);
-    }
-  }, []);
-
-  const { isLoading: isRecalculating, error: recalculationError, triggerRequest: recalculate } = useRequest(
+  const {
+    isLoading: isRecalculating,
+    error: recalculationError,
+    triggerRequest: recalculate,
+    data: calculationResponse,
+  } = useRequest<{ availableVariants: AvailableVariant[]; category: string; version: string }>(
     postCalculationConfig(categoryId as string, version as string, {
       requestedNeed: newRequestedNeed ? prepareRequestedNeed(newRequestedNeed) : ({} as RequestedNeedType),
     }),
@@ -62,9 +56,36 @@ const CalculationResult: React.FC = () => {
       recalculate();
 
       setSubmitting(false);
-      setNewRequestedNeed(null);
     }
   }, [newRequestedNeed]);
+
+  useEffect(() => {
+    if (!isRecalculating && !recalculationError && newRequestedNeed) {
+      sessionStorage.setItem(
+        `${categoryId}/${version}`,
+        JSON.stringify({
+          payload: newRequestedNeed,
+          response: calculationResponse,
+        })
+      );
+      setRequestedNeed(newRequestedNeed);
+      //@ts-ignore
+      setAvailableVariants(calculationResponse?.availableVariants);
+
+      setNewRequestedNeed(null);
+    }
+  }, [isRecalculating]);
+
+  useEffect(() => {
+    const sessionStorageData = sessionStorage.getItem(`${categoryId}/${version}`);
+
+    if (sessionStorageData) {
+      const parsedData = JSON.parse(sessionStorageData);
+
+      setRequestedNeed(parsedData.payload);
+      setAvailableVariants(parsedData.response.availableVariants);
+    }
+  }, []);
 
   return (
     <ErrorBoundary>
@@ -75,7 +96,6 @@ const CalculationResult: React.FC = () => {
           <CalculationContextProvider
             category={categoryVersion.category}
             requestedNeed={requestedNeed as StoreRequestedNeed}
-            availableVariants={availableVariants as AvailableVariant[]}
           >
             <Styled.Wrapper alignment={{ horizontal: 'center' }}>
               <Styled.Container>
@@ -88,7 +108,11 @@ const CalculationResult: React.FC = () => {
                   }}
                 />
 
-                <Items />
+                {availableVariants ? (
+                  <Items availableVariants={availableVariants} />
+                ) : (
+                  <Text>Відсутні можливі варіанти</Text>
+                )}
               </Styled.Container>
             </Styled.Wrapper>
           </CalculationContextProvider>
