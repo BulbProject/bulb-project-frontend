@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
 
-const Forecasts = styled(Flex)`
+const Metrics = styled(Flex)`
   flex-direction: column;
 
   padding: var(--i-regular) 0;
@@ -23,4 +23,4 @@ const Dots = styled(Flex)`
   transform: translateY(-4px);
 `;
 
-export default { Forecasts, ObservationTitle, Dots };
+export default { Metrics, ObservationTitle, Dots };

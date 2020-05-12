@@ -9,7 +9,7 @@ import Button from 'ustudio-ui/components/Button';
 import { AvailableVariant, Item as IItem } from 'types/data';
 import { Classification } from 'shared';
 
-import { Forecasts } from '../Forecasts';
+import { Metrics } from '../Metrics';
 
 import Styled from './Item.styles';
 
@@ -49,7 +49,7 @@ export const Item = ({ variant, item, document }: { variant: AvailableVariant; i
           )}
         </Styled.Classifications>
 
-        <Forecasts forecasts={variant.forecasts} />
+        <Metrics metrics={variant.metrics} />
 
         <Flex direction="column">
           <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
