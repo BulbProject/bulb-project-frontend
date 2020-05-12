@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import type { Unit } from 'ts4ocds';
 import type { RequirementWithOptionDetails as RequirementProps } from 'ts4ocds/extensions/options';
@@ -18,6 +18,7 @@ import Styled from './Requirement.styles';
 
 export const Requirement = ({
   id,
+  title,
   description,
   isDisabled,
   unit,
@@ -55,6 +56,14 @@ export const Requirement = ({
     return undefined;
   };
 
+  const hasSingleOptionGroup = useMemo(() => {
+    if (optionDetails && 'optionGroups' in optionDetails) {
+      return optionDetails.optionGroups.length === 1;
+    }
+
+    return false;
+  }, []);
+
   return (
     <Styled.Requirement htmlFor={id}>
       <Flex
@@ -62,6 +71,18 @@ export const Requirement = ({
         alignment={{ vertical: 'center' }}
         margin={{ top: 'medium' }}
       >
+        {title && (
+          <Styled.Title
+            variant="caption"
+            isBoolean={isBoolean(dataType)}
+            color={isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'}
+          >
+            {optionDetails && 'optionGroups' in optionDetails && hasSingleOptionGroup
+              ? optionDetails.optionGroups[0].description
+              : title}
+          </Styled.Title>
+        )}
+
         <Field name={id} getValue={getValue()} setValue={setValue()}>
           {renderInput({
             dataType,

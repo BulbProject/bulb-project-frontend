@@ -31,14 +31,18 @@ export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, requirem
             currentCriterion={currentCriterion}
           />
         ) : (
-          requirements.map((requirement) => (
-            <Requirement
-              {...requirement}
-              key={requirement.id}
-              requestedNeed={requestedNeed}
-              currentCriterion={currentCriterion}
-            />
-          ))
+          requirements.map((requirement) => {
+            const { title, ...cutedRequirement } = requirement;
+
+            return (
+              <Requirement
+                {...cutedRequirement}
+                key={requirement.id}
+                requestedNeed={requestedNeed}
+                currentCriterion={currentCriterion}
+              />
+            );
+          })
         )}
       </Flex>
     </Flex>
