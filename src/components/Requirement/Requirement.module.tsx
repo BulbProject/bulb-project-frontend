@@ -31,6 +31,12 @@ export const renderInput = ({
     `;
 
     const ValuesListItem = css`
+      &:before {
+        background: var(--c-primary-light);
+      }
+    `;
+
+    const MultiValuesListItem = css`
       padding-left: 1.5rem;
 
       ${Mixin.Font.bodySmall()};
@@ -92,7 +98,7 @@ export const renderInput = ({
         groups={groupsMap}
         defaultValue={defaultValue as string}
         styled={{
-          ValuesListItem,
+          ValuesListItem: MultiValuesListItem,
           ValuesListTitle,
           Dropdown: ({ isOpen }) => css`
             div {

@@ -83,7 +83,11 @@ export const Requirement = ({
             isDisabled,
             defaultValue: requestedNeed[currentCriterion.id]?.[id],
             props: {
-              suffix: <Text variant="caption">{unit?.name || (dataType as string)}</Text>,
+              suffix: (
+                <Text variant="caption" align="right">
+                  {unit?.name || (dataType as string)}
+                </Text>
+              ),
               placeholder: description,
             },
             // eslint-disable-next-line no-nested-ternary
