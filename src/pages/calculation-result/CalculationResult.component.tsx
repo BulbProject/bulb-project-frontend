@@ -41,7 +41,7 @@ const CalculationResult: React.FC = () => {
     error: recalculationError,
     triggerRequest: recalculate,
     data: calculationResponse,
-  } = useRequest(
+  } = useRequest<{ availableVariants: AvailableVariant[]; category: string; version: string }>(
     postCalculationConfig(categoryId as string, version as string, {
       requestedNeed: newRequestedNeed ? prepareRequestedNeed(newRequestedNeed) : ({} as RequestedNeedType),
     }),
