@@ -41,7 +41,7 @@ export const renderInput = ({
       return (
         <Select
           items={optionsMap}
-          defaultValue={(defaultValue || Object.values(optionsMap)[0].value) as string}
+          defaultValue={defaultValue as string}
           styled={{
             ValuesListItem: css`
               &:before {
@@ -63,7 +63,7 @@ export const renderInput = ({
     return (
       <Select
         groups={groupsMap}
-        defaultValue={(defaultValue || Object.values(groupsMap[0].items)[0].value) as string}
+        defaultValue={defaultValue as string}
         styled={{
           ValuesListItem: css`
             &:before {
