@@ -2,14 +2,32 @@ import React, { useMemo } from 'react';
 import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Select from 'ustudio-ui/components/Select/Select';
+import { Mixin } from 'ustudio-ui/theme';
 
 import { useCategoryContext } from 'pages/category/store';
-import { Mixin } from 'ustudio-ui/theme';
+import { Criterion as CriterionProps } from 'types/data';
+
+import { BinaryGroup } from '../BinaryGroup';
 import { RequirementGroup } from '../RequirementGroup';
 
-export const Criteria = () => {
+import { getBooleanGroup, getNonBooleanGroup, hasBinarySelection } from './Criterion.module';
+
+export const Criterion: React.FC<CriterionProps> = ({ requirementGroups }) => {
   const { currentCriterion, dispatch } = useCategoryContext();
-  const { requirementGroups, activeRequirementGroup } = useMemo(() => currentCriterion, [currentCriterion]);
+  const { activeRequirementGroup } = currentCriterion;
+
+  const { hasBinaryGroups, booleanGroup, nonBooleanGroup } = useMemo(
+    () => ({
+      hasBinaryGroups: hasBinarySelection(requirementGroups),
+      booleanGroup: getBooleanGroup(requirementGroups),
+      nonBooleanGroup: getNonBooleanGroup(requirementGroups),
+    }),
+    []
+  );
+
+  if (hasBinaryGroups && booleanGroup && nonBooleanGroup) {
+    return <BinaryGroup booleanGroup={booleanGroup} nonBooleanGroup={nonBooleanGroup} />;
+  }
 
   return (
     <Flex direction="column">
@@ -41,7 +59,7 @@ export const Criteria = () => {
           `,
           ValuesListItem: css`
             &:before {
-              background: var(--c-primary);
+              background: var(--c-primary-light);
             }
           `,
         }}

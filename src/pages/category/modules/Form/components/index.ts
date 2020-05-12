@@ -1,1 +1,1 @@
-export * from './Criteria';
+export * from './Criterion';
