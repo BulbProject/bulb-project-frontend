@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Form } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
@@ -13,7 +13,7 @@ import { RequestedNeed } from 'types/data';
 import { FadeIn } from 'components';
 
 import { useCategoryContext } from '../../store';
-import { Criteria } from '../Form/components';
+import { Criterion } from '../Form/components';
 import { isRequirementGroupFilled } from './Stepper.module';
 
 import { Overlay, Step, StepperButton } from './components';
@@ -143,7 +143,7 @@ export const Stepper: React.FC = () => {
             <Flex direction="column">
               {steps.map((criterion) => {
                 if (currentCriterion.id === criterion.id) {
-                  return <Criteria key={criterion.id} />;
+                  return <Criterion key={criterion.id} {...criterion} />;
                 }
 
                 return null;

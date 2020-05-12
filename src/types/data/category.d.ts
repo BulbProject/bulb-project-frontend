@@ -28,7 +28,7 @@ export interface Category {
    */
   conversions: Conversion[];
   /**
-   * Criteria describe the sequence of related questions, where answers are needed to reflect the specific needs
+   * Criterion describe the sequence of related questions, where answers are needed to reflect the specific needs
    * that the Procuring Entity intends to purchase.
    * Array according to [ocds_requirements_extension](https://github.com/open-contracting-extensions/ocds_requirements_extension)
    */

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Flex from 'ustudio-ui/components/Flex';
 import { FieldSet } from 'formfish';
 
@@ -7,8 +7,6 @@ import { sortById } from 'utils';
 import { Requirement } from 'components';
 import { useCategoryContext } from '../../../../store';
 
-import { HiddenRequirement } from '../HiddenRequirement';
-
 export const RequirementGroup: React.FC<RequirementGroupProps & { isDisabled?: boolean }> = ({
   id,
   requirements,
@@ -16,30 +14,18 @@ export const RequirementGroup: React.FC<RequirementGroupProps & { isDisabled?: b
 }) => {
   const { requestedNeed, currentCriterion } = useCategoryContext();
 
-  const hasSingleRequirement = useMemo(() => requirements.length === 1, [id]);
-  const hasSingleBooleanRequirement = useMemo(
-    () => hasSingleRequirement && requirements[0].dataType === 'boolean' && 'expectedValue' in requirements[0],
-    [id]
-  );
-
   return (
     <FieldSet name={id}>
-      <Flex margin={{ top: hasSingleBooleanRequirement ? undefined : 'regular' }}>
-        {hasSingleBooleanRequirement ? (
-          <HiddenRequirement {...requirements[0]} />
-        ) : (
-          <Flex direction="column">
-            {requirements.sort(sortById).map((requirement) => (
-              <Requirement
-                {...requirement}
-                isDisabled={isDisabled}
-                key={requirement.id}
-                requestedNeed={requestedNeed}
-                currentCriterion={currentCriterion}
-              />
-            ))}
-          </Flex>
-        )}
+      <Flex margin={{ top: 'regular' }} direction="column">
+        {requirements.sort(sortById).map((requirement) => (
+          <Requirement
+            {...requirement}
+            isDisabled={isDisabled}
+            key={requirement.id}
+            requestedNeed={requestedNeed}
+            currentCriterion={currentCriterion}
+          />
+        ))}
       </Flex>
     </FieldSet>
   );

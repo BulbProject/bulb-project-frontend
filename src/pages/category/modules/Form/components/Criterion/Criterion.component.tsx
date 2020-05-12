@@ -5,13 +5,15 @@ import Select from 'ustudio-ui/components/Select/Select';
 
 import { useCategoryContext } from 'pages/category/store';
 import { Mixin } from 'ustudio-ui/theme';
+import { Criterion as CriterionProps } from 'types/data';
+
 import { BinaryGroup } from '../BinaryGroup';
 import { RequirementGroup } from '../RequirementGroup';
-import { getBooleanGroup, getNonBooleanGroup, hasBinarySelection } from './Criteria.module';
 
-export const Criteria = () => {
+import { getBooleanGroup, getNonBooleanGroup, hasBinarySelection } from './Criterion.module';
+
+export const Criterion: React.FC<CriterionProps> = ({ requirementGroups }) => {
   const { currentCriterion, dispatch } = useCategoryContext();
-  const { requirementGroups } = useMemo(() => currentCriterion, [currentCriterion.id]);
   const { activeRequirementGroup } = currentCriterion;
 
   const { hasBinaryGroups, booleanGroup, nonBooleanGroup } = useMemo(
@@ -20,7 +22,7 @@ export const Criteria = () => {
       booleanGroup: getBooleanGroup(requirementGroups),
       nonBooleanGroup: getNonBooleanGroup(requirementGroups),
     }),
-    [currentCriterion.id]
+    []
   );
 
   if (hasBinaryGroups && booleanGroup && nonBooleanGroup) {

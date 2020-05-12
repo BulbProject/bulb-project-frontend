@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Checkbox from 'ustudio-ui/components/Checkbox';
@@ -19,9 +19,20 @@ export const BinaryGroup: React.FC<BinaryGroupProps> = ({ booleanGroup, nonBoole
   const [isBooleanGroupActive, setBooleanGroupActive] = useState(false);
   const [prevBooleanValue, setPrevBooleanValue] = useState<undefined | boolean>();
 
+  const setActiveRequirementGroup = useCallback((value: boolean) => {
+    dispatch({
+      type: 'set_active_requirement_group',
+      payload: {
+        requirementGroup: value ? booleanGroup : nonBooleanGroup,
+        criterionId: currentCriterion.id,
+      },
+    });
+  }, []);
+
   useEffect(() => {
     const prevValue = requestedNeed[currentCriterion.id]?.[booleanGroup.requirements[0].id] as boolean;
 
+    setActiveRequirementGroup(Boolean(prevValue));
     setBooleanGroupActive(Boolean(prevValue));
     setPrevBooleanValue(prevValue);
     setMounted(true);
@@ -49,15 +60,10 @@ export const BinaryGroup: React.FC<BinaryGroupProps> = ({ booleanGroup, nonBoole
                   value={formValue as boolean}
                   onChange={(inputValue = prevBooleanValue ?? false) => {
                     setValue(inputValue);
-                    setBooleanGroupActive(inputValue as boolean);
 
-                    dispatch({
-                      type: 'set_active_requirement_group',
-                      payload: {
-                        requirementGroup: inputValue ? booleanGroup : nonBooleanGroup,
-                        criterionId: currentCriterion.id,
-                      },
-                    });
+                    setBooleanGroupActive(inputValue);
+
+                    setActiveRequirementGroup(inputValue);
                   }}
                   styled={{
                     CheckboxContainer: css`
