@@ -4,22 +4,22 @@ import type { Metric } from 'ts4ocds/extensions/metrics';
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 
-import Styled from './Forecasts.styles';
+import Styled from './Metrics.styles';
 
-export const Forecasts = ({ forecasts }: { forecasts: Metric[] }) => {
+export const Metrics = ({ metrics }: { metrics: Metric[] }) => {
   return (
-    <Styled.Forecasts>
+    <Styled.Metrics>
       <Flex margin={{ bottom: 'regular' }}>
         <Text appearance="bold"> Збереження</Text>
       </Flex>
 
-      {forecasts.map((forecast) => (
-        <Flex key={forecast.id} direction="column">
+      {metrics.map((metric) => (
+        <Flex key={metric.id} direction="column">
           <Flex margin={{ bottom: 'regular' }}>
-            <Text variant="caption">{forecast.title}</Text>
+            <Text variant="caption">{metric.title}</Text>
           </Flex>
 
-          {forecast.observations.map((observation) => (
+          {metric.observations.map((observation) => (
             <Flex key={observation.id} margin={{ bottom: 'regular' }}>
               <Styled.ObservationTitle>
                 <Text variant="small" color="var(--c-dark)">
@@ -30,11 +30,11 @@ export const Forecasts = ({ forecasts }: { forecasts: Metric[] }) => {
                 <Styled.Dots />
               </Styled.ObservationTitle>
 
-              <Text variant="small">{observation.measure}</Text>
+              <Text variant="small">{observation.measure ?? observation.value}</Text>
             </Flex>
           ))}
         </Flex>
       ))}
-    </Styled.Forecasts>
+    </Styled.Metrics>
   );
 };
