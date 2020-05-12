@@ -4,8 +4,6 @@ import { Link, useParams } from 'react-router-dom';
 import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
-import Cell from 'ustudio-ui/components/Grid/Cell';
-import Grid from 'ustudio-ui/components/Grid/Grid';
 
 import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
@@ -21,6 +19,7 @@ import { RequestedNeed } from './modules/RequestedNeed';
 import { Items } from './modules/Items';
 
 import { CalculationContextProvider } from './store';
+import Styled from './CalculationResult.styles';
 
 const CalculationResult: React.FC = () => {
   const { categoryId, version } = useParams();
@@ -78,12 +77,8 @@ const CalculationResult: React.FC = () => {
             requestedNeed={requestedNeed as StoreRequestedNeed}
             availableVariants={availableVariants as AvailableVariant[]}
           >
-            <Grid
-              padding={{ left: 'large', right: 'large', top: 'large', bottom: 'large' }}
-              xs={{ gap: 32 }}
-              lg={{ gap: 32 }}
-            >
-              <Cell lg={{ size: 3 }}>
+            <Styled.Wrapper alignment={{ horizontal: 'center' }}>
+              <Styled.Container>
                 <RequestedNeed
                   error={recalculationError?.message}
                   isLoading={isRecalculating}
@@ -92,12 +87,10 @@ const CalculationResult: React.FC = () => {
                     setNewRequestedNeed(state);
                   }}
                 />
-              </Cell>
 
-              <Cell lg={{ size: 9 }}>
-                <Items />.
-              </Cell>
-            </Grid>
+                <Items />
+              </Styled.Container>
+            </Styled.Wrapper>
           </CalculationContextProvider>
         ) : (
           <Container>

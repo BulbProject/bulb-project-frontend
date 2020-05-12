@@ -4,6 +4,9 @@ import Button from 'ustudio-ui/components/Button';
 
 const Wrapper = styled.div`
   position: relative;
+
+  flex: calc(1 / 4);
+  margin-right: var(--i-large);
 `;
 
 const RequestedNeed = styled(Flex)`
