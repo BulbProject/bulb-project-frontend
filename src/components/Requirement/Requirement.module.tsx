@@ -8,6 +8,7 @@ import NumberInput from 'ustudio-ui/components/Input/NumberInput';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Select from 'ustudio-ui/components/Select/Select';
 import type { Group, Item } from 'ustudio-ui/components/Select/select.types';
+import { Mixin } from 'ustudio-ui/theme';
 
 import { InputProps } from './Requirement.types';
 
@@ -25,6 +26,36 @@ export const renderInput = ({
   props: InputProps;
 }): ReactElement => {
   if (optionGroups) {
+    const ValuesListTitle = css`
+      color: var(--c-darkest);
+    `;
+
+    const ValuesListItem = css`
+      padding-left: 1.5rem;
+
+      ${Mixin.Font.bodySmall()};
+
+      &:before {
+        background: var(--c-primary-light);
+      }
+
+      &:after {
+        content: '';
+
+        position: absolute;
+        top: 50%;
+        left: var(--i-medium);
+
+        transform: translateY(-50%);
+
+        width: 0.3rem;
+        height: 0.3rem;
+        border-radius: 0.3rem;
+
+        background-color: var(--c-secondary-light);
+      }
+    `;
+
     const mapOptionsToItems = (options: Option[]): Record<string, Item> => {
       return options.reduce(
         (map, option) =>
@@ -43,11 +74,7 @@ export const renderInput = ({
           items={optionsMap}
           defaultValue={defaultValue as string}
           styled={{
-            ValuesListItem: css`
-              &:before {
-                background: var(--c-primary);
-              }
-            `,
+            ValuesListItem,
           }}
         />
       );
@@ -65,13 +92,12 @@ export const renderInput = ({
         groups={groupsMap}
         defaultValue={defaultValue as string}
         styled={{
-          ValuesListItem: css`
-            &:before {
-              background: var(--c-primary);
+          ValuesListItem,
+          ValuesListTitle,
+          Dropdown: ({ isOpen }) => css`
+            div {
+              height: ${isOpen ? `200px` : 0};
             }
-          `,
-          ValuesListTitle: css`
-            color: var(--c-secondary);
           `,
         }}
       />
