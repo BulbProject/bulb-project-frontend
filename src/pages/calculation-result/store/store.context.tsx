@@ -10,9 +10,8 @@ export const CalculationContextProvider: React.FC<CalculationContextStateValue> 
   children,
   category,
   requestedNeed,
-  availableVariants,
 }) => {
-  const [state, dispatch] = useReducer(calculationContextReducer, { category, requestedNeed, availableVariants });
+  const [state, dispatch] = useReducer(calculationContextReducer, { category, requestedNeed });
 
   return (
     <CalculationContextState.Provider value={state}>
