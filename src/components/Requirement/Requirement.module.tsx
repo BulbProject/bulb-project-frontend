@@ -77,6 +77,7 @@ export const renderInput = ({
 
       return (
         <Select
+          isDisabled={isDisabled}
           items={optionsMap}
           defaultValue={defaultValue as string}
           styled={{
@@ -95,6 +96,7 @@ export const renderInput = ({
 
     return (
       <Select
+        isDisabled={isDisabled}
         groups={groupsMap}
         defaultValue={defaultValue as string}
         styled={{
@@ -112,13 +114,13 @@ export const renderInput = ({
 
   switch (dataType) {
     case 'string':
-      return <TextInput defaultValue={defaultValue as string} {...props} />;
+      return <TextInput isDisabled={isDisabled} defaultValue={defaultValue as string} {...props} />;
     case 'boolean':
       return <Checkbox isDisabled={isDisabled} defaultValue={defaultValue as boolean} />;
     case 'integer':
     case 'number':
     default:
-      return <NumberInput defaultValue={defaultValue as number} {...props} />;
+      return <NumberInput isDisabled={isDisabled} defaultValue={defaultValue as number} {...props} />;
   }
 };
 

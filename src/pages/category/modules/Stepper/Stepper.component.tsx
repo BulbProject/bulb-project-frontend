@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Form } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
@@ -108,7 +108,8 @@ export const Stepper: React.FC = () => {
           }
         }}
         onSubmit={(state) => {
-          const newRequestedNeed = state[currentCriterion.id][currentCriterion.activeRequirementGroup?.id || ''];
+          const newRequestedNeed =
+            state?.[currentCriterion.id]?.[currentCriterion.activeRequirementGroup?.id || ''] || {};
 
           if (isSubmitting) {
             dispatch({
@@ -140,7 +141,13 @@ export const Stepper: React.FC = () => {
 
           <Styled.Step xs={{ size: 8 }}>
             <Flex direction="column">
-              <Criteria />
+              {steps.map((criterion) => {
+                if (currentCriterion.id === criterion.id) {
+                  return <Criteria key={criterion.id} />;
+                }
+
+                return null;
+              })}
             </Flex>
           </Styled.Step>
 

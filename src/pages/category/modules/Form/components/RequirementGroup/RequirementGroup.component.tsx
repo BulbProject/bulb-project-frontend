@@ -9,7 +9,11 @@ import { useCategoryContext } from '../../../../store';
 
 import { HiddenRequirement } from '../HiddenRequirement';
 
-export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, requirements }) => {
+export const RequirementGroup: React.FC<RequirementGroupProps & { isDisabled?: boolean }> = ({
+  id,
+  requirements,
+  isDisabled,
+}) => {
   const { requestedNeed, currentCriterion } = useCategoryContext();
 
   const hasSingleRequirement = useMemo(() => requirements.length === 1, [id]);
@@ -28,6 +32,7 @@ export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, requirem
             {requirements.sort(sortById).map((requirement) => (
               <Requirement
                 {...requirement}
+                isDisabled={isDisabled}
                 key={requirement.id}
                 requestedNeed={requestedNeed}
                 currentCriterion={currentCriterion}

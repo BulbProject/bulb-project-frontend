@@ -4,12 +4,16 @@ import { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 
 import Styled from './HiddenRequirement.styles';
 
-export const HiddenRequirement = ({ ...requirementProps }: RequirementWithOptionDetails) => (
-  <Field
-    name={requirementProps.id}
-    getters={{ defaultValue: 'defaultChecked' }}
-    getValue={({ target: { value } }) => value}
-  >
-    <Styled.HiddenRequirement type="checkbox" defaultChecked />
-  </Field>
-);
+export const HiddenRequirement = ({
+  isInteractive = false,
+  ...requirementProps
+}: RequirementWithOptionDetails & { isInteractive?: boolean }) => {
+  return (
+    <Field
+      name={requirementProps.id}
+      renderInput={() => (
+        <Styled.HiddenRequirement type="checkbox" isInteractive={isInteractive} onChange={console.log} />
+      )}
+    />
+  );
+};
