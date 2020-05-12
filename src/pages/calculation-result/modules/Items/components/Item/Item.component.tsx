@@ -13,9 +13,19 @@ import { Metrics } from '../Metrics';
 
 import Styled from './Item.styles';
 
-export const Item = ({ variant, item, document }: { variant: AvailableVariant; item: IItem; document?: string }) => {
+export const Item = ({
+  variant,
+  item,
+  document,
+  isSearched,
+}: {
+  variant: AvailableVariant;
+  item: IItem;
+  document?: string;
+  isSearched?: boolean;
+}) => {
   return (
-    <Styled.Item direction="column">
+    <Styled.Item direction="column" isSearched={!!isSearched}>
       <Styled.Image link={document} />
 
       <Styled.Content direction="column">
@@ -28,28 +38,28 @@ export const Item = ({ variant, item, document }: { variant: AvailableVariant; i
         </Styled.ItemDescription>
 
         <Styled.Classifications direction="column">
-          <Flex margin={{ bottom: 'regular' }} direction="column">
+          <Flex direction="column">
             <Flex margin={{ bottom: 'regular' }}>
               <Text variant="caption">Класифікація</Text>
             </Flex>
 
             <Classification {...item.classification} />
           </Flex>
-
-          {item.additionalClassifications && (
-            <Styled.AdditionalClassification direction="column">
-              <Flex margin={{ bottom: 'regular' }}>
-                <Text variant="caption">Додаткові класифікації</Text>
-              </Flex>
-
-              {item.additionalClassifications.map((additionalClassification) => (
-                <Classification key={additionalClassification.id} {...additionalClassification} />
-              ))}
-            </Styled.AdditionalClassification>
-          )}
         </Styled.Classifications>
 
         <Metrics metrics={variant.metrics} />
+
+        {item.additionalClassifications && (
+          <Styled.AdditionalClassification direction="column">
+            <Flex margin={{ bottom: 'regular' }}>
+              <Text variant="caption">Додаткові класифікації</Text>
+            </Flex>
+
+            {item.additionalClassifications.map((additionalClassification) => (
+              <Classification key={additionalClassification.id} {...additionalClassification} />
+            ))}
+          </Styled.AdditionalClassification>
+        )}
 
         <Flex direction="column">
           <Styled.Link href="#" target="_blank" rel="noopener noreferrer">

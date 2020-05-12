@@ -3,9 +3,11 @@ import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
 
 const Wrapper = styled.div`
+  flex-shrink: 0;
+
   position: relative;
 
-  flex: calc(1 / 4);
+  width: 360px;
   margin-right: var(--i-large);
 `;
 
@@ -15,7 +17,12 @@ const RequestedNeed = styled(Flex)`
 `;
 
 const Recalculate = styled(Button)`
+  position: sticky;
+  bottom: 0;
+  z-index: var(--l-bottom);
+
   width: 100%;
+
   padding: var(--i-regular);
 `;
 

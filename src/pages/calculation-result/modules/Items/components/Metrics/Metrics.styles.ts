@@ -5,10 +5,8 @@ import Flex from 'ustudio-ui/components/Flex';
 const Metrics = styled(Flex)`
   flex-direction: column;
 
-  padding: var(--i-regular) 0;
   margin-bottom: var(--i-regular);
 
-  border-top: 1px solid var(--c-light);
   border-bottom: 1px solid var(--c-light);
 `;
 

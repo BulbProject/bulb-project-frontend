@@ -69,7 +69,7 @@ const CalculationResult: React.FC = () => {
         })
       );
       setRequestedNeed(newRequestedNeed);
-      //@ts-ignore
+      // @ts-ignore
       setAvailableVariants(calculationResponse?.availableVariants);
 
       setNewRequestedNeed(null);
@@ -98,22 +98,20 @@ const CalculationResult: React.FC = () => {
             requestedNeed={requestedNeed as StoreRequestedNeed}
           >
             <Styled.Wrapper alignment={{ horizontal: 'center' }}>
-              <Styled.Container>
-                <RequestedNeed
-                  error={recalculationError?.message}
-                  isLoading={isRecalculating}
-                  setSubmitting={setSubmitting}
-                  recalculate={(state) => {
-                    setNewRequestedNeed(state);
-                  }}
-                />
+              <RequestedNeed
+                error={recalculationError?.message}
+                isLoading={isRecalculating}
+                setSubmitting={setSubmitting}
+                recalculate={(state) => {
+                  setNewRequestedNeed(state);
+                }}
+              />
 
-                {availableVariants ? (
-                  <Items availableVariants={availableVariants} />
-                ) : (
-                  <Text>Відсутні можливі варіанти</Text>
-                )}
-              </Styled.Container>
+              {availableVariants ? (
+                <Items availableVariants={availableVariants} />
+              ) : (
+                <Text>Відсутні можливі варіанти</Text>
+              )}
             </Styled.Wrapper>
           </CalculationContextProvider>
         ) : (

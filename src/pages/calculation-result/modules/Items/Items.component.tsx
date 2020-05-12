@@ -1,4 +1,7 @@
 import React from 'react';
+import { css } from 'styled-components';
+
+import Flex from 'ustudio-ui/components/Flex';
 
 import type { AvailableVariant, Item as IItem } from 'types/data';
 
@@ -14,15 +17,35 @@ export const Items = ({ availableVariants }: { availableVariants: AvailableVaria
 
   return (
     <Styled.Items>
-      {availableVariants.map((variant) => {
-        const relatedItem = items.find((item) => item.id === variant.relatedItem) as IItem;
+      <Item
+        variant={availableVariants[0]}
+        item={items.find((item) => item.id === availableVariants[0].relatedItem) as IItem}
+        document={
+          documents?.find((document) => {
+            return document.relatesTo === 'item' && document.relatedItem === availableVariants[0].relatedItem;
+          })?.url
+        }
+        isSearched
+      />
+      <Flex
+        styled={{
+          Flex: css`
+            max-width: calc(100% - 380px);
 
-        const relatedDocument = documents?.find(
-          (document) => document.relatesTo === 'item' && document.relatedItem === relatedItem.id
-        );
+            overflow-x: auto;
+          `,
+        }}
+      >
+        {availableVariants.slice(1).map((variant) => {
+          const relatedItem = items.find((item) => item.id === variant.relatedItem) as IItem;
 
-        return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
-      })}
+          const relatedDocument = documents?.find(
+            (document) => document.relatesTo === 'item' && document.relatedItem === relatedItem.id
+          );
+
+          return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
+        })}
+      </Flex>
     </Styled.Items>
   );
 };
