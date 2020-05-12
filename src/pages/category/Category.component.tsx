@@ -10,7 +10,7 @@ import Text from 'ustudio-ui/components/Text';
 import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'hooks';
 import { CategoryVersion, Criterion } from 'types/data';
-import { sortById } from 'utils';
+import { sortByValue } from 'utils';
 import { FadeIn, ErrorBoundary, CategoryHeader } from 'components';
 import { Container } from 'shared';
 
@@ -34,7 +34,7 @@ const CategoryPage: React.FC = () => {
 
   useEffect(() => {
     if (criteria) {
-      const sortedCriteria = criteria.sort(sortById);
+      const sortedCriteria = criteria.sort(sortByValue('id'));
 
       setSteps(sortedCriteria);
     }

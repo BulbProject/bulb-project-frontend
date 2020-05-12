@@ -5,7 +5,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { useHistory } from 'react-router-dom';
 
-import { modifyId, sortById, prepareRequestedNeed } from 'utils';
+import { modifyId, sortByValue, prepareRequestedNeed } from 'utils';
 import { postCalculationConfig } from 'config';
 import { useRequest } from 'hooks';
 import { RequestedNeed } from 'types/data';
@@ -87,7 +87,7 @@ export const Stepper: React.FC = () => {
       )}
 
       <Styled.Stepper length={steps.length}>
-        {steps.sort(sortById).map((step, index) => (
+        {steps.sort(sortByValue('id')).map((step, index) => (
           <Step title={step.title} key={step.id} isActive={isStepActive(step.title)} index={index} />
         ))}
       </Styled.Stepper>

@@ -3,7 +3,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import { FieldSet } from 'formfish';
 
 import { RequirementGroup as RequirementGroupProps } from 'types/data';
-import { sortById } from 'utils';
+import { sortByValue } from 'utils';
 import { Requirement } from 'components';
 import { useCategoryContext } from '../../../../store';
 
@@ -17,7 +17,7 @@ export const RequirementGroup: React.FC<RequirementGroupProps & { isDisabled?: b
   return (
     <FieldSet name={id}>
       <Flex margin={{ top: 'regular' }} direction="column">
-        {requirements.sort(sortById).map((requirement) => (
+        {requirements.sort(sortByValue('id')).map((requirement) => (
           <Requirement
             {...requirement}
             isDisabled={isDisabled}

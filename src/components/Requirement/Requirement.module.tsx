@@ -2,13 +2,14 @@ import React, { ReactElement } from 'react';
 import { css } from 'styled-components';
 import type { Option, OptionGroup } from 'ts4ocds/extensions/options';
 import type { DataType } from 'ts4ocds/extensions/requirements';
-
+import { Mixin } from 'ustudio-ui/theme';
 import Checkbox from 'ustudio-ui/components/Checkbox';
 import NumberInput from 'ustudio-ui/components/Input/NumberInput';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Select from 'ustudio-ui/components/Select/Select';
 import type { Group, Item } from 'ustudio-ui/components/Select/select.types';
-import { Mixin } from 'ustudio-ui/theme';
+
+import { sortByValue } from 'utils';
 
 import { InputProps } from './Requirement.types';
 
@@ -63,7 +64,7 @@ export const renderInput = ({
     `;
 
     const mapOptionsToItems = (options: Option[]): Record<string, Item> => {
-      return options.reduce(
+      return options.sort(sortByValue('description')).reduce(
         (map, option) =>
           Object.assign(map, {
             [option.value as string]: { value: option.value, label: option.description },
@@ -87,7 +88,7 @@ export const renderInput = ({
       );
     }
 
-    const groupsMap: Group[] = optionGroups.map((optionGroup) => {
+    const groupsMap: Group[] = optionGroups.sort(sortByValue('description')).map((optionGroup) => {
       return {
         title: optionGroup.description as string,
         items: mapOptionsToItems(optionGroup.options),

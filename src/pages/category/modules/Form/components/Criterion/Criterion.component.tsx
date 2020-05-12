@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Select from 'ustudio-ui/components/Select/Select';
+import { Mixin } from 'ustudio-ui/theme';
 
 import { useCategoryContext } from 'pages/category/store';
-import { Mixin } from 'ustudio-ui/theme';
 import { Criterion as CriterionProps } from 'types/data';
 
 import { BinaryGroup } from '../BinaryGroup';
