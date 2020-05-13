@@ -40,7 +40,7 @@ const Item = styled(Flex)(({ isSearched }: { isSearched: boolean }) => {
 
             width: 30px;
 
-            background-image: linear-gradient(to right, rgba(222, 222, 222, 0.7), transparent);
+            background-image: linear-gradient(to right, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
 
             pointer-events: none;
           }

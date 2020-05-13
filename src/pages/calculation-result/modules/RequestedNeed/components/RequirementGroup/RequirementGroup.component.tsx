@@ -32,11 +32,12 @@ export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, requirem
           />
         ) : (
           requirements.map((requirement) => {
-            const { title, ...cutedRequirement } = requirement;
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { title, ...partialRequirement } = requirement;
 
             return (
               <Requirement
-                {...cutedRequirement}
+                {...partialRequirement}
                 key={requirement.id}
                 requestedNeed={requestedNeed}
                 currentCriterion={currentCriterion}

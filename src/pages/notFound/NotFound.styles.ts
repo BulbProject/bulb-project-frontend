@@ -4,11 +4,11 @@ import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
 
 const Content = styled(Flex)`
-  margin-top: 4rem;
+  margin-top: 7rem;
 `;
 
 const ErrorStatus = styled(Text)`
-  ${Mixin.Font.h1()}
+  ${Mixin.Font.h1()};
 
   font-size: 6rem;
 `;

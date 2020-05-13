@@ -1,10 +1,7 @@
-export const getLocaleDataType = ({
-  dataType,
-  locale = 'UA',
-}: {
-  dataType: 'string' | 'boolean' | 'number' | 'integer' | undefined;
-  locale?: string;
-}) => {
+export const getLocaleDataType = (
+  dataType: 'string' | 'boolean' | 'number' | 'integer' | undefined,
+  locale?: string
+) => {
   if (locale === 'UA') {
     switch (dataType) {
       case 'string':
