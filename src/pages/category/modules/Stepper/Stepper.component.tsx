@@ -1,9 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Form } from 'formfish';
+import { Grid } from 'ustudio-ui';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import Alert from 'ustudio-ui/components/Alert';
+import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 import { useHistory } from 'react-router-dom';
 
 import { modifyId, sortByValue, prepareRequestedNeed } from 'utils';
@@ -58,6 +60,8 @@ export const Stepper: React.FC = () => {
   };
 
   const { push } = useHistory();
+
+  const isMd = useMediaQuery('screen and (min-width: 768px)');
 
   return (
     <Flex direction="column">
@@ -139,47 +143,95 @@ export const Stepper: React.FC = () => {
           });
         }}
       >
-        <Styled.Container isContainer>
-          <Cell xs={{ size: 2 }}>
-            <StepperButton isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
-              Назад
-            </StepperButton>
-          </Cell>
-
-          <Styled.Step xs={{ size: 8 }}>
-            <Flex direction="column">
-              {steps.map((criterion) => {
-                if (currentCriterion.id === criterion.id) {
-                  return <Criterion key={criterion.id} {...criterion} />;
-                }
-
-                return null;
-              })}
-            </Flex>
-          </Styled.Step>
-
-          <Cell xs={{ size: 2 }}>
-            {isLastStep ? (
-              <StepperButton
-                isActive
-                onClick={() => {
-                  setSubmitting(true);
-                }}
-                isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-              >
-                Завершити
+        {isMd ? (
+          <Styled.Container isContainer>
+            <Cell xs={{ size: 2 }}>
+              <StepperButton isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
+                Назад
               </StepperButton>
-            ) : (
-              <StepperButton
-                isActive
-                onClick={setStep((id) => id + 1)}
-                isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-              >
-                Далі
-              </StepperButton>
-            )}
-          </Cell>
-        </Styled.Container>
+            </Cell>
+
+            <Styled.Step xs={{ size: 8 }}>
+              <Flex direction="column">
+                {steps.map((criterion) => {
+                  if (currentCriterion.id === criterion.id) {
+                    return <Criterion key={criterion.id} {...criterion} />;
+                  }
+
+                  return null;
+                })}
+              </Flex>
+            </Styled.Step>
+
+            <Cell xs={{ size: 2 }}>
+              {isLastStep ? (
+                <StepperButton
+                  isActive
+                  onClick={() => {
+                    setSubmitting(true);
+                  }}
+                  isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+                >
+                  Завершити
+                </StepperButton>
+              ) : (
+                <StepperButton
+                  isActive
+                  onClick={setStep((id) => id + 1)}
+                  isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+                >
+                  Далі
+                </StepperButton>
+              )}
+            </Cell>
+          </Styled.Container>
+        ) : (
+          <Styled.Container xs={{ direction: 'column', template: 'auto-fill, 100px' }}>
+            <Styled.Step>
+              <Flex direction="column">
+                {steps.map((criterion) => {
+                  if (currentCriterion.id === criterion.id) {
+                    return <Criterion key={criterion.id} {...criterion} />;
+                  }
+
+                  return null;
+                })}
+              </Flex>
+            </Styled.Step>
+
+            <Cell>
+              <Grid xs={{ gap: 32 }}>
+                <Cell>
+                  <StepperButton isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
+                    Назад
+                  </StepperButton>
+                </Cell>
+
+                <Cell>
+                  {isLastStep ? (
+                    <StepperButton
+                      isActive
+                      onClick={() => {
+                        setSubmitting(true);
+                      }}
+                      isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+                    >
+                      Завершити
+                    </StepperButton>
+                  ) : (
+                    <StepperButton
+                      isActive
+                      onClick={setStep((id) => id + 1)}
+                      isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+                    >
+                      Далі
+                    </StepperButton>
+                  )}
+                </Cell>
+              </Grid>
+            </Cell>
+          </Styled.Container>
+        )}
       </Form>
     </Flex>
   );

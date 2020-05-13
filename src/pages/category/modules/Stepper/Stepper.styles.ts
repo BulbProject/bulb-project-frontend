@@ -4,6 +4,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import Grid from 'ustudio-ui/components/Grid/Grid';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import UIModal from 'ustudio-ui/components/Modal';
+import { Mixin } from 'ustudio-ui/theme';
 
 import { StepStyled } from './components/Step';
 import { stepCircleDimension, stepProgressHeight, stepHeight } from './Stepper.module';
@@ -37,6 +38,12 @@ const Stepper = styled(Flex)<{ length: number }>(
 
 const Container = styled(Grid)`
   flex: 1;
+
+  padding: 0 var(--i-large);
+
+  ${Mixin.Screen.md(css`
+    padding: 0;
+  `)}
 `;
 
 const Step = styled(Cell)`
