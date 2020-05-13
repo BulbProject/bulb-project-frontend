@@ -39,6 +39,8 @@ const StepProgress = styled(Progress)`
 `;
 
 const StepTitle = styled(Text)`
+  width: 100%;
+
   position: absolute;
   top: 50%;
   left: 50%;
