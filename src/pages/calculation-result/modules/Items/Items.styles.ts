@@ -40,7 +40,7 @@ const AvailableVariants = styled(Flex)<{ isMd: boolean }>(
             content: '';
 
             position: absolute;
-            top: 0;
+            top: 50%;
             bottom: 0;
 
             width: 30px;

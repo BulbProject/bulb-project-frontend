@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Form } from 'formfish';
-import { Grid } from 'ustudio-ui';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
@@ -42,12 +41,6 @@ export const Stepper: React.FC = () => {
 
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (isSubmitting) {
-      setTimeout(() => setSubmitting(false), 0);
-    }
-  }, [isSubmitting]);
 
   const { isLoading, error, triggerRequest, data: calculationResponse } = useRequest<RequestedNeed>(
     postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
