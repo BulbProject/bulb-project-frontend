@@ -13,7 +13,13 @@ import { Criterion } from './components';
 import Styled from './RequestedNeed.styles';
 import type { RequestedNeedProps } from './RequestedNeed.types';
 
-export const RequestedNeed: React.FC<RequestedNeedProps> = ({ error, isLoading, setSubmitting, recalculate }) => {
+export const RequestedNeed: React.FC<RequestedNeedProps> = ({
+  error,
+  isLoading,
+  setSubmitting,
+  recalculate,
+  isHidden = false,
+}) => {
   const {
     category: { criteria, id },
     requestedNeed,
@@ -23,7 +29,7 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({ error, isLoading, 
   const [hasFormChanged, setFormChanged] = useState(false);
 
   return (
-    <Styled.Wrapper>
+    <Styled.Wrapper isHidden={isHidden}>
       {isLoading && (
         <Styled.Overlay isLoading={isLoading} alignment={{ horizontal: 'center', vertical: 'center' }}>
           <Spinner appearance={{ size: 64 }} />

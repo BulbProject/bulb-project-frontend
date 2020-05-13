@@ -2,19 +2,34 @@ import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
 
-const Wrapper = styled.div`
-  flex-shrink: 0;
-
-  position: relative;
-
-  width: 360px;
-  margin-right: var(--i-large);
-`;
-
 const RequestedNeed = styled(Flex)`
   position: sticky;
   top: calc(var(--i-large) + 64px);
 `;
+
+const Wrapper = styled.div<{ isHidden?: boolean }>(
+  ({ isHidden }) => css`
+  flex-shrink: 0;
+
+  position: relative;
+
+  ${
+    isHidden
+      ? css`
+          width: 100%;
+          margin-top: var(--i-large);
+
+          ${RequestedNeed} {
+            position: static;
+            top: unset;
+          }
+        `
+      : css`
+          width: 320px;
+          margin-right: var(--i-large);
+        `
+  }}`
+);
 
 const Recalculate = styled(Button)`
   position: sticky;

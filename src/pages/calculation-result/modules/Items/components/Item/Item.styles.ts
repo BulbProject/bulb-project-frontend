@@ -5,7 +5,6 @@ import Flex from 'ustudio-ui/components/Flex';
 const Image = styled.div<{ link?: string }>(
   ({ link }) => css`
     width: 100%;
-    height: 190px;
 
     padding: var(--i-medium);
 
@@ -24,31 +23,43 @@ const Item = styled(Flex)(({ isSearched }: { isSearched: boolean }) => {
 
     flex-shrink: 0;
 
-    width: 380px;
+    width: 100%;
 
     border: 1px solid var(--c-light);
 
-    ${isSearched
-      ? css`
-          &:after {
-            content: '';
+    @media screen and (min-width: 798px) {
+      width: 360px;
 
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: -30px;
+      ${isSearched
+        ? css`
+            &:after {
+              content: '';
 
-            width: 30px;
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              right: -30px;
 
-            background-image: linear-gradient(to right, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
+              width: 30px;
 
-            pointer-events: none;
-          }
-        `
-      : ''}
+              background-image: linear-gradient(to right, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
+
+              pointer-events: none;
+            }
+          `
+        : ``}
+
+      ${Image} {
+        height: 190px;
+      }
+    }
 
     &:not(:last-child) {
       margin-right: -1px;
+    }
+
+    ${Image} {
+      height: 240px;
     }
   `;
 });
