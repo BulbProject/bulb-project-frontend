@@ -24,9 +24,28 @@ export const Item = ({
   document?: string;
   isSearched?: boolean;
 }) => {
+  const efficiencyObservation = variant.metrics
+    .flatMap((metric) => metric.observations)
+    .find((observation) => observation.id === '0202');
+
   return (
     <Styled.Item direction="column" isSearched={!!isSearched}>
-      <Styled.Image link={document} />
+      <Styled.Image link={document}>
+        {efficiencyObservation && (
+          <Styled.EfficiencyClass efficiencyClass={efficiencyObservation.measure as string}>
+            {efficiencyObservation.measure}
+          </Styled.EfficiencyClass>
+        )}
+
+        <Styled.Economy>
+          <Text align="center" appearance="bold">
+            280
+          </Text>
+          <Text variant="small" align="center">
+            kWh/annum
+          </Text>
+        </Styled.Economy>
+      </Styled.Image>
 
       <Styled.Content direction="column">
         <Styled.ItemDescription>

@@ -2,8 +2,12 @@ import styled, { css } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
 
-const Image = styled.div<{ link?: string }>(
+const Image = styled(Flex)<{ link?: string }>(
   ({ link }) => css`
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+
     width: 100%;
     height: 190px;
 
@@ -17,6 +21,67 @@ const Image = styled.div<{ link?: string }>(
     object-fit: cover;
   `
 );
+
+const getEfficiencyColor = ({ efficiencyClass }: { efficiencyClass: string }) => {
+  switch (efficiencyClass) {
+    case 'A++':
+      return '#33a357';
+    case 'A+':
+      return '#33a357';
+    case 'A':
+      return '#33a357';
+    case 'B':
+      return '#79b752';
+    case 'C':
+      return '#c3d545';
+    case 'D':
+      return '#fff12c';
+    case 'E':
+      return '#edb731';
+    case 'F':
+      return '#d66f2c';
+    case 'G':
+      return '#cc232a';
+    default:
+      return 'var(--c-white)';
+  }
+};
+
+const EfficiencyClass = styled(Flex)<{ efficiencyClass: string }>(
+  ({ efficiencyClass }) => css`
+    align-items: center;
+
+    position: relative;
+
+    width: 40px;
+    height: 30px;
+
+    background: ${getEfficiencyColor({ efficiencyClass })};
+
+    color: var(--c-white);
+
+    &:before {
+      content: '';
+
+      position: absolute;
+
+      border: 15px solid transparent;
+      border-right: 15px solid ${getEfficiencyColor({ efficiencyClass })};
+
+      transform: translateX(-30px);
+    }
+  `
+);
+
+const Economy = styled.div`
+  display: inline-flex;
+  flex-direction: column;
+
+  padding: var(--i-medium);
+
+  border: 2px solid var(--c-primary);
+  border-radius: var(--i-small);
+`;
 
 const Item = styled(Flex)(({ isSearched }: { isSearched: boolean }) => {
   return css`
@@ -85,4 +150,14 @@ const Link = styled.a`
   }
 `;
 
-export default { Item, Image, Content, ItemDescription, Classifications, AdditionalClassification, Link };
+export default {
+  Item,
+  Image,
+  Content,
+  ItemDescription,
+  Classifications,
+  AdditionalClassification,
+  Link,
+  EfficiencyClass,
+  Economy,
+};
