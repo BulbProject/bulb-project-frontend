@@ -73,6 +73,55 @@ export const Stepper: React.FC = () => {
   const isXs = useMediaQuery('screen and (min-width: 576px)');
   const isMd = useMediaQuery('screen and (min-width: 768px)');
 
+  const ForwardButton = ({ size = 1 }: { size?: number }) => (
+    <Cell xs={{ size }}>
+      {isLastStep ? (
+        <StepperButton
+          intent="positive"
+          appearance="contained"
+          isActive
+          onClick={() => {
+            setSubmitting(true);
+          }}
+          isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+        >
+          Завершити
+        </StepperButton>
+      ) : (
+        <StepperButton
+          appearance="contained"
+          isActive
+          onClick={setStep((id) => id + 1)}
+          isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+        >
+          Далі
+        </StepperButton>
+      )}
+    </Cell>
+  );
+
+  const BackButton = ({ appearance = 'text', size = 1 }: { appearance?: 'text' | 'outlined'; size?: number }) => (
+    <Cell xs={{ size }}>
+      <StepperButton appearance={appearance} isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
+        Назад
+      </StepperButton>
+    </Cell>
+  );
+
+  const Criteria = ({ size = 1 }: { size?: number }) => (
+    <Styled.Step xs={{ size }}>
+      <Flex direction="column">
+        {steps.map((criterion) => {
+          if (currentCriterion.id === criterion.id) {
+            return <Criterion key={criterion.id} {...criterion} />;
+          }
+
+          return null;
+        })}
+      </Flex>
+    </Styled.Step>
+  );
+
   return (
     <Flex direction="column">
       {isLoading && isSubmitting && (
@@ -165,103 +214,23 @@ export const Stepper: React.FC = () => {
       >
         {isMd ? (
           <Styled.Container isContainer>
-            <Cell xs={{ size: 2 }}>
-              <StepperButton isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
-                Назад
-              </StepperButton>
-            </Cell>
+            <BackButton size={2} />
 
-            <Styled.Step xs={{ size: 8 }}>
-              <Flex direction="column">
-                {steps.map((criterion) => {
-                  if (currentCriterion.id === criterion.id) {
-                    return <Criterion key={criterion.id} {...criterion} />;
-                  }
+            <Criteria size={8} />
 
-                  return null;
-                })}
-              </Flex>
-            </Styled.Step>
-
-            <Cell xs={{ size: 2 }}>
-              {isLastStep ? (
-                <StepperButton
-                  intent="positive"
-                  isActive
-                  onClick={() => {
-                    setSubmitting(true);
-                  }}
-                  isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-                >
-                  Завершити
-                </StepperButton>
-              ) : (
-                <StepperButton
-                  isActive
-                  onClick={setStep((id) => id + 1)}
-                  isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-                >
-                  Далі
-                </StepperButton>
-              )}
-            </Cell>
+            <ForwardButton size={2} />
           </Styled.Container>
         ) : (
           <Styled.Container xs={{ direction: 'column', template: 'auto-fill, 100px' }}>
-            <Styled.Step>
-              <Flex direction="column">
-                {steps.map((criterion) => {
-                  if (currentCriterion.id === criterion.id) {
-                    return <Criterion key={criterion.id} {...criterion} />;
-                  }
-
-                  return null;
-                })}
-              </Flex>
-            </Styled.Step>
+            <Criteria />
 
             <Cell>
               <Styled.MobileButtonsContainer xs={{ gap: 32 }}>
-                {!isFirstStep && isXs && (
-                  <Cell>
-                    <StepperButton appearance="outlined" isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
-                      Назад
-                    </StepperButton>
-                  </Cell>
-                )}
+                {!isFirstStep && isXs && <BackButton appearance="outlined" />}
 
-                <Cell>
-                  {isLastStep ? (
-                    <StepperButton
-                      intent="positive"
-                      appearance="contained"
-                      isActive
-                      onClick={() => {
-                        setSubmitting(true);
-                      }}
-                      isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-                    >
-                      Завершити
-                    </StepperButton>
-                  ) : (
-                    <StepperButton
-                      appearance="contained"
-                      isActive
-                      onClick={setStep((id) => id + 1)}
-                      isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-                    >
-                      Далі
-                    </StepperButton>
-                  )}
-                </Cell>
+                <ForwardButton />
 
-                {!isFirstStep && !isXs && (
-                  <Cell>
-                    <StepperButton appearance="outlined" isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
-                      Назад
-                    </StepperButton>
-                  </Cell>
-                )}
+                {!isFirstStep && !isXs && <BackButton appearance="outlined" />}
               </Styled.MobileButtonsContainer>
             </Cell>
           </Styled.Container>
