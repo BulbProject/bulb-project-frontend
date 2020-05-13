@@ -48,6 +48,7 @@ export const Item = ({
             <Text align="center" appearance="bold">
               {formatNumber(economyObservation.measure as number)}
             </Text>
+
             <Text variant="small" align="center">
               {economyObservation.unit?.name}
             </Text>
