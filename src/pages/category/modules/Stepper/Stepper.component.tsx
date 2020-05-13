@@ -66,31 +66,6 @@ export const Stepper: React.FC = () => {
   const isXs = useMediaQuery('screen and (min-width: 576px)');
   const isMd = useMediaQuery('screen and (min-width: 768px)');
 
-  const ForwardButton = ({ appearance = 'text' }: { appearance?: 'text' | 'contained' }) => {
-    return isLastStep ? (
-      <StepperButton
-        intent="positive"
-        appearance={appearance}
-        isActive
-        onClick={() => {
-          setSubmitting(true);
-        }}
-        isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-      >
-        Завершити
-      </StepperButton>
-    ) : (
-      <StepperButton
-        appearance={appearance}
-        isActive
-        onClick={setStep((id) => id + 1)}
-        isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-      >
-        Далі
-      </StepperButton>
-    );
-  };
-
   const BackButton = ({ appearance = 'text' }: { appearance?: 'text' | 'outlined' }) => (
     <StepperButton appearance={appearance} isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
       Назад
@@ -208,7 +183,28 @@ export const Stepper: React.FC = () => {
             <Styled.Step xs={{ size: 8 }}>{Criteria}</Styled.Step>
 
             <Cell xs={{ size: 2 }}>
-              <ForwardButton />
+              {isLastStep ? (
+                <StepperButton
+                  intent="positive"
+                  appearance="text"
+                  isActive
+                  onClick={() => {
+                    setSubmitting(true);
+                  }}
+                  isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+                >
+                  Завершити
+                </StepperButton>
+              ) : (
+                <StepperButton
+                  appearance="text"
+                  isActive
+                  onClick={setStep((id) => id + 1)}
+                  isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+                >
+                  Далі
+                </StepperButton>
+              )}
             </Cell>
           </Styled.Container>
         ) : (
@@ -224,7 +220,28 @@ export const Stepper: React.FC = () => {
                 )}
 
                 <Cell>
-                  <ForwardButton appearance="contained" />
+                  {isLastStep ? (
+                    <StepperButton
+                      intent="positive"
+                      appearance="contained"
+                      isActive
+                      onClick={() => {
+                        setSubmitting(true);
+                      }}
+                      isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+                    >
+                      Завершити
+                    </StepperButton>
+                  ) : (
+                    <StepperButton
+                      appearance="contained"
+                      isActive
+                      onClick={setStep((id) => id + 1)}
+                      isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+                    >
+                      Далі
+                    </StepperButton>
+                  )}
                 </Cell>
 
                 {!isFirstStep && !isXs && (
