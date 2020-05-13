@@ -73,53 +73,47 @@ export const Stepper: React.FC = () => {
   const isXs = useMediaQuery('screen and (min-width: 576px)');
   const isMd = useMediaQuery('screen and (min-width: 768px)');
 
-  const ForwardButton = ({ size = 1 }: { size?: number }) => (
-    <Cell xs={{ size }}>
-      {isLastStep ? (
-        <StepperButton
-          intent="positive"
-          appearance="contained"
-          isActive
-          onClick={() => {
-            setSubmitting(true);
-          }}
-          isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-        >
-          Завершити
-        </StepperButton>
-      ) : (
-        <StepperButton
-          appearance="contained"
-          isActive
-          onClick={setStep((id) => id + 1)}
-          isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
-        >
-          Далі
-        </StepperButton>
-      )}
-    </Cell>
-  );
-
-  const BackButton = ({ appearance = 'text', size = 1 }: { appearance?: 'text' | 'outlined'; size?: number }) => (
-    <Cell xs={{ size }}>
-      <StepperButton appearance={appearance} isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
-        Назад
+  const ForwardButton = ({ appearance = 'text' }: { appearance?: 'text' | 'contained' }) => {
+    return isLastStep ? (
+      <StepperButton
+        intent="positive"
+        appearance={appearance}
+        isActive
+        onClick={() => {
+          setSubmitting(true);
+        }}
+        isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+      >
+        Завершити
       </StepperButton>
-    </Cell>
+    ) : (
+      <StepperButton
+        appearance={appearance}
+        isActive
+        onClick={setStep((id) => id + 1)}
+        isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
+      >
+        Далі
+      </StepperButton>
+    );
+  };
+
+  const BackButton = ({ appearance = 'text' }: { appearance?: 'text' | 'outlined' }) => (
+    <StepperButton appearance={appearance} isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
+      Назад
+    </StepperButton>
   );
 
-  const Criteria = ({ size = 1 }: { size?: number }) => (
-    <Styled.Step xs={{ size }}>
-      <Flex direction="column">
-        {steps.map((criterion) => {
-          if (currentCriterion.id === criterion.id) {
-            return <Criterion key={criterion.id} {...criterion} />;
-          }
+  const Criteria = (
+    <Flex direction="column">
+      {steps.map((criterion) => {
+        if (currentCriterion.id === criterion.id) {
+          return <Criterion key={criterion.id} {...criterion} />;
+        }
 
-          return null;
-        })}
-      </Flex>
-    </Styled.Step>
+        return null;
+      })}
+    </Flex>
   );
 
   return (
@@ -214,23 +208,37 @@ export const Stepper: React.FC = () => {
       >
         {isMd ? (
           <Styled.Container isContainer>
-            <BackButton size={2} />
+            <Cell xs={{ size: 2 }}>
+              <BackButton />
+            </Cell>
 
-            <Criteria size={8} />
+            <Styled.Step xs={{ size: 8 }}>{Criteria}</Styled.Step>
 
-            <ForwardButton size={2} />
+            <Cell xs={{ size: 2 }}>
+              <ForwardButton />
+            </Cell>
           </Styled.Container>
         ) : (
           <Styled.Container xs={{ direction: 'column', template: 'auto-fill, 100px' }}>
-            <Criteria />
+            <Styled.Step>{Criteria}</Styled.Step>
 
             <Cell>
               <Styled.MobileButtonsContainer xs={{ gap: 32 }}>
-                {!isFirstStep && isXs && <BackButton appearance="outlined" />}
+                {!isFirstStep && isXs && (
+                  <Cell>
+                    <BackButton appearance="outlined" />
+                  </Cell>
+                )}
 
-                <ForwardButton />
+                <Cell>
+                  <ForwardButton appearance="contained" />
+                </Cell>
 
-                {!isFirstStep && !isXs && <BackButton appearance="outlined" />}
+                {!isFirstStep && !isXs && (
+                  <Cell>
+                    <BackButton appearance="outlined" />
+                  </Cell>
+                )}
               </Styled.MobileButtonsContainer>
             </Cell>
           </Styled.Container>
