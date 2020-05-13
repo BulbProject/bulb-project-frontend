@@ -7,9 +7,12 @@ const Image = styled.div<{ link?: string }>(
     width: 100%;
     height: 190px;
 
+    padding: var(--i-medium);
+
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    background-origin: content-box;
     background-image: url(${link});
     object-fit: cover;
   `
