@@ -7,9 +7,7 @@ import { modifyId } from 'utils';
 
 import { useCalculationContext } from '../../../../store';
 
-import Styled from './RequirementGroup.styles';
-
-export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, description, requirements }) => {
+export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, requirements }) => {
   const { category, requestedNeed } = useCalculationContext();
 
   const hasSingleRequirement = useMemo(() => requirements.length === 1, []);
@@ -24,8 +22,6 @@ export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, descript
 
   return (
     <Flex direction="column">
-      {!hasSingleBooleanRequirement && description && <Styled.Title color="var(--c-dark)">{description}</Styled.Title>}
-
       <Flex direction="column" margin={{ top: 'regular' }}>
         {hasSingleBooleanRequirement ? (
           <Requirement
@@ -35,14 +31,19 @@ export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, descript
             currentCriterion={currentCriterion}
           />
         ) : (
-          requirements.map((requirement) => (
-            <Requirement
-              {...requirement}
-              key={requirement.id}
-              requestedNeed={requestedNeed}
-              currentCriterion={currentCriterion}
-            />
-          ))
+          requirements.map((requirement) => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { title, ...partialRequirement } = requirement;
+
+            return (
+              <Requirement
+                {...partialRequirement}
+                key={requirement.id}
+                requestedNeed={requestedNeed}
+                currentCriterion={currentCriterion}
+              />
+            );
+          })
         )}
       </Flex>
     </Flex>

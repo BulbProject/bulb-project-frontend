@@ -8,6 +8,8 @@ import Text from 'ustudio-ui/components/Text';
 
 import { Field } from 'formfish';
 
+import { getLocaleDataType } from 'utils';
+
 import type { Criterion } from 'types/data';
 import type { StoreRequestedNeed } from 'types/globals';
 
@@ -89,7 +91,7 @@ export const Requirement = ({
             props: {
               suffix: (
                 <Text variant="caption" align="right" color={isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'}>
-                  {unit?.name || (dataType as string)}
+                  {unit?.name || getLocaleDataType({ dataType })}
                 </Text>
               ),
               placeholder: description,

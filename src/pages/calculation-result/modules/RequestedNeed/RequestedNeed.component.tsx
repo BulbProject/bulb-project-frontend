@@ -24,15 +24,13 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({ error, isLoading, 
 
   return (
     <Styled.Wrapper>
-      <Styled.Overlay isLoading={isLoading} alignment={{ horizontal: 'center', vertical: 'center' }}>
-        <Spinner appearance={{ size: 64 }} />
-      </Styled.Overlay>
+      {isLoading && (
+        <Styled.Overlay isLoading={isLoading} alignment={{ horizontal: 'center', vertical: 'center' }}>
+          <Spinner appearance={{ size: 64 }} />
+        </Styled.Overlay>
+      )}
 
       <Styled.RequestedNeed direction="column">
-        <Flex margin={{ bottom: 'large' }}>
-          <Text variant="h3">Ваш вибір</Text>
-        </Flex>
-
         <Form
           name={id}
           watch={(state) => {
@@ -54,7 +52,7 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({ error, isLoading, 
               <Criterion {...criterion} key={criterion.id} />
             ))}
 
-            <Styled.Recalculate type="submit" appearance="text" isDisabled={!hasFormChanged || isLoading}>
+            <Styled.Recalculate type="submit" isDisabled={!hasFormChanged || isLoading}>
               Перерахувати
             </Styled.Recalculate>
 

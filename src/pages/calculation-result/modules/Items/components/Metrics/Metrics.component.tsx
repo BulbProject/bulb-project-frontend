@@ -1,32 +1,31 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { css } from 'styled-components';
+
 import type { Metric, Observation } from 'ts4ocds/extensions/metrics';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 
+import { formatNumber } from 'utils';
+
 import Styled from './Metrics.styles';
 
 export const Metrics = ({ metrics }: { metrics: Metric[] }) => {
-
-  const getObservationUnit = (observation: Observation) => {
+  const getObservationUnit = useCallback((observation: Observation) => {
     if (observation.value) {
-      return `, ${observation.value.currency}`;
+      return observation.value.currency;
     }
     if (observation.unit) {
-      return `, ${observation.unit.name}`;
+      return observation.unit.name;
     }
 
     return '';
-  };
+  }, []);
 
   return (
-    <Styled.Metrics>
-      <Flex margin={{ bottom: 'regular' }}>
-        <Text appearance="bold"> Збереження</Text>
-      </Flex>
-
+    <Flex direction="column">
       {metrics.map((metric) => (
-        <Flex key={metric.id} direction="column">
+        <Flex key={metric.id} direction="column" margin={{ bottom: 'large' }}>
           <Flex margin={{ bottom: 'regular' }}>
             <Text variant="caption">{metric.title}</Text>
           </Flex>
@@ -36,17 +35,28 @@ export const Metrics = ({ metrics }: { metrics: Metric[] }) => {
               <Styled.ObservationTitle>
                 <Text variant="small" color="var(--c-dark)">
                   {observation.notes}
-                  {getObservationUnit(observation)}
                 </Text>
 
                 <Styled.Dots />
               </Styled.ObservationTitle>
 
-              <Text variant="small">{observation.measure ?? observation.value?.amount}</Text>
+              <Text
+                variant="small"
+                styled={{
+                  Text: css`
+                    padding-left: var(--i-small);
+                    background-color: var(--c-lightest);
+                    white-space: nowrap;
+                  `,
+                }}
+              >
+                {typeof observation.measure === 'number' ? formatNumber(observation.measure) : observation.measure}
+                {formatNumber(observation.value?.amount)} {getObservationUnit(observation)}
+              </Text>
             </Flex>
           ))}
         </Flex>
       ))}
-    </Styled.Metrics>
+    </Flex>
   );
 };
