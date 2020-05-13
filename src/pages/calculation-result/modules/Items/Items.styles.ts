@@ -29,7 +29,7 @@ const AvailableVariants = styled(Flex)<{ isMd: boolean }>(
   ({ isMd }) => css`
     position: relative;
 
-    max-width: ${isMd ? 'calc(100% - 380px)' : 'calc(100vw - 4rem)'};
+    max-width: ${isMd ? 'calc(100% - 360px)' : 'calc(100vw - 4rem)'};
 
     overflow-x: auto;
 
