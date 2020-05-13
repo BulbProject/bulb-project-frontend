@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Form } from 'formfish';
 import { Grid } from 'ustudio-ui';
 import Cell from 'ustudio-ui/components/Grid/Cell';
@@ -34,11 +34,20 @@ export const Stepper: React.FC = () => {
   const isStepActive = useCallback((stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(title), [
     title,
   ]);
+  const activeStep = useMemo((): string => titles.find((stepTitle) => stepTitle === currentCriterion.title) as string, [
+    title,
+  ]);
   const isLastStep = useMemo((): boolean => titles.indexOf(title) === steps.length - 1, [title]);
   const isFirstStep = useMemo((): boolean => titles.indexOf(title) === 0, [title]);
 
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (isSubmitting) {
+      setTimeout(() => setSubmitting(false), 0);
+    }
+  }, [isSubmitting]);
 
   const { isLoading, error, triggerRequest, data: calculationResponse } = useRequest<RequestedNeed>(
     postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
@@ -46,7 +55,7 @@ export const Stepper: React.FC = () => {
     }),
     {
       dependencies: [requestedNeedData],
-      isRequesting: Boolean(requestedNeedData),
+      isRequesting: Boolean(requestedNeedData) && isSubmitting,
     }
   );
 
@@ -61,6 +70,7 @@ export const Stepper: React.FC = () => {
 
   const { push } = useHistory();
 
+  const isXs = useMediaQuery('screen and (min-width: 576px)');
   const isMd = useMediaQuery('screen and (min-width: 768px)');
 
   return (
@@ -97,16 +107,26 @@ export const Stepper: React.FC = () => {
         </Styled.Modal>
       )}
 
-      <Styled.Stepper length={steps.length}>
-        {steps.sort(sortByValue('id')).map((step, index) => (
-          <Step title={step.title} key={step.id} isActive={isStepActive(step.title)} index={index} />
-        ))}
+      <Styled.Stepper alignment={{ horizontal: 'center' }} length={steps.length}>
+        {isMd ? (
+          steps
+            .sort(sortByValue('id'))
+            .map((step, index) => (
+              <Step title={step.title} key={step.id} isActive={isStepActive(step.title)} index={index} />
+            ))
+        ) : (
+          <div>
+            <Styled.MobileStep align="center" color="var(--c-primary)" variant="h3">
+              {activeStep}
+            </Styled.MobileStep>
+          </div>
+        )}
       </Styled.Stepper>
 
       {description && (
-        <Text align="center" variant="h3">
+        <Styled.Description align="center" variant={isMd ? 'h3' : 'body'}>
           {description}
-        </Text>
+        </Styled.Description>
       )}
 
       <Form
@@ -166,6 +186,7 @@ export const Stepper: React.FC = () => {
             <Cell xs={{ size: 2 }}>
               {isLastStep ? (
                 <StepperButton
+                  intent="positive"
                   isActive
                   onClick={() => {
                     setSubmitting(true);
@@ -200,16 +221,20 @@ export const Stepper: React.FC = () => {
             </Styled.Step>
 
             <Cell>
-              <Grid xs={{ gap: 32 }}>
-                <Cell>
-                  <StepperButton isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
-                    Назад
-                  </StepperButton>
-                </Cell>
+              <Styled.MobileButtonsContainer xs={{ gap: 32 }}>
+                {!isFirstStep && isXs && (
+                  <Cell>
+                    <StepperButton appearance="outlined" isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
+                      Назад
+                    </StepperButton>
+                  </Cell>
+                )}
 
                 <Cell>
                   {isLastStep ? (
                     <StepperButton
+                      intent="positive"
+                      appearance="contained"
                       isActive
                       onClick={() => {
                         setSubmitting(true);
@@ -220,6 +245,7 @@ export const Stepper: React.FC = () => {
                     </StepperButton>
                   ) : (
                     <StepperButton
+                      appearance="contained"
                       isActive
                       onClick={setStep((id) => id + 1)}
                       isDisabled={!currentCriterion.activeRequirementGroup || !isNextStepAvailable}
@@ -228,7 +254,15 @@ export const Stepper: React.FC = () => {
                     </StepperButton>
                   )}
                 </Cell>
-              </Grid>
+
+                {!isFirstStep && !isXs && (
+                  <Cell>
+                    <StepperButton appearance="outlined" isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
+                      Назад
+                    </StepperButton>
+                  </Cell>
+                )}
+              </Styled.MobileButtonsContainer>
             </Cell>
           </Styled.Container>
         )}

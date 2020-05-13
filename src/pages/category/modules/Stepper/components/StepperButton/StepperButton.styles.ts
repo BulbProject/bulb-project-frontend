@@ -19,7 +19,7 @@ const StepperButton = styled(Button)<{ isActive: boolean }>(
         `};
 
     ${Mixin.Screen.md(css`
-      margin: var(--i-large);
+      margin: var(--i-regular) var(--i-large);
     `)}
   `
 );

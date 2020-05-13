@@ -1,5 +1,4 @@
 import React from 'react';
-import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import Styled from './StepperButton.styles';
 
@@ -7,12 +6,13 @@ export const StepperButton: React.FC<{
   isActive: boolean;
   onClick: () => void;
   isDisabled?: boolean;
-}> = ({ isActive, children, onClick, isDisabled = false }) => {
-  const isMd = useMediaQuery('screen and (min-width: 768px)');
-
+  appearance?: string;
+  intent?: string;
+}> = ({ isActive, children, onClick, isDisabled = false, appearance = 'text', intent = 'primary' }) => {
   return (
     <Styled.StepperButton
-      appearance={isMd ? 'text' : 'contained'}
+      appearance={appearance as 'text'}
+      intent={intent as 'primary'}
       type="submit"
       isActive={isActive}
       onClick={onClick}
