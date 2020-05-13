@@ -49,7 +49,17 @@ export const BinaryGroup: React.FC<BinaryGroupProps> = ({ booleanGroup, nonBoole
       <Styled.Divider />
 
       <Styled.CheckboxContainer alignment={{ horizontal: 'end', vertical: 'center' }}>
-        <Text variant="caption">{booleanGroup.description}</Text>
+        <Text
+          variant="caption"
+          align="right"
+          styled={{
+            Text: css`
+              width: 100%;
+            `,
+          }}
+        >
+          {booleanGroup.description}
+        </Text>
 
         <FieldSet name={booleanGroup.id}>
           <Field

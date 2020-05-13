@@ -6,9 +6,18 @@ export const StepperButton: React.FC<{
   isActive: boolean;
   onClick: () => void;
   isDisabled?: boolean;
-}> = ({ isActive, children, onClick, isDisabled = false }) => {
+  appearance?: string;
+  intent?: string;
+}> = ({ isActive, children, onClick, isDisabled = false, appearance = 'text', intent = 'primary' }) => {
   return (
-    <Styled.StepperButton appearance="text" type="submit" isActive={isActive} onClick={onClick} isDisabled={isDisabled}>
+    <Styled.StepperButton
+      appearance={appearance as 'text'}
+      intent={intent as 'primary'}
+      type="submit"
+      isActive={isActive}
+      onClick={onClick}
+      isDisabled={isDisabled}
+    >
       {children}
     </Styled.StepperButton>
   );

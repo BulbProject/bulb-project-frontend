@@ -16,10 +16,8 @@ export const isRequirementGroupFilled = ({
   const requirementGroup = criterion?.[currentCriterion.activeRequirementGroup?.id || ''];
 
   if (requirementGroup) {
-    return (
-      Object.values(requirementGroup).filter(
-        (requirementValue) => requirementValue === undefined || requirementValue === ''
-      ).length === 0
+    return Object.values(requirementGroup).every(
+      (requirementValue) => !(requirementValue === undefined || requirementValue === '')
     );
   }
 

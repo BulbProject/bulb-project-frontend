@@ -2,12 +2,15 @@ import React from 'react';
 
 import Flex from 'ustudio-ui/components/Flex';
 import Placeholder from 'ustudio-ui/components/Placeholder';
+import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { getRandomWidth } from 'utils';
 
 import Styled from '../../Card.styles';
 
 export const StubCard = () => {
+  const isXs = useMediaQuery('screen and (min-width: 576px)');
+
   return (
     <Styled.BaseCard direction="column">
       <Flex margin={{ bottom: 'medium' }}>
@@ -20,15 +23,17 @@ export const StubCard = () => {
         />
       </Flex>
 
-      <Flex margin={{ bottom: 'regular' }}>
-        <Placeholder
-          appearance={{
-            height: 'small',
-            width: getRandomWidth(25, 100),
-          }}
-          variant="text"
-        />
-      </Flex>
+      {isXs && (
+        <Flex margin={{ bottom: 'regular' }}>
+          <Placeholder
+            appearance={{
+              height: 'small',
+              width: getRandomWidth(25, 100),
+            }}
+            variant="text"
+          />
+        </Flex>
+      )}
 
       <Flex>
         <Placeholder

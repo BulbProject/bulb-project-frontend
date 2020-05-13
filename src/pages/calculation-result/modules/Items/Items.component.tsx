@@ -1,7 +1,6 @@
 import React from 'react';
-import { css } from 'styled-components';
 
-import Flex from 'ustudio-ui/components/Flex';
+import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import type { AvailableVariant, Item as IItem } from 'types/data';
 
@@ -15,8 +14,10 @@ export const Items = ({ availableVariants }: { availableVariants: AvailableVaria
     category: { items, documents },
   } = useCalculationContext();
 
+  const isMd = useMediaQuery('screen and (min-width: 798px)');
+
   return (
-    <Styled.Items>
+    <Styled.Items direction={isMd ? 'row' : 'column'}>
       <Item
         variant={availableVariants[0]}
         item={items.find((item) => item.id === availableVariants[0].relatedItem) as IItem}
@@ -27,15 +28,8 @@ export const Items = ({ availableVariants }: { availableVariants: AvailableVaria
         }
         isSearched
       />
-      <Flex
-        styled={{
-          Flex: css`
-            max-width: calc(100% - 380px);
 
-            overflow-x: auto;
-          `,
-        }}
-      >
+      <Styled.AvailableVariants isMd={isMd}>
         {availableVariants.slice(1).map((variant) => {
           const relatedItem = items.find((item) => item.id === variant.relatedItem) as IItem;
 
@@ -45,7 +39,7 @@ export const Items = ({ availableVariants }: { availableVariants: AvailableVaria
 
           return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
         })}
-      </Flex>
+      </Styled.AvailableVariants>
     </Styled.Items>
   );
 };

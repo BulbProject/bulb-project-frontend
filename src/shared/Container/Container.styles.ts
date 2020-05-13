@@ -7,7 +7,7 @@ import { Mixin } from 'ustudio-ui/theme';
 const Container = styled(Grid)`
   padding: 0 var(--i-large);
 
-  ${Mixin.Screen.xs(
+  ${Mixin.Screen.md(
     css`
       padding: 0;
     `

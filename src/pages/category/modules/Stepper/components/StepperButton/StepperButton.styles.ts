@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 import Button from 'ustudio-ui/components/Button';
+import { Mixin } from 'ustudio-ui/theme';
 
 const StepperButton = styled(Button)<{ isActive: boolean }>(
   ({ isActive }) => css`
     width: 100%;
-    margin: var(--i-large);
 
     transition: height var(--transition);
 
@@ -17,6 +17,10 @@ const StepperButton = styled(Button)<{ isActive: boolean }>(
           opacity: 0;
           pointer-events: none;
         `};
+
+    ${Mixin.Screen.md(css`
+      margin: var(--i-regular) var(--i-large);
+    `)}
   `
 );
 
