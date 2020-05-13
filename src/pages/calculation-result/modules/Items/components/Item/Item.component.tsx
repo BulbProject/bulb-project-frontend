@@ -9,6 +9,8 @@ import Button from 'ustudio-ui/components/Button';
 import { AvailableVariant, Item as IItem } from 'types/data';
 import { Classification } from 'shared';
 
+import { formatNumber } from 'utils';
+
 import { Metrics } from '../Metrics';
 
 import Styled from './Item.styles';
@@ -26,7 +28,11 @@ export const Item = ({
 }) => {
   const efficiencyObservation = variant.metrics
     .flatMap((metric) => metric.observations)
-    .find((observation) => observation.id === '0202');
+    .find((observation) => observation.id === 'energyEfficiencyClass');
+
+  const economyObservation = variant.metrics
+    .flatMap((metric) => metric.observations)
+    .find((observation) => observation.id === 'energyPerYear');
 
   return (
     <Styled.Item direction="column" isSearched={!!isSearched}>
@@ -37,14 +43,16 @@ export const Item = ({
           </Styled.EfficiencyClass>
         )}
 
-        <Styled.Economy>
-          <Text align="center" appearance="bold">
-            280
-          </Text>
-          <Text variant="small" align="center">
-            kWh/annum
-          </Text>
-        </Styled.Economy>
+        {economyObservation && (
+          <Styled.Economy>
+            <Text align="center" appearance="bold">
+              {formatNumber(economyObservation.measure as number)}
+            </Text>
+            <Text variant="small" align="center">
+              {economyObservation.unit?.name}
+            </Text>
+          </Styled.Economy>
+        )}
       </Styled.Image>
 
       <Styled.Content direction="column">
