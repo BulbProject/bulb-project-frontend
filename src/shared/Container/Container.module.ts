@@ -1,1 +1,6 @@
-export const containerCellProps = { offset: { before: 2, after: 2 }, size: 8 };
+export const containerCellProps = (size: number) => {
+  return {
+    offset: { before: (12 - size) / 2, after: (12 - size) / 2 },
+    size,
+  };
+};
