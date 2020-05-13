@@ -7,18 +7,37 @@ const Items = styled(Flex)`
 
   overflow-x: hidden;
 
-  @media screen and (min-width: 798px) {
-    &:after {
+  &:after {
+    content: '';
+
+    position: absolute;
+    top: calc(50% - 7px);
+    bottom: 0;
+    right: 0;
+
+    width: 30px;
+
+    background-image: linear-gradient(to left, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
+
+    pointer-events: none;
+
+    @media screen and (min-width: 798px) {
+      top: 0;
+    }
+  }
+
+  @media screen and (max-width: 797px) {
+    &:before {
       content: '';
 
       position: absolute;
-      top: 0;
+      top: calc(50% - 7px);
       bottom: 0;
-      right: 0;
+      left: 0;
 
       width: 30px;
 
-      background-image: linear-gradient(to left, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
+      background-image: linear-gradient(to right, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
 
       pointer-events: none;
     }
@@ -32,35 +51,6 @@ const AvailableVariants = styled(Flex)<{ isMd: boolean }>(
     max-width: ${isMd ? 'calc(100% - 360px)' : 'calc(100vw - 4rem)'};
 
     overflow-x: auto;
-
-    ${!isMd
-      ? css`
-          &:after,
-          &:before {
-            content: '';
-
-            position: absolute;
-            top: 50%;
-            bottom: 0;
-
-            width: 30px;
-
-            pointer-events: none;
-          }
-
-          &:after {
-            right: 0;
-
-            background-image: linear-gradient(to left, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
-          }
-
-          &:before {
-            left: 0;
-
-            background-image: linear-gradient(to right, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
-          }
-        `
-      : ``}
   `
 );
 
