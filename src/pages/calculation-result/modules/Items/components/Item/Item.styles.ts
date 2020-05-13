@@ -22,7 +22,7 @@ const Image = styled(Flex)<{ link?: string }>(
   `
 );
 
-const getEfficiencyColor = ({ efficiencyClass }: { efficiencyClass: string }) => {
+const getEfficiencyColor = (efficiencyClass: string) => {
   switch (efficiencyClass) {
     case 'A++':
       return '#33a357';
@@ -56,7 +56,7 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: string }>(
     width: 40px;
     height: 30px;
 
-    background: ${getEfficiencyColor({ efficiencyClass })};
+    background: ${getEfficiencyColor(efficiencyClass)};
 
     color: var(--c-white);
 
@@ -66,7 +66,7 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: string }>(
       position: absolute;
 
       border: 15px solid transparent;
-      border-right: 15px solid ${getEfficiencyColor({ efficiencyClass })};
+      border-right: 15px solid ${getEfficiencyColor(efficiencyClass)};
 
       transform: translateX(-30px);
     }
