@@ -113,4 +113,26 @@ const ItemsTitle = styled(Flex)`
   padding-left: var(--i-large);
 `;
 
-export default { Items, AvailableVariants, Carousel, CarouselButton, ItemsTitle };
+const IndicatorsContainer = styled(Flex)`
+  position: absolute;
+  top: 3.5rem;
+  left: 0;
+  right: 0;
+`;
+
+const Indicator = styled.div(
+  ({ active }: { active: boolean }) => css`
+    width: ${active ? '12px' : 'var(--i-medium)'};
+    height: ${active ? '12px' : 'var(--i-medium)'};
+
+    margin: var(--i-small);
+
+    border-radius: ${active ? '12px' : 'var(--i-medium)'};
+
+    background-color: ${active ? 'var(--c-primary)' : 'var(--c-neutral)'};
+
+    transition: var(--transition);
+  `
+);
+
+export default { Items, AvailableVariants, Carousel, CarouselButton, ItemsTitle, IndicatorsContainer, Indicator };
