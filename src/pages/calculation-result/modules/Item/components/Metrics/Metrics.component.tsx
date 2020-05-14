@@ -5,12 +5,23 @@ import type { Metric, Observation } from 'ts4ocds/extensions/metrics';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
+import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { formatNumber } from 'utils';
 
 import Styled from './Metrics.styles';
 
-export const Metrics = ({ metrics, showTitles }: { metrics: Metric[]; showTitles: boolean }) => {
+export const Metrics = ({
+  metrics,
+  showTitles,
+  hoveredObservation,
+  setHoveredObservation,
+}: {
+  metrics: Metric[];
+  showTitles: boolean;
+  hoveredObservation: string;
+  setHoveredObservation: (id: string) => void;
+}) => {
   const getObservationUnit = useCallback((observation: Observation) => {
     if (observation.value) {
       return observation.value.currency;
@@ -21,6 +32,8 @@ export const Metrics = ({ metrics, showTitles }: { metrics: Metric[]; showTitles
 
     return '';
   }, []);
+
+  const isLg = useMediaQuery('screen and (min-width: 832px)');
 
   return (
     <Styled.Metrics direction="column">
@@ -47,7 +60,13 @@ export const Metrics = ({ metrics, showTitles }: { metrics: Metric[]; showTitles
               key={observation.id}
               margin={{ bottom: 'regular' }}
               alignment={showTitles ? undefined : { horizontal: 'center' }}
+              onMouseEnter={() => setHoveredObservation(observation.id)}
+              onMouseLeave={() => setHoveredObservation('')}
             >
+              {isLg && metric.id !== 'economy' && (
+                <Styled.Highlight isHovered={hoveredObservation === observation.id} />
+              )}
+
               {showTitles && (
                 <Styled.ObservationTitle>
                   <Text variant="small" color="var(--c-dark)">

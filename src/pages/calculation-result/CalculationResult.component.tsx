@@ -93,6 +93,8 @@ const CalculationResult: React.FC = () => {
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
+  const [hoveredObservation, setHoveredObservation] = useState('');
+
   const hasMany = useMemo(() => (availableVariants || []).length > 1, [availableVariants?.length]);
 
   return (
@@ -166,10 +168,18 @@ const CalculationResult: React.FC = () => {
                         );
                       })?.url
                     }
+                    hoveredObservation={hoveredObservation}
+                    setHoveredObservation={setHoveredObservation}
                   />
                 </Styled.RequestedNeed>
 
-                {availableVariants && <Items availableVariants={availableVariants} />}
+                {availableVariants && (
+                  <Items
+                    availableVariants={availableVariants}
+                    hoveredObservation={hoveredObservation}
+                    setHoveredObservation={setHoveredObservation}
+                  />
+                )}
               </Styled.Wrapper>
             </CalculationContextProvider>
           ) : (
@@ -177,14 +187,14 @@ const CalculationResult: React.FC = () => {
               <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
                 {isLoading && <Spinner delay={500} />}
 
-                {(!requestedNeed || !categoryVersion) && !isLoading && (
+                {(!requestedNeed || !categoryVersion) && !isLoading && error?.statusCode === 404 && (
                   <Text color="negative">
                     Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
                     цієї категорії ☹️
                   </Text>
                 )}
 
-                {error && !isLoading && <ErrorPage />}
+                {error && error.statusCode !== 404 && !isLoading && <ErrorPage />}
               </Flex>
             </Container>
           )}

@@ -16,11 +16,15 @@ export const Item = ({
   item,
   document,
   isRequested = false,
+  hoveredObservation,
+  setHoveredObservation,
 }: {
   variant: AvailableVariant;
   item: ItemType;
   document?: string;
   isRequested?: boolean;
+  hoveredObservation: string;
+  setHoveredObservation: (id: string) => void;
 }) => {
   const efficiencyObservation = variant.metrics
     .flatMap((metric) => metric.observations)
@@ -78,7 +82,12 @@ export const Item = ({
           </Flex>
         </Styled.ItemDescription>
 
-        <Metrics showTitles={isRequested} metrics={variant.metrics} />
+        <Metrics
+          showTitles={isRequested}
+          metrics={variant.metrics}
+          hoveredObservation={hoveredObservation}
+          setHoveredObservation={setHoveredObservation}
+        />
 
         {/* <Flex direction="column">
           <Styled.Link href="#" target="_blank" rel="noopener noreferrer">

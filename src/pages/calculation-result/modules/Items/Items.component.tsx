@@ -11,7 +11,15 @@ import { useCalculationContext } from '../../store';
 import { Item } from '../Item';
 import Styled from './Items.styles';
 
-export const Items = ({ availableVariants }: { availableVariants: AvailableVariant[] }) => {
+export const Items = ({
+  availableVariants,
+  hoveredObservation,
+  setHoveredObservation,
+}: {
+  availableVariants: AvailableVariant[];
+  hoveredObservation: string;
+  setHoveredObservation: (id: string) => void;
+}) => {
   const {
     category: { items, documents },
   } = useCalculationContext();
@@ -49,7 +57,16 @@ export const Items = ({ availableVariants }: { availableVariants: AvailableVaria
               (document) => document.relatesTo === 'item' && document.relatedItem === relatedItem.id
             );
 
-            return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
+            return (
+              <Item
+                key={variant.id}
+                variant={variant}
+                item={relatedItem}
+                document={relatedDocument?.url}
+                hoveredObservation={hoveredObservation}
+                setHoveredObservation={setHoveredObservation}
+              />
+            );
           })}
         </Styled.Carousel>
 
