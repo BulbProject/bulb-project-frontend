@@ -16,9 +16,9 @@ import { CategoriesListEntity } from 'types/data';
 
 import { Card, Error } from './modules';
 
-import Styled from './Main.styles';
+import Styled from './CategoriesList.styles';
 
-const Categories = () => {
+const CategoriesList = () => {
   const { data: categoriesList, error, isLoading, triggerRequest } = useRequest<CategoriesListEntity[]>(
     getCategoriesConfig()
   );
@@ -69,4 +69,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default CategoriesList;
