@@ -108,7 +108,6 @@ const CategoriesList = () => {
                     category={category.categoryVersion}
                     error={category.error}
                     reload={() => reloadItem(category.id, category.version)}
-                    isDisabled
                   />
                 </motion.div>
               ))}

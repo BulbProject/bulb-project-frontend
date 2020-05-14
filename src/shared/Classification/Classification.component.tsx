@@ -7,17 +7,20 @@ import { Classification as OCDSClassification } from 'ts4ocds';
 
 import Styled from './Classification.styles';
 
-export const Classification: React.FC<OCDSClassification & { className?: string }> = ({
+export const Classification: React.FC<OCDSClassification & { className?: string; isDisabled?: boolean }> = ({
   id,
   description,
+  isDisabled,
   className = '',
 }) => {
   return (
     <Flex className={className}>
-      <Styled.ClassificationId variant="small">{id}</Styled.ClassificationId>
+      <Styled.ClassificationId variant="small" isDisabled={!!isDisabled}>
+        {id}
+      </Styled.ClassificationId>
 
       {description && (
-        <Text variant="small" color="var(--c-dark)">
+        <Text variant="small" color={isDisabled ? 'var(--c-neutral)' : 'var(--c-dark)'}>
           {description}
         </Text>
       )}

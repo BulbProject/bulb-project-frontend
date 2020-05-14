@@ -10,31 +10,25 @@ import { CategoryCardProps } from '../../Card.types';
 
 import Styled from '../../Card.styles';
 
-export const BaseCard = ({
-  id,
-  version,
-  title,
-  description,
-  classification,
-  isDisabled,
-}: CategoryCardProps & { isDisabled: boolean }) => {
+export const BaseCard = ({ title, description, classification, status }: CategoryCardProps) => {
   const isXs = useMediaQuery('screen and (min-width: 576px)');
+  const isDisabled = status === 'pending';
 
   return (
-    <Styled.Link key={`${id}-${version}`} to={`/categories/${id}/${version}`}>
-      <Styled.Card direction="column">
-        <Styled.CardTitle variant="h5">{title}</Styled.CardTitle>
+    <Styled.Card direction="column" isDisabled={isDisabled}>
+      <Styled.CardTitle variant="h5" isDisabled={isDisabled}>
+        {title}
+      </Styled.CardTitle>
 
-        {isXs && (
-          <Flex margin={{ bottom: 'regular' }}>
-            <Text color="var(--c-dark)" variant="small">
-              {description}
-            </Text>
-          </Flex>
-        )}
+      {isXs && (
+        <Flex margin={{ bottom: 'regular' }}>
+          <Text color={isDisabled ? 'var(--c-neutral)' : 'var(--c-dark)'} variant="small">
+            {description}
+          </Text>
+        </Flex>
+      )}
 
-        <Classification {...classification} />
-      </Styled.Card>
-    </Styled.Link>
+      <Classification {...classification} isDisabled={isDisabled} />
+    </Styled.Card>
   );
 };

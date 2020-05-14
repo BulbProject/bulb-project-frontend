@@ -3,8 +3,9 @@ import { Text } from 'ustudio-ui';
 
 const circleDimension = 0.4;
 
-const ClassificationId = styled(Text)`
-  color: var(--c-secondary);
+const ClassificationId = styled(Text)<{ isDisabled: boolean }>(
+  ({ isDisabled }) => `
+  color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-secondary)'};
 
   white-space: nowrap;
 
@@ -25,9 +26,10 @@ const ClassificationId = styled(Text)`
 
     transform: translateY(-50%);
 
-    background-color: var(--c-secondary);
+    background-color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-secondary)'};
     border-radius: 50%;
   }
-`;
+`
+);
 
 export default { ClassificationId };
