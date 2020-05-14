@@ -25,15 +25,15 @@ const App: React.FC = () => {
     >
       <BrowserRouter>
         <FadeIn>
-          <Layout>
-            <Suspense fallback={<div />}>
-              <Switch>
-                {routes.map((route) => (
-                  <Route {...route} key={route.path as string} />
-                ))}
-              </Switch>
-            </Suspense>
-          </Layout>
+          {/* <Layout> */}
+          <Suspense fallback={<div />}>
+            <Switch>
+              {routes.map((route) => (
+                <Route {...route} key={route.path as string} />
+              ))}
+            </Switch>
+          </Suspense>
+          {/* </Layout> */}
         </FadeIn>
       </BrowserRouter>
 

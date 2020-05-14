@@ -11,7 +11,7 @@ const Hero = styled(Flex)`
 
   color: var(--c-white);
 
-  background-color: var(--c-darkest);
+  background-image: linear-gradient(to bottom, rgba(26, 26, 26, 1), rgba(26, 26, 26, 1) 75%, rgba(26, 26, 26, 0.975));
 
   ${Mixin.Screen.xs(css`
     padding: 4rem 2rem;
