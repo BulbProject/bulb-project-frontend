@@ -4,7 +4,6 @@ import styled, { css, keyframes } from 'styled-components';
 import LibDrawer from 'ustudio-ui/components/Drawer';
 
 import { Mixin } from 'ustudio-ui/theme';
-import Flex from 'ustudio-ui/components/Flex';
 
 const Layout = styled.div`
   height: 100%;
@@ -63,14 +62,6 @@ const LinksHeaderContainer = styled.div`
 
   ${Mixin.Screen.xs(css`
     display: block;
-  `)};
-`;
-
-const LinksFooterContainer = styled.div`
-  margin: var(--i-regular) 0;
-
-  ${Mixin.Screen.xs(css`
-    margin: 0 var(--i-regular);
   `)};
 `;
 
@@ -193,51 +184,6 @@ const Main = styled.main`
   padding: var(--i-large) 0;
 `;
 
-const Footer = styled.footer`
-  padding: var(--i-regular) 0;
-
-  background-color: var(--c-light);
-`;
-
-const FooterContent = styled(Flex)`
-  flex-direction: column;
-  justify-content: center;
-
-  ${Mixin.Screen.xs(css`
-    flex-direction: row;
-    justify-content: space-between;
-  `)};
-`;
-
-const ContactContainer = styled(Flex)`
-  text-align: center;
-
-  ${Mixin.Screen.xs(css`
-    text-align: left;
-  `)};
-`;
-
-const FooterLogoContainer = styled(Flex)`
-  flex-direction: row;
-  ${Mixin.Screen.xs(css`
-    flex-direction: column;
-  `)};
-
-  ${Mixin.Screen.lg(css`
-    flex-direction: row;
-  `)};
-
-  ${LogoImage} {
-    ${Mixin.Screen.xs(css`
-      margin: 0 0 var(--i-medium);
-    `)};
-
-    ${Mixin.Screen.lg(css`
-      margin: 0 var(--i-large) 0 0;
-    `)};
-  }
-`;
-
 export default {
   Layout,
   Header,
@@ -245,12 +191,7 @@ export default {
   LogoImage,
   LogoText,
   LinksHeaderContainer,
-  LinksFooterContainer,
   DrawerButton,
   Drawer,
   Main,
-  Footer,
-  FooterContent,
-  ContactContainer,
-  FooterLogoContainer,
 };

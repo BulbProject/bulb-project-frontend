@@ -7,7 +7,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import Drawer from 'ustudio-ui/components/Drawer';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
-import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
+import { Layout, CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
 
 import type { AvailableVariant, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
@@ -95,71 +95,73 @@ const CalculationResult: React.FC = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   return (
-    <ErrorBoundary>
-      <FadeIn>
-        {categoryVersion && requestedNeed && <CategoryHeader {...{ title, description, classification }} />}
+    <Layout>
+      <ErrorBoundary>
+        <FadeIn>
+          {categoryVersion && requestedNeed && <CategoryHeader {...{ title, description, classification }} />}
 
-        {requestedNeed && categoryVersion && !isLoading && !error ? (
-          <CalculationContextProvider
-            category={categoryVersion.category}
-            requestedNeed={requestedNeed as StoreRequestedNeed}
-          >
-            <Styled.Wrapper alignment={{ horizontal: 'center' }}>
-              {isXl ? (
-                <RequestedNeed
-                  error={recalculationError?.message}
-                  isLoading={isRecalculating}
-                  setSubmitting={setSubmitting}
-                  recalculate={(state) => {
-                    setNewRequestedNeed(state);
-                  }}
-                />
-              ) : (
-                <>
-                  <Styled.FilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
-                    <FilterIcon />
-                  </Styled.FilterButton>
+          {requestedNeed && categoryVersion && !isLoading && !error ? (
+            <CalculationContextProvider
+              category={categoryVersion.category}
+              requestedNeed={requestedNeed as StoreRequestedNeed}
+            >
+              <Styled.Wrapper alignment={{ horizontal: 'center' }}>
+                {isXl ? (
+                  <RequestedNeed
+                    error={recalculationError?.message}
+                    isLoading={isRecalculating}
+                    setSubmitting={setSubmitting}
+                    recalculate={(state) => {
+                      setNewRequestedNeed(state);
+                    }}
+                  />
+                ) : (
+                  <>
+                    <Styled.FilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
+                      <FilterIcon />
+                    </Styled.FilterButton>
 
-                  <Drawer isOpen={isDrawerOpen} onChange={() => setDrawerOpen(false)} showOverlay position="right">
-                    <RequestedNeed
-                      isHidden
-                      error={recalculationError?.message}
-                      isLoading={isRecalculating}
-                      setSubmitting={setSubmitting}
-                      recalculate={(state) => {
-                        setNewRequestedNeed(state);
-                        setDrawerOpen(false);
-                      }}
-                    />
-                  </Drawer>
-                </>
-              )}
+                    <Drawer isOpen={isDrawerOpen} onChange={() => setDrawerOpen(false)} showOverlay position="right">
+                      <RequestedNeed
+                        isHidden
+                        error={recalculationError?.message}
+                        isLoading={isRecalculating}
+                        setSubmitting={setSubmitting}
+                        recalculate={(state) => {
+                          setNewRequestedNeed(state);
+                          setDrawerOpen(false);
+                        }}
+                      />
+                    </Drawer>
+                  </>
+                )}
 
-              {availableVariants ? (
-                <Items availableVariants={availableVariants} />
-              ) : (
-                <Text>Відсутні можливі варіанти</Text>
-              )}
-            </Styled.Wrapper>
-          </CalculationContextProvider>
-        ) : (
-          <Container>
-            <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
-              {isLoading && <Spinner delay={500} />}
+                {availableVariants ? (
+                  <Items availableVariants={availableVariants} />
+                ) : (
+                  <Text>Відсутні можливі варіанти</Text>
+                )}
+              </Styled.Wrapper>
+            </CalculationContextProvider>
+          ) : (
+            <Container>
+              <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
+                {isLoading && <Spinner delay={500} />}
 
-              {(!requestedNeed || !categoryVersion) && !isLoading && (
-                <Text color="negative">
-                  Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
-                  цієї категорії ☹️
-                </Text>
-              )}
+                {(!requestedNeed || !categoryVersion) && !isLoading && (
+                  <Text color="negative">
+                    Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
+                    цієї категорії ☹️
+                  </Text>
+                )}
 
-              {error && !isLoading && <ErrorPage />}
-            </Flex>
-          </Container>
-        )}
-      </FadeIn>
-    </ErrorBoundary>
+                {error && !isLoading && <ErrorPage />}
+              </Flex>
+            </Container>
+          )}
+        </FadeIn>
+      </ErrorBoundary>
+    </Layout>
   );
 };
 

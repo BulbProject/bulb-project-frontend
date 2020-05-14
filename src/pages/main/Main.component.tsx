@@ -1,7 +1,19 @@
 import React from 'react';
 
+import { Footer } from 'components';
+
+import { Hero, Content } from './modules';
+
 const Main = () => {
-  return <h1>Bulb Project</h1>;
+  return (
+    <main>
+      <Hero />
+
+      <Content />
+
+      <Footer />
+    </main>
+  );
 };
 
 export default Main;
