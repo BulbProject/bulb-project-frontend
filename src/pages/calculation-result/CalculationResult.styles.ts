@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import { Mixin } from 'ustudio-ui/theme';
-import { RequestedNeed } from './modules/RequestedNeed';
 
 const Wrapper = styled(Flex)`
   max-width: 100vw;

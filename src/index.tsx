@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { ThemeProvider } from 'ustudio-ui/theme';
 
@@ -28,7 +28,6 @@ const App: React.FC = () => {
           <Layout>
             <Suspense fallback={<div />}>
               <Switch>
-                <Redirect exact from="/categories" to="/" />
                 {routes.map((route) => (
                   <Route {...route} key={route.path as string} />
                 ))}
