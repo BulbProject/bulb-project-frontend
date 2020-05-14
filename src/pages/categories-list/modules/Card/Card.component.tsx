@@ -5,12 +5,12 @@ import { BaseCard, ErrorCard, StubCard } from './components';
 import Styled from './Card.styles';
 
 export const Card = ({
-  category,
+  categoryVersion: category,
   version,
   error,
   reload,
 }: {
-  category?: CategoryCardData;
+  categoryVersion?: CategoryCardData;
   version: string;
   reload: () => void;
   error?: string;
