@@ -129,7 +129,7 @@ const CalculationResult: React.FC = () => {
                       isOpen={isDrawerOpen}
                       onChange={() => setDrawerOpen(false)}
                       showOverlay
-                      position="left"
+                      position={isLg ? 'left' : 'right'}
                       styled={{
                         Drawer: css`
                           z-index: var(--l-topmost);
@@ -179,6 +179,12 @@ const CalculationResult: React.FC = () => {
                     hoveredObservation={hoveredObservation}
                     setHoveredObservation={setHoveredObservation}
                   />
+                )}
+
+                {!isLg && (
+                  <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
+                    <FilterIcon />
+                  </Styled.MobileFilterButton>
                 )}
               </Styled.Wrapper>
             </CalculationContextProvider>

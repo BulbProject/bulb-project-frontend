@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
+import { Mixin } from 'ustudio-ui/theme';
 
 const Wrapper = styled(Flex)`
   max-width: 100vw;
@@ -25,4 +26,38 @@ const RequestedNeed = styled(Flex)<{ hasMany: boolean }>(
   `
 );
 
-export default { Wrapper, FilterButton, RequestedNeed };
+const MobileFilterButton = styled.button`
+  position: fixed;
+  bottom: var(--i-large);
+  right: var(--i-large);
+
+  z-index: var(--l-topmost);
+
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+
+  background-color: var(--c-primary-light);
+  color: var(--c-lightest);
+
+  transition: var(--transition);
+
+  ${Mixin.Device.desktop(css`
+    &:hover,
+    &:focus {
+      background-color: var(--c-primary);
+    }
+  `)}
+
+  ${Mixin.Device.mobile(css`
+    &:focus {
+      background-color: var(--c-primary);
+    }
+  `)}
+  
+  svg {
+    height: 1.5rem;
+  }
+`;
+
+export default { Wrapper, FilterButton, RequestedNeed, MobileFilterButton };
