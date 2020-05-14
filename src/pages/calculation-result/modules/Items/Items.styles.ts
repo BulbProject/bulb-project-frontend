@@ -7,7 +7,7 @@ const Items = styled(Flex)`
 
   overflow-x: hidden;
 
-  width: 380px;
+  width: 450px;
 
   &:before {
     content: '';

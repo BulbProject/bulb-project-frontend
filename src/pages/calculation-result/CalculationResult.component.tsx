@@ -173,7 +173,7 @@ const CalculationResult: React.FC = () => {
                   />
                 </Styled.RequestedNeed>
 
-                {availableVariants && (
+                {availableVariants.length > 1 && (
                   <Items
                     availableVariants={availableVariants}
                     hoveredObservation={hoveredObservation}

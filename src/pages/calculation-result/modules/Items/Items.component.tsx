@@ -49,7 +49,7 @@ export const Items = ({
           </Styled.CarouselButton>
         )}
 
-        <Styled.Carousel $offset={activeItem * 380}>
+        <Styled.Carousel $offset={activeItem * 450}>
           {availableVariants.slice(1).map((variant) => {
             const relatedItem = items.find((item) => item.id === variant.relatedItem) as ItemType;
 

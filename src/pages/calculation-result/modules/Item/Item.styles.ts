@@ -29,31 +29,31 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
 
     return css`
       align-items: center;
-  
+
       position: relative;
-  
+
       width: ${isSeparate ? 40 : 40 + classIndex * 4}px;
       height: ${labelHeight}px;
-      
+
       padding-${trianglePosition}: var(--i-medium);
-  
+
       background: ${getEfficiencyColor(efficiencyClass)};
-  
+
       color: var(--c-white);
-  
+
       &:before {
         content: '';
-  
+
         position: absolute;
-  
+
         border: ${labelHeight / 2}px solid transparent;
         border-${trianglePosition}: ${labelHeight / 2}px solid ${
       isSeparate ? 'var(--c-darkest)' : getEfficiencyColor(efficiencyClass)
     };
-  
+
         ${trianglePosition}: 100%;
       }
-      
+
       ${
         isSeparate
           ? css`
@@ -95,8 +95,6 @@ const Item = styled(Flex)`
   width: 100%;
 
   @media screen and (min-width: 798px) {
-    width: 380px;
-
     ${Image} {
       height: 190px;
     }

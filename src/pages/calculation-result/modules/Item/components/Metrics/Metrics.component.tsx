@@ -37,59 +37,62 @@ export const Metrics = ({
 
   return (
     <Styled.Metrics direction="column">
-      {metrics.map((metric) => (
-        <Styled.Metric key={metric.id} direction="column">
-          <Flex margin={{ bottom: 'regular' }}>
-            <Text
-              variant="caption"
-              styled={{
-                Text: showTitles
-                  ? css``
-                  : css`
-                      color: transparent;
-                      pointer-events: none;
-                    `,
-              }}
-            >
-              {metric.title}
-            </Text>
-          </Flex>
-
-          {metric.observations.map((observation) => (
-            <Styled.Observation
-              key={observation.id}
-              margin={{ bottom: 'regular' }}
-              alignment={showTitles ? undefined : { horizontal: 'center' }}
-              onMouseEnter={() => setHoveredObservation(observation.id)}
-              onMouseLeave={() => setHoveredObservation('')}
-            >
-              {isLg && metric.id !== 'economy' && (
-                <Styled.Highlight isHovered={hoveredObservation === observation.id} />
-              )}
-
-              {showTitles && (
-                <Styled.ObservationTitle>
-                  <Text variant="small" color="var(--c-dark)">
-                    {observation.notes}
-                  </Text>
-                </Styled.ObservationTitle>
-              )}
-
+      {metrics
+        .filter((metric) => metric.id !== 'economy')
+        .map((metric) => (
+          <Styled.Metric key={metric.id} direction="column">
+            <Flex margin={{ bottom: 'regular' }}>
               <Text
-                variant="small"
+                variant="caption"
                 styled={{
-                  Text: css`
-                    white-space: nowrap;
-                  `,
+                  Text: showTitles
+                    ? css``
+                    : css`
+                        color: transparent;
+                        user-select: none;
+                        pointer-events: none;
+                      `,
                 }}
               >
-                {typeof observation.measure === 'number' ? formatNumber(observation.measure) : observation.measure}
-                {formatNumber(observation.value?.amount)} {getObservationUnit(observation)}
+                {metric.title}
               </Text>
-            </Styled.Observation>
-          ))}
-        </Styled.Metric>
-      ))}
+            </Flex>
+
+            {metric.observations.map((observation) => (
+              <Styled.Observation
+                key={observation.id}
+                margin={{ bottom: 'regular' }}
+                alignment={showTitles ? undefined : { horizontal: 'center' }}
+                onMouseEnter={() => setHoveredObservation(observation.id)}
+                onMouseLeave={() => setHoveredObservation('')}
+              >
+                {isLg && metric.id !== 'economy' && (
+                  <Styled.Highlight isHovered={hoveredObservation === observation.id} />
+                )}
+
+                {showTitles && (
+                  <Styled.ObservationTitle>
+                    <Text variant="small" color="var(--c-dark)">
+                      {observation.notes}
+                    </Text>
+                  </Styled.ObservationTitle>
+                )}
+
+                <Text
+                  variant="small"
+                  styled={{
+                    Text: css`
+                      white-space: nowrap;
+                    `,
+                  }}
+                >
+                  {typeof observation.measure === 'number' ? formatNumber(observation.measure) : observation.measure}
+                  {formatNumber(observation.value?.amount)} {getObservationUnit(observation)}
+                </Text>
+              </Styled.Observation>
+            ))}
+          </Styled.Metric>
+        ))}
     </Styled.Metrics>
   );
 };

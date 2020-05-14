@@ -9,7 +9,9 @@ const Metrics = styled(Flex)`
 `;
 
 const Metric = styled(Flex)`
-  margin-bottom: 1.5rem;
+  :not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const Observation = styled(Flex)`

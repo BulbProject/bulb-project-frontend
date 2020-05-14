@@ -22,7 +22,7 @@ const FilterButton = styled(Button)`
 
 const RequestedNeed = styled(Flex)<{ hasMany: boolean }>(
   ({ hasMany }) => css`
-    width: ${hasMany ? 380 : 640}px;
+    width: ${hasMany ? 450 : 640}px;
   `
 );
 
@@ -54,7 +54,7 @@ const MobileFilterButton = styled.button`
       background-color: var(--c-primary);
     }
   `)}
-  
+
   svg {
     height: 1.5rem;
   }
