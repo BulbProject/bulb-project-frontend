@@ -6,6 +6,7 @@ import { EfficiencyClass as EfficiencyClassType, efficiencyClasses, getEfficienc
 const Image = styled(Flex)<{ link?: string }>(
   ({ link }) => css`
     justify-content: space-between;
+    flex-shrink: 0;
 
     width: 100%;
 

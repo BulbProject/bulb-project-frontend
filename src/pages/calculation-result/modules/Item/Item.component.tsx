@@ -1,15 +1,10 @@
 import React from 'react';
 
-import { css } from 'styled-components';
-
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
-import Button from 'ustudio-ui/components/Button';
 
-import { AvailableVariant, Item as IItem } from 'types/data';
+import { AvailableVariant, Item as ItemType } from 'types/data';
 import { Classification } from 'shared';
-
-import { formatNumber } from 'utils';
 
 import { Metrics } from './components';
 import { efficiencyClasses, EfficiencyClass } from './Item.module';
@@ -23,7 +18,7 @@ export const Item = ({
   isRequested = false,
 }: {
   variant: AvailableVariant;
-  item: IItem;
+  item: ItemType;
   document?: string;
   isRequested?: boolean;
 }) => {
@@ -80,33 +75,10 @@ export const Item = ({
 
           <Flex margin={{ top: 'medium' }} alignment={{ horizontal: 'center' }}>
             <Classification {...item.classification} />
-            {/* <Text variant="h6">Кількість: {variant.quantity}</Text> */}
           </Flex>
         </Styled.ItemDescription>
 
-        {/* <Styled.Classifications direction="column">
-          <Flex direction="column">
-            <Flex margin={{ bottom: 'regular' }}>
-              <Text variant="caption">Класифікація</Text>
-            </Flex>
-
-            <Classification {...item.classification} />
-          </Flex>
-        </Styled.Classifications> */}
-
         <Metrics showTitles={isRequested} metrics={variant.metrics} />
-
-        {/* item.additionalClassifications && (
-          <Styled.AdditionalClassification direction="column">
-            <Flex margin={{ bottom: 'regular' }}>
-              <Text variant="caption">Додаткові класифікації</Text>
-            </Flex>
-
-            {item.additionalClassifications.map((additionalClassification) => (
-              <Classification key={additionalClassification.id} {...additionalClassification} />
-            ))}
-          </Styled.AdditionalClassification>
-        ) */}
 
         {/* <Flex direction="column">
           <Styled.Link href="#" target="_blank" rel="noopener noreferrer">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { css } from 'styled-components';
 import { Item as ItemType } from 'types/data';
@@ -9,7 +9,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import Drawer from 'ustudio-ui/components/Drawer';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
-import { Layout, CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
+import { Layout, ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
 
 import type { AvailableVariant, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
@@ -20,14 +20,13 @@ import type { StoreRequestedNeed } from 'types/globals';
 import { prepareRequestedNeed } from 'utils';
 import FilterIcon from '../../assets/icons/filter.inline.svg';
 
-import { Filter, Item } from './modules';
-import { Items } from './modules/Items';
+import { Filter, Item, Items } from './modules';
 
 import { CalculationContextProvider } from './store';
 import Styled from './CalculationResult.styles';
 
 const CalculationResult: React.FC = () => {
-  const isXl = useMediaQuery('screen and (min-width: 1154px)');
+  const isLg = useMediaQuery('screen and (min-width: 832px)');
 
   const { categoryId, version } = useParams();
 
@@ -39,8 +38,6 @@ const CalculationResult: React.FC = () => {
   const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
     getCategoryVersionConfig(categoryId as string, version as string)
   );
-
-  const { category: { title, description, classification } = {} } = categoryVersion || ({} as CategoryVersion);
 
   const {
     isLoading: isRecalculating,
@@ -96,19 +93,19 @@ const CalculationResult: React.FC = () => {
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
+  const hasMany = useMemo(() => (availableVariants || []).length > 1, [availableVariants?.length]);
+
   return (
     <Layout>
       <ErrorBoundary>
         <FadeIn>
-          {/* categoryVersion && requestedNeed && <CategoryHeader {...{ title, description, classification }} /> */}
-
           {requestedNeed && categoryVersion && availableVariants && !isLoading && !error ? (
             <CalculationContextProvider
               category={categoryVersion.category}
               requestedNeed={requestedNeed as StoreRequestedNeed}
             >
-              <Styled.Wrapper alignment={{ horizontal: 'center' }}>
-                <Styled.RequestedNeed direction="column">
+              <Styled.Wrapper alignment={{ horizontal: 'center' }} direction={isLg ? 'row' : 'column'}>
+                <Styled.RequestedNeed direction="column" hasMany={hasMany}>
                   <Flex
                     alignment={{ horizontal: 'space-between', vertical: 'center' }}
                     margin={{ bottom: 'large', top: 'regular' }}

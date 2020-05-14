@@ -23,7 +23,7 @@ export const Items = ({ availableVariants }: { availableVariants: AvailableVaria
   const [activeItem, setActiveItem] = useState(0);
 
   return (
-    <Styled.Items direction="column" hasMany={hasMany}>
+    <Styled.Items direction="column">
       <Styled.ItemsTitle>
         <Text variant="body" appearance="bold" color="var(--c-dark)">
           Більш енергоефективні варіанти
