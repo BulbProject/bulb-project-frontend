@@ -7,10 +7,4 @@ const ObservationTitle = styled(Flex)`
   overflow: hidden;
 `;
 
-const Dots = styled(Flex)`
-  border-bottom: 1px dotted var(--c-neutral);
-
-  transform: translateY(-4px);
-`;
-
-export default { ObservationTitle, Dots };
+export default { ObservationTitle };

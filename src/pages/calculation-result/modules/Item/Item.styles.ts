@@ -10,7 +10,7 @@ const Image = styled(Flex)<{ link?: string }>(
 
     width: 100%;
 
-    padding: var(--i-medium);
+    padding: var(--i-regular) var(--i-medium) var(--i-medium);
 
     background-size: contain;
     background-repeat: no-repeat;
@@ -82,52 +82,29 @@ const Economy = styled.div`
   border-radius: var(--i-small);
 `;
 
-const Item = styled(Flex)(({ isSearched }: { isSearched: boolean }) => {
-  return css`
-    position: relative;
+const Item = styled(Flex)`
+  position: relative;
 
-    flex-shrink: 0;
+  flex-shrink: 0;
 
-    width: 100%;
+  width: 100%;
 
-    border: 1px solid var(--c-light);
-
-    @media screen and (min-width: 798px) {
-      width: 360px;
-
-      ${isSearched
-        ? css`
-            &:after {
-              content: '';
-
-              position: absolute;
-              top: 0;
-              bottom: 0;
-              right: -30px;
-
-              width: 30px;
-
-              background-image: linear-gradient(to right, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
-
-              pointer-events: none;
-            }
-          `
-        : ``}
-
-      ${Image} {
-        height: 190px;
-      }
-    }
-
-    &:not(:last-child) {
-      margin-right: -1px;
-    }
+  @media screen and (min-width: 798px) {
+    width: 380px;
 
     ${Image} {
-      height: 240px;
+      height: 190px;
     }
-  `;
-});
+  }
+
+  &:not(:last-child) {
+    margin-right: -1px;
+  }
+
+  ${Image} {
+    height: 240px;
+  }
+`;
 
 const Content = styled(Flex)`
   padding: var(--i-regular);

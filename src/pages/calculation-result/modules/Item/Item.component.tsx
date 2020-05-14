@@ -11,7 +11,7 @@ import { Classification } from 'shared';
 
 import { formatNumber } from 'utils';
 
-import { Metrics } from '../Metrics';
+import { Metrics } from './components';
 
 import Styled from './Item.styles';
 
@@ -19,12 +19,12 @@ export const Item = ({
   variant,
   item,
   document,
-  isSearched,
+  isRequested = false,
 }: {
   variant: AvailableVariant;
   item: IItem;
   document?: string;
-  isSearched?: boolean;
+  isRequested?: boolean;
 }) => {
   const efficiencyObservation = variant.metrics
     .flatMap((metric) => metric.observations)
@@ -35,7 +35,7 @@ export const Item = ({
     .find((observation) => observation.id === 'energyPerYear');
 
   return (
-    <Styled.Item direction="column" isSearched={!!isSearched}>
+    <Styled.Item direction="column">
       <Styled.Image link={document}>
         {efficiencyObservation && (
           <Styled.EfficiencyClass efficiencyClass={efficiencyObservation.measure as string}>
@@ -75,9 +75,9 @@ export const Item = ({
           </Flex>
         </Styled.Classifications>
 
-        <Metrics metrics={variant.metrics} />
+        <Metrics showTitles={isRequested} metrics={variant.metrics} />
 
-        {item.additionalClassifications && (
+        {/* item.additionalClassifications && (
           <Styled.AdditionalClassification direction="column">
             <Flex margin={{ bottom: 'regular' }}>
               <Text variant="caption">Додаткові класифікації</Text>
@@ -87,7 +87,7 @@ export const Item = ({
               <Classification key={additionalClassification.id} {...additionalClassification} />
             ))}
           </Styled.AdditionalClassification>
-        )}
+        ) */}
 
         <Flex direction="column">
           <Styled.Link href="#" target="_blank" rel="noopener noreferrer">

@@ -18,7 +18,7 @@ const FilterButton = styled(Button)`
 `;
 
 const RequestedNeed = styled(Flex)`
-  flex: 0.5;
+  width: 380px;
 `;
 
 export default { Wrapper, FilterButton, RequestedNeed };

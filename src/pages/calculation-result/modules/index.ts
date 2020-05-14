@@ -1,3 +1,3 @@
 export * from './Filter';
 export * from './Item';
-export * from './AvailableVariants';
+// export * from './AvailableVariants';

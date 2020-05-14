@@ -10,7 +10,7 @@ import { formatNumber } from 'utils';
 
 import Styled from './Metrics.styles';
 
-export const Metrics = ({ metrics }: { metrics: Metric[] }) => {
+export const Metrics = ({ metrics, showTitles }: { metrics: Metric[]; showTitles: boolean }) => {
   const getObservationUnit = useCallback((observation: Observation) => {
     if (observation.value) {
       return observation.value.currency;
@@ -27,18 +27,34 @@ export const Metrics = ({ metrics }: { metrics: Metric[] }) => {
       {metrics.map((metric) => (
         <Flex key={metric.id} direction="column" margin={{ bottom: 'large' }}>
           <Flex margin={{ bottom: 'regular' }}>
-            <Text variant="caption">{metric.title}</Text>
+            <Text
+              variant="caption"
+              styled={{
+                Text: showTitles
+                  ? css``
+                  : css`
+                      color: transparent;
+                      pointer-events: none;
+                    `,
+              }}
+            >
+              {metric.title}
+            </Text>
           </Flex>
 
           {metric.observations.map((observation) => (
-            <Flex key={observation.id} margin={{ bottom: 'regular' }}>
-              <Styled.ObservationTitle>
-                <Text variant="small" color="var(--c-dark)">
-                  {observation.notes}
-                </Text>
-
-                <Styled.Dots />
-              </Styled.ObservationTitle>
+            <Flex
+              key={observation.id}
+              margin={{ bottom: 'regular' }}
+              alignment={showTitles ? undefined : { horizontal: 'center' }}
+            >
+              {showTitles && (
+                <Styled.ObservationTitle>
+                  <Text variant="small" color="var(--c-dark)">
+                    {observation.notes}
+                  </Text>
+                </Styled.ObservationTitle>
+              )}
 
               <Text
                 variant="small"

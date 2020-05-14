@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { css } from 'styled-components';
+import { Item as IItem } from 'types/data';
 
 import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
@@ -20,7 +21,7 @@ import type { StoreRequestedNeed } from 'types/globals';
 import { prepareRequestedNeed } from 'utils';
 import FilterIcon from '../../assets/icons/filter.inline.svg';
 
-import { Filter } from './modules/Filter';
+import { Filter, Item } from './modules';
 import { Items } from './modules/Items';
 
 import { CalculationContextProvider } from './store';
@@ -102,49 +103,68 @@ const CalculationResult: React.FC = () => {
         <FadeIn>
           {categoryVersion && requestedNeed && <CategoryHeader {...{ title, description, classification }} />}
 
-          {requestedNeed && categoryVersion && !isLoading && !error ? (
+          {requestedNeed && categoryVersion && availableVariants && !isLoading && !error ? (
             <CalculationContextProvider
               category={categoryVersion.category}
               requestedNeed={requestedNeed as StoreRequestedNeed}
             >
               <Styled.Wrapper alignment={{ horizontal: 'center' }}>
-                <Styled.RequestedNeed alignment={{ horizontal: 'space-between' }}>
-                  <Text variant="h3">Те, що Ви шукали</Text>
+                <Styled.RequestedNeed direction="column">
+                  <Flex alignment={{ horizontal: 'space-between' }} margin={{ bottom: 'large' }}>
+                    <Text variant="h3">Те, що Ви шукали</Text>
 
-                  <Styled.FilterButton
-                    appearance="text"
-                    onClick={() => setDrawerOpen(!isDrawerOpen)}
-                    iconAfter={<FilterIcon />}
-                  >
-                    Змінити умови
-                  </Styled.FilterButton>
+                    <Styled.FilterButton
+                      appearance="text"
+                      onClick={() => setDrawerOpen(!isDrawerOpen)}
+                      iconAfter={<FilterIcon />}
+                    >
+                      Змінити умови
+                    </Styled.FilterButton>
 
-                  <Drawer
-                    isOpen={isDrawerOpen}
-                    onChange={() => setDrawerOpen(false)}
-                    showOverlay
-                    position="left"
-                    styled={{
-                      Drawer: css`
-                        z-index: var(--l-topmost);
-                      `,
-                      Overlay: css`
-                        background-color: var(--c-darkest);
+                    <Drawer
+                      isOpen={isDrawerOpen}
+                      onChange={() => setDrawerOpen(false)}
+                      showOverlay
+                      position="left"
+                      styled={{
+                        Drawer: css`
+                          z-index: var(--l-topmost);
+                        `,
+                        Overlay: css`
+                          background-color: var(--c-darkest);
 
-                        z-index: calc(var(--l-topmost) - 1);
-                      `,
-                    }}
-                  >
-                    <Filter
-                      error={recalculationError?.message}
-                      isLoading={isRecalculating}
-                      setSubmitting={setSubmitting}
-                      recalculate={(state) => {
-                        setNewRequestedNeed(state);
-                        setDrawerOpen(false);
+                          z-index: calc(var(--l-topmost) - 1);
+                        `,
                       }}
-                    />
-                  </Drawer>
+                    >
+                      <Filter
+                        error={recalculationError?.message}
+                        isLoading={isRecalculating}
+                        setSubmitting={setSubmitting}
+                        recalculate={(state) => {
+                          setNewRequestedNeed(state);
+                          setDrawerOpen(false);
+                        }}
+                      />
+                    </Drawer>
+                  </Flex>
+
+                  <Item
+                    isRequested
+                    variant={availableVariants[0]}
+                    item={
+                      categoryVersion.category.items.find(
+                        (item) => item.id === availableVariants[0].relatedItem
+                      ) as IItem
+                    }
+                    document={
+                      categoryVersion.category.documents?.find((document) => {
+                        return (
+                          document.relatesTo === 'item' && document.relatedItem === availableVariants[0].relatedItem
+                        );
+                      })?.url
+                    }
+                  />
                 </Styled.RequestedNeed>
 
                 {/* {availableVariants ? (
