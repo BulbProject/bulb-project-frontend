@@ -37,7 +37,7 @@ export const Item = ({
   const economyMetric = variant.metrics.find((metric) => metric.id === 'economy');
 
   const getUnit = (observation: Observation) => {
-    return observation.unit?.name || observation.value?.currency;
+    return observation.unit?.name || observation.value?.currency || '';
   };
 
   return (
@@ -54,6 +54,7 @@ export const Item = ({
             ))}
           </Styled.EfficiencyClassesList>
         )}
+
         {efficiencyObservation && (
           <Styled.EfficiencyClass
             efficiencyClass={efficiencyObservation.measure as EfficiencyClass}
@@ -63,10 +64,10 @@ export const Item = ({
           </Styled.EfficiencyClass>
         )}
 
-        <Styled.EconomyContainer>
-          {economyMetric &&
-            economyMetric.observations.map((observation) => (
-              <Styled.Economy>
+        {economyMetric && (
+          <Styled.EconomyContainer>
+            {economyMetric.observations.map((observation) => (
+              <Styled.Economy key={observation.id}>
                 <Styled.EconomyNote variant="small">{observation.notes}</Styled.EconomyNote>
 
                 <Styled.EconomyMeasure>
@@ -88,7 +89,8 @@ export const Item = ({
                 </Styled.EconomyMeasure>
               </Styled.Economy>
             ))}
-        </Styled.EconomyContainer>
+          </Styled.EconomyContainer>
+        )}
       </Styled.Image>
 
       <Styled.Content direction="column">

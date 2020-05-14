@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
@@ -43,11 +42,13 @@ export const Items = ({
         </Text>
       </Styled.ItemsTitle>
 
-      <Styled.IndicatorsContainer alignment={{ horizontal: 'center', vertical: 'center' }}>
-        {availableVariants.slice(1).map((variant, index) => (
-          <Styled.Indicator active={index === activeItem} key={variant.id} />
-        ))}
-      </Styled.IndicatorsContainer>
+      {availableVariants.slice(1).length > 1 && (
+        <Styled.IndicatorsContainer alignment={{ horizontal: 'center', vertical: 'center' }}>
+          {availableVariants.slice(1).map((variant, index) => (
+            <Styled.Indicator active={index === activeItem} key={variant.id} />
+          ))}
+        </Styled.IndicatorsContainer>
+      )}
 
       <Styled.AvailableVariants isMd={isMd}>
         {hasMany && activeItem > 0 && (
