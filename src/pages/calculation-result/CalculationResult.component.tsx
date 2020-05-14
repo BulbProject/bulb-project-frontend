@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { css } from 'styled-components';
 
 import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
@@ -118,7 +119,22 @@ const CalculationResult: React.FC = () => {
                     Змінити умови
                   </Styled.FilterButton>
 
-                  <Drawer isOpen={isDrawerOpen} onChange={() => setDrawerOpen(false)} showOverlay position="left">
+                  <Drawer
+                    isOpen={isDrawerOpen}
+                    onChange={() => setDrawerOpen(false)}
+                    showOverlay
+                    position="left"
+                    styled={{
+                      Drawer: css`
+                        z-index: var(--l-topmost);
+                      `,
+                      Overlay: css`
+                        background-color: var(--c-darkest);
+
+                        z-index: calc(var(--l-topmost) - 1);
+                      `,
+                    }}
+                  >
                     <Filter
                       error={recalculationError?.message}
                       isLoading={isRecalculating}
