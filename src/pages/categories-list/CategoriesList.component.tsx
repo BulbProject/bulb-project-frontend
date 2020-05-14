@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
@@ -17,11 +17,62 @@ import { CategoriesListEntity } from 'types/data';
 import { Card, Error } from './modules';
 
 import Styled from './CategoriesList.styles';
+import { getCategory, sortCategories } from './CategoriesList.module';
+import { CategoryCard } from './CategoriesList.types';
 
 const CategoriesList = () => {
-  const { data: categoriesList, error, isLoading, triggerRequest } = useRequest<CategoriesListEntity[]>(
+  const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
+  const [isLoading, setLoading] = useState(true);
+
+  const { data: categoriesList, error: listError, triggerRequest } = useRequest<CategoriesListEntity[]>(
     getCategoriesConfig()
   );
+
+  const getFullCategoriesInfo = async () => {
+    setLoading(true);
+
+    const categoriesPromises = categoriesList?.map((_cat) => {
+      const category = getCategory(_cat.id, _cat.version);
+
+      return category;
+    });
+
+    if (categoriesPromises?.length) {
+      Promise.all(categoriesPromises)
+        .then((resolvedCategories) => {
+          setFullCategories(resolvedCategories);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  };
+
+  const reloadItem = (id: string, version: string) => {
+    const category = getCategory(id, version);
+
+    Promise.resolve(category).then(({ categoryVersion }) => {
+      if (categoryVersion) {
+        const filteredCategories = fullCategories.filter((_cat) => _cat.id !== id);
+        setFullCategories([
+          ...filteredCategories,
+          {
+            id,
+            version,
+            categoryVersion,
+          },
+        ]);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (categoriesList) {
+      getFullCategoriesInfo();
+    }
+  }, [categoriesList]);
 
   return (
     <Layout>
@@ -35,16 +86,16 @@ const CategoriesList = () => {
             </FadeIn>
           )}
 
-          {!isLoading && categoriesList && (
+          {!isLoading && (
             <FadeIn>
               <Flex direction="column">
                 <Flex margin={{ bottom: 'large' }}>
                   <Text variant="h1">Виберіть категорію для проведення розрахунків</Text>
                 </Flex>
 
-                {!categoriesList?.length && <Text variant="h3">Тут ще немає категорій</Text>}
+                {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
 
-                {categoriesList?.map((category, index) => (
+                {sortCategories(fullCategories)?.map((category, index) => (
                   <motion.div
                     key={category.id}
                     variants={{
@@ -53,14 +104,14 @@ const CategoriesList = () => {
                     }}
                     transition={{ delay: index * 0.2 }}
                   >
-                    <Card {...category} />
+                    <Card {...category} reload={() => reloadItem(category.id, category.version)} />
                   </motion.div>
                 ))}
               </Flex>
             </FadeIn>
           )}
 
-          {!isLoading && error && (
+          {!isLoading && listError && (
             <FadeIn>
               <Error reloadCategories={triggerRequest} />
             </FadeIn>

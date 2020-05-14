@@ -1,34 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { useRequest } from 'hooks';
-import { getCategoryVersionConfig } from 'config';
-
-import { CategoryVersion } from 'types/data';
-
+import { CategoryCardData } from '../../CategoriesList.types';
 import { BaseCard, ErrorCard, StubCard } from './components';
+import Styled from './Card.styles';
 
-export const Card = ({ id, version }: { id: string; version: string }) => {
-  const { data: categoryVersion, isLoading, error, triggerRequest } = useRequest<CategoryVersion>(
-    getCategoryVersionConfig(id, version)
-  );
+export const Card = ({
+  categoryVersion: category,
+  version,
+  error,
+  reload,
+}: {
+  categoryVersion?: CategoryCardData;
+  version: string;
+  reload: () => void;
+  error?: string;
+}) => {
+  const [isLoading, setLoading] = useState(false);
 
-  const { category } = (categoryVersion || {}) as CategoryVersion;
+  const reloadItem = async () => {
+    setLoading(true);
+    await reload();
+    setLoading(false);
+  };
 
   return (
     <>
       {isLoading && <StubCard />}
 
-      {!isLoading && categoryVersion && (
-        <BaseCard
-          id={id}
-          title={category.title}
-          description={category.description}
-          classification={category.classification}
-          version={version}
-        />
+      {!isLoading && category && category.status === 'active' && (
+        <Styled.Link key={`${category.id}-${version}`} to={`/categories/${category.id}/${version}`}>
+          <BaseCard {...category} version={version} />
+        </Styled.Link>
       )}
 
-      {!isLoading && error && <ErrorCard updateCategoryData={triggerRequest} />}
+      {!isLoading && category && category.status === 'pending' && <BaseCard {...category} version={version} />}
+
+      {!isLoading && error && <ErrorCard updateCategoryData={reloadItem} />}
     </>
   );
 };

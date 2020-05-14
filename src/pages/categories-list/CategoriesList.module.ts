@@ -1,0 +1,43 @@
+import axios, { AxiosRequestConfig } from 'axios';
+import { CategoryVersion } from 'types/data';
+import { getCategoryVersionConfig } from 'config';
+
+import { CategoryCard } from './CategoriesList.types';
+
+export const requestData = async <Response>(
+  requestConfig: AxiosRequestConfig
+): Promise<{ data?: Response; error?: string }> => {
+  try {
+    const { data } = await axios(requestConfig);
+
+    return { data };
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
+const transformCategoryData = (categoryVersion?: CategoryVersion) => {
+  if (!categoryVersion) return undefined;
+
+  return {
+    id: categoryVersion.category.id,
+    title: categoryVersion.category.title,
+    status: categoryVersion.status,
+    description: categoryVersion.category.description,
+    classification: categoryVersion.category.classification,
+    version: categoryVersion.version,
+  };
+};
+
+export const getCategory = async (id: string, version: string) => {
+  const { data: categoryVersion, error } = await requestData<CategoryVersion>(getCategoryVersionConfig(id, version));
+
+  return { id, version, categoryVersion: transformCategoryData(categoryVersion), error };
+};
+
+export const sortCategories = (categories: CategoryCard[]) => {
+  const pendingCategories = categories.filter((category) => category.categoryVersion?.status === 'pending');
+  const activeCategories = categories.filter((category) => category.categoryVersion?.status === 'active');
+
+  return [...activeCategories, ...pendingCategories];
+};
