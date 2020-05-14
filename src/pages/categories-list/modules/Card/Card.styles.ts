@@ -21,15 +21,18 @@ const BaseCard = styled(Flex)`
   transition: var(--transition);
 `;
 
-const CardTitle = styled(Text)`
+const CardTitle = styled(Text)<{ isDisabled: boolean }>(
+  ({ isDisabled }) => `
   margin-bottom: var(--i-medium);
 
-  color: var(--c-secondary);
+  color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-secondary)'};
   transition: var(--transition);
-`;
+`
+);
 
-const Card = styled(BaseCard)`
-  &:hover {
+const Card = styled(BaseCard)<{ isDisabled: boolean }>(({ isDisabled }) =>
+  !isDisabled
+    ? `&:hover {
     border: 1px solid var(--c-primary);
     box-shadow: var(--s-primary);
   }
@@ -41,8 +44,9 @@ const Card = styled(BaseCard)`
     ${CardTitle} {
       color: var(--c-primary);
     }
-  }
-`;
+  }`
+    : ''
+);
 
 const ReloadIcon = styled(ReloadIconEl)`
   width: 2rem;
