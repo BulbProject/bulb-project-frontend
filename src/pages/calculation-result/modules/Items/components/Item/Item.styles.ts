@@ -10,7 +10,7 @@ const Image = styled(Flex)<{ link?: string }>(
 
     width: 100%;
 
-    padding: var(--i-medium);
+    padding: calc(var(--i-medium) + var(--i-regular)) var(--i-medium) var(--i-medium);
 
     background-size: contain;
     background-repeat: no-repeat;
@@ -72,7 +72,7 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: string }>(
   `
 );
 
-const Economy = styled.div`
+const Consumption = styled.div`
   display: inline-flex;
   flex-direction: column;
 
@@ -88,7 +88,7 @@ const Item = styled(Flex)(({ isSearched }: { isSearched: boolean }) => {
 
     flex-shrink: 0;
 
-    width: 100%;
+    width: ${isSearched ? '100%' : '75%'};
 
     border: 1px solid var(--c-light);
 
@@ -170,5 +170,5 @@ export default {
   AdditionalClassification,
   Link,
   EfficiencyClass,
-  Economy,
+  Consumption,
 };

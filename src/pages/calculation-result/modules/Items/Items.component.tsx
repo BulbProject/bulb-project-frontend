@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
@@ -10,6 +10,8 @@ import { Item } from './components';
 import Styled from './Items.styles';
 
 export const Items = ({ availableVariants }: { availableVariants: AvailableVariant[] }) => {
+  const [hoveredObservation, setHoveredObservation] = useState('');
+
   const {
     category: { items, documents },
   } = useCalculationContext();
@@ -26,10 +28,12 @@ export const Items = ({ availableVariants }: { availableVariants: AvailableVaria
             return document.relatesTo === 'item' && document.relatedItem === availableVariants[0].relatedItem;
           })?.url
         }
+        hoveredObservation={hoveredObservation}
+        setHoveredObservation={setHoveredObservation}
         isSearched
       />
 
-      <Styled.AvailableVariants isMd={isMd}>
+      <Styled.AvailableVariants>
         {availableVariants.slice(1).map((variant) => {
           const relatedItem = items.find((item) => item.id === variant.relatedItem) as IItem;
 
@@ -37,7 +41,16 @@ export const Items = ({ availableVariants }: { availableVariants: AvailableVaria
             (document) => document.relatesTo === 'item' && document.relatedItem === relatedItem.id
           );
 
-          return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
+          return (
+            <Item
+              key={variant.id}
+              variant={variant}
+              item={relatedItem}
+              document={relatedDocument?.url}
+              hoveredObservation={hoveredObservation}
+              setHoveredObservation={setHoveredObservation}
+            />
+          );
         })}
       </Styled.AvailableVariants>
     </Styled.Items>

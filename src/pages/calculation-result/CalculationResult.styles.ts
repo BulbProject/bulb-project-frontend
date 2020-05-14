@@ -1,12 +1,16 @@
 import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import { Mixin } from 'ustudio-ui/theme';
-import { RequestedNeed } from './modules/RequestedNeed';
 
 const Wrapper = styled(Flex)`
   max-width: 100vw;
 
   padding: var(--i-large);
+
+  @media (max-width: 640px) {
+    padding-left: var(--i-medium);
+    padding-right: var(--i-medium);
+  }
 `;
 
 const FilterButton = styled.button`
@@ -38,7 +42,7 @@ const FilterButton = styled.button`
       background-color: var(--c-primary);
     }
   `)}
-  
+
   svg {
     height: 1.5rem;
   }

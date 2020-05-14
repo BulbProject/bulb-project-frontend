@@ -19,18 +19,22 @@ export const Item = ({
   variant,
   item,
   document,
+  hoveredObservation,
+  setHoveredObservation,
   isSearched,
 }: {
   variant: AvailableVariant;
   item: IItem;
   document?: string;
+  hoveredObservation: string;
+  setHoveredObservation: (observationId: string) => void;
   isSearched?: boolean;
 }) => {
   const efficiencyObservation = variant.metrics
     .flatMap((metric) => metric.observations)
     .find((observation) => observation.id === 'energyEfficiencyClass');
 
-  const economyObservation = variant.metrics
+  const consumptionObservation = variant.metrics
     .flatMap((metric) => metric.observations)
     .find((observation) => observation.id === 'energyPerYear');
 
@@ -43,22 +47,22 @@ export const Item = ({
           </Styled.EfficiencyClass>
         )}
 
-        {economyObservation && (
-          <Styled.Economy>
+        {consumptionObservation && (
+          <Styled.Consumption>
             <Text align="center" appearance="bold">
-              {formatNumber(economyObservation.measure as number)}
+              {formatNumber(consumptionObservation.measure as number)}
             </Text>
 
             <Text variant="small" align="center">
-              {economyObservation.unit?.name}
+              {consumptionObservation.unit?.name}
             </Text>
-          </Styled.Economy>
+          </Styled.Consumption>
         )}
       </Styled.Image>
 
       <Styled.Content direction="column">
         <Styled.ItemDescription>
-          <Text variant="h3">{item.description}</Text>
+          <Text appearance="bold">{item.description}</Text>
 
           <Flex margin={{ top: 'medium' }} alignment={{ horizontal: 'center' }}>
             <Text variant="h6">Кількість: {variant.quantity}</Text>
@@ -75,19 +79,12 @@ export const Item = ({
           </Flex>
         </Styled.Classifications>
 
-        <Metrics metrics={variant.metrics} />
-
-        {item.additionalClassifications && (
-          <Styled.AdditionalClassification direction="column">
-            <Flex margin={{ bottom: 'regular' }}>
-              <Text variant="caption">Додаткові класифікації</Text>
-            </Flex>
-
-            {item.additionalClassifications.map((additionalClassification) => (
-              <Classification key={additionalClassification.id} {...additionalClassification} />
-            ))}
-          </Styled.AdditionalClassification>
-        )}
+        <Metrics
+          metrics={variant.metrics}
+          isSearched={!!isSearched}
+          hoveredObservation={hoveredObservation}
+          setHoveredObservation={setHoveredObservation}
+        />
 
         <Flex direction="column">
           <Styled.Link href="#" target="_blank" rel="noopener noreferrer">

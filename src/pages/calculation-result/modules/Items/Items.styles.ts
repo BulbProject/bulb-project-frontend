@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
 
@@ -8,7 +8,7 @@ const Items = styled(Flex)`
   overflow-x: hidden;
 
   &:after {
-    content: '';
+    content: none;
 
     position: absolute;
     top: calc(50% - 7px);
@@ -22,36 +22,29 @@ const Items = styled(Flex)`
     pointer-events: none;
 
     @media screen and (min-width: 798px) {
+      content: '';
+
       top: 0;
     }
   }
 
   @media screen and (max-width: 797px) {
     &:before {
-      content: '';
-
-      position: absolute;
-      top: calc(50% - 7px);
-      bottom: 0;
-      left: 0;
-
-      width: 30px;
-
-      background-image: linear-gradient(to right, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
-
-      pointer-events: none;
+      content: none;
     }
   }
 `;
 
-const AvailableVariants = styled(Flex)<{ isMd: boolean }>(
-  ({ isMd }) => css`
-    position: relative;
+const AvailableVariants = styled(Flex)`
+  position: relative;
 
-    max-width: ${isMd ? 'calc(100% - 360px)' : 'calc(100vw - 4rem)'};
+  max-width: calc(100% - 360px);
 
-    overflow-x: auto;
-  `
-);
+  overflow-x: auto;
+
+  @media (max-width: 796px) {
+    max-width: calc(100vw - 1rem);
+  }
+`;
 
 export default { Items, AvailableVariants };

@@ -7,7 +7,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import Drawer from 'ustudio-ui/components/Drawer';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
-import { CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
+import { ErrorBoundary, FadeIn, ErrorPage } from 'components';
 import { Container } from 'shared';
 
 import type { AvailableVariant, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
@@ -37,8 +37,6 @@ const CalculationResult: React.FC = () => {
   const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
     getCategoryVersionConfig(categoryId as string, version as string)
   );
-
-  const { category: { title, description, classification } = {} } = categoryVersion || ({} as CategoryVersion);
 
   const {
     isLoading: isRecalculating,
@@ -97,8 +95,6 @@ const CalculationResult: React.FC = () => {
   return (
     <ErrorBoundary>
       <FadeIn>
-        {categoryVersion && requestedNeed && <CategoryHeader {...{ title, description, classification }} />}
-
         {requestedNeed && categoryVersion && !isLoading && !error ? (
           <CalculationContextProvider
             category={categoryVersion.category}
@@ -147,14 +143,14 @@ const CalculationResult: React.FC = () => {
             <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
               {isLoading && <Spinner delay={500} />}
 
-              {(!requestedNeed || !categoryVersion) && !isLoading && (
+              {(!requestedNeed || !categoryVersion) && !isLoading && error?.statusCode === 404 && (
                 <Text color="negative">
                   Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
                   цієї категорії ☹️
                 </Text>
               )}
 
-              {error && !isLoading && <ErrorPage />}
+              {error && error.statusCode !== 404 && !isLoading && <ErrorPage />}
             </Flex>
           </Container>
         )}
