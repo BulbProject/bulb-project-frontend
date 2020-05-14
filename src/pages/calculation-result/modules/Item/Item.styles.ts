@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
+
 import { EfficiencyClass as EfficiencyClassType, efficiencyClasses, getEfficiencyColor } from './Item.module';
 
 const Image = styled(Flex)<{ link?: string }>(
@@ -77,14 +79,41 @@ const EfficiencyClassesList = styled.ul`
   }
 `;
 
-const Economy = styled.div`
+const Economy = styled(Flex)`
+  align-items: center;
+
+  padding: var(--i-medium);
+  margin-top: var(--i-small);
+
+  background-color: var(--c-primary);
+  color: var(--c-light);
+`;
+
+const EconomyContainer = styled.div`
   display: inline-flex;
   flex-direction: column;
 
-  padding: var(--i-medium);
+  max-width: 40%;
+`;
 
-  border: 2px solid var(--c-primary);
-  border-radius: var(--i-small);
+const EconomyMeasure = styled(Flex)`
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+
+  margin-left: var(--i-regular);
+
+  width: 45%;
+`;
+
+const EconomyNote = styled(Text)`
+  width: 55%;
+
+  font-weight: 700;
+`;
+
+const BoldText = styled(Text)`
+  font-weight: 700;
 `;
 
 const Item = styled(Flex)`
@@ -149,4 +178,8 @@ export default {
   EfficiencyClass,
   EfficiencyClassesList,
   Economy,
+  EconomyContainer,
+  EconomyMeasure,
+  EconomyNote,
+  BoldText,
 };
