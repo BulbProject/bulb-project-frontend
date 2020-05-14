@@ -28,7 +28,6 @@ const App: React.FC = () => {
           <Layout>
             <Suspense fallback={<div />}>
               <Switch>
-                <Redirect exact from="/categories" to="/" />
                 {routes.map((route) => (
                   <Route {...route} key={route.path as string} />
                 ))}
