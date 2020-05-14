@@ -1,10 +1,14 @@
 import React from 'react';
 
+import { Observation } from 'ts4ocds/extensions/metrics';
+
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 
 import { AvailableVariant, Item as ItemType } from 'types/data';
+
 import { Classification } from 'shared';
+import { formatNumber } from 'utils';
 
 import { Metrics } from './components';
 import { efficiencyClasses, EfficiencyClass } from './Item.module';
@@ -30,9 +34,11 @@ export const Item = ({
     .flatMap((metric) => metric.observations)
     .find((observation) => observation.id === 'energyEfficiencyClass');
 
-  const economyObservation = variant.metrics
-    .flatMap((metric) => metric.observations)
-    .find((observation) => observation.id === 'energyPerYear');
+  const economyMetric = variant.metrics.find((metric) => metric.id === 'economy');
+
+  const getUnit = (observation: Observation) => {
+    return observation.unit?.name || observation.value?.currency;
+  };
 
   return (
     <Styled.Item direction="column">
@@ -48,7 +54,6 @@ export const Item = ({
             ))}
           </Styled.EfficiencyClassesList>
         )}
-
         {efficiencyObservation && (
           <Styled.EfficiencyClass
             efficiencyClass={efficiencyObservation.measure as EfficiencyClass}
@@ -58,17 +63,32 @@ export const Item = ({
           </Styled.EfficiencyClass>
         )}
 
-        {/* economyObservation && (
-          <Styled.Economy>
-            <Text align="center" appearance="bold">
-              {formatNumber(economyObservation.measure as number)}
-            </Text>
+        <Styled.EconomyContainer>
+          {economyMetric &&
+            economyMetric.observations.map((observation) => (
+              <Styled.Economy>
+                <Styled.EconomyNote variant="small">{observation.notes}</Styled.EconomyNote>
 
-            <Text variant="small" align="center">
-              {economyObservation.unit?.name}
-            </Text>
-          </Styled.Economy>
-        ) */}
+                <Styled.EconomyMeasure>
+                  {getUnit(observation) ? (
+                    <Text appearance="bold">
+                      {formatNumber((observation.measure as number) || observation.value?.amount)}
+                    </Text>
+                  ) : (
+                    <Flex alignment={{ vertical: 'center', horizontal: 'end' }}>
+                      <Styled.BoldText variant="small">x &nbsp;</Styled.BoldText>
+
+                      <Text variant="h4">
+                        {formatNumber((observation.measure as number) || observation.value?.amount)}
+                      </Text>
+                    </Flex>
+                  )}
+
+                  <Styled.BoldText variant="small">{getUnit(observation)}</Styled.BoldText>
+                </Styled.EconomyMeasure>
+              </Styled.Economy>
+            ))}
+        </Styled.EconomyContainer>
       </Styled.Image>
 
       <Styled.Content direction="column">
