@@ -7,11 +7,15 @@ const Hero = styled(Flex)`
   position: relative;
 
   height: 100vh;
-  padding: 4rem 2rem;
+  padding: 0 2rem;
 
   color: var(--c-white);
 
   background-color: var(--c-darkest);
+
+  ${Mixin.Screen.xs(css`
+    padding: 4rem 2rem;
+  `)}
 `;
 
 const textAppearance = keyframes`
@@ -37,6 +41,8 @@ const HeroCaption = styled(HeroText)`
 
   ${Mixin.Font.caption()};
 
+  color: var(--c-neutral);
+
   &:before,
   &:after {
     content: '';
@@ -49,7 +55,7 @@ const HeroCaption = styled(HeroText)`
 
     transform: translateY(-50%);
 
-    background-color: var(--c-white);
+    background-color: var(--c-neutral);
   }
 
   &:before {
