@@ -153,7 +153,7 @@ const CallToAction = styled.button`
     background-image: radial-gradient(
       circle,
       rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.25) 50%,
+      rgba(255, 255, 255, 0.5) 50%,
       rgba(255, 255, 255, 0.75) 100%
     );
 
