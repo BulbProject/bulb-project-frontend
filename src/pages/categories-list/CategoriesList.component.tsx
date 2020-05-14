@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 import { getCategoriesConfig } from 'config';
 import { useRequest } from 'hooks';
 
-import { ErrorBoundary, FadeIn } from 'components';
+import { ErrorBoundary, FadeIn, Layout } from 'components';
 import { Container } from 'shared';
 
 import { CategoriesListEntity } from 'types/data';
@@ -24,48 +24,50 @@ const CategoriesList = () => {
   );
 
   return (
-    <ErrorBoundary>
-      <Container>
-        {isLoading && (
-          <FadeIn>
-            <Styled.LoaderContainer>
-              <Spinner appearance={{ size: 64 }} delay={300} />
-            </Styled.LoaderContainer>
-          </FadeIn>
-        )}
+    <Layout>
+      <ErrorBoundary>
+        <Container>
+          {isLoading && (
+            <FadeIn>
+              <Styled.LoaderContainer>
+                <Spinner appearance={{ size: 64 }} delay={300} />
+              </Styled.LoaderContainer>
+            </FadeIn>
+          )}
 
-        {!isLoading && categoriesList && (
-          <FadeIn>
-            <Flex direction="column">
-              <Flex margin={{ bottom: 'large' }}>
-                <Text variant="h1">Виберіть категорію для проведення розрахунків</Text>
+          {!isLoading && categoriesList && (
+            <FadeIn>
+              <Flex direction="column">
+                <Flex margin={{ bottom: 'large' }}>
+                  <Text variant="h1">Виберіть категорію для проведення розрахунків</Text>
+                </Flex>
+
+                {!categoriesList?.length && <Text variant="h3">Тут ще немає категорій</Text>}
+
+                {categoriesList?.map((category, index) => (
+                  <motion.div
+                    key={category.id}
+                    variants={{
+                      visible: { opacity: 1, x: 0 },
+                      hidden: { opacity: 0, x: (index + 1) * -10 },
+                    }}
+                    transition={{ delay: index * 0.2 }}
+                  >
+                    <Card {...category} />
+                  </motion.div>
+                ))}
               </Flex>
+            </FadeIn>
+          )}
 
-              {!categoriesList?.length && <Text variant="h3">Тут ще немає категорій</Text>}
-
-              {categoriesList?.map((category, index) => (
-                <motion.div
-                  key={category.id}
-                  variants={{
-                    visible: { opacity: 1, x: 0 },
-                    hidden: { opacity: 0, x: (index + 1) * -10 },
-                  }}
-                  transition={{ delay: index * 0.2 }}
-                >
-                  <Card {...category} />
-                </motion.div>
-              ))}
-            </Flex>
-          </FadeIn>
-        )}
-
-        {!isLoading && error && (
-          <FadeIn>
-            <Error reloadCategories={triggerRequest} />
-          </FadeIn>
-        )}
-      </Container>
-    </ErrorBoundary>
+          {!isLoading && error && (
+            <FadeIn>
+              <Error reloadCategories={triggerRequest} />
+            </FadeIn>
+          )}
+        </Container>
+      </ErrorBoundary>
+    </Layout>
   );
 };
 

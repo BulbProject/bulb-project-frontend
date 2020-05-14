@@ -1,6 +1,5 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
-import { Mixin } from 'ustudio-ui/theme';
 
 const Content = styled.section`
   position: relative;
@@ -25,14 +24,17 @@ const arrowBlink = keyframes`
 const show = keyframes`
   0% {
     top: 0;
+    opacity: 1;
   }
   
   50% {
     top: -2rem;
+    opacity: 1;
   }
   
   100% {
     top: 0;
+    opacity: 0;
   }
 `;
 
@@ -40,10 +42,12 @@ const Arrow = styled(Flex)`
   position: absolute;
   top: 0;
 
+  opacity: 0;
+
   height: 2rem;
 
-  color: var(--c-primary);
-  background-color: var(--c-lightest);
+  color: var(--c-secondary-light);
+  background-color: rgba(26, 26, 26, 0.75);
 
   animation: ${show} 1.5s ease-in-out;
   animation-delay: 1.5s;

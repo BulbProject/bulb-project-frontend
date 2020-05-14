@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { ThemeProvider } from 'ustudio-ui/theme';
 
-import { Layout, FadeIn, GlobalStyles } from 'components';
+import { FadeIn, GlobalStyles } from 'components';
 
 import routes from './routes';
 
@@ -25,7 +25,6 @@ const App: React.FC = () => {
     >
       <BrowserRouter>
         <FadeIn>
-          {/* <Layout> */}
           <Suspense fallback={<div />}>
             <Switch>
               {routes.map((route) => (
@@ -33,7 +32,6 @@ const App: React.FC = () => {
               ))}
             </Switch>
           </Suspense>
-          {/* </Layout> */}
         </FadeIn>
       </BrowserRouter>
 

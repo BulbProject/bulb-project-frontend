@@ -41,7 +41,7 @@ const HeroCaption = styled(HeroText)`
 
   ${Mixin.Font.caption()};
 
-  color: var(--c-neutral);
+  color: var(--c-secondary-light);
 
   &:before,
   &:after {
@@ -55,7 +55,7 @@ const HeroCaption = styled(HeroText)`
 
     transform: translateY(-50%);
 
-    background-color: var(--c-neutral);
+    background-color: var(--c-secondary-light);
   }
 
   &:before {
