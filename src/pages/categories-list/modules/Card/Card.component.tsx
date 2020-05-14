@@ -1,34 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { useRequest } from 'hooks';
-import { getCategoryVersionConfig } from 'config';
-
-import { CategoryVersion } from 'types/data';
-
+import { CategoryCardData } from '../../CategoriesList.types';
 import { BaseCard, ErrorCard, StubCard } from './components';
 
-export const Card = ({ id, version }: { id: string; version: string }) => {
-  const { data: categoryVersion, isLoading, error, triggerRequest } = useRequest<CategoryVersion>(
-    getCategoryVersionConfig(id, version)
-  );
+export const Card = ({
+  category,
+  version,
+  error,
+  reload,
+  isDisabled
+}: {
+  category?: CategoryCardData;
+  version: string;
+  isDisabled: boolean
+  reload: () => void;
+  error?: string;
+}) => {
+  const [isLoading, setLoading] = useState(false);
 
-  const { category } = (categoryVersion || {}) as CategoryVersion;
+  const reloadItem = async () => {
+    setLoading(true);
+    await reload();
+    setLoading(false);
+  };
 
   return (
     <>
       {isLoading && <StubCard />}
 
-      {!isLoading && categoryVersion && (
+      {!isLoading && category && (
         <BaseCard
-          id={id}
+          id={category.id}
           title={category.title}
           description={category.description}
           classification={category.classification}
           version={version}
+          isDisabled={isDisabled}
         />
       )}
 
-      {!isLoading && error && <ErrorCard updateCategoryData={triggerRequest} />}
+      {!isLoading && error && <ErrorCard updateCategoryData={reloadItem} />}
     </>
   );
 };

@@ -10,7 +10,14 @@ import { CategoryCardProps } from '../../Card.types';
 
 import Styled from '../../Card.styles';
 
-export const BaseCard = ({ id, version, title, description, classification }: CategoryCardProps) => {
+export const BaseCard = ({
+  id,
+  version,
+  title,
+  description,
+  classification,
+  isDisabled,
+}: CategoryCardProps & { isDisabled: boolean }) => {
   const isXs = useMediaQuery('screen and (min-width: 576px)');
 
   return (
