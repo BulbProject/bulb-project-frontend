@@ -19,7 +19,7 @@ export const Content = () => {
 
   return (
     <Styled.Content>
-      <Styled.Arrow>
+      <Styled.Arrow alignment={{ horizontal: 'center', vertical: 'center' }}>
         <ArrowIcon />
       </Styled.Arrow>
 

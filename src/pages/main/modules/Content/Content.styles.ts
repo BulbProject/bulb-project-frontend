@@ -1,28 +1,10 @@
 import styled, { keyframes } from 'styled-components';
-
-const show = keyframes`
-  0% {
-    top: 0;
-  }
-  
-  50% {
-    top: -2rem;
-  }
-  
-  100% {
-    top: 0;
-  }
-`;
+import Flex from 'ustudio-ui/components/Flex';
 
 const Content = styled.section`
   position: relative;
 
-  padding: var(--i-large) 0;
-
   background-color: var(--c-lightest);
-
-  animation: ${show} 1.5s ease-in-out;
-  animation-delay: 1.5s;
 `;
 
 const arrowBlink = keyframes`
@@ -39,22 +21,43 @@ const arrowBlink = keyframes`
   }
 `;
 
-const Arrow = styled.span`
+const show = keyframes`
+  0% {
+    top: 0;
+  }
+  
+  50% {
+    top: -2rem;
+  }
+  
+  100% {
+    top: 0;
+  }
+`;
+
+const Arrow = styled(Flex)`
   position: absolute;
-  top: 0.5rem;
-  left: 50%;
+  top: 0;
 
-  transform: translateX(-50%) rotate(-90deg);
-
-  opacity: 0;
-
-  width: 1rem;
-  height: 1rem;
+  height: 2rem;
 
   color: var(--c-primary);
+  background-color: var(--c-lightest);
 
-  animation: ${arrowBlink} 1.5s ease-in-out;
+  animation: ${show} 1.5s ease-in-out;
   animation-delay: 1.5s;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+
+    opacity: 0;
+
+    transform: rotate(-90deg);
+
+    animation: ${arrowBlink} 1.5s ease-in-out;
+    animation-delay: 1.5s;
+  }
 `;
 
 export default { Content, Arrow };
