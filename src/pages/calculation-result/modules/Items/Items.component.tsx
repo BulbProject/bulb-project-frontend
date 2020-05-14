@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Text from 'ustudio-ui/components/Text';
 
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
@@ -21,6 +21,10 @@ export const Items = ({ availableVariants }: { availableVariants: AvailableVaria
   const hasMany = useMemo(() => availableVariants.length > 2, [availableVariants.length]);
 
   const [activeItem, setActiveItem] = useState(0);
+
+  useEffect(() => {
+    setActiveItem(0);
+  }, [JSON.stringify(availableVariants)]);
 
   return (
     <Styled.Items direction="column">
