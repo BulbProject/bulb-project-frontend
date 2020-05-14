@@ -24,7 +24,7 @@ const CategoriesList = () => {
   const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
   const [isLoading, setLoading] = useState(true);
 
-  const { data: categoriesList, error: listError, triggerRequest: triggerList } = useRequest<CategoriesListEntity[]>(
+  const { data: categoriesList, error: listError, triggerRequest } = useRequest<CategoriesListEntity[]>(
     getCategoriesConfig()
   );
 
@@ -103,12 +103,7 @@ const CategoriesList = () => {
                   }}
                   transition={{ delay: index * 0.2 }}
                 >
-                  <Card
-                    version={category.version}
-                    category={category.categoryVersion}
-                    error={category.error}
-                    reload={() => reloadItem(category.id, category.version)}
-                  />
+                  <Card {...category} reload={() => reloadItem(category.id, category.version)} />
                 </motion.div>
               ))}
             </Flex>
@@ -117,7 +112,7 @@ const CategoriesList = () => {
 
         {!isLoading && listError && (
           <FadeIn>
-            <Error reloadCategories={triggerList} />
+            <Error reloadCategories={triggerRequest} />
           </FadeIn>
         )}
       </Container>

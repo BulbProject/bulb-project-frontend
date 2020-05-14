@@ -26,7 +26,6 @@ export interface Category {
    * Conversions needed to run a calculation of available valiants once Procuring Entities' need is captured.
    * Array according to [eOCDS-conversions](https://github.com/eOCDS-Extensions/eOCDS-conversions).
    */
-
   conversions: Conversion[];
   /**
    * Criterion describe the sequence of related questions, where answers are needed to reflect the specific needs

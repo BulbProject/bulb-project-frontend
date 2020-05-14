@@ -29,27 +29,11 @@ export const Card = ({
 
       {!isLoading && category && category.status === 'active' && (
         <Styled.Link key={`${category.id}-${version}`} to={`/categories/${category.id}/${version}`}>
-          <BaseCard
-            id={category.id}
-            title={category.title}
-            description={category.description}
-            classification={category.classification}
-            status={category.status}
-            version={version}
-          />
+          <BaseCard {...category} version={version} />
         </Styled.Link>
       )}
 
-      {!isLoading && category && category.status === 'pending' && (
-        <BaseCard
-          id={category.id}
-          title={category.title}
-          description={category.description}
-          classification={category.classification}
-          status={category.status}
-          version={version}
-        />
-      )}
+      {!isLoading && category && category.status === 'pending' && <BaseCard {...category} version={version} />}
 
       {!isLoading && error && <ErrorCard updateCategoryData={reloadItem} />}
     </>
