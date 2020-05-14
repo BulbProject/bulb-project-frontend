@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { css } from 'styled-components';
-import { Item as IItem } from 'types/data';
+import { Item as ItemType } from 'types/data';
 
 import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
 import Drawer from 'ustudio-ui/components/Drawer';
-import Button from 'ustudio-ui/components/Button';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { Layout, CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
@@ -101,7 +100,7 @@ const CalculationResult: React.FC = () => {
     <Layout>
       <ErrorBoundary>
         <FadeIn>
-          {categoryVersion && requestedNeed && <CategoryHeader {...{ title, description, classification }} />}
+          {/* categoryVersion && requestedNeed && <CategoryHeader {...{ title, description, classification }} /> */}
 
           {requestedNeed && categoryVersion && availableVariants && !isLoading && !error ? (
             <CalculationContextProvider
@@ -110,8 +109,14 @@ const CalculationResult: React.FC = () => {
             >
               <Styled.Wrapper alignment={{ horizontal: 'center' }}>
                 <Styled.RequestedNeed direction="column">
-                  <Flex alignment={{ horizontal: 'space-between' }} margin={{ bottom: 'large' }}>
-                    <Text variant="h3">Те, що Ви шукали</Text>
+                  <Flex
+                    alignment={{ horizontal: 'space-between', vertical: 'center' }}
+                    margin={{ bottom: 'large', top: 'regular' }}
+                    padding={{ left: 'medium' }}
+                  >
+                    <Text variant="body" appearance="bold">
+                      Те, що Ви шукали
+                    </Text>
 
                     <Styled.FilterButton
                       appearance="text"
@@ -155,7 +160,7 @@ const CalculationResult: React.FC = () => {
                     item={
                       categoryVersion.category.items.find(
                         (item) => item.id === availableVariants[0].relatedItem
-                      ) as IItem
+                      ) as ItemType
                     }
                     document={
                       categoryVersion.category.documents?.find((document) => {
@@ -167,11 +172,7 @@ const CalculationResult: React.FC = () => {
                   />
                 </Styled.RequestedNeed>
 
-                {/* {availableVariants ? (
-                  <Items availableVariants={availableVariants} />
-                ) : (
-                  <Text>Відсутні можливі варіанти</Text>
-                )} */}
+                {availableVariants && <Items availableVariants={availableVariants} />}
               </Styled.Wrapper>
             </CalculationContextProvider>
           ) : (

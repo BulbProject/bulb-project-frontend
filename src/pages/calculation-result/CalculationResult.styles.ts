@@ -5,7 +5,8 @@ import Button from 'ustudio-ui/components/Button';
 const Wrapper = styled(Flex)`
   max-width: 100vw;
 
-  padding: var(--i-large);
+  margin: calc(var(--i-large) * -1) 0;
+  padding: 0 var(--i-large) 0;
 `;
 
 const FilterButton = styled(Button)`

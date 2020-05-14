@@ -25,7 +25,7 @@ export const Metrics = ({ metrics, showTitles }: { metrics: Metric[]; showTitles
   return (
     <Styled.Metrics direction="column">
       {metrics.map((metric) => (
-        <Flex key={metric.id} direction="column" margin={{ bottom: 'large' }}>
+        <Styled.Metric key={metric.id} direction="column">
           <Flex margin={{ bottom: 'regular' }}>
             <Text
               variant="caption"
@@ -43,7 +43,7 @@ export const Metrics = ({ metrics, showTitles }: { metrics: Metric[]; showTitles
           </Flex>
 
           {metric.observations.map((observation) => (
-            <Flex
+            <Styled.Observation
               key={observation.id}
               margin={{ bottom: 'regular' }}
               alignment={showTitles ? undefined : { horizontal: 'center' }}
@@ -60,8 +60,6 @@ export const Metrics = ({ metrics, showTitles }: { metrics: Metric[]; showTitles
                 variant="small"
                 styled={{
                   Text: css`
-                    padding-left: var(--i-small);
-                    background-color: var(--c-lightest);
                     white-space: nowrap;
                   `,
                 }}
@@ -69,9 +67,9 @@ export const Metrics = ({ metrics, showTitles }: { metrics: Metric[]; showTitles
                 {typeof observation.measure === 'number' ? formatNumber(observation.measure) : observation.measure}
                 {formatNumber(observation.value?.amount)} {getObservationUnit(observation)}
               </Text>
-            </Flex>
+            </Styled.Observation>
           ))}
-        </Flex>
+        </Styled.Metric>
       ))}
     </Styled.Metrics>
   );

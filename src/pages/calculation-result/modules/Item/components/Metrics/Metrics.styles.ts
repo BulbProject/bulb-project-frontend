@@ -3,10 +3,19 @@ import styled from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 
 const Metrics = styled(Flex)`
-  margin-top: var(--i-large);
   padding-top: var(--i-regular);
 
   border-top: 1px solid var(--c-light);
+`;
+
+const Metric = styled(Flex)`
+  margin-bottom: 1.5rem;
+`;
+
+const Observation = styled(Flex)`
+  &:not(:first-child) {
+    margin-bottom: var(--i-regular);
+  }
 `;
 
 const ObservationTitle = styled(Flex)`
@@ -14,4 +23,4 @@ const ObservationTitle = styled(Flex)`
   overflow: hidden;
 `;
 
-export default { Metrics, ObservationTitle };
+export default { Metrics, Metric, Observation, ObservationTitle };

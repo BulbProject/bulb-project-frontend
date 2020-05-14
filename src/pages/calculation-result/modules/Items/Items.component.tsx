@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
+import Text from 'ustudio-ui/components/Text';
 
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
-import type { AvailableVariant, Item as IItem } from 'types/data';
+import type { AvailableVariant, Item as ItemType } from 'types/data';
+import ArrowIcon from '../../../../assets/icons/arrow.inline.svg';
 
 import { useCalculationContext } from '../../store';
 
-import { Item } from './components';
+import { Item } from '../Item';
 import Styled from './Items.styles';
 
 export const Items = ({ availableVariants }: { availableVariants: AvailableVariant[] }) => {
@@ -16,29 +18,42 @@ export const Items = ({ availableVariants }: { availableVariants: AvailableVaria
 
   const isMd = useMediaQuery('screen and (min-width: 798px)');
 
+  const hasMany = useMemo(() => availableVariants.length > 2, [availableVariants.length]);
+
+  const [activeItem, setActiveItem] = useState(0);
+
   return (
-    <Styled.Items direction={isMd ? 'row' : 'column'}>
-      <Item
-        variant={availableVariants[0]}
-        item={items.find((item) => item.id === availableVariants[0].relatedItem) as IItem}
-        document={
-          documents?.find((document) => {
-            return document.relatesTo === 'item' && document.relatedItem === availableVariants[0].relatedItem;
-          })?.url
-        }
-        isSearched
-      />
+    <Styled.Items direction="column" hasMany={hasMany}>
+      <Styled.ItemsTitle>
+        <Text variant="body" appearance="bold" color="var(--c-dark)">
+          Більш енергоефективні варіанти
+        </Text>
+      </Styled.ItemsTitle>
 
       <Styled.AvailableVariants isMd={isMd}>
-        {availableVariants.slice(1).map((variant) => {
-          const relatedItem = items.find((item) => item.id === variant.relatedItem) as IItem;
+        {hasMany && activeItem > 0 && (
+          <Styled.CarouselButton rotation={0} $position="left" onClick={() => setActiveItem(activeItem - 1)}>
+            <ArrowIcon />
+          </Styled.CarouselButton>
+        )}
 
-          const relatedDocument = documents?.find(
-            (document) => document.relatesTo === 'item' && document.relatedItem === relatedItem.id
-          );
+        <Styled.Carousel $offset={activeItem * 380}>
+          {availableVariants.slice(1).map((variant) => {
+            const relatedItem = items.find((item) => item.id === variant.relatedItem) as ItemType;
 
-          return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
-        })}
+            const relatedDocument = documents?.find(
+              (document) => document.relatesTo === 'item' && document.relatedItem === relatedItem.id
+            );
+
+            return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
+          })}
+        </Styled.Carousel>
+
+        {hasMany && activeItem < availableVariants.length - 2 && (
+          <Styled.CarouselButton rotation={180} $position="right" onClick={() => setActiveItem(activeItem + 1)}>
+            <ArrowIcon />
+          </Styled.CarouselButton>
+        )}
       </Styled.AvailableVariants>
     </Styled.Items>
   );

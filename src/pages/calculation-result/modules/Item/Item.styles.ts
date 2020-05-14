@@ -30,7 +30,7 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
   
       position: relative;
   
-      width: 40px;
+      width: ${trianglePosition === 'left' ? 40 + classIndex * 4 : 40}px;
       height: ${labelHeight}px;
       
       padding-${trianglePosition}: var(--i-medium);
