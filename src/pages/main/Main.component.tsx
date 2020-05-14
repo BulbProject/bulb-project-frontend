@@ -1,19 +1,17 @@
 import React from 'react';
 
-import { FadeIn, Footer } from 'components';
+import { Footer } from 'components';
 
 import { Hero, Content } from './modules';
 
 const Main = () => {
   return (
     <main>
-      <FadeIn>
-        <Hero />
+      <Hero />
 
-        <Content />
+      <Content />
 
-        <Footer />
-      </FadeIn>
+      <Footer />
     </main>
   );
 };

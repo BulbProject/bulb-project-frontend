@@ -60,7 +60,7 @@ const githubApiServiceUrl = 'https://udoc.eprocurement.systems';
 const githubBranch = 'develop';
 const githubInfoPath = 'info';
 // @TODO change when correct folder will have been added to the repo
-const githubMainContentPath = 'info';
+const githubMainContentPath = 'main-content';
 
 export const getInfoFiles = () => {
   return createRequestConfig({

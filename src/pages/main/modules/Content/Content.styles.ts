@@ -1,5 +1,6 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
+import { Mixin } from 'ustudio-ui/theme';
 
 const Content = styled.section`
   position: relative;
