@@ -22,6 +22,7 @@ const Content = styled.section`
   background-color: var(--c-lightest);
 
   animation: ${show} 1.5s ease-in-out;
+  animation-delay: 1.5s;
 `;
 
 const arrowBlink = keyframes`
@@ -53,6 +54,7 @@ const Arrow = styled.span`
   color: var(--c-primary);
 
   animation: ${arrowBlink} 1.5s ease-in-out;
+  animation-delay: 1.5s;
 `;
 
 export default { Content, Arrow };
