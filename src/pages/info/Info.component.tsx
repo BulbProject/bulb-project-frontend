@@ -14,12 +14,11 @@ import { useRequest } from 'hooks';
 import { getInfoFile } from 'config';
 
 import { Container } from 'shared';
-import { FadeIn } from 'components';
+import { FadeIn, renderers } from 'components';
 
 import ArrowIcon from '../../assets/icons/arrow.inline.svg';
 import ReloadIcon from '../../assets/icons/reload.inline.svg';
 
-import { renderers } from './modules';
 import Styled from './Info.styles';
 
 const InfoComponent = () => {
