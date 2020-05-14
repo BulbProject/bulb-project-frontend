@@ -130,6 +130,20 @@ const ripple = keyframes`
   }
 `;
 
+const bump = keyframes`
+  0% {
+    transform: scale(0.975);
+  }
+  
+  50% {
+    transform: scale(1);
+  }
+  
+  100% {
+    transform: scale(0.975);
+  }
+`;
+
 const CallToAction = styled.button`
   position: relative;
   overflow: hidden;
@@ -137,6 +151,8 @@ const CallToAction = styled.button`
   width: 4rem;
 
   transition: var(--transition);
+
+  animation: ${bump} 2s ease-in-out infinite;
 
   &:before {
     content: '';
