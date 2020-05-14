@@ -23,7 +23,7 @@ export const Metrics = ({ metrics, showTitles }: { metrics: Metric[]; showTitles
   }, []);
 
   return (
-    <Flex direction="column">
+    <Styled.Metrics direction="column">
       {metrics.map((metric) => (
         <Flex key={metric.id} direction="column" margin={{ bottom: 'large' }}>
           <Flex margin={{ bottom: 'regular' }}>
@@ -73,6 +73,6 @@ export const Metrics = ({ metrics, showTitles }: { metrics: Metric[]; showTitles
           ))}
         </Flex>
       ))}
-    </Flex>
+    </Styled.Metrics>
   );
 };

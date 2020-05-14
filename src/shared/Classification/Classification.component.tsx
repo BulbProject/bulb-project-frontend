@@ -13,7 +13,7 @@ export const Classification: React.FC<OCDSClassification & { className?: string 
   className = '',
 }) => {
   return (
-    <Flex className={className}>
+    <Flex className={className} isInline>
       <Styled.ClassificationId variant="small">{id}</Styled.ClassificationId>
 
       {description && (

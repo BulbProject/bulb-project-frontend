@@ -12,6 +12,7 @@ import { Classification } from 'shared';
 import { formatNumber } from 'utils';
 
 import { Metrics } from './components';
+import { efficiencyClasses, EfficiencyClass } from './Item.module';
 
 import Styled from './Item.styles';
 
@@ -37,13 +38,28 @@ export const Item = ({
   return (
     <Styled.Item direction="column">
       <Styled.Image link={document}>
+        {isRequested && (
+          <Styled.EfficiencyClassesList>
+            {Object.keys(efficiencyClasses).map((efficiencyClass: string) => (
+              <li key={efficiencyClass}>
+                <Styled.EfficiencyClass efficiencyClass={efficiencyClass as EfficiencyClass} trianglePosition="left">
+                  {efficiencyClass}
+                </Styled.EfficiencyClass>
+              </li>
+            ))}
+          </Styled.EfficiencyClassesList>
+        )}
+
         {efficiencyObservation && (
-          <Styled.EfficiencyClass efficiencyClass={efficiencyObservation.measure as string}>
+          <Styled.EfficiencyClass
+            efficiencyClass={efficiencyObservation.measure as EfficiencyClass}
+            trianglePosition="right"
+          >
             {efficiencyObservation.measure}
           </Styled.EfficiencyClass>
         )}
 
-        {economyObservation && (
+        {/* economyObservation && (
           <Styled.Economy>
             <Text align="center" appearance="bold">
               {formatNumber(economyObservation.measure as number)}
@@ -53,19 +69,22 @@ export const Item = ({
               {economyObservation.unit?.name}
             </Text>
           </Styled.Economy>
-        )}
+        ) */}
       </Styled.Image>
 
       <Styled.Content direction="column">
         <Styled.ItemDescription>
-          <Text variant="h3">{item.description}</Text>
+          <Text variant="body" appearance="bold">
+            {item.description}
+          </Text>
 
           <Flex margin={{ top: 'medium' }} alignment={{ horizontal: 'center' }}>
-            <Text variant="h6">Кількість: {variant.quantity}</Text>
+            <Classification {...item.classification} />
+            {/* <Text variant="h6">Кількість: {variant.quantity}</Text> */}
           </Flex>
         </Styled.ItemDescription>
 
-        <Styled.Classifications direction="column">
+        {/* <Styled.Classifications direction="column">
           <Flex direction="column">
             <Flex margin={{ bottom: 'regular' }}>
               <Text variant="caption">Класифікація</Text>
@@ -73,7 +92,7 @@ export const Item = ({
 
             <Classification {...item.classification} />
           </Flex>
-        </Styled.Classifications>
+        </Styled.Classifications> */}
 
         <Metrics showTitles={isRequested} metrics={variant.metrics} />
 
@@ -89,7 +108,7 @@ export const Item = ({
           </Styled.AdditionalClassification>
         ) */}
 
-        <Flex direction="column">
+        {/* <Flex direction="column">
           <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
             <Button
               styled={{
@@ -119,7 +138,7 @@ export const Item = ({
           >
             Contract Notice
           </Button>
-        </Flex>
+        </Flex> */}
       </Styled.Content>
     </Styled.Item>
   );

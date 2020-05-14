@@ -1,12 +1,11 @@
 import styled, { css } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
+import { EfficiencyClass as EfficiencyClassType, efficiencyClasses, getEfficiencyColor } from './Item.module';
 
 const Image = styled(Flex)<{ link?: string }>(
   ({ link }) => css`
-    flex-direction: column;
     justify-content: space-between;
-    align-items: flex-end;
 
     width: 100%;
 
@@ -21,56 +20,57 @@ const Image = styled(Flex)<{ link?: string }>(
   `
 );
 
-const getEfficiencyColor = (efficiencyClass: string) => {
-  switch (efficiencyClass) {
-    case 'A++':
-      return '#33a357';
-    case 'A+':
-      return '#33a357';
-    case 'A':
-      return '#33a357';
-    case 'B':
-      return '#79b752';
-    case 'C':
-      return '#c3d545';
-    case 'D':
-      return '#fff12c';
-    case 'E':
-      return '#edb731';
-    case 'F':
-      return '#d66f2c';
-    case 'G':
-      return '#cc232a';
-    default:
-      return 'var(--c-white)';
+const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; trianglePosition: 'left' | 'right' }>(
+  ({ efficiencyClass, trianglePosition }) => {
+    const classIndex = Object.keys(efficiencyClasses).indexOf(efficiencyClass);
+    const labelHeight = 24;
+
+    return css`
+      align-items: center;
+  
+      position: relative;
+  
+      width: 40px;
+      height: ${labelHeight}px;
+      
+      padding-${trianglePosition}: var(--i-medium);
+  
+      background: ${getEfficiencyColor(efficiencyClass)};
+  
+      color: var(--c-white);
+  
+      &:before {
+        content: '';
+  
+        position: absolute;
+  
+        border: ${labelHeight / 2}px solid transparent;
+        border-${trianglePosition}: ${labelHeight / 2}px solid ${getEfficiencyColor(efficiencyClass)};
+  
+        ${trianglePosition}: 100%;
+      }
+      
+      ${
+        trianglePosition === 'right'
+          ? css`
+              margin-top: ${classIndex * labelHeight + classIndex / 2}px;
+            `
+          : ``
+      };
+  `;
   }
-};
-
-const EfficiencyClass = styled(Flex)<{ efficiencyClass: string }>(
-  ({ efficiencyClass }) => css`
-    align-items: center;
-
-    position: relative;
-
-    width: 40px;
-    height: 30px;
-
-    background: ${getEfficiencyColor(efficiencyClass)};
-
-    color: var(--c-white);
-
-    &:before {
-      content: '';
-
-      position: absolute;
-
-      border: 15px solid transparent;
-      border-right: 15px solid ${getEfficiencyColor(efficiencyClass)};
-
-      transform: translateX(-30px);
-    }
-  `
 );
+
+const EfficiencyClassesList = styled.ul`
+  display: flex;
+  flex-direction: column;
+
+  margin: -0.5px 0;
+
+  li {
+    margin: 0.5px 0;
+  }
+`;
 
 const Economy = styled.div`
   display: inline-flex;
@@ -114,10 +114,7 @@ const ItemDescription = styled(Flex)`
   flex-direction: column;
   align-items: center;
 
-  padding-bottom: var(--i-regular);
   margin-bottom: var(--i-regular);
-
-  border-bottom: 1px solid var(--c-light);
 `;
 
 const Classifications = styled(Flex)`
@@ -147,5 +144,6 @@ export default {
   AdditionalClassification,
   Link,
   EfficiencyClass,
+  EfficiencyClassesList,
   Economy,
 };
