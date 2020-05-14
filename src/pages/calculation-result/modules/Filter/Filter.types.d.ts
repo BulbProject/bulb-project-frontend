@@ -1,7 +1,6 @@
 import type { StoreRequestedNeed } from 'types/globals';
 
-export interface RequestedNeedProps {
-  isHidden?: boolean;
+export interface FilterProps {
   error?: string;
   isLoading: boolean;
   setSubmitting(isSubmitting: boolean): void;

@@ -5,6 +5,7 @@ import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
 import Drawer from 'ustudio-ui/components/Drawer';
+import Button from 'ustudio-ui/components/Button';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { Layout, CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
@@ -18,7 +19,7 @@ import type { StoreRequestedNeed } from 'types/globals';
 import { prepareRequestedNeed } from 'utils';
 import FilterIcon from '../../assets/icons/filter.inline.svg';
 
-import { RequestedNeed } from './modules/RequestedNeed';
+import { Filter } from './modules/Filter';
 import { Items } from './modules/Items';
 
 import { CalculationContextProvider } from './store';
@@ -106,41 +107,35 @@ const CalculationResult: React.FC = () => {
               requestedNeed={requestedNeed as StoreRequestedNeed}
             >
               <Styled.Wrapper alignment={{ horizontal: 'center' }}>
-                {isXl ? (
-                  <RequestedNeed
-                    error={recalculationError?.message}
-                    isLoading={isRecalculating}
-                    setSubmitting={setSubmitting}
-                    recalculate={(state) => {
-                      setNewRequestedNeed(state);
-                    }}
-                  />
-                ) : (
-                  <>
-                    <Styled.FilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
-                      <FilterIcon />
-                    </Styled.FilterButton>
+                <Styled.RequestedNeed alignment={{ horizontal: 'space-between' }}>
+                  <Text variant="h3">Те, що Ви шукали</Text>
 
-                    <Drawer isOpen={isDrawerOpen} onChange={() => setDrawerOpen(false)} showOverlay position="right">
-                      <RequestedNeed
-                        isHidden
-                        error={recalculationError?.message}
-                        isLoading={isRecalculating}
-                        setSubmitting={setSubmitting}
-                        recalculate={(state) => {
-                          setNewRequestedNeed(state);
-                          setDrawerOpen(false);
-                        }}
-                      />
-                    </Drawer>
-                  </>
-                )}
+                  <Styled.FilterButton
+                    appearance="text"
+                    onClick={() => setDrawerOpen(!isDrawerOpen)}
+                    iconAfter={<FilterIcon />}
+                  >
+                    Змінити умови
+                  </Styled.FilterButton>
 
-                {availableVariants ? (
+                  <Drawer isOpen={isDrawerOpen} onChange={() => setDrawerOpen(false)} showOverlay position="left">
+                    <Filter
+                      error={recalculationError?.message}
+                      isLoading={isRecalculating}
+                      setSubmitting={setSubmitting}
+                      recalculate={(state) => {
+                        setNewRequestedNeed(state);
+                        setDrawerOpen(false);
+                      }}
+                    />
+                  </Drawer>
+                </Styled.RequestedNeed>
+
+                {/* {availableVariants ? (
                   <Items availableVariants={availableVariants} />
                 ) : (
                   <Text>Відсутні можливі варіанти</Text>
-                )}
+                )} */}
               </Styled.Wrapper>
             </CalculationContextProvider>
           ) : (

@@ -10,16 +10,10 @@ import type { StoreRequestedNeed } from 'types/globals';
 import { useCalculationContext } from '../../store';
 import { Criterion } from './components';
 
-import Styled from './RequestedNeed.styles';
-import type { RequestedNeedProps } from './RequestedNeed.types';
+import Styled from './Filter.styles';
+import type { FilterProps } from './Filter.types';
 
-export const RequestedNeed: React.FC<RequestedNeedProps> = ({
-  error,
-  isLoading,
-  setSubmitting,
-  recalculate,
-  isHidden = false,
-}) => {
+export const Filter: React.FC<FilterProps> = ({ error, isLoading, setSubmitting, recalculate }) => {
   const {
     category: { criteria, id },
     requestedNeed,
@@ -29,14 +23,14 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
   const [hasFormChanged, setFormChanged] = useState(false);
 
   return (
-    <Styled.Wrapper isHidden={isHidden}>
+    <Styled.Wrapper>
       {isLoading && (
         <Styled.Overlay isLoading={isLoading} alignment={{ horizontal: 'center', vertical: 'center' }}>
           <Spinner appearance={{ size: 64 }} />
         </Styled.Overlay>
       )}
 
-      <Styled.RequestedNeed direction="column">
+      <Flex direction="column">
         <Form
           name={id}
           watch={(state) => {
@@ -71,7 +65,7 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
             )}
           </>
         </Form>
-      </Styled.RequestedNeed>
+      </Flex>
     </Styled.Wrapper>
   );
 };
