@@ -1,35 +1,35 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Text } from 'ustudio-ui';
 
 const circleDimension = 0.4;
 
 const ClassificationId = styled(Text)<{ isDisabled: boolean }>(
-  ({ isDisabled }) => `
-  color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-secondary)'};
+  ({ isDisabled }) => css`
+    color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-secondary)'};
 
-  white-space: nowrap;
+    white-space: nowrap;
 
-  position: relative;
+    position: relative;
 
-  margin-right: var(--i-regular);
-  padding-right: var(--i-regular);
+    margin-right: var(--i-regular);
+    padding-right: var(--i-regular);
 
-  &:after {
-    content: '';
+    &:after {
+      content: '';
 
-    width: ${circleDimension}rem;
-    height: ${circleDimension}rem;
+      width: ${circleDimension}rem;
+      height: ${circleDimension}rem;
 
-    position: absolute;
-    right: -${circleDimension / 2}rem;
-    top: ${circleDimension + 0.1}rem;
+      position: absolute;
+      right: -${circleDimension / 2}rem;
+      top: ${circleDimension + 0.1}rem;
 
-    transform: translateY(-50%);
+      transform: translateY(-50%);
 
-    background-color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-secondary)'};
-    border-radius: 50%;
-  }
-`
+      background-color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-secondary)'};
+      border-radius: 50%;
+    }
+  `
 );
 
 export default { ClassificationId };
