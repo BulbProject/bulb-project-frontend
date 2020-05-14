@@ -14,12 +14,11 @@ import { useRequest } from 'hooks';
 import { getInfoFile } from 'config';
 
 import { Container } from 'shared';
-import { FadeIn } from 'components';
+import { Layout, FadeIn, renderers } from 'components';
 
 import ArrowIcon from '../../assets/icons/arrow.inline.svg';
 import ReloadIcon from '../../assets/icons/reload.inline.svg';
 
-import { renderers } from './modules';
 import Styled from './Info.styles';
 
 const InfoComponent = () => {
@@ -33,59 +32,61 @@ const InfoComponent = () => {
   );
 
   return (
-    <Container>
-      {isLoading && !error && (
-        <FadeIn>
-          <Styled.CenteredContainer>
-            <Spinner appearance={{ size: 64 }} delay={300} />
-          </Styled.CenteredContainer>
-        </FadeIn>
-      )}
-
-      {!isLoading && !error && (
-        <>
-          <Helmet>
-            <title>{infoFileName}</title>
-          </Helmet>
-
+    <Layout>
+      <Container>
+        {isLoading && !error && (
           <FadeIn>
-            <ReactMarkdown
-              escapeHtml={false}
-              source={data?.content || 'Не вдалося знайти цей документ'}
-              renderers={renderers}
-            />
+            <Styled.CenteredContainer>
+              <Spinner appearance={{ size: 64 }} delay={300} />
+            </Styled.CenteredContainer>
           </FadeIn>
-        </>
-      )}
+        )}
 
-      {!isLoading && error && (
-        <Flex direction="column" alignment={{ horizontal: 'center' }}>
-          <FadeIn>
-            <Flex margin={{ top: 'large', bottom: 'regular' }}>
-              <Text variant="h3" align="center" color="var(--c-negative)">
-                Хм, щось пішло не так...
-              </Text>
-            </Flex>
+        {!isLoading && !error && (
+          <>
+            <Helmet>
+              <title>{infoFileName}</title>
+            </Helmet>
 
-            <Flex alignment={{ horizontal: 'center' }}>
-              <Styled.ActionButton onClick={() => goBack()}>
-                <ArrowIcon />
-                Назад
-              </Styled.ActionButton>
+            <FadeIn>
+              <ReactMarkdown
+                escapeHtml={false}
+                source={data?.content || 'Не вдалося знайти цей документ'}
+                renderers={renderers}
+              />
+            </FadeIn>
+          </>
+        )}
 
-              {error?.statusCode !== 404 && (
-                <Flex isInline margin={{ left: 'regular' }}>
-                  <Styled.ActionButton onClick={() => triggerRequest()}>
-                    <ReloadIcon />
-                    Оновити сторінку
-                  </Styled.ActionButton>
-                </Flex>
-              )}
-            </Flex>
-          </FadeIn>
-        </Flex>
-      )}
-    </Container>
+        {!isLoading && error && (
+          <Flex direction="column" alignment={{ horizontal: 'center' }}>
+            <FadeIn>
+              <Flex margin={{ top: 'large', bottom: 'regular' }}>
+                <Text variant="h3" align="center" color="var(--c-negative)">
+                  Хм, щось пішло не так...
+                </Text>
+              </Flex>
+
+              <Flex alignment={{ horizontal: 'center' }}>
+                <Styled.ActionButton onClick={() => goBack()}>
+                  <ArrowIcon />
+                  Назад
+                </Styled.ActionButton>
+
+                {error?.statusCode !== 404 && (
+                  <Flex isInline margin={{ left: 'regular' }}>
+                    <Styled.ActionButton onClick={() => triggerRequest()}>
+                      <ReloadIcon />
+                      Оновити сторінку
+                    </Styled.ActionButton>
+                  </Flex>
+                )}
+              </Flex>
+            </FadeIn>
+          </Flex>
+        )}
+      </Container>
+    </Layout>
   );
 };
 

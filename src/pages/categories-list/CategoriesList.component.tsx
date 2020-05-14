@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 import { getCategoriesConfig } from 'config';
 import { useRequest } from 'hooks';
 
-import { ErrorBoundary, FadeIn } from 'components';
+import { ErrorBoundary, FadeIn, Layout } from 'components';
 import { Container } from 'shared';
 
 import { CategoriesListEntity } from 'types/data';
@@ -75,6 +75,7 @@ const CategoriesList = () => {
   }, [categoriesList]);
 
   return (
+    <Layout>
     <ErrorBoundary>
       <Container>
         {isLoading && (
@@ -117,6 +118,7 @@ const CategoriesList = () => {
         )}
       </Container>
     </ErrorBoundary>
+    </Layout>
   );
 };
 

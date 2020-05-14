@@ -59,6 +59,8 @@ const githubApiServiceUrl = 'https://udoc.eprocurement.systems';
 // @TODO need change branch to "master" for production
 const githubBranch = 'develop';
 const githubInfoPath = 'info';
+// @TODO change when correct folder will have been added to the repo
+const githubMainContentPath = 'main-content';
 
 export const getInfoFiles = () => {
   return createRequestConfig({
@@ -73,5 +75,21 @@ export const getInfoFile = (fileName: string): AxiosRequestConfig => {
     baseUrl: githubApiServiceUrl,
     method: 'get',
     path: `entries/BulbProject/bulb-project-frontend/${githubBranch}/${githubInfoPath}/${fileName}.md`,
+  });
+};
+
+export const getMainContentFiles = () => {
+  return createRequestConfig({
+    baseUrl: githubApiServiceUrl,
+    method: 'get',
+    path: `entries/BulbProject/bulb-project-frontend/${githubBranch}/${githubMainContentPath}`,
+  });
+};
+
+export const getMainContentFile = (fileName: string): AxiosRequestConfig => {
+  return createRequestConfig({
+    baseUrl: githubApiServiceUrl,
+    method: 'get',
+    path: `entries/BulbProject/bulb-project-frontend/${githubBranch}/${githubMainContentPath}/${fileName}.md`,
   });
 };

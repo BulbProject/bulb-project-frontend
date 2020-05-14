@@ -5,3 +5,5 @@ export * from './GlobalStyles';
 export * from './CategoryHeader';
 export * from './ErrorPage';
 export * from './Requirement';
+export * from './Markdown';
+export * from './Footer';
