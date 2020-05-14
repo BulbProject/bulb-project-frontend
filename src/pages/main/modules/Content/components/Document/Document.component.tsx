@@ -5,24 +5,28 @@ import Spinner from 'ustudio-ui/components/Spinner';
 
 import { useRequest } from 'hooks';
 import { getMainContentFile } from 'config';
-import { renderers } from 'components';
+import { FadeIn, renderers } from 'components';
 
 export const Document: React.FC<{ fileName: string }> = ({ fileName }) => {
   const { isLoading, error, data } = useRequest<{ content: string }>(getMainContentFile(fileName.slice(0, -3)));
 
   if (isLoading && !error) {
     return (
-      <Flex alignment={{ vertical: 'center', horizontal: 'center' }}>
-        <Spinner />
-      </Flex>
+      <FadeIn>
+        <Flex alignment={{ vertical: 'center', horizontal: 'center' }}>
+          <Spinner />
+        </Flex>
+      </FadeIn>
     );
   }
 
   return (
-    <ReactMarkdown
-      escapeHtml={false}
-      source={data?.content || 'Не вдалося знайти цей документ'}
-      renderers={renderers}
-    />
+    <FadeIn>
+      <ReactMarkdown
+        escapeHtml={false}
+        source={data?.content || 'Не вдалося знайти цей документ'}
+        renderers={renderers}
+      />
+    </FadeIn>
   );
 };
