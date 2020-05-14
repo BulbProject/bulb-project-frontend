@@ -23,14 +23,15 @@ const Image = styled(Flex)<{ link?: string }>(
 const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; trianglePosition: 'left' | 'right' }>(
   ({ efficiencyClass, trianglePosition }) => {
     const classIndex = Object.keys(efficiencyClasses).indexOf(efficiencyClass);
-    const labelHeight = 24;
+    const isSeparate = trianglePosition === 'right';
+    const labelHeight = isSeparate ? 36 : 24;
 
     return css`
       align-items: center;
   
       position: relative;
   
-      width: ${trianglePosition === 'left' ? 40 + classIndex * 4 : 40}px;
+      width: ${isSeparate ? 40 : 40 + classIndex * 4}px;
       height: ${labelHeight}px;
       
       padding-${trianglePosition}: var(--i-medium);
@@ -45,15 +46,18 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
         position: absolute;
   
         border: ${labelHeight / 2}px solid transparent;
-        border-${trianglePosition}: ${labelHeight / 2}px solid ${getEfficiencyColor(efficiencyClass)};
+        border-${trianglePosition}: ${labelHeight / 2}px solid ${
+      isSeparate ? 'var(--c-darkest)' : getEfficiencyColor(efficiencyClass)
+    };
   
         ${trianglePosition}: 100%;
       }
       
       ${
-        trianglePosition === 'right'
+        isSeparate
           ? css`
-              margin-top: ${classIndex * labelHeight + classIndex / 2}px;
+              margin-top: ${classIndex * (labelHeight / 1.5) + classIndex / 2}px;
+              background: var(--c-darkest);
             `
           : ``
       };
