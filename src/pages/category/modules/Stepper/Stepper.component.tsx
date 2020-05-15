@@ -64,6 +64,14 @@ export const Stepper: React.FC = () => {
 
   useEffect(() => {
     if (!isLoading && !error && Boolean(calculationResponse)) {
+      sessionStorage.setItem(
+        `${category.id}/${category.version}`,
+        JSON.stringify({
+          payload: requestedNeed,
+          response: calculationResponse,
+        })
+      );
+
       push(`/categories/${category.id}/${category.version}/calculation-result`);
     }
   });
