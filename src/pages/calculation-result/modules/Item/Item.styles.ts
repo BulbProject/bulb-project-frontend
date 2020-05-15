@@ -42,6 +42,9 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
       background: ${getEfficiencyColor(efficiencyClass)};
 
       color: var(--c-white);
+      
+      pointer-events: none;
+      user-select: none;
 
       &:before {
         content: '';
@@ -87,6 +90,9 @@ const Economy = styled(Flex)`
 
   background-color: var(--c-primary);
   color: var(--c-light);
+
+  pointer-events: none;
+  user-select: none;
 `;
 
 const EconomyContainer = styled.div`
