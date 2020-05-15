@@ -21,7 +21,7 @@ const FilterButton = styled(Button)`
 
 const getItemWidth = ({ hasMany, isLg }: { hasMany: boolean; isLg: boolean }) => {
   if (!isLg) {
-    return `${itemWidth}px`;
+    return '100%';
   }
 
   if (hasMany && isLg) {
