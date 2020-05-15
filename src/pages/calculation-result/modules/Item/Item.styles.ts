@@ -73,16 +73,18 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
   }
 );
 
-const EfficiencyClassesList = styled.ul`
-  display: flex;
-  flex-direction: column;
+const EfficiencyClassesList = styled.ul<{ hasMany: boolean }>(
+  ({ hasMany }) => css`
+    display: flex;
+    flex-direction: column;
 
-  margin: -0.5px 0;
+    margin: -0.5px 0 -0.5px ${hasMany ? 'var(--i-regular)' : 0};
 
-  li {
-    margin: 0.5px 0;
-  }
-`;
+    li {
+      margin: 0.5px 0;
+    }
+  `
+);
 
 const Economy = styled(Flex)<{ $backgroundColor: string }>(
   ({ $backgroundColor }) => css`

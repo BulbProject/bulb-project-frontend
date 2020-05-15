@@ -40,7 +40,7 @@ export const Item = ({
     <Styled.Item direction="column" isRequested={isRequested}>
       <Styled.Image link={document} isReversed={!isRequested}>
         {isRequested && (
-          <Styled.EfficiencyClassesList>
+          <Styled.EfficiencyClassesList hasMany={hasMany}>
             {Object.keys(efficiencyClasses).map((efficiencyClass: string) => (
               <li key={efficiencyClass}>
                 <Styled.EfficiencyClass efficiencyClass={efficiencyClass as EfficiencyClass} trianglePosition="left">
