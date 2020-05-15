@@ -83,18 +83,20 @@ const EfficiencyClassesList = styled.ul`
   }
 `;
 
-const Economy = styled(Flex)`
-  align-items: center;
+const Economy = styled(Flex)<{ $backgroundColor: string }>(
+  ({ $backgroundColor }) => css`
+    align-items: center;
 
-  padding: var(--i-medium);
-  margin-top: var(--i-small);
+    padding: var(--i-medium);
+    margin-top: var(--i-small);
 
-  background-color: var(--c-primary);
-  color: var(--c-light);
+    background-color: ${`var(--c-${$backgroundColor})`};
+    color: var(--c-light);
 
-  pointer-events: none;
-  user-select: none;
-`;
+    pointer-events: none;
+    user-select: none;
+  `
+);
 
 const EconomyContainer = styled.div`
   display: inline-flex;
@@ -135,6 +137,10 @@ const Item = styled(Flex)<{ isRequested?: boolean }>(
       ${Image} {
         height: 190px;
       }
+    }
+
+    &:not(:last-child) {
+      border-right: 1px solid var(--c-light);
     }
 
     ${Image} {

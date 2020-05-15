@@ -60,7 +60,10 @@ export const Item = ({
         {economyMetric && (
           <Styled.EconomyContainer>
             {economyMetric.observations.map((observation) => (
-              <Styled.Economy key={observation.id}>
+              <Styled.Economy
+                key={observation.id}
+                $backgroundColor={observation.id === 'energyEconomy' ? 'secondary' : 'primary'}
+              >
                 <Styled.EconomyNote variant="small">{observation.notes}</Styled.EconomyNote>
 
                 <Styled.EconomyMeasure>
@@ -92,9 +95,11 @@ export const Item = ({
             {item.description}
           </Text>
 
-          <Flex margin={{ top: 'medium' }} alignment={{ horizontal: 'center' }}>
+          <Flex margin={{ top: 'medium', bottom: 'medium' }} alignment={{ horizontal: 'center' }}>
             <Classification {...item.classification} />
           </Flex>
+
+          <Text variant="h6">{`Кількість: ${variant.quantity}`}</Text>
         </Styled.ItemDescription>
 
         <Metrics
