@@ -105,7 +105,8 @@ const EconomyContainer = styled.div`
   display: inline-flex;
   flex-direction: column;
 
-  max-width: 45%;
+  min-width: 40%;
+  max-width: 50%;
 `;
 
 const EconomyMeasure = styled(Flex)`

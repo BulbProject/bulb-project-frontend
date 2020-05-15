@@ -4,11 +4,16 @@ import { Mixin } from 'ustudio-ui/theme';
 
 const Wrapper = styled(Flex)`
   max-width: calc(100vw - var(--i-large) * 2);
-  height: 100%;
 
   margin: calc(var(--i-large) * -1) var(--i-large);
 
   overflow-x: auto;
+
+  min-height: calc(100vh - 291.77px);
+
+  ${Mixin.Screen.xs(css`
+    min-height: calc(100vh - 182.3px);
+  `)}
 `;
 
 const MobileFilterButton = styled.button`

@@ -98,75 +98,73 @@ const CalculationResult: React.FC = () => {
   return (
     <Layout>
       <ErrorBoundary>
-        <FadeIn>
-          {requestedNeed && categoryVersion && availableVariants && !isLoading && !error ? (
-            <CalculationContextProvider
-              category={categoryVersion.category}
-              requestedNeed={requestedNeed as StoreRequestedNeed}
-            >
-              {hasMany ? (
-                <Styled.Wrapper alignment={{ horizontal: isLg ? 'center' : 'start' }}>
-                  <RequestedNeed
-                    hasMany={hasMany}
-                    isDrawerOpen={isDrawerOpen}
-                    setDrawerOpen={setDrawerOpen}
-                    isRecalculating={isRecalculating}
-                    setSubmitting={setSubmitting}
-                    category={categoryVersion.category}
-                    requestedNeed={availableVariants[0]}
-                    hoveredObservation={hoveredObservation}
-                    setHoveredObservation={setHoveredObservation}
-                    setNewRequestedNeed={setNewRequestedNeed}
-                    recalculationError={recalculationError?.message}
-                  />
+        {requestedNeed && categoryVersion && availableVariants && !isLoading && !error ? (
+          <CalculationContextProvider
+            category={categoryVersion.category}
+            requestedNeed={requestedNeed as StoreRequestedNeed}
+          >
+            {hasMany ? (
+              <Styled.Wrapper alignment={{ horizontal: isLg ? 'center' : 'start' }}>
+                <RequestedNeed
+                  hasMany={hasMany}
+                  isDrawerOpen={isDrawerOpen}
+                  setDrawerOpen={setDrawerOpen}
+                  isRecalculating={isRecalculating}
+                  setSubmitting={setSubmitting}
+                  category={categoryVersion.category}
+                  requestedNeed={availableVariants[0]}
+                  hoveredObservation={hoveredObservation}
+                  setHoveredObservation={setHoveredObservation}
+                  setNewRequestedNeed={setNewRequestedNeed}
+                  recalculationError={recalculationError?.message}
+                />
 
-                  <Items
-                    availableVariants={availableVariants}
-                    hoveredObservation={hoveredObservation}
-                    setHoveredObservation={setHoveredObservation}
-                  />
-                </Styled.Wrapper>
-              ) : (
-                <Container>
-                  <RequestedNeed
-                    hasMany={hasMany}
-                    isDrawerOpen={isDrawerOpen}
-                    setDrawerOpen={setDrawerOpen}
-                    isRecalculating={isRecalculating}
-                    setSubmitting={setSubmitting}
-                    category={categoryVersion.category}
-                    requestedNeed={availableVariants[0]}
-                    hoveredObservation={hoveredObservation}
-                    setHoveredObservation={setHoveredObservation}
-                    setNewRequestedNeed={setNewRequestedNeed}
-                    recalculationError={recalculationError?.message}
-                  />
-                </Container>
+                <Items
+                  availableVariants={availableVariants}
+                  hoveredObservation={hoveredObservation}
+                  setHoveredObservation={setHoveredObservation}
+                />
+              </Styled.Wrapper>
+            ) : (
+              <Container>
+                <RequestedNeed
+                  hasMany={hasMany}
+                  isDrawerOpen={isDrawerOpen}
+                  setDrawerOpen={setDrawerOpen}
+                  isRecalculating={isRecalculating}
+                  setSubmitting={setSubmitting}
+                  category={categoryVersion.category}
+                  requestedNeed={availableVariants[0]}
+                  hoveredObservation={hoveredObservation}
+                  setHoveredObservation={setHoveredObservation}
+                  setNewRequestedNeed={setNewRequestedNeed}
+                  recalculationError={recalculationError?.message}
+                />
+              </Container>
+            )}
+
+            {!isLg && (
+              <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
+                <FilterIcon />
+              </Styled.MobileFilterButton>
+            )}
+          </CalculationContextProvider>
+        ) : (
+          <Container>
+            <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
+              {isLoading && <Spinner delay={500} />}
+
+              {(!requestedNeed || !categoryVersion) && !isLoading && error?.statusCode === 404 && (
+                <Text color="negative">
+                  Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
+                  цієї категорії ☹️
+                </Text>
               )}
 
-              {!isLg && (
-                <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
-                  <FilterIcon />
-                </Styled.MobileFilterButton>
-              )}
-            </CalculationContextProvider>
-          ) : (
-            <Container>
-              <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
-                {isLoading && <Spinner delay={500} />}
-
-                {(!requestedNeed || !categoryVersion) && !isLoading && error?.statusCode === 404 && (
-                  <Text color="negative">
-                    Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
-                    цієї категорії ☹️
-                  </Text>
-                )}
-
-                {error && error.statusCode !== 404 && !isLoading && <ErrorPage />}
-              </Flex>
-            </Container>
-          )}
-        </FadeIn>
+              {error && error.statusCode !== 404 && !isLoading && <ErrorPage />}
+            </Flex>
+          </Container>
+        )}
       </ErrorBoundary>
     </Layout>
   );

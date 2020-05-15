@@ -30,64 +30,70 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
   const isLg = useMediaQuery('screen and (min-width: 832px)');
 
   return (
-    <Styled.RequestedNeed direction="column" hasMany={hasMany} isLg={isLg}>
-      <Flex
-        alignment={{ horizontal: 'space-between', vertical: 'center' }}
-        margin={{ bottom: 'large', top: 'regular' }}
-        padding={hasMany ? { left: 'regular' } : undefined}
-      >
-        <Styled.Title variant="body" appearance="bold">
-          Те, що Ви шукали
-        </Styled.Title>
-
-        <Styled.FilterButton appearance="text" onClick={() => setDrawerOpen(!isDrawerOpen)} iconAfter={<FilterIcon />}>
-          Змінити умови
-        </Styled.FilterButton>
-
-        <Drawer
-          isOpen={isDrawerOpen}
-          onChange={() => setDrawerOpen(false)}
-          showOverlay
-          position={isLg ? 'left' : 'right'}
-          styled={{
-            Drawer: css`
-              width: 320px;
-              z-index: var(--l-topmost);
-            `,
-            Overlay: css`
-              background-color: var(--c-darkest);
-
-              z-index: calc(var(--l-topmost) - 1);
-            `,
-          }}
+    <Flex alignment={{ horizontal: 'center' }}>
+      <Styled.RequestedNeed direction="column" hasMany={hasMany} isLg={isLg}>
+        <Flex
+          alignment={{ horizontal: 'space-between', vertical: 'center' }}
+          margin={{ bottom: 'large', top: 'regular' }}
+          padding={hasMany ? { left: 'regular' } : undefined}
         >
-          <CloseButton onClick={setDrawerOpen} />
+          <Styled.Title variant="body" appearance="bold">
+            Те, що Ви шукали
+          </Styled.Title>
 
-          <Filter
-            error={recalculationError}
-            isLoading={isRecalculating}
-            setSubmitting={setSubmitting}
-            recalculate={(state) => {
-              setNewRequestedNeed(state);
-              setDrawerOpen(false);
+          <Styled.FilterButton
+            appearance="text"
+            onClick={() => setDrawerOpen(!isDrawerOpen)}
+            iconAfter={<FilterIcon />}
+          >
+            Змінити умови
+          </Styled.FilterButton>
+
+          <Drawer
+            isOpen={isDrawerOpen}
+            onChange={() => setDrawerOpen(false)}
+            showOverlay
+            position={isLg ? 'left' : 'right'}
+            styled={{
+              Drawer: css`
+                width: 320px;
+                z-index: var(--l-topmost);
+              `,
+              Overlay: css`
+                background-color: var(--c-darkest);
+
+                z-index: calc(var(--l-topmost) - 1);
+              `,
             }}
-          />
-        </Drawer>
-      </Flex>
+          >
+            <CloseButton onClick={setDrawerOpen} />
 
-      <Item
-        hasMany={hasMany}
-        isRequested
-        variant={requestedNeed}
-        item={category.items.find((item) => item.id === requestedNeed.relatedItem) as ItemType}
-        document={
-          category.documents?.find((document) => {
-            return document.relatesTo === 'item' && document.relatedItem === requestedNeed.relatedItem;
-          })?.url
-        }
-        hoveredObservation={hoveredObservation}
-        setHoveredObservation={setHoveredObservation}
-      />
-    </Styled.RequestedNeed>
+            <Filter
+              error={recalculationError}
+              isLoading={isRecalculating}
+              setSubmitting={setSubmitting}
+              recalculate={(state) => {
+                setNewRequestedNeed(state);
+                setDrawerOpen(false);
+              }}
+            />
+          </Drawer>
+        </Flex>
+
+        <Item
+          hasMany={hasMany}
+          isRequested
+          variant={requestedNeed}
+          item={category.items.find((item) => item.id === requestedNeed.relatedItem) as ItemType}
+          document={
+            category.documents?.find((document) => {
+              return document.relatesTo === 'item' && document.relatedItem === requestedNeed.relatedItem;
+            })?.url
+          }
+          hoveredObservation={hoveredObservation}
+          setHoveredObservation={setHoveredObservation}
+        />
+      </Styled.RequestedNeed>
+    </Flex>
   );
 };

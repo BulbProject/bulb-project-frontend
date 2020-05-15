@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import Button from 'ustudio-ui/components/Button';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
+import { Mixin } from 'ustudio-ui/theme';
 
 import { itemWidth } from '../../CalculationResult.module';
 
@@ -34,7 +35,11 @@ const RequestedNeed = styled(Flex)<{ hasMany: boolean; isLg: boolean }>(
   ({ hasMany, isLg }) => css`
     width: ${getItemWidth({ hasMany, isLg })};
 
-    min-width: 450px;
+    min-width: ${hasMany ? 'calc(100% - 30px)' : '100%'};
+
+    ${Mixin.Screen.xs(css`
+      min-width: 450px;
+    `)}
   `
 );
 
