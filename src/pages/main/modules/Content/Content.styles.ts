@@ -4,18 +4,20 @@ import Flex from 'ustudio-ui/components/Flex';
 const Content = styled.section`
   position: relative;
 
-  background-color: var(--c-lightest);
+  height: 100vh;
+
+  background-image: linear-gradient(to bottom, rgba(26, 26, 26, 1), rgba(26, 26, 26, 1) 75%, rgba(26, 26, 26, 0.975));
 `;
 
 const arrowBlink = keyframes`
   0% {
     opacity: 0;
   }
-  
+
   50% {
     opacity: 1;
   }
-  
+
   100% {
     opacity: 0;
   }
@@ -26,12 +28,12 @@ const show = keyframes`
     top: 0;
     opacity: 1;
   }
-  
+
   50% {
     top: -2rem;
     opacity: 1;
   }
-  
+
   100% {
     top: 0;
     opacity: 0;
@@ -65,4 +67,11 @@ const Arrow = styled(Flex)`
   }
 `;
 
-export default { Content, Arrow };
+const DocumentContainer = styled(Flex)`
+  height: 100vh;
+
+  justify-content: center;
+  align-items: center;
+`;
+
+export default { Content, Arrow, DocumentContainer };

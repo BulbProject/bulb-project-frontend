@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import Flex from 'ustudio-ui/components/Flex';
 
 import { useRequest } from 'hooks';
 import { getMainContentFiles } from 'config';
@@ -35,9 +34,9 @@ export const Content = () => {
         </Styled.Arrow>
 
         <Container>
-          <Flex direction={documentsDirection}>
+          <Styled.DocumentContainer direction={documentsDirection}>
             {!isLoading && fileNames && fileNames.map(({ name }) => <Document key={name} fileName={name} />)}
-          </Flex>
+          </Styled.DocumentContainer>
         </Container>
       </Styled.Content>
     </FadeIn>

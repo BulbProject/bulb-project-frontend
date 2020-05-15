@@ -6,7 +6,7 @@ export const FadeIn: React.FC = ({ children }) => {
   return (
     <motion.div
       variants={{
-        visible: { opacity: 1 },
+        visible: { opacity: 1, width: '100%' },
         hidden: { opacity: 0 },
       }}
       initial="hidden"
