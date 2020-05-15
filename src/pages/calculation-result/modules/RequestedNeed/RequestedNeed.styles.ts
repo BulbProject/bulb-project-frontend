@@ -1,7 +1,13 @@
 import styled, { css } from 'styled-components';
 import Button from 'ustudio-ui/components/Button';
 import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
+
 import { itemWidth } from '../../CalculationResult.module';
+
+const Title = styled(Text)`
+  text-transform: uppercase;
+`;
 
 const FilterButton = styled(Button)`
   svg {
@@ -30,4 +36,4 @@ const RequestedNeed = styled(Flex)<{ hasMany: boolean; isLg: boolean }>(
   `
 );
 
-export default { RequestedNeed, FilterButton };
+export default { Title, RequestedNeed, FilterButton };

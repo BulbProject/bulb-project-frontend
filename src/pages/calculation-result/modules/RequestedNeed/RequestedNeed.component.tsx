@@ -37,9 +37,9 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
         margin={{ bottom: 'large', top: 'regular' }}
         padding={{ left: 'medium' }}
       >
-        <Text variant="body" appearance="bold">
+        <Styled.Title variant="body" appearance="bold">
           Те, що Ви шукали
-        </Text>
+        </Styled.Title>
 
         <Styled.FilterButton appearance="text" onClick={() => setDrawerOpen(!isDrawerOpen)} iconAfter={<FilterIcon />}>
           Змінити умови

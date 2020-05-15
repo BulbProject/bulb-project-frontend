@@ -55,6 +55,8 @@ const ItemsTitle = styled(Flex)`
   margin-bottom: calc(var(--i-large) + 5px);
 
   padding-left: var(--i-large);
+
+  text-transform: uppercase;
 `;
 
 export default { Items, AvailableVariants, ItemsTitle };
