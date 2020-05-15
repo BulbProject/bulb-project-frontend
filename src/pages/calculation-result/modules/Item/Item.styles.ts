@@ -63,7 +63,7 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
       ${
         isSeparate
           ? css`
-              margin-top: ${classIndex * (labelHeight / 1.5) + classIndex / 2}px;
+              margin-top: ${classIndex * (labelHeight / 1.5) + classIndex / 2 - 3}px;
               background: var(--c-darkest);
             `
           : ``
