@@ -16,7 +16,7 @@ export const BaseCard = ({ title, description, classification, status }: Categor
 
   return (
     <Styled.Card direction="column" isDisabled={isDisabled}>
-      <Styled.CardTitle variant="h5" isDisabled={isDisabled}>
+      <Styled.CardTitle variant="h5" color={isDisabled ? 'var(--c-neutral)' : 'var(--c-secondary)'}>
         {title}
       </Styled.CardTitle>
 
