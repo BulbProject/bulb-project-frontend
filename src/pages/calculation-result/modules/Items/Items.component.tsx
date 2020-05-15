@@ -1,43 +1,59 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import Text from 'ustudio-ui/components/Text';
 
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
-import type { AvailableVariant, Item as IItem } from 'types/data';
+import type { AvailableVariant, Item as ItemType } from 'types/data';
 
 import { useCalculationContext } from '../../store';
 
-import { Item } from './components';
+import { Item } from '../Item';
 import Styled from './Items.styles';
 
-export const Items = ({ availableVariants }: { availableVariants: AvailableVariant[] }) => {
+export const Items = ({
+  availableVariants,
+  hoveredObservation,
+  setHoveredObservation,
+}: {
+  availableVariants: AvailableVariant[];
+  hoveredObservation: string;
+  setHoveredObservation: (id: string) => void;
+}) => {
   const {
     category: { items, documents },
   } = useCalculationContext();
 
-  const isMd = useMediaQuery('screen and (min-width: 798px)');
+  const isLg = useMediaQuery('screen and (min-width: 832px)');
+
+  const itemsQuantity = useMemo(() => availableVariants.length - 1, [availableVariants.length]);
+  const hasMany = useMemo(() => itemsQuantity > 1, [itemsQuantity]);
 
   return (
-    <Styled.Items direction={isMd ? 'row' : 'column'}>
-      <Item
-        variant={availableVariants[0]}
-        item={items.find((item) => item.id === availableVariants[0].relatedItem) as IItem}
-        document={
-          documents?.find((document) => {
-            return document.relatesTo === 'item' && document.relatedItem === availableVariants[0].relatedItem;
-          })?.url
-        }
-        isSearched
-      />
+    <Styled.Items direction="column" quantity={itemsQuantity} hasMany={hasMany} isLg={isLg}>
+      <Styled.ItemsTitle>
+        <Text variant="body" appearance="bold" color="var(--c-dark)">
+          {itemsQuantity > 1 ? 'Більш енергоефективні варіанти' : 'Більш енергоефективний варіант'}
+        </Text>
+      </Styled.ItemsTitle>
 
-      <Styled.AvailableVariants isMd={isMd}>
+      <Styled.AvailableVariants isLg={isLg}>
         {availableVariants.slice(1).map((variant) => {
-          const relatedItem = items.find((item) => item.id === variant.relatedItem) as IItem;
+          const relatedItem = items.find((item) => item.id === variant.relatedItem) as ItemType;
 
           const relatedDocument = documents?.find(
             (document) => document.relatesTo === 'item' && document.relatedItem === relatedItem.id
           );
 
-          return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
+          return (
+            <Item
+              key={variant.id}
+              variant={variant}
+              item={relatedItem}
+              document={relatedDocument?.url}
+              hoveredObservation={hoveredObservation}
+              setHoveredObservation={setHoveredObservation}
+            />
+          );
         })}
       </Styled.AvailableVariants>
     </Styled.Items>

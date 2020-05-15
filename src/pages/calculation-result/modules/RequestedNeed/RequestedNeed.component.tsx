@@ -1,77 +1,99 @@
-import React, { useState } from 'react';
-import { Form } from 'formfish';
-
-import Text from 'ustudio-ui/components/Text';
+import React from 'react';
+import { css } from 'styled-components';
+import Drawer from 'ustudio-ui/components/Drawer';
 import Flex from 'ustudio-ui/components/Flex';
-import Spinner from 'ustudio-ui/components/Spinner';
+import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
-import type { StoreRequestedNeed } from 'types/globals';
+import { Item as ItemType } from 'types/data';
+import { CloseButton } from 'shared';
+import FilterIcon from '../../../../assets/icons/filter.inline.svg';
 
-import { useCalculationContext } from '../../store';
-import { Criterion } from './components';
+import { Filter } from '../Filter';
+import { Item } from '../Item';
 
+import { RequestedNeedProps } from './RequestedNeed.types';
 import Styled from './RequestedNeed.styles';
-import type { RequestedNeedProps } from './RequestedNeed.types';
 
 export const RequestedNeed: React.FC<RequestedNeedProps> = ({
-  error,
-  isLoading,
+  hasMany,
+  isDrawerOpen,
+  setDrawerOpen,
+  recalculationError,
+  isRecalculating,
   setSubmitting,
-  recalculate,
-  isHidden = false,
+  category,
+  requestedNeed,
+  hoveredObservation,
+  setHoveredObservation,
+  setNewRequestedNeed,
 }) => {
-  const {
-    category: { criteria, id },
-    requestedNeed,
-    dispatch,
-  } = useCalculationContext();
-
-  const [hasFormChanged, setFormChanged] = useState(false);
+  const isLg = useMediaQuery('screen and (min-width: 832px)');
 
   return (
-    <Styled.Wrapper isHidden={isHidden}>
-      {isLoading && (
-        <Styled.Overlay isLoading={isLoading} alignment={{ horizontal: 'center', vertical: 'center' }}>
-          <Spinner appearance={{ size: 64 }} />
-        </Styled.Overlay>
-      )}
+    <Styled.RequestedNeed direction="column" hasMany={hasMany} isLg={isLg}>
+      <Flex
+        alignment={{ horizontal: 'space-between', vertical: 'center' }}
+        margin={{ bottom: 'large', top: 'regular' }}
+        padding={hasMany ? { left: 'regular' } : undefined}
+      >
+        <Styled.Title variant="body" appearance="bold">
+          Те, що Ви шукали
+        </Styled.Title>
 
-      <Styled.RequestedNeed direction="column">
-        <Form
-          name={id}
-          watch={(state) => {
-            setFormChanged(JSON.stringify(state[id]) !== JSON.stringify(requestedNeed));
-          }}
-          onSubmit={(state) => {
-            setSubmitting(true);
+        {isLg && (
+          <Styled.FilterButton
+            appearance="text"
+            onClick={() => setDrawerOpen(!isDrawerOpen)}
+            iconAfter={<FilterIcon />}
+          >
+            Змінити умови
+          </Styled.FilterButton>
+        )}
 
-            dispatch({
-              type: 'recalculate',
-              payload: state[id] as StoreRequestedNeed,
-            });
+        <Drawer
+          isOpen={isDrawerOpen}
+          onChange={() => setDrawerOpen(false)}
+          showOverlay
+          position={isLg ? 'left' : 'right'}
+          styled={{
+            Drawer: css`
+              width: 320px;
+              z-index: var(--l-topmost);
+            `,
+            Overlay: css`
+              background-color: var(--c-darkest);
 
-            recalculate(state[id] as StoreRequestedNeed);
+              z-index: calc(var(--l-topmost) - 1);
+            `,
           }}
         >
-          <>
-            {criteria.map((criterion) => (
-              <Criterion {...criterion} key={criterion.id} />
-            ))}
+          <CloseButton onClick={setDrawerOpen} />
 
-            <Styled.Recalculate type="submit" isDisabled={!hasFormChanged || isLoading}>
-              Перерахувати
-            </Styled.Recalculate>
+          <Filter
+            error={recalculationError}
+            isLoading={isRecalculating}
+            setSubmitting={setSubmitting}
+            recalculate={(state) => {
+              setNewRequestedNeed(state);
+              setDrawerOpen(false);
+            }}
+          />
+        </Drawer>
+      </Flex>
 
-            {error && (
-              <Flex direction="column" margin={{ bottom: 'medium' }}>
-                <Text color="var(--c-negative)" align="center" variant="small">
-                  {error}
-                </Text>
-              </Flex>
-            )}
-          </>
-        </Form>
-      </Styled.RequestedNeed>
-    </Styled.Wrapper>
+      <Item
+        hasMany={hasMany}
+        isRequested
+        variant={requestedNeed}
+        item={category.items.find((item) => item.id === requestedNeed.relatedItem) as ItemType}
+        document={
+          category.documents?.find((document) => {
+            return document.relatesTo === 'item' && document.relatedItem === requestedNeed.relatedItem;
+          })?.url
+        }
+        hoveredObservation={hoveredObservation}
+        setHoveredObservation={setHoveredObservation}
+      />
+    </Styled.RequestedNeed>
   );
 };

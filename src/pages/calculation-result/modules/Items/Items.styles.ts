@@ -1,57 +1,62 @@
 import styled, { css } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
+import { itemWidth } from '../../CalculationResult.module';
 
-const Items = styled(Flex)`
-  position: relative;
+const Items = styled(Flex)<{ quantity: number; hasMany: boolean; isLg: boolean }>(
+  ({ quantity, hasMany, isLg }) => css`
+    position: relative;
 
-  overflow-x: hidden;
+    max-width: 100%;
+    width: ${itemWidth * quantity}px;
 
-  &:after {
-    content: '';
+    overflow-x: ${isLg ? 'auto' : 'visible'};
 
-    position: absolute;
-    top: calc(50% - 7px);
-    bottom: 0;
-    right: 0;
-
-    width: 30px;
-
-    background-image: linear-gradient(to left, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
-
-    pointer-events: none;
-
-    @media screen and (min-width: 798px) {
-      top: 0;
-    }
-  }
-
-  @media screen and (max-width: 797px) {
-    &:before {
-      content: '';
-
+    &:before,
+    &:after {
       position: absolute;
-      top: calc(50% - 7px);
+      top: 0;
       bottom: 0;
-      left: 0;
+
+      z-index: 2;
 
       width: 30px;
 
-      background-image: linear-gradient(to right, rgba(222, 222, 222, 0.7), rgba(222, 222, 222, 0));
-
       pointer-events: none;
     }
-  }
-`;
 
-const AvailableVariants = styled(Flex)<{ isMd: boolean }>(
-  ({ isMd }) => css`
-    position: relative;
+    &:before {
+      content: '';
+      left: 0;
 
-    max-width: ${isMd ? 'calc(100% - 360px)' : 'calc(100vw - 4rem)'};
+      background-image: linear-gradient(to right, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0));
+    }
 
-    overflow-x: auto;
+    &:after {
+      content: ${hasMany && isLg ? `''` : 'unset'};
+      right: 0;
+
+      background-image: linear-gradient(to left, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0));
+    }
   `
 );
 
-export default { Items, AvailableVariants };
+const AvailableVariants = styled(Flex)<{ isLg: boolean }>(
+  ({ isLg }) => css`
+    position: relative;
+    height: 100%;
+
+    overflow-x: ${isLg ? 'auto' : 'visible'};
+  `
+);
+
+const ItemsTitle = styled(Flex)`
+  margin-top: calc(var(--i-regular) + 5px);
+  margin-bottom: calc(var(--i-large) + 5px);
+
+  padding-left: var(--i-large);
+
+  text-transform: uppercase;
+`;
+
+export default { Items, AvailableVariants, ItemsTitle };

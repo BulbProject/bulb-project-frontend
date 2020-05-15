@@ -175,6 +175,13 @@ const Drawer = styled(LibDrawer)`
   flex-direction: column;
 
   padding: var(--i-regular) var(--i-large);
+
+  ${DrawerButton} {
+    position: absolute;
+
+    top: 1.5rem;
+    right: 17px;
+  }
 `;
 
 const Main = styled.main`

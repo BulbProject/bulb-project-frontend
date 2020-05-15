@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import Flex from 'ustudio-ui/components/Flex';
 import Spinner from 'ustudio-ui/components/Spinner';
@@ -8,7 +8,17 @@ import { getMainContentFile } from 'config';
 import { FadeIn, renderers } from 'components';
 
 export const Document: React.FC<{ fileName: string }> = ({ fileName }) => {
-  const { isLoading, error, data } = useRequest<{ content: string }>(getMainContentFile(fileName.slice(0, -3)));
+  const [isMounted, setMounted] = useState(false);
+
+  const { isLoading, error, data } = useRequest<{ content: string }>(getMainContentFile(fileName.slice(0, -3)), {
+    isRequesting: isMounted,
+  });
+
+  useEffect(() => {
+    setMounted(true);
+
+    return () => setMounted(false);
+  }, []);
 
   if (isLoading && !error) {
     return (

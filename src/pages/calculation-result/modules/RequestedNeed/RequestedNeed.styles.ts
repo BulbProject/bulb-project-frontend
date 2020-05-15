@@ -1,75 +1,44 @@
 import styled, { css } from 'styled-components';
-import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
+import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
+import { Mixin } from 'ustudio-ui/theme';
 
-const RequestedNeed = styled(Flex)`
-  position: sticky;
-  top: calc(var(--i-large) + 64px);
+const Title = styled(Text)`
+  text-transform: uppercase;
 `;
 
-const Wrapper = styled.div<{ isHidden?: boolean }>(
-  ({ isHidden }) => css`
-  flex-shrink: 0;
+const FilterButton = styled(Button)`
+  svg {
+    width: 0.7rem;
 
-  position: relative;
-
-  ${
-    isHidden
-      ? css`
-          width: 100%;
-          margin-top: var(--i-large);
-
-          ${RequestedNeed} {
-            position: static;
-            top: unset;
-          }
-        `
-      : css`
-          width: 320px;
-          margin-right: var(--i-large);
-        `
-  }}`
-);
-
-const Recalculate = styled(Button)`
-  position: sticky;
-  bottom: 0;
-  z-index: var(--l-bottom);
-
-  width: 100%;
-
-  padding: var(--i-regular);
+    margin-left: var(--i-medium);
+    margin-top: 1px;
+  }
 `;
 
-const Overlay = styled(Flex)<{ isLoading: boolean }>(
-  ({ isLoading }) => css`
-    height: 100%;
+const getItemWidth = ({ hasMany, isLg }: { hasMany: boolean; isLg: boolean }) => {
+  if (!isLg) {
+    return '100%';
+  }
 
-    position: absolute;
-    top: 0;
-    left: 0;
+  if (hasMany && isLg) {
+    return '450px';
+  }
 
-    z-index: var(--l-bottom);
+  return '100%';
+};
 
-    pointer-events: ${isLoading ? 'auto' : 'none'};
-    opacity: ${isLoading ? 1 : 0};
-    transition: opacity var(--transition);
+const RequestedNeed = styled(Flex)<{ hasMany: boolean; isLg: boolean }>(
+  ({ hasMany, isLg }) => css`
+    width: ${getItemWidth({ hasMany, isLg })};
 
-    &:before {
-      content: '';
+    min-width: ${hasMany ? 'calc(100% - 30px)' : '100%'};
 
-      width: 100%;
-      height: 100%;
-
-      position: absolute;
-      top: 0;
-      left: 0;
-
-      background-color: var(--c-light);
-
-      opacity: 0.75;
-    }
+    ${Mixin.Screen.xs(css`
+      min-width: 450px;
+    `)}
   `
 );
 
-export default { Wrapper, RequestedNeed, Recalculate, Overlay };
+export default { Title, RequestedNeed, FilterButton };

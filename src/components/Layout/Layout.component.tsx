@@ -36,6 +36,8 @@ export const Layout: FC = ({ children }) => {
         </Styled.Header>
 
         <Styled.Drawer position="right" showOverlay isOpen={isDrawerOpen} onChange={() => setDrawerOpen(false)}>
+          <Styled.DrawerButton drawerIsOpen={isDrawerOpen} onClick={() => setDrawerOpen(!isDrawerOpen)} />
+
           <Aside closeDrawer={() => setDrawerOpen(false)} />
         </Styled.Drawer>
 

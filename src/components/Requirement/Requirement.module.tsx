@@ -64,7 +64,7 @@ export const renderInput = ({
     `;
 
     const mapOptionsToItems = (options: Option[]): Record<string, Item> => {
-      return options.sort(sortByValue('description')).reduce(
+      return options.sort(sortByValue('id')).reduce(
         (map, option) =>
           Object.assign(map, {
             [option.value as string]: { value: option.value, label: option.description },
@@ -88,7 +88,7 @@ export const renderInput = ({
       );
     }
 
-    const groupsMap: Group[] = optionGroups.sort(sortByValue('description')).map((optionGroup) => {
+    const groupsMap: Group[] = optionGroups.sort(sortByValue('id')).map((optionGroup) => {
       return {
         title: optionGroup.description as string,
         items: mapOptionsToItems(optionGroup.options),
@@ -121,7 +121,18 @@ export const renderInput = ({
     case 'integer':
     case 'number':
     default:
-      return <NumberInput isDisabled={isDisabled} defaultValue={defaultValue as number} {...props} />;
+      return (
+        <NumberInput
+          isDisabled={isDisabled}
+          defaultValue={defaultValue as number}
+          {...props}
+          styled={{
+            Suffix: css`
+              white-space: nowrap;
+            `,
+          }}
+        />
+      );
   }
 };
 

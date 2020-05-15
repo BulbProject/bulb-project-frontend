@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
-import Drawer from 'ustudio-ui/components/Drawer';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
-import { Layout, CategoryHeader, ErrorBoundary, FadeIn, ErrorPage } from 'components';
+import { Layout, ErrorBoundary, ErrorPage, FadeIn } from 'components';
 import { Container } from 'shared';
 
 import type { AvailableVariant, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
@@ -18,14 +17,14 @@ import type { StoreRequestedNeed } from 'types/globals';
 import { prepareRequestedNeed } from 'utils';
 import FilterIcon from '../../assets/icons/filter.inline.svg';
 
+import { Items } from './modules';
 import { RequestedNeed } from './modules/RequestedNeed';
-import { Items } from './modules/Items';
 
 import { CalculationContextProvider } from './store';
 import Styled from './CalculationResult.styles';
 
 const CalculationResult: React.FC = () => {
-  const isXl = useMediaQuery('screen and (min-width: 1154px)');
+  const isLg = useMediaQuery('screen and (min-width: 832px)');
 
   const { categoryId, version } = useParams();
 
@@ -37,8 +36,6 @@ const CalculationResult: React.FC = () => {
   const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
     getCategoryVersionConfig(categoryId as string, version as string)
   );
-
-  const { category: { title, description, classification } = {} } = categoryVersion || ({} as CategoryVersion);
 
   const {
     isLoading: isRecalculating,
@@ -94,72 +91,82 @@ const CalculationResult: React.FC = () => {
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
+  const [hoveredObservation, setHoveredObservation] = useState('');
+
+  const hasMany = useMemo(() => (availableVariants || []).length > 1, [availableVariants?.length]);
+
   return (
     <Layout>
       <ErrorBoundary>
-        <FadeIn>
-          {categoryVersion && requestedNeed && <CategoryHeader {...{ title, description, classification }} />}
-
-          {requestedNeed && categoryVersion && !isLoading && !error ? (
-            <CalculationContextProvider
-              category={categoryVersion.category}
-              requestedNeed={requestedNeed as StoreRequestedNeed}
-            >
-              <Styled.Wrapper alignment={{ horizontal: 'center' }}>
-                {isXl ? (
+        {requestedNeed && categoryVersion && availableVariants && !isLoading && !error ? (
+          <CalculationContextProvider
+            category={categoryVersion.category}
+            requestedNeed={requestedNeed as StoreRequestedNeed}
+          >
+            <FadeIn>
+              {hasMany ? (
+                <Styled.Wrapper alignment={{ horizontal: isLg ? 'center' : 'start' }}>
                   <RequestedNeed
-                    error={recalculationError?.message}
-                    isLoading={isRecalculating}
+                    hasMany={hasMany}
+                    isDrawerOpen={isDrawerOpen}
+                    setDrawerOpen={setDrawerOpen}
+                    isRecalculating={isRecalculating}
                     setSubmitting={setSubmitting}
-                    recalculate={(state) => {
-                      setNewRequestedNeed(state);
-                    }}
+                    category={categoryVersion.category}
+                    requestedNeed={availableVariants[0]}
+                    hoveredObservation={hoveredObservation}
+                    setHoveredObservation={setHoveredObservation}
+                    setNewRequestedNeed={setNewRequestedNeed}
+                    recalculationError={recalculationError?.message}
                   />
-                ) : (
-                  <>
-                    <Styled.FilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
-                      <FilterIcon />
-                    </Styled.FilterButton>
 
-                    <Drawer isOpen={isDrawerOpen} onChange={() => setDrawerOpen(false)} showOverlay position="right">
-                      <RequestedNeed
-                        isHidden
-                        error={recalculationError?.message}
-                        isLoading={isRecalculating}
-                        setSubmitting={setSubmitting}
-                        recalculate={(state) => {
-                          setNewRequestedNeed(state);
-                          setDrawerOpen(false);
-                        }}
-                      />
-                    </Drawer>
-                  </>
-                )}
+                  <Items
+                    availableVariants={availableVariants}
+                    hoveredObservation={hoveredObservation}
+                    setHoveredObservation={setHoveredObservation}
+                  />
+                </Styled.Wrapper>
+              ) : (
+                <Container>
+                  <RequestedNeed
+                    hasMany={hasMany}
+                    isDrawerOpen={isDrawerOpen}
+                    setDrawerOpen={setDrawerOpen}
+                    isRecalculating={isRecalculating}
+                    setSubmitting={setSubmitting}
+                    category={categoryVersion.category}
+                    requestedNeed={availableVariants[0]}
+                    hoveredObservation={hoveredObservation}
+                    setHoveredObservation={setHoveredObservation}
+                    setNewRequestedNeed={setNewRequestedNeed}
+                    recalculationError={recalculationError?.message}
+                  />
+                </Container>
+              )}
+            </FadeIn>
 
-                {availableVariants ? (
-                  <Items availableVariants={availableVariants} />
-                ) : (
-                  <Text>Відсутні можливі варіанти</Text>
-                )}
-              </Styled.Wrapper>
-            </CalculationContextProvider>
-          ) : (
-            <Container>
-              <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
-                {isLoading && <Spinner delay={500} />}
+            {!isLg && (
+              <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
+                <FilterIcon />
+              </Styled.MobileFilterButton>
+            )}
+          </CalculationContextProvider>
+        ) : (
+          <Container>
+            <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
+              {isLoading && <Spinner delay={500} />}
 
-                {(!requestedNeed || !categoryVersion) && !isLoading && (
-                  <Text color="negative">
-                    Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
-                    цієї категорії ☹️
-                  </Text>
-                )}
+              {(!requestedNeed || !categoryVersion) && !isLoading && error?.statusCode === 404 && (
+                <Text color="negative">
+                  Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
+                  цієї категорії ☹️
+                </Text>
+              )}
 
-                {error && !isLoading && <ErrorPage />}
-              </Flex>
-            </Container>
-          )}
-        </FadeIn>
+              {error && error.statusCode !== 404 && !isLoading && <ErrorPage />}
+            </Flex>
+          </Container>
+        )}
       </ErrorBoundary>
     </Layout>
   );

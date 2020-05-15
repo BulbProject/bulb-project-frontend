@@ -14,7 +14,7 @@ export const Classification: React.FC<OCDSClassification & { className?: string;
   className = '',
 }) => {
   return (
-    <Flex className={className}>
+    <Flex className={className} isInline>
       <Styled.ClassificationId variant="small" isDisabled={!!isDisabled}>
         {id}
       </Styled.ClassificationId>

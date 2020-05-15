@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
@@ -21,31 +21,34 @@ const BaseCard = styled(Flex)`
   transition: var(--transition);
 `;
 
-const CardTitle = styled(Text)<{ isDisabled: boolean }>(
-  ({ isDisabled }) => `
+const CardTitle = styled(Text)`
   margin-bottom: var(--i-medium);
 
-  color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-secondary)'};
   transition: var(--transition);
-`
-);
+`;
 
 const Card = styled(BaseCard)<{ isDisabled: boolean }>(({ isDisabled }) =>
-  !isDisabled
-    ? `&:hover {
-    border: 1px solid var(--c-primary);
-    box-shadow: var(--s-primary);
-  }
+  isDisabled
+    ? css`
+        cursor: not-allowed;
+        user-select: none;
+      `
+    : css`
+        &:hover {
+          border: 1px solid var(--c-primary);
+          box-shadow: var(--s-primary);
+        }
 
-  &:focus {
-    border: 1px solid var(--c-primary);
-  }
-  &:active {
-    ${CardTitle} {
-      color: var(--c-primary);
-    }
-  }`
-    : ''
+        &:focus {
+          border: 1px solid var(--c-primary);
+        }
+
+        &:active {
+          ${CardTitle} {
+            color: var(--c-primary);
+          }
+        }
+      `
 );
 
 const ReloadIcon = styled(ReloadIconEl)`
