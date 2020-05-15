@@ -4,7 +4,6 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import Grid from 'ustudio-ui/components/Grid/Grid';
 import Cell from 'ustudio-ui/components/Grid/Cell';
-import UIModal from 'ustudio-ui/components/Modal';
 import { Mixin } from 'ustudio-ui/theme';
 
 import { StepStyled } from './components/Step';
@@ -66,15 +65,6 @@ const Step = styled(Cell)`
   transition: var(--transition);
 `;
 
-const Modal = styled(UIModal)`
-  width: 100%;
-
-  ${Mixin.Screen.md(css`
-    width: 50%;
-    margin: var(--i-large);
-  `)}
-`;
-
 const MobileStep = styled(Text)`
   position: sticky;
   top: 4rem;
@@ -94,4 +84,4 @@ const MobileButtonsContainer = styled(Grid)`
   grid-gap: 1rem;
 `;
 
-export default { Stepper, Container, Modal, Step, MobileStep, Description, MobileButtonsContainer };
+export default { Stepper, Container, Step, MobileStep, Description, MobileButtonsContainer };
