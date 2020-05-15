@@ -5,8 +5,6 @@ import { Observation } from 'ts4ocds/extensions/metrics';
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 
-import { AvailableVariant, Item as ItemType } from 'types/data';
-
 import { Classification } from 'shared';
 import { formatNumber } from 'utils';
 
@@ -14,6 +12,7 @@ import { Metrics } from './components';
 import { efficiencyClasses, EfficiencyClass } from './Item.module';
 
 import Styled from './Item.styles';
+import { ItemProps } from './Item.types';
 
 export const Item = ({
   variant,
@@ -22,14 +21,8 @@ export const Item = ({
   isRequested = false,
   hoveredObservation,
   setHoveredObservation,
-}: {
-  variant: AvailableVariant;
-  item: ItemType;
-  document?: string;
-  isRequested?: boolean;
-  hoveredObservation: string;
-  setHoveredObservation: (id: string) => void;
-}) => {
+  hasMany = true,
+}: ItemProps) => {
   const efficiencyObservation = variant.metrics
     .flatMap((metric) => metric.observations)
     .find((observation) => observation.id === 'energyEfficiencyClass');
@@ -41,7 +34,7 @@ export const Item = ({
   };
 
   return (
-    <Styled.Item direction="column">
+    <Styled.Item direction="column" isRequested={isRequested}>
       <Styled.Image link={document} isReversed={!isRequested}>
         {isRequested && (
           <Styled.EfficiencyClassesList>
@@ -93,7 +86,7 @@ export const Item = ({
         )}
       </Styled.Image>
 
-      <Styled.Content direction="column">
+      <Styled.Content direction="column" hasMany={hasMany}>
         <Styled.ItemDescription>
           <Text variant="body" appearance="bold">
             {item.description}

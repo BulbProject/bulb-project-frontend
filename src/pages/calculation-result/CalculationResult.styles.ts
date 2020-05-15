@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
-import Button from 'ustudio-ui/components/Button';
 import { Mixin } from 'ustudio-ui/theme';
 
 const Wrapper = styled(Flex)`
@@ -10,21 +9,6 @@ const Wrapper = styled(Flex)`
   margin: calc(var(--i-large) * -1) 0;
   padding: 0 var(--i-large) 0;
 `;
-
-const FilterButton = styled(Button)`
-  svg {
-    width: 0.7rem;
-
-    margin-left: var(--i-medium);
-    margin-top: 1px;
-  }
-`;
-
-const RequestedNeed = styled(Flex)<{ hasMany: boolean }>(
-  ({ hasMany }) => css`
-    width: ${hasMany ? 450 : 640}px;
-  `
-);
 
 const MobileFilterButton = styled.button`
   position: fixed;
@@ -60,4 +44,4 @@ const MobileFilterButton = styled.button`
   }
 `;
 
-export default { Wrapper, FilterButton, RequestedNeed, MobileFilterButton };
+export default { Wrapper, MobileFilterButton };

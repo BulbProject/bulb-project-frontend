@@ -1,12 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { css } from 'styled-components';
-import { Item as ItemType } from 'types/data';
 
 import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
-import Drawer from 'ustudio-ui/components/Drawer';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { Layout, ErrorBoundary, FadeIn, ErrorPage } from 'components';
@@ -20,7 +17,8 @@ import type { StoreRequestedNeed } from 'types/globals';
 import { prepareRequestedNeed } from 'utils';
 import FilterIcon from '../../assets/icons/filter.inline.svg';
 
-import { Filter, Item, Items } from './modules';
+import { Items } from './modules';
+import { RequestedNeed } from './modules/RequestedNeed';
 
 import { CalculationContextProvider } from './store';
 import Styled from './CalculationResult.styles';
@@ -106,87 +104,51 @@ const CalculationResult: React.FC = () => {
               category={categoryVersion.category}
               requestedNeed={requestedNeed as StoreRequestedNeed}
             >
-              <Styled.Wrapper alignment={{ horizontal: 'center' }} direction={isLg ? 'row' : 'column'}>
-                <Styled.RequestedNeed direction="column" hasMany={hasMany}>
-                  <Flex
-                    alignment={{ horizontal: 'space-between', vertical: 'center' }}
-                    margin={{ bottom: 'large', top: 'regular' }}
-                    padding={{ left: 'medium' }}
-                  >
-                    <Text variant="body" appearance="bold">
-                      Те, що Ви шукали
-                    </Text>
-
-                    <Styled.FilterButton
-                      appearance="text"
-                      onClick={() => setDrawerOpen(!isDrawerOpen)}
-                      iconAfter={<FilterIcon />}
-                    >
-                      Змінити умови
-                    </Styled.FilterButton>
-
-                    <Drawer
-                      isOpen={isDrawerOpen}
-                      onChange={() => setDrawerOpen(false)}
-                      showOverlay
-                      position={isLg ? 'left' : 'right'}
-                      styled={{
-                        Drawer: css`
-                          z-index: var(--l-topmost);
-                        `,
-                        Overlay: css`
-                          background-color: var(--c-darkest);
-
-                          z-index: calc(var(--l-topmost) - 1);
-                        `,
-                      }}
-                    >
-                      <Filter
-                        error={recalculationError?.message}
-                        isLoading={isRecalculating}
-                        setSubmitting={setSubmitting}
-                        recalculate={(state) => {
-                          setNewRequestedNeed(state);
-                          setDrawerOpen(false);
-                        }}
-                      />
-                    </Drawer>
-                  </Flex>
-
-                  <Item
-                    isRequested
-                    variant={availableVariants[0]}
-                    item={
-                      categoryVersion.category.items.find(
-                        (item) => item.id === availableVariants[0].relatedItem
-                      ) as ItemType
-                    }
-                    document={
-                      categoryVersion.category.documents?.find((document) => {
-                        return (
-                          document.relatesTo === 'item' && document.relatedItem === availableVariants[0].relatedItem
-                        );
-                      })?.url
-                    }
+              {hasMany ? (
+                <Styled.Wrapper alignment={{ horizontal: 'center' }} direction={isLg ? 'row' : 'column'}>
+                  <RequestedNeed
+                    hasMany={hasMany}
+                    isDrawerOpen={isDrawerOpen}
+                    setDrawerOpen={setDrawerOpen}
+                    isRecalculating={isRecalculating}
+                    setSubmitting={setSubmitting}
+                    category={categoryVersion.category}
+                    requestedNeed={availableVariants[0]}
                     hoveredObservation={hoveredObservation}
                     setHoveredObservation={setHoveredObservation}
+                    setNewRequestedNeed={setNewRequestedNeed}
+                    recalculationError={recalculationError?.message}
                   />
-                </Styled.RequestedNeed>
 
-                {availableVariants.length > 1 && (
                   <Items
                     availableVariants={availableVariants}
                     hoveredObservation={hoveredObservation}
                     setHoveredObservation={setHoveredObservation}
                   />
-                )}
+                </Styled.Wrapper>
+              ) : (
+                <Container>
+                  <RequestedNeed
+                    hasMany={hasMany}
+                    isDrawerOpen={isDrawerOpen}
+                    setDrawerOpen={setDrawerOpen}
+                    isRecalculating={isRecalculating}
+                    setSubmitting={setSubmitting}
+                    category={categoryVersion.category}
+                    requestedNeed={availableVariants[0]}
+                    hoveredObservation={hoveredObservation}
+                    setHoveredObservation={setHoveredObservation}
+                    setNewRequestedNeed={setNewRequestedNeed}
+                    recalculationError={recalculationError?.message}
+                  />
+                </Container>
+              )}
 
-                {!isLg && (
-                  <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
-                    <FilterIcon />
-                  </Styled.MobileFilterButton>
-                )}
-              </Styled.Wrapper>
+              {!isLg && (
+                <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
+                  <FilterIcon />
+                </Styled.MobileFilterButton>
+              )}
             </CalculationContextProvider>
           ) : (
             <Container>
