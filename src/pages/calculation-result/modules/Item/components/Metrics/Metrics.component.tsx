@@ -74,17 +74,10 @@ export const Metrics = ({
                   </Styled.ObservationTitle>
                 )}
 
-                <Text
-                  variant="small"
-                  styled={{
-                    Text: css`
-                      white-space: nowrap;
-                    `,
-                  }}
-                >
+                <Styled.ObservationMeasure variant="small" align="center">
                   {typeof observation.measure === 'number' ? formatNumber(observation.measure) : observation.measure}
                   {formatNumber(observation.value?.amount)} {getObservationUnit(observation)}
-                </Text>
+                </Styled.ObservationMeasure>
 
                 {isLg && metric.id !== 'economy' && (
                   <Styled.Highlight isHovered={hoveredObservation === observation.id} />

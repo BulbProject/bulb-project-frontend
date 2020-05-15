@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
 
 const Metrics = styled(Flex)`
   padding-top: var(--i-regular);
@@ -25,6 +26,14 @@ const Observation = styled(Flex)`
 const ObservationTitle = styled(Flex)`
   white-space: nowrap;
   overflow: hidden;
+
+  flex: calc(2 / 3);
+`;
+
+const ObservationMeasure = styled(Text)`
+  white-space: nowrap;
+
+  flex: calc(1 / 3);
 `;
 
 const Highlight = styled.div(({ isHovered }: { isHovered: boolean }) => {
@@ -46,4 +55,4 @@ const Highlight = styled.div(({ isHovered }: { isHovered: boolean }) => {
   `;
 });
 
-export default { Metrics, Metric, Observation, ObservationTitle, Highlight };
+export default { Metrics, Metric, Observation, ObservationTitle, ObservationMeasure, Highlight };
