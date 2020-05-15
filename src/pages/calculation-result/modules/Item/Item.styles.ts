@@ -7,8 +7,8 @@ import { itemWidth } from '../../CalculationResult.module';
 
 import { EfficiencyClass as EfficiencyClassType, efficiencyClasses, getEfficiencyColor } from './Item.module';
 
-const Image = styled(Flex)<{ link?: string }>(
-  ({ link }) => css`
+const Image = styled(Flex)<{ link?: string; isSearched?: boolean }>(
+  ({ link, isSearched }) => css`
     justify-content: space-between;
     flex-shrink: 0;
 
@@ -18,7 +18,7 @@ const Image = styled(Flex)<{ link?: string }>(
 
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: ${isSearched ? 'center' : '75%'} center;
     background-origin: content-box;
     background-image: url(${link});
     object-fit: cover;
@@ -44,7 +44,7 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
       background: ${getEfficiencyColor(efficiencyClass)};
 
       color: var(--c-white);
-      
+
       pointer-events: none;
       user-select: none;
 

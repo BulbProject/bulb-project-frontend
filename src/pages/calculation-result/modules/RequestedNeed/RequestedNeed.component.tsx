@@ -82,6 +82,7 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
       </Flex>
 
       <Item
+        isSearched
         hasMany={hasMany}
         isRequested
         variant={requestedNeed}
