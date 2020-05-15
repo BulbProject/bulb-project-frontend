@@ -33,9 +33,15 @@ const Highlight = styled.div(({ isHovered }: { isHovered: boolean }) => {
     top: -4px;
     left: -1rem;
     right: -1rem;
+
+    z-index: -1;
+
     height: 24px;
-    background-color: rgba(0, 0, 0, 0.05);
+
+    background-color: var(--c-light);
+
     opacity: ${isHovered ? 1 : 0};
+
     transition: var(--transition);
   `;
 });

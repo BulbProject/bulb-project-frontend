@@ -66,10 +66,6 @@ export const Metrics = ({
                 onMouseEnter={() => setHoveredObservation(observation.id)}
                 onMouseLeave={() => setHoveredObservation('')}
               >
-                {isLg && metric.id !== 'economy' && (
-                  <Styled.Highlight isHovered={hoveredObservation === observation.id} />
-                )}
-
                 {showTitles && (
                   <Styled.ObservationTitle>
                     <Text variant="small" color="var(--c-dark)">
@@ -89,6 +85,10 @@ export const Metrics = ({
                   {typeof observation.measure === 'number' ? formatNumber(observation.measure) : observation.measure}
                   {formatNumber(observation.value?.amount)} {getObservationUnit(observation)}
                 </Text>
+
+                {isLg && metric.id !== 'economy' && (
+                  <Styled.Highlight isHovered={hoveredObservation === observation.id} />
+                )}
               </Styled.Observation>
             ))}
           </Styled.Metric>
