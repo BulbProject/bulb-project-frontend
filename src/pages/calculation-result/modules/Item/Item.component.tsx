@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 
+import { css } from 'styled-components';
+
 import { Observation } from 'ts4ocds/extensions/metrics';
 
 import Text from 'ustudio-ui/components/Text';
@@ -22,6 +24,7 @@ export const Item = ({
   hoveredObservation,
   setHoveredObservation,
   hasMany = true,
+  isSearched = false,
 }: ItemProps) => {
   const isEconomyObservation = useCallback(
     ({ id }: { id: string }) => id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy',
@@ -50,7 +53,7 @@ export const Item = ({
 
   return (
     <Styled.Item direction="column" isRequested={isRequested}>
-      <Styled.Image link={document} isReversed={!isRequested}>
+      <Styled.Image link={document} isReversed={!isRequested} isSearched={isSearched}>
         {isRequested && (
           <Styled.EfficiencyClassesList hasMany={hasMany}>
             {Object.keys(efficiencyClasses).map((efficiencyClass: string) => (
@@ -97,7 +100,16 @@ export const Item = ({
                   )}
 
                   {getUnit(observation) && (
-                    <Styled.EconomyUnit variant="small">{getUnit(observation)}</Styled.EconomyUnit>
+                    <Styled.EconomyUnit
+                      variant="small"
+                      styled={{
+                        Text: css`
+                          white-space: nowrap;
+                        `,
+                      }}
+                    >
+                      {getUnit(observation)}
+                    </Styled.EconomyUnit>
                   )}
                 </Styled.EconomyMeasure>
               </Styled.Economy>
