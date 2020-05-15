@@ -4,8 +4,6 @@ import Flex from 'ustudio-ui/components/Flex';
 const Content = styled.section`
   position: relative;
 
-  height: 100vh;
-
   background-image: linear-gradient(to bottom, rgba(26, 26, 26, 1), rgba(26, 26, 26, 1) 75%, rgba(26, 26, 26, 0.975));
 `;
 
@@ -48,8 +46,8 @@ const Arrow = styled(Flex)`
 
   height: 2rem;
 
-  color: var(--c-secondary-light);
-  background-color: rgba(26, 26, 26, 0.75);
+  color: var(--c-secondary);
+  background-color: var(--c-lightest);
 
   animation: ${show} 1.5s ease-in-out;
   animation-delay: 1.5s;
@@ -68,7 +66,7 @@ const Arrow = styled(Flex)`
 `;
 
 const DocumentContainer = styled(Flex)`
-  height: 100vh;
+  min-height: 100vh;
 
   justify-content: center;
   align-items: center;

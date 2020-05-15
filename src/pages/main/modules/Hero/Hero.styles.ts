@@ -1,4 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
+import { Link as RouterLink } from 'react-router-dom';
+
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
@@ -22,7 +24,7 @@ const textAppearance = keyframes`
   from {
     bottom: -2rem;
   }
-  
+
   to {
     bottom: 0;
   }
@@ -80,7 +82,7 @@ const HeroDescription = styled(HeroText)`
   ${Mixin.Screen.md(css`
     width: 66%;
   `)}
-  
+
   ${Mixin.Screen.lg(css`
     width: 50%;
   `)}
@@ -89,6 +91,8 @@ const HeroDescription = styled(HeroText)`
 const ActionImage = styled.img`
   position: relative;
   z-index: 2;
+
+  margin-bottom: var(--i-regular);
 
   opacity: 0.8;
 
@@ -111,17 +115,35 @@ const ActionImage = styled.img`
   `)}
 `;
 
+const ActionButton = styled(Text)`
+  color: var(--c-dark);
+
+  transition: transform var(--transition);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const Link = styled(RouterLink)`
+  margin-bottom: var(--i-large);
+
+  &:after {
+    content: unset;
+  }
+`;
+
 const ripple = keyframes`
   0% {
     opacity: 0;
     width: 0;
     height: 0;
   }
-  
+
   15% {
     opacity: 1;
   }
-  
+
   50%,
   100% {
     opacity: 0;
@@ -134,11 +156,11 @@ const bump = keyframes`
   0% {
     transform: scale(0.975);
   }
-  
+
   50% {
     transform: scale(1);
   }
-  
+
   100% {
     transform: scale(0.975);
   }
@@ -175,12 +197,6 @@ const CallToAction = styled.button`
 
     animation: ${ripple} 3s infinite;
   }
-
-  a {
-    &:after {
-      content: unset;
-    }
-  }
 `;
 
-export default { Hero, HeroText, HeroCaption, HeroDescription, ActionImage, CallToAction };
+export default { Hero, HeroText, HeroCaption, HeroDescription, ActionImage, CallToAction, ActionButton, Link };
