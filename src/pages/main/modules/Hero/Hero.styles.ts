@@ -130,6 +130,12 @@ const ActionButton = styled(Text)`
 `;
 
 const Link = styled(RouterLink)`
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
   margin-bottom: var(--i-large);
 
   &:after {
@@ -151,8 +157,8 @@ const ripple = keyframes`
   50%,
   100% {
     opacity: 0;
-    width: 100%;
-    height: 75%;
+    width: 4rem;
+    height: 4rem;
   }
 `;
 
@@ -184,11 +190,11 @@ const CallToAction = styled.button`
     content: '';
 
     position: absolute;
-    top: 35%;
+    top: 33%;
     left: 50%;
     z-index: 1;
 
-    border-radius: 100% 100%;
+    border-radius: 4rem;
 
     transform: translateX(-50%) translateY(-50%);
 

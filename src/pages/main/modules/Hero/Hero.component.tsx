@@ -10,14 +10,13 @@ import Styled from './Hero.styles';
 export const Hero = () => {
   return (
     <FadeIn>
-      <Styled.Hero direction="column" alignment={{ horizontal: 'center', vertical: 'center' }}>
+      <Styled.Hero direction="column" alignment={{ horizontal: 'center', vertical: 'space-around' }}>
         <Flex
           direction="column"
           alignment={{ horizontal: 'center' }}
           styled={{
             Flex: css`
               position: relative;
-              padding-bottom: 6rem;
             `,
           }}
         >
@@ -31,15 +30,15 @@ export const Hero = () => {
           </Styled.HeroDescription>
         </Flex>
 
-        <Styled.Link to="/categories">
-          <Flex direction="column" alignment={{ horizontal: 'center' }}>
+        <Flex direction="column" alignment={{ horizontal: 'center', vertical: 'center' }}>
+          <Styled.Link to="/categories">
             <Styled.CallToAction>
               <Styled.ActionImage src={BulbImage} />
             </Styled.CallToAction>
 
             <Styled.ActionButton variant="h6">Почати розрахунок</Styled.ActionButton>
-          </Flex>
-        </Styled.Link>
+          </Styled.Link>
+        </Flex>
       </Styled.Hero>
     </FadeIn>
   );
