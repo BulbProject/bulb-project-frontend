@@ -33,6 +33,8 @@ const getItemWidth = ({ hasMany, isLg }: { hasMany: boolean; isLg: boolean }) =>
 const RequestedNeed = styled(Flex)<{ hasMany: boolean; isLg: boolean }>(
   ({ hasMany, isLg }) => css`
     width: ${getItemWidth({ hasMany, isLg })};
+
+    min-width: 450px;
   `
 );
 

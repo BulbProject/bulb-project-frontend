@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { Observation } from 'ts4ocds/extensions/metrics';
 
@@ -23,11 +23,20 @@ export const Item = ({
   setHoveredObservation,
   hasMany = true,
 }: ItemProps) => {
-  const efficiencyObservation = variant.metrics
-    .flatMap((metric) => metric.observations)
-    .find((observation) => observation.id === 'energyEfficiencyClass');
+  const isEconomyObservation = useCallback(
+    ({ id }: { id: string }) => id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy',
+    []
+  );
 
-  const economyMetric = variant.metrics.find((metric) => metric.id === 'economy');
+  const efficiencyObservation = useMemo(() => {
+    return variant.metrics
+      .flatMap((metric) => metric.observations)
+      .find((observation) => observation.id === 'energyEfficiencyClass');
+  }, [JSON.stringify(variant.metrics)]);
+
+  const economyObservations = useMemo(() => {
+    return variant.metrics.flatMap(({ observations }) => observations).filter(isEconomyObservation);
+  }, [JSON.stringify(variant.metrics)]);
 
   const getUnit = useCallback(
     (observation: Observation) => {
@@ -60,9 +69,9 @@ export const Item = ({
           </Styled.EfficiencyClass>
         )}
 
-        {economyMetric && (
+        {Boolean(economyObservations.length) && (
           <Styled.EconomyContainer>
-            {economyMetric.observations.map((observation) => (
+            {economyObservations.map((observation) => (
               <Styled.Economy
                 key={observation.id}
                 $backgroundColor={observation.id === 'energyEconomy' ? 'secondary' : 'primary'}
@@ -109,7 +118,7 @@ export const Item = ({
 
         <Metrics
           showTitles={isRequested}
-          metrics={variant.metrics}
+          metrics={variant.metrics.filter(({ observations }) => !observations.filter(isEconomyObservation).length)}
           hoveredObservation={hoveredObservation}
           setHoveredObservation={setHoveredObservation}
         />
