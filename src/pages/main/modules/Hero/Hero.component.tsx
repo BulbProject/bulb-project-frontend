@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 
@@ -11,13 +10,14 @@ import Styled from './Hero.styles';
 export const Hero = () => {
   return (
     <FadeIn>
-      <Styled.Hero direction="column" alignment={{ horizontal: 'center', vertical: 'space-around' }}>
+      <Styled.Hero direction="column" alignment={{ horizontal: 'center', vertical: 'center' }}>
         <Flex
           direction="column"
           alignment={{ horizontal: 'center' }}
           styled={{
             Flex: css`
               position: relative;
+              padding-bottom: 6rem;
             `,
           }}
         >
@@ -31,11 +31,15 @@ export const Hero = () => {
           </Styled.HeroDescription>
         </Flex>
 
-        <Styled.CallToAction>
-          <Link to="/categories">
-            <Styled.ActionImage src={BulbImage} />
-          </Link>
-        </Styled.CallToAction>
+        <Styled.Link to="/categories">
+          <Flex direction="column" alignment={{ horizontal: 'center' }}>
+            <Styled.CallToAction>
+              <Styled.ActionImage src={BulbImage} />
+            </Styled.CallToAction>
+
+            <Styled.ActionButton variant="h6">Почати розрахунок</Styled.ActionButton>
+          </Flex>
+        </Styled.Link>
       </Styled.Hero>
     </FadeIn>
   );
