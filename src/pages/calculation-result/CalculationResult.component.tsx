@@ -156,7 +156,7 @@ const CalculationResult: React.FC = () => {
             <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
               {isLoading && <Spinner delay={500} />}
 
-              {(!requestedNeed || !categoryVersion) && !isLoading && error?.statusCode === 404 && (
+              {!isLoading && (!requestedNeed || !categoryVersion || error?.statusCode === 404) && (
                 <Text color="negative">
                   Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
                   цієї категорії ☹️
