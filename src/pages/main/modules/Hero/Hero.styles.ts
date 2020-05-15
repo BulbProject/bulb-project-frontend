@@ -123,6 +123,10 @@ const ActionButton = styled(Text)`
   &:hover {
     transform: scale(1.05);
   }
+
+  &:active {
+    transform: scale(1);
+  }
 `;
 
 const Link = styled(RouterLink)`
