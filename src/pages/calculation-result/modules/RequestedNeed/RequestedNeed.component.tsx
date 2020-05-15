@@ -7,6 +7,7 @@ import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { Item as ItemType } from 'types/data';
 import FilterIcon from '../../../../assets/icons/filter.inline.svg';
+import CloseIcon from '../../../../assets/icons/times.inline.svg';
 
 import { Filter } from '../Filter';
 import { Item } from '../Item';
@@ -51,6 +52,7 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
           position={isLg ? 'left' : 'right'}
           styled={{
             Drawer: css`
+              width: 320px;
               z-index: var(--l-topmost);
             `,
             Overlay: css`
@@ -60,6 +62,10 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
             `,
           }}
         >
+          <Styled.CloseDrawer onClick={() => setDrawerOpen(false)}>
+            <CloseIcon />
+          </Styled.CloseDrawer>
+
           <Filter
             error={recalculationError}
             isLoading={isRecalculating}
