@@ -4,8 +4,6 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
 
-import { itemWidth } from '../../CalculationResult.module';
-
 const Title = styled(Text)`
   text-transform: uppercase;
 `;

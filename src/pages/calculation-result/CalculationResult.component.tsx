@@ -6,7 +6,7 @@ import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
-import { Layout, ErrorBoundary, FadeIn, ErrorPage } from 'components';
+import { Layout, ErrorBoundary, ErrorPage } from 'components';
 import { Container } from 'shared';
 
 import type { AvailableVariant, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
