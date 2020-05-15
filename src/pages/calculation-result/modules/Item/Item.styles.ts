@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
+import { Mixin } from 'ustudio-ui/theme';
 import { itemWidth } from '../../CalculationResult.module';
 
 import { EfficiencyClass as EfficiencyClassType, efficiencyClasses, getEfficiencyColor } from './Item.module';
@@ -115,10 +116,20 @@ const EconomyMeasure = styled(Flex)`
   width: 45%;
 `;
 
+const EconomyTimesMeasure = styled(Text)`
+  ${Mixin.Font.h2()};
+
+  line-height: 1;
+`;
+
 const EconomyNote = styled(Text)`
   width: 55%;
 
-  font-weight: 700;
+  line-height: 1.5;
+`;
+
+const EconomyUnit = styled(Text)`
+  margin-top: -4px;
 `;
 
 const BoldText = styled(Text)`
@@ -193,6 +204,8 @@ export default {
   Economy,
   EconomyContainer,
   EconomyMeasure,
+  EconomyTimesMeasure,
   EconomyNote,
+  EconomyUnit,
   BoldText,
 };

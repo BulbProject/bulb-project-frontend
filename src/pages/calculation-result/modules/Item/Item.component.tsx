@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Observation } from 'ts4ocds/extensions/metrics';
 
@@ -29,9 +29,12 @@ export const Item = ({
 
   const economyMetric = variant.metrics.find((metric) => metric.id === 'economy');
 
-  const getUnit = (observation: Observation) => {
-    return observation.unit?.name || observation.value?.currency || '';
-  };
+  const getUnit = useCallback(
+    (observation: Observation) => {
+      return observation.unit?.name || observation.value?.currency || '';
+    },
+    [JSON.stringify(variant)]
+  );
 
   return (
     <Styled.Item direction="column" isRequested={isRequested}>
@@ -73,15 +76,17 @@ export const Item = ({
                     </Text>
                   ) : (
                     <Flex alignment={{ vertical: 'center', horizontal: 'end' }}>
-                      <Styled.BoldText variant="small">x &nbsp;</Styled.BoldText>
+                      <Styled.BoldText variant="small">x&nbsp;</Styled.BoldText>
 
-                      <Text variant="h4">
+                      <Styled.EconomyTimesMeasure>
                         {formatNumber((observation.measure as number) || observation.value?.amount)}
-                      </Text>
+                      </Styled.EconomyTimesMeasure>
                     </Flex>
                   )}
 
-                  <Styled.BoldText variant="small">{getUnit(observation)}</Styled.BoldText>
+                  {getUnit(observation) && (
+                    <Styled.EconomyUnit variant="small">{getUnit(observation)}</Styled.EconomyUnit>
+                  )}
                 </Styled.EconomyMeasure>
               </Styled.Economy>
             ))}
