@@ -1,8 +1,7 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Form } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
-import Text from 'ustudio-ui/components/Text';
 import Alert from 'ustudio-ui/components/Alert';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 import { useHistory } from 'react-router-dom';
@@ -23,6 +22,8 @@ import { Overlay, Step, StepperButton } from './components';
 import Styled from './Stepper.styles';
 
 export const Stepper: React.FC = () => {
+  const { push } = useHistory();
+
   const { currentCriterion, criteria, requestedNeed, requestedNeedData, category, dispatch } = useCategoryContext();
 
   const { title, description } = useMemo(() => currentCriterion, [currentCriterion.id]);
@@ -61,7 +62,11 @@ export const Stepper: React.FC = () => {
     }, 100);
   };
 
-  const { push } = useHistory();
+  useEffect(() => {
+    if (!isLoading && !error && Boolean(calculationResponse)) {
+      push(`/categories/${category.id}/${category.version}/calculation-result`);
+    }
+  });
 
   const isXs = useMediaQuery('screen and (min-width: 576px)');
   const isMd = useMediaQuery('screen and (min-width: 768px)');
@@ -96,26 +101,6 @@ export const Stepper: React.FC = () => {
         <Alert onChange={triggerRequest} isOpen={Boolean(error)} horizontalPosition="center" verticalPosition="top">
           Упс, щось пішло не так...
         </Alert>
-      )}
-
-      {!isLoading && !error && Boolean(requestedNeedData) && (
-        <Styled.Modal
-          title="Успіх!"
-          isOpen={!isLoading && !error && Boolean(requestedNeedData)}
-          onChange={() => {
-            sessionStorage.setItem(
-              `${category.id}/${category.version}`,
-              JSON.stringify({
-                payload: requestedNeed,
-                response: calculationResponse,
-              })
-            );
-
-            push(`/categories/${category.id}/${category.version}/calculation-result`);
-          }}
-        >
-          <Text>Ваш розрахунковий запит був успішно надісланий :)</Text>
-        </Styled.Modal>
       )}
 
       <Styled.Stepper alignment={{ horizontal: 'center' }} length={steps.length}>
