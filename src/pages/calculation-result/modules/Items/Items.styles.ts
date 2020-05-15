@@ -122,12 +122,12 @@ const IndicatorsContainer = styled(Flex)`
 
 const Indicator = styled.div(
   ({ active }: { active: boolean }) => css`
-    width: ${active ? '12px' : 'var(--i-medium)'};
-    height: ${active ? '12px' : 'var(--i-medium)'};
+    width: ${active ? '10px' : '8px'};
+    height: ${active ? '10px' : '8px'};
 
     margin: var(--i-small);
 
-    border-radius: ${active ? '12px' : 'var(--i-medium)'};
+    border-radius: 10px;
 
     background-color: ${active ? 'var(--c-primary)' : 'var(--c-neutral)'};
 
