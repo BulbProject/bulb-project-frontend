@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -15,7 +15,17 @@ import { FadeIn } from '../FadeIn';
 import Styled from './Aside.styles';
 
 export const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
-  const { isLoading, data: filesList, error, triggerRequest } = useRequest<{ name: string }[]>(getInfoFiles());
+  const [isMounted, setMounted] = useState(false);
+
+  const { isLoading, data: filesList, error, triggerRequest } = useRequest<{ name: string }[]>(getInfoFiles(), {
+    isRequesting: isMounted,
+  });
+
+  useEffect(() => {
+    setMounted(true);
+
+    return () => setMounted(false);
+  }, []);
 
   return (
     <>

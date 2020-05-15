@@ -35,7 +35,10 @@ export const Item = ({
   }, [JSON.stringify(variant.metrics)]);
 
   const economyObservations = useMemo(() => {
-    return variant.metrics.flatMap(({ observations }) => observations).filter(isEconomyObservation);
+    return variant.metrics
+      .flatMap(({ observations }) => observations)
+      .filter(isEconomyObservation)
+      .sort(({ id }) => (id === 'energyEconomy' ? 1 : -1));
   }, [JSON.stringify(variant.metrics)]);
 
   const getUnit = useCallback(

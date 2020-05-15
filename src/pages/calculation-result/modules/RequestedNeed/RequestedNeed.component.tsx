@@ -2,7 +2,6 @@ import React from 'react';
 import { css } from 'styled-components';
 import Drawer from 'ustudio-ui/components/Drawer';
 import Flex from 'ustudio-ui/components/Flex';
-import Text from 'ustudio-ui/components/Text';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { Item as ItemType } from 'types/data';
