@@ -4,11 +4,10 @@ import { Mixin } from 'ustudio-ui/theme';
 
 const Wrapper = styled(Flex)<{ isLg: boolean }>(
   ({ isLg }) => css`
-    max-width: 100vw;
+    max-width: calc(100vw + var(--i-large) * 2);
     height: 100%;
 
-    margin: calc(var(--i-large) * -1) 0;
-    padding: 0 var(--i-large) 0;
+    margin: calc(var(--i-large) * -1) var(--i-large);
 
     overflow-x: ${isLg ? 'unset' : 'auto'};
   `
