@@ -40,9 +40,15 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
           Те, що Ви шукали
         </Styled.Title>
 
-        <Styled.FilterButton appearance="text" onClick={() => setDrawerOpen(!isDrawerOpen)} iconAfter={<FilterIcon />}>
-          Змінити умови
-        </Styled.FilterButton>
+        {isLg && (
+          <Styled.FilterButton
+            appearance="text"
+            onClick={() => setDrawerOpen(!isDrawerOpen)}
+            iconAfter={<FilterIcon />}
+          >
+            Змінити умови
+          </Styled.FilterButton>
+        )}
 
         <Drawer
           isOpen={isDrawerOpen}
