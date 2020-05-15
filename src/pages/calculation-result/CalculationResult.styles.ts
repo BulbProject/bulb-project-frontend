@@ -2,13 +2,17 @@ import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import { Mixin } from 'ustudio-ui/theme';
 
-const Wrapper = styled(Flex)`
-  max-width: 100vw;
-  height: 100%;
+const Wrapper = styled(Flex)<{ isLg: boolean }>(
+  ({ isLg }) => css`
+    max-width: 100vw;
+    height: 100%;
 
-  margin: calc(var(--i-large) * -1) 0;
-  padding: 0 var(--i-large) 0;
-`;
+    margin: calc(var(--i-large) * -1) 0;
+    padding: 0 var(--i-large) 0;
+
+    overflow-x: ${isLg ? 'unset' : 'auto'};
+  `
+);
 
 const MobileFilterButton = styled.button`
   position: fixed;

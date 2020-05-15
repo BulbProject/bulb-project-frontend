@@ -3,20 +3,22 @@ import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import { itemWidth } from '../../CalculationResult.module';
 
-const Items = styled(Flex)<{ quantity: number; hasMany: boolean }>(
-  ({ quantity, hasMany }) => css`
+const Items = styled(Flex)<{ quantity: number; hasMany: boolean; isLg: boolean }>(
+  ({ quantity, hasMany, isLg }) => css`
     position: relative;
 
     max-width: 100%;
     width: ${itemWidth * quantity}px;
 
-    overflow-x: auto;
+    overflow-x: ${isLg ? 'auto' : 'visible'};
 
     &:before,
     &:after {
       position: absolute;
       top: 0;
       bottom: 0;
+
+      z-index: 2;
 
       width: 30px;
 
@@ -27,24 +29,26 @@ const Items = styled(Flex)<{ quantity: number; hasMany: boolean }>(
       content: '';
       left: 0;
 
-      background-image: linear-gradient(to right, rgba(238, 238, 238, 0.5), rgba(222, 222, 222, 0));
+      background-image: linear-gradient(to right, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0));
     }
 
     &:after {
-      content: ${hasMany ? `''` : 'unset'};
+      content: ${hasMany && isLg ? `''` : 'unset'};
       right: 0;
 
-      background-image: linear-gradient(to left, rgba(238, 238, 238, 0.5), rgba(222, 222, 222, 0));
+      background-image: linear-gradient(to left, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0));
     }
   `
 );
 
-const AvailableVariants = styled(Flex)<{ isMd: boolean }>`
-  position: relative;
-  height: 100%;
+const AvailableVariants = styled(Flex)<{ isLg: boolean }>(
+  ({ isLg }) => css`
+    position: relative;
+    height: 100%;
 
-  overflow-x: auto;
-`;
+    overflow-x: ${isLg ? 'auto' : 'visible'};
+  `
+);
 
 const ItemsTitle = styled(Flex)`
   margin-top: calc(var(--i-regular) + 5px);

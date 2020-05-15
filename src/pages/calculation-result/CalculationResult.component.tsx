@@ -105,7 +105,7 @@ const CalculationResult: React.FC = () => {
               requestedNeed={requestedNeed as StoreRequestedNeed}
             >
               {hasMany ? (
-                <Styled.Wrapper alignment={{ horizontal: 'center' }} direction={isLg ? 'row' : 'column'}>
+                <Styled.Wrapper alignment={{ horizontal: 'center' }} isLg={isLg}>
                   <RequestedNeed
                     hasMany={hasMany}
                     isDrawerOpen={isDrawerOpen}

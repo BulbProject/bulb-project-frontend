@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import Button from 'ustudio-ui/components/Button';
 import Flex from 'ustudio-ui/components/Flex';
+import { itemWidth } from '../../CalculationResult.module';
 
 const FilterButton = styled(Button)`
   svg {
@@ -11,9 +12,21 @@ const FilterButton = styled(Button)`
   }
 `;
 
-const RequestedNeed = styled(Flex)<{ hasMany: boolean }>(
-  ({ hasMany }) => css`
-    width: ${hasMany ? `${450}px` : '100%'};
+const getItemWidth = ({ hasMany, isLg }: { hasMany: boolean; isLg: boolean }) => {
+  if (!isLg) {
+    return `${itemWidth}px`;
+  }
+
+  if (hasMany && isLg) {
+    return '450px';
+  }
+
+  return '100%';
+};
+
+const RequestedNeed = styled(Flex)<{ hasMany: boolean; isLg: boolean }>(
+  ({ hasMany, isLg }) => css`
+    width: ${getItemWidth({ hasMany, isLg })};
   `
 );
 

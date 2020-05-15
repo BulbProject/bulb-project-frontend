@@ -30,7 +30,7 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
   const isLg = useMediaQuery('screen and (min-width: 832px)');
 
   return (
-    <Styled.RequestedNeed direction="column" hasMany={hasMany && isLg}>
+    <Styled.RequestedNeed direction="column" hasMany={hasMany} isLg={isLg}>
       <Flex
         alignment={{ horizontal: 'space-between', vertical: 'center' }}
         margin={{ bottom: 'large', top: 'regular' }}

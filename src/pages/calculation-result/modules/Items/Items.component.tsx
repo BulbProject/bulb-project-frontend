@@ -23,20 +23,20 @@ export const Items = ({
     category: { items, documents },
   } = useCalculationContext();
 
-  const isMd = useMediaQuery('screen and (min-width: 798px)');
+  const isLg = useMediaQuery('screen and (min-width: 832px)');
 
   const itemsQuantity = useMemo(() => availableVariants.length - 1, [availableVariants.length]);
   const hasMany = useMemo(() => itemsQuantity > 1, [itemsQuantity]);
 
   return (
-    <Styled.Items direction="column" quantity={itemsQuantity} hasMany={hasMany}>
+    <Styled.Items direction="column" quantity={itemsQuantity} hasMany={hasMany} isLg={isLg}>
       <Styled.ItemsTitle>
         <Text variant="body" appearance="bold" color="var(--c-dark)">
           Більш енергоефективні варіанти
         </Text>
       </Styled.ItemsTitle>
 
-      <Styled.AvailableVariants isMd={isMd}>
+      <Styled.AvailableVariants isLg={isLg}>
         {availableVariants.slice(1).map((variant) => {
           const relatedItem = items.find((item) => item.id === variant.relatedItem) as ItemType;
 
