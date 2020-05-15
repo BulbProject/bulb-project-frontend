@@ -6,7 +6,7 @@ import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
-import { Layout, ErrorBoundary, ErrorPage } from 'components';
+import { Layout, ErrorBoundary, ErrorPage, FadeIn } from 'components';
 import { Container } from 'shared';
 
 import type { AvailableVariant, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
@@ -103,45 +103,47 @@ const CalculationResult: React.FC = () => {
             category={categoryVersion.category}
             requestedNeed={requestedNeed as StoreRequestedNeed}
           >
-            {hasMany ? (
-              <Styled.Wrapper alignment={{ horizontal: isLg ? 'center' : 'start' }}>
-                <RequestedNeed
-                  hasMany={hasMany}
-                  isDrawerOpen={isDrawerOpen}
-                  setDrawerOpen={setDrawerOpen}
-                  isRecalculating={isRecalculating}
-                  setSubmitting={setSubmitting}
-                  category={categoryVersion.category}
-                  requestedNeed={availableVariants[0]}
-                  hoveredObservation={hoveredObservation}
-                  setHoveredObservation={setHoveredObservation}
-                  setNewRequestedNeed={setNewRequestedNeed}
-                  recalculationError={recalculationError?.message}
-                />
+            <FadeIn>
+              {hasMany ? (
+                <Styled.Wrapper alignment={{ horizontal: isLg ? 'center' : 'start' }}>
+                  <RequestedNeed
+                    hasMany={hasMany}
+                    isDrawerOpen={isDrawerOpen}
+                    setDrawerOpen={setDrawerOpen}
+                    isRecalculating={isRecalculating}
+                    setSubmitting={setSubmitting}
+                    category={categoryVersion.category}
+                    requestedNeed={availableVariants[0]}
+                    hoveredObservation={hoveredObservation}
+                    setHoveredObservation={setHoveredObservation}
+                    setNewRequestedNeed={setNewRequestedNeed}
+                    recalculationError={recalculationError?.message}
+                  />
 
-                <Items
-                  availableVariants={availableVariants}
-                  hoveredObservation={hoveredObservation}
-                  setHoveredObservation={setHoveredObservation}
-                />
-              </Styled.Wrapper>
-            ) : (
-              <Container>
-                <RequestedNeed
-                  hasMany={hasMany}
-                  isDrawerOpen={isDrawerOpen}
-                  setDrawerOpen={setDrawerOpen}
-                  isRecalculating={isRecalculating}
-                  setSubmitting={setSubmitting}
-                  category={categoryVersion.category}
-                  requestedNeed={availableVariants[0]}
-                  hoveredObservation={hoveredObservation}
-                  setHoveredObservation={setHoveredObservation}
-                  setNewRequestedNeed={setNewRequestedNeed}
-                  recalculationError={recalculationError?.message}
-                />
-              </Container>
-            )}
+                  <Items
+                    availableVariants={availableVariants}
+                    hoveredObservation={hoveredObservation}
+                    setHoveredObservation={setHoveredObservation}
+                  />
+                </Styled.Wrapper>
+              ) : (
+                <Container>
+                  <RequestedNeed
+                    hasMany={hasMany}
+                    isDrawerOpen={isDrawerOpen}
+                    setDrawerOpen={setDrawerOpen}
+                    isRecalculating={isRecalculating}
+                    setSubmitting={setSubmitting}
+                    category={categoryVersion.category}
+                    requestedNeed={availableVariants[0]}
+                    hoveredObservation={hoveredObservation}
+                    setHoveredObservation={setHoveredObservation}
+                    setNewRequestedNeed={setNewRequestedNeed}
+                    recalculationError={recalculationError?.message}
+                  />
+                </Container>
+              )}
+            </FadeIn>
 
             {!isLg && (
               <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
