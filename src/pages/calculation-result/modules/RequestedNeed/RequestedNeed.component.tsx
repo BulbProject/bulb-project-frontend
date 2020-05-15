@@ -35,7 +35,6 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
       <Flex
         alignment={{ horizontal: 'space-between', vertical: 'center' }}
         margin={{ bottom: 'large', top: 'regular' }}
-        padding={{ left: 'medium' }}
       >
         <Styled.Title variant="body" appearance="bold">
           Те, що Ви шукали

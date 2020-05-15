@@ -32,7 +32,7 @@ export const Items = ({
     <Styled.Items direction="column" quantity={itemsQuantity} hasMany={hasMany} isLg={isLg}>
       <Styled.ItemsTitle>
         <Text variant="body" appearance="bold" color="var(--c-dark)">
-          Більш енергоефективні варіанти
+          {itemsQuantity > 1 ? 'Більш енергоефективні варіанти' : 'Більш енергоефективний варіант'}
         </Text>
       </Styled.ItemsTitle>
 
