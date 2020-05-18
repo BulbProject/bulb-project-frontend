@@ -41,4 +41,56 @@ const RequestedNeed = styled(Flex)<{ hasMany: boolean; isLg: boolean }>(
   `
 );
 
-export default { Title, RequestedNeed, FilterButton };
+const DrawerButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+
+  top: 0.25rem;
+  right: 0.25rem;
+
+  z-index: 2;
+
+  width: 3rem;
+  height: 3rem;
+
+  &:hover,
+  &:focus {
+    &:before,
+    &:after {
+      background-color: var(--c-negative);
+    }
+  }
+
+  &:before,
+  &:after {
+    content: '';
+
+    position: relative;
+
+    width: 3rem;
+    height: 1px;
+
+    background-color: var(--c-darkest);
+
+    transform-origin: center;
+
+    transition: background-color var(--transition);
+  }
+
+  &:before {
+    left: 50%;
+
+    transform: translateX(-50%) rotate(-45deg);
+  }
+
+  &:after {
+    right: 50%;
+
+    transform: translateX(50%) rotate(45deg);
+  }
+`;
+
+export default { Title, RequestedNeed, FilterButton, DrawerButton };
