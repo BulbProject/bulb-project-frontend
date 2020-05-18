@@ -5,7 +5,6 @@ import Flex from 'ustudio-ui/components/Flex';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { Item as ItemType } from 'types/data';
-import { CloseButton } from 'shared';
 import FilterIcon from '../../../../assets/icons/filter.inline.svg';
 
 import { Filter } from '../Filter';
@@ -67,7 +66,7 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
             `,
           }}
         >
-          <CloseButton onClick={setDrawerOpen} />
+          <Styled.DrawerButton onClick={() => setDrawerOpen(false)} />
 
           <Filter
             error={recalculationError}
