@@ -56,14 +56,6 @@ const DrawerButton = styled.button`
   width: 3rem;
   height: 3rem;
 
-  &:hover,
-  &:focus {
-    &:before,
-    &:after {
-      background-color: var(--c-negative);
-    }
-  }
-
   &:before,
   &:after {
     content: '';
@@ -76,8 +68,6 @@ const DrawerButton = styled.button`
     background-color: var(--c-darkest);
 
     transform-origin: center;
-
-    transition: background-color var(--transition);
   }
 
   &:before {
