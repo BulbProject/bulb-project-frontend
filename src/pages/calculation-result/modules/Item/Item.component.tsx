@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { css } from 'styled-components';
 
@@ -9,6 +9,8 @@ import Flex from 'ustudio-ui/components/Flex';
 
 import { Classification } from 'shared';
 import { formatNumber } from 'utils';
+
+import Bulb from '../../../../assets/images/bulb.svg';
 
 import { Metrics } from './components';
 import { efficiencyClasses, EfficiencyClass } from './Item.module';
@@ -50,9 +52,11 @@ export const Item = ({
     [JSON.stringify(variant)]
   );
 
+  const [imgLink, setImgLink] = useState(Bulb);
+
   return (
     <Styled.Item direction="column">
-      <Styled.Image link={document} isReversed={!isRequested} isSearched={isSearched}>
+      <Styled.ImageContainer link={document} isReversed={!isRequested} isSearched={isSearched}>
         {isRequested && (
           <Styled.EfficiencyClassesList>
             {Object.keys(efficiencyClasses).map((efficiencyClass: string) => (
@@ -115,7 +119,9 @@ export const Item = ({
             ))}
           </Styled.EconomyContainer>
         )}
-      </Styled.Image>
+
+        <Styled.Image src={imgLink} onLoad={() => setImgLink(document)} onError={() => setImgLink(imgLink)} />
+      </Styled.ImageContainer>
 
       <Styled.Content direction="column">
         <Styled.ItemDescription>

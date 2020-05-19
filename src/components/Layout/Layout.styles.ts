@@ -23,17 +23,17 @@ const HeaderWrapper = styled.header`
 
   position: fixed;
 
+  z-index: var(--l-top);
+
   background-image: linear-gradient(to top, #f6f6f6, #fff);
 
   box-shadow: var(--s-light);
 `;
 
 const Header = styled(Flex)`
-  max-width: calc(1470px + var(--i-large) * 2);
+  max-width: calc(2560px + var(--i-large) * 2);
 
   padding: var(--i-regular) var(--i-large);
-
-  z-index: var(--l-top);
 `;
 
 const LogoLink = styled(Link)`

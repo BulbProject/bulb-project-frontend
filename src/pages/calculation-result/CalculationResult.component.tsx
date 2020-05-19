@@ -16,6 +16,7 @@ import { useRequest } from 'hooks';
 import type { StoreRequestedNeed } from 'types/globals';
 import { prepareRequestedNeed } from 'utils';
 import FilterIcon from '../../assets/icons/filter.inline.svg';
+import { maxWidth } from './CalculationResult.module';
 
 import { Items, ItemsLayout } from './modules';
 import { RequestedNeed } from './modules/RequestedNeed';
@@ -25,7 +26,7 @@ import Styled from './CalculationResult.styles';
 
 const CalculationResult: React.FC = () => {
   const isLg = useMediaQuery('screen and (min-width: 832px)');
-  const isXl = useMediaQuery('screen and (min-width: 1470px)');
+  const isXl = useMediaQuery(`screen and (min-width: ${maxWidth}px)`);
 
   const { categoryId, version } = useParams();
 

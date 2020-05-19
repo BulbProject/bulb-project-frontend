@@ -3,11 +3,14 @@ import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
+import { itemWidth } from '../../CalculationResult.module';
 
 import { EfficiencyClass as EfficiencyClassType, efficiencyClasses, getEfficiencyColor } from './Item.module';
 
-const Image = styled(Flex)<{ link?: string; isSearched?: boolean }>(
+const ImageContainer = styled(Flex)<{ link?: string; isSearched?: boolean }>(
   ({ link, isSearched }) => css`
+    position: relative;
+
     justify-content: space-between;
     flex-shrink: 0;
 
@@ -15,14 +18,27 @@ const Image = styled(Flex)<{ link?: string; isSearched?: boolean }>(
 
     padding: var(--i-regular) 0 var(--i-medium);
 
-    background-size: contain;
+    /*background-size: contain;
     background-repeat: no-repeat;
     background-position: ${isSearched ? 'center' : '75%'} center;
     background-origin: content-box;
-    background-image: url(${link});
+    background-image: url(${link});*/
+
     object-fit: cover;
   `
 );
+
+const Image = styled.img`
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  height: 100%;
+  width: auto;
+`;
 
 const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; trianglePosition: 'left' | 'right' }>(
   ({ efficiencyClass, trianglePosition }) => {
@@ -34,6 +50,8 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
       align-items: center;
 
       position: relative;
+      
+      z-index: 2;
 
       width: ${isSeparate ? 40 : 40 + classIndex * 4}px;
       height: ${labelHeight}px;
@@ -100,6 +118,11 @@ const EconomyContainer = styled.div`
   display: inline-flex;
   flex-direction: column;
 
+  position: relative;
+
+  z-index: 2;
+
+  min-width: 40%;
   max-width: 195px;
 `;
 
@@ -136,10 +159,12 @@ const BoldText = styled(Text)`
 const Item = styled(Flex)`
   position: relative;
 
+  min-width: ${itemWidth}px;
+
   flex-shrink: 0;
 
   @media screen and (min-width: 798px) {
-    ${Image} {
+    ${ImageContainer} {
       height: 190px;
     }
   }
@@ -148,7 +173,7 @@ const Item = styled(Flex)`
     border-right: 1px solid var(--c-light);
   }
 
-  ${Image} {
+  ${ImageContainer} {
     height: 240px;
   }
 `;
@@ -182,6 +207,7 @@ const Link = styled.a`
 
 export default {
   Item,
+  ImageContainer,
   Image,
   Content,
   ItemDescription,

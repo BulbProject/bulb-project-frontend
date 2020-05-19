@@ -1,9 +1,10 @@
 import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import { Mixin } from 'ustudio-ui/theme';
+import { maxWidth } from './CalculationResult.module';
 
 const Wrapper = styled(Flex)`
-  max-width: 1470px;
+  max-width: ${maxWidth}px;
 
   margin: calc(var(--i-large) * -1) 0;
 
