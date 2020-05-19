@@ -72,6 +72,7 @@ const CalculationResult: React.FC = () => {
         })
       );
       setRequestedNeed(newRequestedNeed);
+      // availableVariants are supposed to be defined in here
       // @ts-ignore
       setAvailableVariants(calculationResponse?.availableVariants);
 

@@ -4,6 +4,8 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
 
+import { requestedNeedWidth } from '../../CalculationResult.module';
+
 const Title = styled(Text)`
   text-transform: uppercase;
 `;
@@ -24,7 +26,7 @@ const FilterButton = styled(Button)`
 
 const RequestedNeed = styled(Flex)`
   ${Mixin.Screen.xs(css`
-    min-width: 450px;
+    min-width: ${requestedNeedWidth}px;
   `)};
 `;
 

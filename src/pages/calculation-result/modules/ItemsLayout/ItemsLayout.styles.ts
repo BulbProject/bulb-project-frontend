@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { itemWidth } from '../../CalculationResult.module';
+import { itemWidth, requestedNeedWidth } from '../../CalculationResult.module';
 import StyledItems from '../Items/Items.styles';
 import StyledItem from '../Item/Item.styles';
 import StyledRequestedNeed from '../RequestedNeed/RequestedNeed.styles';
@@ -39,7 +39,7 @@ const DoubleLayout = styled.section`
   }
 
   ${RequestedNeed} {
-    min-width: 450px;
+    min-width: ${requestedNeedWidth}px;
 
     ${EfficiencyClassesList} {
       margin: -0.5px 0 -0.5px var(--i-regular);
@@ -62,7 +62,7 @@ const DoubleLayout = styled.section`
 const TripleLayout = styled.section`
   ${RequestedNeed} {
     width: calc(5 / 13 * 100%);
-    min-width: 450px;
+    min-width: ${requestedNeedWidth}px;
 
     ${EfficiencyClassesList} {
       margin: -0.5px 0 -0.5px var(--i-regular);
@@ -102,7 +102,7 @@ const TripleLayout = styled.section`
 const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(
   ({ quantity, isLg }) => css`
     ${RequestedNeed} {
-      width: 420px;
+      width: ${requestedNeedWidth}px;
 
       ${EfficiencyClassesList} {
         margin: -0.5px 0 -0.5px var(--i-regular);

@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
+
+const getShadowGradient = (direction: 'left' | 'right'): FlattenSimpleInterpolation => {
+  return css`linear-gradient(to ${direction}, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0))`;
+};
 
 const Items = styled(Flex)`
   position: relative;
@@ -26,13 +30,13 @@ const Items = styled(Flex)`
     content: '';
     left: 0;
 
-    background-image: linear-gradient(to right, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0));
+    background-image: ${getShadowGradient('right')};
   }
 
   &:after {
     right: 0;
 
-    background-image: linear-gradient(to left, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0));
+    background-image: ${getShadowGradient('left')};
   }
 `;
 
