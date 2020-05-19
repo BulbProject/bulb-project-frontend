@@ -24,7 +24,7 @@ export const Item = ({
   document,
   isRequested = false,
   hoveredObservation,
-  setHoveredObservation
+  setHoveredObservation,
 }: ItemProps) => {
   const isEconomyObservation = useCallback(
     ({ id }: { id: string }) => id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy',
