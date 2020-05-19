@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { Mixin } from 'ustudio-ui/theme';
 
 import { itemWidth } from '../../CalculationResult.module';
 import StyledItems from '../Items/Items.styles';
@@ -40,9 +39,15 @@ const DoubleLayout = styled.section`
   }
 
   ${RequestedNeed} {
+    min-width: 450px;
+
     ${EfficiencyClassesList} {
       margin: -0.5px 0 -0.5px var(--i-regular);
     }
+  }
+
+  ${Items} {
+    min-width: ${itemWidth}px;
   }
 
   ${ItemContent} {
@@ -57,6 +62,7 @@ const DoubleLayout = styled.section`
 const TripleLayout = styled.section`
   ${RequestedNeed} {
     width: calc(5 / 13 * 100%);
+    min-width: 450px;
 
     ${EfficiencyClassesList} {
       margin: -0.5px 0 -0.5px var(--i-regular);
@@ -75,7 +81,7 @@ const TripleLayout = styled.section`
     width: calc(8 / 13 * 100%);
     min-width: ${itemWidth * 2}px;
 
-    overflow-x: hidden;
+    overflow: hidden;
 
     ${Item} {
       width: 50%;
@@ -114,14 +120,16 @@ const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(
     ${Items} {
       width: ${itemWidth * quantity}px;
 
-      overflow-x: hidden;
-
       ${Item} {
         width: ${itemWidth}px;
       }
 
-      ${AvailableVariants} {
-        overflow-x: auto;
+      @media screen and (min-width: 1130px) {
+        width: ${itemWidth * quantity}px;
+
+        ${AvailableVariants} {
+          overflow-x: auto;
+        }
       }
 
       &:after {

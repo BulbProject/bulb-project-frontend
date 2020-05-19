@@ -5,7 +5,9 @@ import Flex from 'ustudio-ui/components/Flex';
 const Items = styled(Flex)`
   position: relative;
 
-  max-width: 100%;
+  @media screen and (min-width: 1130px) {
+    max-width: calc(100% - 450px);
+  }
 
   &:before,
   &:after {

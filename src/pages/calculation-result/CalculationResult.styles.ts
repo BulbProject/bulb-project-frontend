@@ -7,13 +7,15 @@ const Wrapper = styled(Flex)`
 
   margin: calc(var(--i-large) * -1) 0;
 
-  overflow-x: auto;
-
   min-height: calc(100vh - 291.77px);
 
   ${Mixin.Screen.xs(css`
     min-height: calc(100vh - 182.3px);
-  `)}
+  `)};
+
+  @media screen and (max-width: 1130px) {
+    overflow-x: auto;
+  }
 `;
 
 const MobileFilterButton = styled.button`

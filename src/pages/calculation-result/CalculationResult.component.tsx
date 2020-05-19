@@ -124,7 +124,7 @@ const CalculationResult: React.FC = () => {
             <FadeIn>
               <ItemsLayout itemsQuantity={itemsQuantity}>
                 {hasMany ? (
-                  <Styled.Wrapper alignment={{ horizontal: isXl ? 'center' : 'start' }}>
+                  <Styled.Wrapper alignment={{ horizontal: 'start' }}>
                     {RequestedNeedComponent}
 
                     <Items
