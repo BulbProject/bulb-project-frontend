@@ -26,20 +26,25 @@ const CardTitle = styled(Text)`
   font-weight: 400;
   line-height: 1.1;
   margin-bottom: var(--i-large);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const CardContent = styled.div`
   position: relative;
-  width: 65%;
 `;
 
 const CardContentContainer = styled.div`
+  opacity: 0;
   color: var(--c-light);
   height: 100%;
   position: relative;
   display: flex;
   align-items: center;
-  padding: var(--i-large);
+  padding: var(--i-regular) var(--i-large);
+  transition: opacity var(--transition);
   &:before {
     content: '';
     position: absolute;
@@ -50,8 +55,17 @@ const CardContentContainer = styled.div`
     background-color: var(--c-darkest);
     opacity: 0.7;
   }
+
+  &:hover {
+    opacity: 1;
+  }
 `;
-const CardDescription = styled.div``;
+const CardDescription = styled.div`
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+`;
 
 const Card = styled(BaseCard)<{ isDisabled: boolean }>(({ isDisabled }) =>
   isDisabled

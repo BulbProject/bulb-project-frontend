@@ -1,1 +1,1 @@
-export * from './CardsLayout.component';
+export * from './CardLayout.component';

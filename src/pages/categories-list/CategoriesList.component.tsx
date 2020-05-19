@@ -19,6 +19,7 @@ import { Card, Error } from './modules';
 import Styled from './CategoriesList.styles';
 import { getCategory, sortCategories } from './CategoriesList.module';
 import { CategoryCard } from './CategoriesList.types';
+import { CardLayout } from './modules/CardLayout';
 
 const CategoriesList = () => {
   const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
@@ -159,14 +160,16 @@ const CategoriesList = () => {
 
               <Styled.Grid>
                 <Styled.BigCell>
-                  <Styled.CategoryHeader>
+                  <Styled.CategoriesHeader>
                     <Text variant="h1" styled={{ Text: { fontWeight: 400 } }}>
                       Виберіть категорію для проведення розрахунків
                     </Text>
-                  </Styled.CategoryHeader>
+                  </Styled.CategoriesHeader>
                 </Styled.BigCell>
                 {hardcodedCards.map((card, cardIndex) => (
-                  <Card categoryVersion={{ ...card }} version="v1" reload={() => {}} cardIndex={cardIndex} />
+                  <CardLayout cardIndex={cardIndex} image={card.image}>
+                    <Card categoryVersion={{ ...card }} version="v1" reload={() => {}} cardIndex={cardIndex} />
+                  </CardLayout>
                 ))}
               </Styled.Grid>
             </Flex>

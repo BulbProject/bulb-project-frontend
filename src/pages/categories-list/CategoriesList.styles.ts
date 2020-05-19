@@ -1,4 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+
+import StyledLayout from './modules/CardLayout/CardLayout.styles';
 
 const LoaderContainer = styled.div`
   position: fixed;
@@ -18,34 +20,7 @@ const Grid = styled.div`
   grid-auto-flow: dense;
 `;
 
-const imageStyles = (image?: string) =>
-  image
-    ? css`
-        background-image: url(${image});
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-origin: content-box;
-        object-fit: cover;
-      `
-    : '';
-
-const Cell = styled.div(
-  ({ image }: { image?: string }) => css`
-    ${imageStyles(image)};
-  `
-);
-
-const WideCell = styled(Cell)`
-  grid-column: span 2;
-`;
-
-const BigCell = styled(Cell)`
-  grid-column: span 2;
-  grid-row: span 2;
-`;
-
-const CategoryHeader = styled.div`
+const CategoriesHeader = styled.div`
   padding: var(--i-large);
   display: flex;
   align-items: center;
@@ -55,8 +30,6 @@ const CategoryHeader = styled.div`
 export default {
   LoaderContainer,
   Grid,
-  WideCell,
-  BigCell,
-  Cell,
-  CategoryHeader,
+  CategoriesHeader,
+  BigCell: StyledLayout.BigCell,
 };

@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import StyledCard from '../Card/Card.styles';
 
 const imageStyles = (image?: string) =>
   image
@@ -20,11 +21,19 @@ const Cell = styled.div(
 
 const WideCell = styled(Cell)`
   grid-column: span 2;
+
+  ${StyledCard.CardContent} {
+    width: 65%;
+  }
 `;
 
 const BigCell = styled(Cell)`
   grid-column: span 2;
   grid-row: span 2;
+
+  ${StyledCard.CardContent} {
+    width: 65%;
+  }
 `;
 
 export default {
