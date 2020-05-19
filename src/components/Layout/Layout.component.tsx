@@ -20,21 +20,23 @@ export const Layout: FC = ({ children }) => {
       <Helmet titleTemplate="Bulb Project | %s" defaultTitle="Bulb Project" />
 
       <Styled.Layout>
-        <Styled.Header>
-          <Styled.LogoLink to="/">
-            <Styled.LogoImage src={logo} alt="Bulb Project Logo" />
+        <Styled.HeaderWrapper>
+          <Styled.Header alignment={{ horizontal: 'space-between', vertical: 'center' }}>
+            <Styled.LogoLink to="/">
+              <Styled.LogoImage src={logo} alt="Bulb Project Logo" />
 
-            <Styled.LogoText>Bulb Project</Styled.LogoText>
-          </Styled.LogoLink>
+              <Styled.LogoText>Bulb Project</Styled.LogoText>
+            </Styled.LogoLink>
 
-          <Flex isInline>
-            <Styled.LinksHeaderContainer>
-              <SocialLinks />
-            </Styled.LinksHeaderContainer>
+            <Flex isInline>
+              <Styled.LinksHeaderContainer>
+                <SocialLinks />
+              </Styled.LinksHeaderContainer>
 
-            <Styled.DrawerButton drawerIsOpen={isDrawerOpen} onClick={() => setDrawerOpen(!isDrawerOpen)} />
-          </Flex>
-        </Styled.Header>
+              <Styled.DrawerButton drawerIsOpen={isDrawerOpen} onClick={() => setDrawerOpen(!isDrawerOpen)} />
+            </Flex>
+          </Styled.Header>
+        </Styled.HeaderWrapper>
 
         <Styled.Drawer
           position="right"
