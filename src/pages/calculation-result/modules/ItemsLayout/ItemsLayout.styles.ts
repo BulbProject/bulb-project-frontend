@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Mixin } from 'ustudio-ui/theme';
 
 import { itemWidth, requestedNeedWidth } from '../../CalculationResult.module';
 import StyledItems from '../Items/Items.styles';
@@ -7,7 +8,7 @@ import StyledRequestedNeed from '../RequestedNeed/RequestedNeed.styles';
 import StyledContainer from '../../../../shared/Container/Container.styles';
 
 const { Items, AvailableVariants } = StyledItems;
-const { Item, EfficiencyClassesList, Content: ItemContent } = StyledItem;
+const { Item, EfficiencyClassesList, Content: ItemContent, Image: ItemImage } = StyledItem;
 const { RequestedNeed } = StyledRequestedNeed;
 const { Container } = StyledContainer;
 
@@ -48,6 +49,14 @@ const DoubleLayout = styled.section`
 
   ${Items} {
     min-width: ${itemWidth}px;
+
+    ${ItemImage} {
+      background-position: 75% center;
+
+      ${Mixin.Screen.lg(css`
+        background-position: center;
+      `)}
+    }
   }
 
   ${ItemContent} {
@@ -60,6 +69,9 @@ const DoubleLayout = styled.section`
 `;
 
 const TripleLayout = styled.section`
+  display: flex;
+  justify-content: center;
+
   ${RequestedNeed} {
     width: calc(5 / 13 * 100%);
     min-width: ${requestedNeedWidth}px;
@@ -103,6 +115,9 @@ const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(({ quanti
   const variantsQuantity = quantity - 1;
 
   return css`
+    display: flex;
+    justify-content: center;
+
     ${RequestedNeed} {
       width: ${requestedNeedWidth}px;
 

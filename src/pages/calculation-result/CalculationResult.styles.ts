@@ -3,7 +3,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import { Mixin } from 'ustudio-ui/theme';
 
 const Wrapper = styled(Flex)`
-  max-width: 100vw;
+  max-width: 1470px;
 
   margin: calc(var(--i-large) * -1) 0;
 
