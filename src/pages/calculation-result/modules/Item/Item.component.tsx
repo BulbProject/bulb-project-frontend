@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { css } from 'styled-components';
 
@@ -9,6 +9,8 @@ import Flex from 'ustudio-ui/components/Flex';
 
 import { Classification } from 'shared';
 import { formatNumber } from 'utils';
+
+import Bulb from '../../../../assets/images/bulb.svg';
 
 import { Metrics } from './components';
 import { efficiencyClasses, EfficiencyClass } from './Item.module';
@@ -23,8 +25,6 @@ export const Item = ({
   isRequested = false,
   hoveredObservation,
   setHoveredObservation,
-  hasMany = true,
-  isSearched = false,
 }: ItemProps) => {
   const isEconomyObservation = useCallback(
     ({ id }: { id: string }) => id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy',
@@ -51,11 +51,13 @@ export const Item = ({
     [JSON.stringify(variant)]
   );
 
+  const [imgLink, setImgLink] = useState(Bulb);
+
   return (
-    <Styled.Item direction="column" isRequested={isRequested}>
-      <Styled.Image link={document} isReversed={!isRequested} isSearched={isSearched}>
+    <Styled.Item direction="column">
+      <Styled.ImageContainer isReversed={!isRequested}>
         {isRequested && (
-          <Styled.EfficiencyClassesList hasMany={hasMany}>
+          <Styled.EfficiencyClassesList>
             {Object.keys(efficiencyClasses).map((efficiencyClass: string) => (
               <li key={efficiencyClass}>
                 <Styled.EfficiencyClass efficiencyClass={efficiencyClass as EfficiencyClass} trianglePosition="left">
@@ -116,9 +118,11 @@ export const Item = ({
             ))}
           </Styled.EconomyContainer>
         )}
-      </Styled.Image>
 
-      <Styled.Content direction="column" hasMany={hasMany}>
+        <Styled.Image src={imgLink} onLoad={() => setImgLink(document)} onError={() => setImgLink(imgLink)} />
+      </Styled.ImageContainer>
+
+      <Styled.Content direction="column">
         <Styled.ItemDescription>
           <Text variant="body" appearance="bold">
             {item.description}

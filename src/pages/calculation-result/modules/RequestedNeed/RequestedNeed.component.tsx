@@ -29,25 +29,24 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
   const isLg = useMediaQuery('screen and (min-width: 832px)');
 
   return (
-    <Styled.RequestedNeed direction="column" hasMany={hasMany} isLg={isLg}>
+    <Styled.RequestedNeed direction="column">
       <Flex
         alignment={{ horizontal: 'space-between', vertical: 'center' }}
         margin={{ bottom: 'large', top: 'regular' }}
         padding={hasMany ? { left: 'regular' } : undefined}
       >
-        <Styled.Title variant="body" appearance="bold">
+        <Styled.Title
+          variant="body"
+          // Another bug in props types
+          // @ts-ignore
+          appearance="bold"
+        >
           Те, що Ви шукали
         </Styled.Title>
 
-        {isLg && (
-          <Styled.FilterButton
-            appearance="text"
-            onClick={() => setDrawerOpen(!isDrawerOpen)}
-            iconAfter={<FilterIcon />}
-          >
-            Змінити умови
-          </Styled.FilterButton>
-        )}
+        <Styled.FilterButton appearance="text" onClick={() => setDrawerOpen(!isDrawerOpen)} iconAfter={<FilterIcon />}>
+          Змінити умови
+        </Styled.FilterButton>
 
         <Drawer
           isOpen={isDrawerOpen}
@@ -81,8 +80,6 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
       </Flex>
 
       <Item
-        isSearched
-        hasMany={hasMany}
         isRequested
         variant={requestedNeed}
         item={category.items.find((item) => item.id === requestedNeed.relatedItem) as ItemType}

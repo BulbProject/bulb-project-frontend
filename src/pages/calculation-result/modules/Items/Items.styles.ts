@@ -1,62 +1,62 @@
-import styled, { css } from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
-import { itemWidth } from '../../CalculationResult.module';
 
-const Items = styled(Flex)<{ quantity: number; hasMany: boolean; isLg: boolean }>(
-  ({ quantity, hasMany, isLg }) => css`
-    position: relative;
+const getShadowGradient = (direction: 'left' | 'right'): FlattenSimpleInterpolation => {
+  return css`linear-gradient(to ${direction}, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0))`;
+};
 
-    max-width: 100%;
-    width: ${itemWidth * quantity}px;
+const Items = styled(Flex)`
+  position: relative;
 
-    overflow-x: ${isLg ? 'auto' : 'visible'};
+  @media screen and (min-width: 1130px) {
+    max-width: calc(100% - 450px);
+  }
 
-    &:before,
-    &:after {
-      position: absolute;
-      top: 0;
-      bottom: 0;
+  &:before,
+  &:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
 
-      z-index: 2;
+    z-index: 2;
 
-      width: 30px;
+    width: 30px;
 
-      pointer-events: none;
-    }
+    pointer-events: none;
+  }
 
-    &:before {
-      content: '';
-      left: 0;
+  &:before {
+    content: '';
+    left: 0;
 
-      background-image: linear-gradient(to right, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0));
-    }
+    background-image: ${getShadowGradient('right')};
+  }
 
-    &:after {
-      content: ${hasMany && isLg ? `''` : 'unset'};
-      right: 0;
+  &:after {
+    right: 0;
 
-      background-image: linear-gradient(to left, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0));
-    }
-  `
-);
+    background-image: ${getShadowGradient('left')};
+  }
+`;
 
-const AvailableVariants = styled(Flex)<{ isLg: boolean }>(
-  ({ isLg }) => css`
-    position: relative;
-    height: 100%;
+const AvailableVariants = styled(Flex)`
+  position: relative;
+  height: 100%;
 
-    overflow-x: ${isLg ? 'auto' : 'visible'};
-  `
-);
+  padding-top: calc(var(--i-large) * 2 + var(--i-regular));
+`;
 
 const ItemsTitle = styled(Flex)`
-  margin-top: calc(var(--i-regular) + 5px);
-  margin-bottom: calc(var(--i-large) + 5px);
+  width: auto;
 
-  padding-left: var(--i-large);
+  position: absolute;
+
+  top: calc(var(--i-regular) + 5px);
+  left: var(--i-regular);
 
   text-transform: uppercase;
+  white-space: nowrap;
 `;
 
 export default { Items, AvailableVariants, ItemsTitle };

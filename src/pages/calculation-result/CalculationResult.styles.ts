@@ -1,19 +1,22 @@
 import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import { Mixin } from 'ustudio-ui/theme';
+import { maxWidth } from './CalculationResult.module';
 
 const Wrapper = styled(Flex)`
-  max-width: calc(100vw - var(--i-large) * 2);
+  max-width: ${maxWidth}px;
 
-  margin: calc(var(--i-large) * -1) var(--i-large);
-
-  overflow-x: auto;
+  margin: calc(var(--i-large) * -1) 0;
 
   min-height: calc(100vh - 291.77px);
 
   ${Mixin.Screen.xs(css`
     min-height: calc(100vh - 182.3px);
-  `)}
+  `)};
+
+  @media screen and (max-width: 1130px) {
+    overflow-x: auto;
+  }
 `;
 
 const MobileFilterButton = styled.button`

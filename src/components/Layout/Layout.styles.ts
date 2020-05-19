@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
 
 import LibDrawer from 'ustudio-ui/components/Drawer';
+import Flex from 'ustudio-ui/components/Flex';
 
 import { Mixin } from 'ustudio-ui/theme';
 
@@ -13,23 +14,26 @@ const Layout = styled.div`
   flex-direction: column;
 `;
 
-const Header = styled.header`
-  height: 64px;
+const HeaderWrapper = styled.header`
   width: 100%;
+  height: 64px;
 
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
 
   position: fixed;
-
-  padding: var(--i-regular) var(--i-large);
 
   z-index: var(--l-top);
 
   background-image: linear-gradient(to top, #f6f6f6, #fff);
 
   box-shadow: var(--s-light);
+`;
+
+const Header = styled(Flex)`
+  max-width: calc(2560px + var(--i-large) * 2);
+
+  padding: var(--i-regular) var(--i-large);
 `;
 
 const LogoLink = styled(Link)`
@@ -193,6 +197,7 @@ const Main = styled.main`
 
 export default {
   Layout,
+  HeaderWrapper,
   Header,
   LogoLink,
   LogoImage,

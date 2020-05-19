@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { css } from 'styled-components';
 
 import type { Metric, Observation } from 'ts4ocds/extensions/metrics';
@@ -34,6 +34,7 @@ export const Metrics = ({
   }, []);
 
   const isLg = useMediaQuery('screen and (min-width: 832px)');
+  const areTitlesShown = useMemo(() => !isLg || showTitles, [isLg, showTitles]);
 
   return (
     <Styled.Metrics direction="column">
@@ -43,7 +44,7 @@ export const Metrics = ({
             <Text
               variant="caption"
               styled={{
-                Text: showTitles
+                Text: areTitlesShown
                   ? css``
                   : css`
                       color: transparent;
@@ -60,11 +61,11 @@ export const Metrics = ({
             <Styled.Observation
               key={observation.id}
               margin={{ bottom: 'regular' }}
-              alignment={showTitles ? undefined : { horizontal: 'center' }}
+              alignment={areTitlesShown ? undefined : { horizontal: 'center' }}
               onMouseEnter={() => setHoveredObservation(observation.id)}
               onMouseLeave={() => setHoveredObservation('')}
             >
-              {showTitles && (
+              {areTitlesShown && (
                 <Styled.ObservationTitle>
                   <Text variant="small" color="var(--c-dark)">
                     {observation.notes}

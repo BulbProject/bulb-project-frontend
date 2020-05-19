@@ -7,23 +7,30 @@ import { itemWidth } from '../../CalculationResult.module';
 
 import { EfficiencyClass as EfficiencyClassType, efficiencyClasses, getEfficiencyColor } from './Item.module';
 
-const Image = styled(Flex)<{ link?: string; isSearched?: boolean }>(
-  ({ link, isSearched }) => css`
-    justify-content: space-between;
-    flex-shrink: 0;
+const ImageContainer = styled(Flex)`
+  position: relative;
 
-    width: 100%;
+  justify-content: space-between;
+  flex-shrink: 0;
 
-    padding: var(--i-regular) 0 var(--i-medium);
+  width: 100%;
 
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: ${isSearched ? 'center' : '75%'} center;
-    background-origin: content-box;
-    background-image: url(${link});
-    object-fit: cover;
-  `
-);
+  padding: var(--i-regular) 0 var(--i-medium);
+
+  object-fit: cover;
+`;
+
+const Image = styled.img`
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  height: 100%;
+  width: auto;
+`;
 
 const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; trianglePosition: 'left' | 'right' }>(
   ({ efficiencyClass, trianglePosition }) => {
@@ -35,6 +42,8 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
       align-items: center;
 
       position: relative;
+      
+      z-index: 2;
 
       width: ${isSeparate ? 40 : 40 + classIndex * 4}px;
       height: ${labelHeight}px;
@@ -73,18 +82,14 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
   }
 );
 
-const EfficiencyClassesList = styled.ul<{ hasMany: boolean }>(
-  ({ hasMany }) => css`
-    display: flex;
-    flex-direction: column;
+const EfficiencyClassesList = styled.ul`
+  display: flex;
+  flex-direction: column;
 
-    margin: -0.5px 0 -0.5px ${hasMany ? 'var(--i-regular)' : 0};
-
-    li {
-      margin: 0.5px 0;
-    }
-  `
-);
+  li {
+    margin: 0.5px 0;
+  }
+`;
 
 const Economy = styled(Flex)<{ $backgroundColor: string }>(
   ({ $backgroundColor }) => css`
@@ -105,8 +110,12 @@ const EconomyContainer = styled.div`
   display: inline-flex;
   flex-direction: column;
 
+  position: relative;
+
+  z-index: 2;
+
   min-width: 40%;
-  max-width: 50%;
+  max-width: 195px;
 `;
 
 const EconomyMeasure = styled(Flex)`
@@ -139,35 +148,29 @@ const BoldText = styled(Text)`
   font-weight: 700;
 `;
 
-const Item = styled(Flex)<{ isRequested?: boolean }>(
-  ({ isRequested }) => css`
-    position: relative;
+const Item = styled(Flex)`
+  position: relative;
 
-    flex-shrink: 0;
+  min-width: ${itemWidth}px;
 
-    width: ${isRequested ? '100%' : `${itemWidth}px`};
+  flex-shrink: 0;
 
-    @media screen and (min-width: 798px) {
-      ${Image} {
-        height: 190px;
-      }
+  @media screen and (min-width: 798px) {
+    ${ImageContainer} {
+      height: 190px;
     }
+  }
 
-    &:not(:last-child) {
-      border-right: 1px solid var(--c-light);
-    }
+  &:not(:last-child) {
+    border-right: 1px solid var(--c-light);
+  }
 
-    ${Image} {
-      height: 240px;
-    }
-  `
-);
+  ${ImageContainer} {
+    height: 240px;
+  }
+`;
 
-const Content = styled(Flex)<{ hasMany: boolean }>(
-  ({ hasMany }) => css`
-    padding: var(--i-regular) ${hasMany ? 'var(--i-regular)' : 0};
-  `
-);
+const Content = styled(Flex)``;
 
 const ItemDescription = styled(Flex)`
   flex-direction: column;
@@ -196,6 +199,7 @@ const Link = styled.a`
 
 export default {
   Item,
+  ImageContainer,
   Image,
   Content,
   ItemDescription,

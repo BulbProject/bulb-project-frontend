@@ -9,15 +9,16 @@ import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 import { Layout, ErrorBoundary, ErrorPage, FadeIn } from 'components';
 import { Container } from 'shared';
 
-import type { AvailableVariant, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
+import type { AvailableVariant, Category, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
 import { getCategoryVersionConfig, postCalculationConfig } from 'config';
 import { useRequest } from 'hooks';
 
 import type { StoreRequestedNeed } from 'types/globals';
 import { prepareRequestedNeed } from 'utils';
 import FilterIcon from '../../assets/icons/filter.inline.svg';
+import { maxWidth } from './CalculationResult.module';
 
-import { Items } from './modules';
+import { Items, ItemsLayout } from './modules';
 import { RequestedNeed } from './modules/RequestedNeed';
 
 import { CalculationContextProvider } from './store';
@@ -25,6 +26,7 @@ import Styled from './CalculationResult.styles';
 
 const CalculationResult: React.FC = () => {
   const isLg = useMediaQuery('screen and (min-width: 832px)');
+  const isXl = useMediaQuery(`screen and (min-width: ${maxWidth}px)`);
 
   const { categoryId, version } = useParams();
 
@@ -71,6 +73,7 @@ const CalculationResult: React.FC = () => {
         })
       );
       setRequestedNeed(newRequestedNeed);
+      // availableVariants are supposed to be defined in here
       // @ts-ignore
       setAvailableVariants(calculationResponse?.availableVariants);
 
@@ -93,7 +96,24 @@ const CalculationResult: React.FC = () => {
 
   const [hoveredObservation, setHoveredObservation] = useState('');
 
-  const hasMany = useMemo(() => (availableVariants || []).length > 1, [availableVariants?.length]);
+  const itemsQuantity = useMemo(() => (availableVariants || []).length, [availableVariants?.length]);
+  const hasMany = useMemo(() => itemsQuantity > 1, [itemsQuantity]);
+
+  const RequestedNeedComponent = (
+    <RequestedNeed
+      hasMany={hasMany}
+      isDrawerOpen={isDrawerOpen}
+      setDrawerOpen={setDrawerOpen}
+      isRecalculating={isRecalculating}
+      setSubmitting={setSubmitting}
+      category={categoryVersion?.category as Category}
+      requestedNeed={availableVariants?.[0] as AvailableVariant}
+      hoveredObservation={hoveredObservation}
+      setHoveredObservation={setHoveredObservation}
+      setNewRequestedNeed={setNewRequestedNeed}
+      recalculationError={recalculationError?.message}
+    />
+  );
 
   return (
     <Layout>
@@ -104,45 +124,21 @@ const CalculationResult: React.FC = () => {
             requestedNeed={requestedNeed as StoreRequestedNeed}
           >
             <FadeIn>
-              {hasMany ? (
-                <Styled.Wrapper alignment={{ horizontal: isLg ? 'center' : 'start' }}>
-                  <RequestedNeed
-                    hasMany={hasMany}
-                    isDrawerOpen={isDrawerOpen}
-                    setDrawerOpen={setDrawerOpen}
-                    isRecalculating={isRecalculating}
-                    setSubmitting={setSubmitting}
-                    category={categoryVersion.category}
-                    requestedNeed={availableVariants[0]}
-                    hoveredObservation={hoveredObservation}
-                    setHoveredObservation={setHoveredObservation}
-                    setNewRequestedNeed={setNewRequestedNeed}
-                    recalculationError={recalculationError?.message}
-                  />
+              <ItemsLayout itemsQuantity={itemsQuantity}>
+                {hasMany ? (
+                  <Styled.Wrapper alignment={{ horizontal: isXl ? 'center' : 'start' }}>
+                    {RequestedNeedComponent}
 
-                  <Items
-                    availableVariants={availableVariants}
-                    hoveredObservation={hoveredObservation}
-                    setHoveredObservation={setHoveredObservation}
-                  />
-                </Styled.Wrapper>
-              ) : (
-                <Container>
-                  <RequestedNeed
-                    hasMany={hasMany}
-                    isDrawerOpen={isDrawerOpen}
-                    setDrawerOpen={setDrawerOpen}
-                    isRecalculating={isRecalculating}
-                    setSubmitting={setSubmitting}
-                    category={categoryVersion.category}
-                    requestedNeed={availableVariants[0]}
-                    hoveredObservation={hoveredObservation}
-                    setHoveredObservation={setHoveredObservation}
-                    setNewRequestedNeed={setNewRequestedNeed}
-                    recalculationError={recalculationError?.message}
-                  />
-                </Container>
-              )}
+                    <Items
+                      availableVariants={availableVariants}
+                      hoveredObservation={hoveredObservation}
+                      setHoveredObservation={setHoveredObservation}
+                    />
+                  </Styled.Wrapper>
+                ) : (
+                  <Container>{RequestedNeedComponent}</Container>
+                )}
+              </ItemsLayout>
             </FadeIn>
 
             {!isLg && (
