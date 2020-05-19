@@ -23,7 +23,6 @@ export const Item = ({
   isRequested = false,
   hoveredObservation,
   setHoveredObservation,
-  hasMany = true,
   isSearched = false,
 }: ItemProps) => {
   const isEconomyObservation = useCallback(
@@ -52,10 +51,10 @@ export const Item = ({
   );
 
   return (
-    <Styled.Item direction="column" isRequested={isRequested}>
+    <Styled.Item direction="column">
       <Styled.Image link={document} isReversed={!isRequested} isSearched={isSearched}>
         {isRequested && (
-          <Styled.EfficiencyClassesList hasMany={hasMany}>
+          <Styled.EfficiencyClassesList>
             {Object.keys(efficiencyClasses).map((efficiencyClass: string) => (
               <li key={efficiencyClass}>
                 <Styled.EfficiencyClass efficiencyClass={efficiencyClass as EfficiencyClass} trianglePosition="left">
@@ -118,7 +117,7 @@ export const Item = ({
         )}
       </Styled.Image>
 
-      <Styled.Content direction="column" hasMany={hasMany}>
+      <Styled.Content direction="column">
         <Styled.ItemDescription>
           <Text variant="body" appearance="bold">
             {item.description}

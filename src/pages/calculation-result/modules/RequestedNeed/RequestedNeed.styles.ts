@@ -15,31 +15,18 @@ const FilterButton = styled(Button)`
     margin-left: var(--i-medium);
     margin-top: 1px;
   }
+
+  @media screen and (max-width: 832px) {
+    visibility: hidden;
+    pointer-events: none;
+  }
 `;
 
-const getItemWidth = ({ hasMany, isLg }: { hasMany: boolean; isLg: boolean }) => {
-  if (!isLg) {
-    return '100%';
-  }
-
-  if (hasMany && isLg) {
-    return '450px';
-  }
-
-  return '100%';
-};
-
-const RequestedNeed = styled(Flex)<{ hasMany: boolean; isLg: boolean }>(
-  ({ hasMany, isLg }) => css`
-    width: ${getItemWidth({ hasMany, isLg })};
-
-    min-width: ${hasMany ? 'calc(100% - 30px)' : '100%'};
-
-    ${Mixin.Screen.xs(css`
-      min-width: 450px;
-    `)}
-  `
-);
+const RequestedNeed = styled(Flex)`
+  ${Mixin.Screen.xs(css`
+    min-width: 450px;
+  `)};
+`;
 
 const DrawerButton = styled.button`
   display: flex;

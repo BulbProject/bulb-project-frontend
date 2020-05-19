@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
-import { itemWidth } from '../../CalculationResult.module';
 
 import { EfficiencyClass as EfficiencyClassType, efficiencyClasses, getEfficiencyColor } from './Item.module';
 
@@ -73,18 +72,14 @@ const EfficiencyClass = styled(Flex)<{ efficiencyClass: EfficiencyClassType; tri
   }
 );
 
-const EfficiencyClassesList = styled.ul<{ hasMany: boolean }>(
-  ({ hasMany }) => css`
-    display: flex;
-    flex-direction: column;
+const EfficiencyClassesList = styled.ul`
+  display: flex;
+  flex-direction: column;
 
-    margin: -0.5px 0 -0.5px ${hasMany ? 'var(--i-regular)' : 0};
-
-    li {
-      margin: 0.5px 0;
-    }
-  `
-);
+  li {
+    margin: 0.5px 0;
+  }
+`;
 
 const Economy = styled(Flex)<{ $backgroundColor: string }>(
   ({ $backgroundColor }) => css`
@@ -139,35 +134,27 @@ const BoldText = styled(Text)`
   font-weight: 700;
 `;
 
-const Item = styled(Flex)<{ isRequested?: boolean }>(
-  ({ isRequested }) => css`
-    position: relative;
+const Item = styled(Flex)`
+  position: relative;
 
-    flex-shrink: 0;
+  flex-shrink: 0;
 
-    width: ${isRequested ? '100%' : `${itemWidth}px`};
-
-    @media screen and (min-width: 798px) {
-      ${Image} {
-        height: 190px;
-      }
-    }
-
-    &:not(:last-child) {
-      border-right: 1px solid var(--c-light);
-    }
-
+  @media screen and (min-width: 798px) {
     ${Image} {
-      height: 240px;
+      height: 190px;
     }
-  `
-);
+  }
 
-const Content = styled(Flex)<{ hasMany: boolean }>(
-  ({ hasMany }) => css`
-    padding: var(--i-regular) ${hasMany ? 'var(--i-regular)' : 0};
-  `
-);
+  &:not(:last-child) {
+    border-right: 1px solid var(--c-light);
+  }
+
+  ${Image} {
+    height: 240px;
+  }
+`;
+
+const Content = styled(Flex)``;
 
 const ItemDescription = styled(Flex)`
   flex-direction: column;

@@ -7,6 +7,5 @@ export interface ItemProps {
   isRequested?: boolean;
   hoveredObservation: string;
   setHoveredObservation: (id: string) => void;
-  hasMany?: boolean;
   isSearched?: boolean;
 }
