@@ -99,8 +99,10 @@ const TripleLayout = styled.section`
   }
 `;
 
-const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(
-  ({ quantity, isLg }) => css`
+const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(({ quantity, isLg }) => {
+  const variantsQuantity = quantity - 1;
+
+  return css`
     ${RequestedNeed} {
       width: ${requestedNeedWidth}px;
 
@@ -118,14 +120,14 @@ const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(
     }
 
     ${Items} {
-      width: ${itemWidth * quantity}px;
+      width: ${itemWidth * variantsQuantity}px;
 
       ${Item} {
         width: ${itemWidth}px;
       }
 
       @media screen and (min-width: 1130px) {
-        width: ${itemWidth * quantity}px;
+        width: ${itemWidth * variantsQuantity}px;
 
         ${AvailableVariants} {
           overflow-x: auto;
@@ -136,7 +138,7 @@ const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(
         content: ${isLg ? `''` : 'unset'};
       }
     }
-  `
-);
+  `;
+});
 
 export default { SingleLayout, DoubleLayout, TripleLayout, ManyLayout };

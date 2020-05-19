@@ -25,7 +25,7 @@ import Styled from './CalculationResult.styles';
 
 const CalculationResult: React.FC = () => {
   const isLg = useMediaQuery('screen and (min-width: 832px)');
-  const isXl = useMediaQuery('screen and (min-width: 1130px)');
+  const isXl = useMediaQuery('screen and (min-width: 1470px)');
 
   const { categoryId, version } = useParams();
 
@@ -125,7 +125,7 @@ const CalculationResult: React.FC = () => {
             <FadeIn>
               <ItemsLayout itemsQuantity={itemsQuantity}>
                 {hasMany ? (
-                  <Styled.Wrapper alignment={{ horizontal: 'start' }}>
+                  <Styled.Wrapper alignment={{ horizontal: isXl ? 'center' : 'start' }}>
                     {RequestedNeedComponent}
 
                     <Items
