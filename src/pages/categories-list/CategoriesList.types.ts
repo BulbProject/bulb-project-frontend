@@ -1,7 +1,7 @@
 import { Category, CategoryVersion } from '../../types/data';
 
-export type CategoryCardData = Pick<Category, 'id' | 'title' | 'description' | 'classification' | 'status'> &
-  Pick<CategoryVersion, 'version'>;
+export type CategoryCardData = Pick<Category, 'id' | 'title' | 'description' | 'status'> &
+  Pick<CategoryVersion, 'version'> & { image: string };
 
 export interface CategoryCard {
   id: string;

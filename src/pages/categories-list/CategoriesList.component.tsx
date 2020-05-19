@@ -74,49 +74,110 @@ const CategoriesList = () => {
     }
   }, [categoriesList]);
 
+  const hardcodedCards = [
+    {
+      id: 1,
+      title: 'Електричні лампи внутрішнього освітлення',
+      description:
+        'Основними вимогами, що ставляться до сучасного освітлення є наступні: забезпечення найкращих умов зорової роботи, керування освітленням безпосередньо із робочого місця, енергоефективність, енергозбереження протягом усього періоду експлуатації, мінімізація шкоди навколишньому середовищу.',
+      status: 'active',
+      image: 'https://allkharkov.ua/img/news_cont/news10/2018-05-08_10_solar.jpg',
+    },
+    {
+      id: 2,
+      title: 'Електричні лампи внутрішнього освітлення',
+      description:
+        'Основними вимогами, що ставляться до сучасного освітлення є наступні: забезпечення найкращих умов зорової роботи, керування освітленням безпосередньо із робочого місця, енергоефективність, енергозбереження протягом усього періоду експлуатації, мінімізація шкоди навколишньому середовищу.',
+      status: 'active',
+      image: 'https://allkharkov.ua/img/news_cont/news10/2018-05-08_10_solar.jpg',
+    },
+    {
+      id: 3,
+      title: 'Електричні лампи внутрішнього освітлення',
+      description:
+        'Основними вимогами, що ставляться до сучасного освітлення є наступні: забезпечення найкращих умов зорової роботи, керування освітленням безпосередньо із робочого місця, енергоефективність, енергозбереження протягом усього періоду експлуатації, мінімізація шкоди навколишньому середовищу.',
+      status: 'active',
+      image: 'https://allkharkov.ua/img/news_cont/news10/2018-05-08_10_solar.jpg',
+    },
+    {
+      id: 4,
+      title: 'Електричні лампи внутрішнього освітлення',
+      description:
+        'Основними вимогами, що ставляться до сучасного освітлення є наступні: забезпечення найкращих умов зорової роботи, керування освітленням безпосередньо із робочого місця, енергоефективність, енергозбереження протягом усього періоду експлуатації, мінімізація шкоди навколишньому середовищу.',
+      status: 'active',
+      image: 'https://allkharkov.ua/img/news_cont/news10/2018-05-08_10_solar.jpg',
+    },
+    {
+      id: 5,
+      title: 'Електричні лампи внутрішнього освітлення',
+      description:
+        'Основними вимогами, що ставляться до сучасного освітлення є наступні: забезпечення найкращих умов зорової роботи, керування освітленням безпосередньо із робочого місця, енергоефективність, енергозбереження протягом усього періоду експлуатації, мінімізація шкоди навколишньому середовищу.',
+      status: 'active',
+      image: 'https://allkharkov.ua/img/news_cont/news10/2018-05-08_10_solar.jpg',
+    },
+    {
+      id: 6,
+      title: 'Електричні лампи внутрішнього освітлення',
+      description:
+        'Основними вимогами, що ставляться до сучасного освітлення є наступні: забезпечення найкращих умов зорової роботи, керування освітленням безпосередньо із робочого місця, енергоефективність, енергозбереження протягом усього періоду експлуатації, мінімізація шкоди навколишньому середовищу.',
+      status: 'active',
+      image: 'https://allkharkov.ua/img/news_cont/news10/2018-05-08_10_solar.jpg',
+    },
+    {
+      id: 7,
+      title: 'Електричні лампи внутрішнього освітлення',
+      description:
+        'Основними вимогами, що ставляться до сучасного освітлення є наступні: забезпечення найкращих умов зорової роботи, керування освітленням безпосередньо із робочого місця, енергоефективність, енергозбереження протягом усього періоду експлуатації, мінімізація шкоди навколишньому середовищу.',
+      status: 'active',
+      image: 'https://allkharkov.ua/img/news_cont/news10/2018-05-08_10_solar.jpg',
+    },
+    {
+      id: 8,
+      title: 'Електричні лампи внутрішнього освітлення',
+      description:
+        'Основними вимогами, що ставляться до сучасного освітлення є наступні: забезпечення найкращих умов зорової роботи, керування освітленням безпосередньо із робочого місця, енергоефективність, енергозбереження протягом усього періоду експлуатації, мінімізація шкоди навколишньому середовищу.',
+      status: 'active',
+      image: 'https://allkharkov.ua/img/news_cont/news10/2018-05-08_10_solar.jpg',
+    },
+  ];
+
   return (
     <Layout>
       <ErrorBoundary>
-        <Container>
-          {isLoading && (
-            <FadeIn>
-              <Styled.LoaderContainer>
-                <Spinner appearance={{ size: 64 }} delay={300} />
-              </Styled.LoaderContainer>
-            </FadeIn>
-          )}
+        {isLoading && (
+          <FadeIn>
+            <Styled.LoaderContainer>
+              <Spinner appearance={{ size: 64 }} delay={300} />
+            </Styled.LoaderContainer>
+          </FadeIn>
+        )}
 
-          {!isLoading && (
-            <FadeIn>
-              <Flex direction="column">
-                <Flex margin={{ bottom: 'large' }}>
-                  <Text variant="h1">Виберіть категорію для проведення розрахунків</Text>
-                </Flex>
+        {!isLoading && (
+          <FadeIn>
+            <Flex direction="column">
+              {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
 
-                {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
-
-                {sortCategories(fullCategories)?.map((category, index) => (
-                  <motion.div
-                    key={category.id}
-                    variants={{
-                      visible: { opacity: 1, x: 0 },
-                      hidden: { opacity: 0, x: (index + 1) * -10 },
-                    }}
-                    transition={{ delay: index * 0.2 }}
-                  >
-                    <Card {...category} reload={() => reloadItem(category.id, category.version)} />
-                  </motion.div>
+              <Styled.Grid>
+                <Styled.BigCell>
+                  <Styled.CategoryHeader>
+                    <Text variant="h1" styled={{ Text: { fontWeight: 400 } }}>
+                      Виберіть категорію для проведення розрахунків
+                    </Text>
+                  </Styled.CategoryHeader>
+                </Styled.BigCell>
+                {hardcodedCards.map((card, cardIndex) => (
+                  <Card categoryVersion={{ ...card }} version="v1" reload={() => {}} cardIndex={cardIndex} />
                 ))}
-              </Flex>
-            </FadeIn>
-          )}
+              </Styled.Grid>
+            </Flex>
+          </FadeIn>
+        )}
 
-          {!isLoading && listError && (
-            <FadeIn>
-              <Error reloadCategories={triggerRequest} />
-            </FadeIn>
-          )}
-        </Container>
+        {!isLoading && listError && (
+          <FadeIn>
+            <Error reloadCategories={triggerRequest} />
+          </FadeIn>
+        )}
       </ErrorBoundary>
     </Layout>
   );

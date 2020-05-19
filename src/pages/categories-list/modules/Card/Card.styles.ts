@@ -22,10 +22,36 @@ const BaseCard = styled(Flex)`
 `;
 
 const CardTitle = styled(Text)`
-  margin-bottom: var(--i-medium);
-
-  transition: var(--transition);
+  position: relative;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: var(--i-large);
 `;
+
+const CardContent = styled.div`
+  position: relative;
+  width: 65%;
+`;
+
+const CardContentContainer = styled.div`
+  color: var(--c-light);
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: var(--i-large);
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--c-darkest);
+    opacity: 0.7;
+  }
+`;
+const CardDescription = styled.div``;
 
 const Card = styled(BaseCard)<{ isDisabled: boolean }>(({ isDisabled }) =>
   isDisabled
@@ -70,5 +96,8 @@ export default {
   Card,
   BaseCard,
   CardTitle,
+  CardContent,
+  CardDescription,
   ReloadIcon,
+  CardContentContainer,
 };
