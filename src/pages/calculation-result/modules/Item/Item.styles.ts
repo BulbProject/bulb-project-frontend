@@ -7,26 +7,18 @@ import { itemWidth } from '../../CalculationResult.module';
 
 import { EfficiencyClass as EfficiencyClassType, efficiencyClasses, getEfficiencyColor } from './Item.module';
 
-const ImageContainer = styled(Flex)<{ link?: string; isSearched?: boolean }>(
-  ({ link, isSearched }) => css`
-    position: relative;
+const ImageContainer = styled(Flex)`
+  position: relative;
 
-    justify-content: space-between;
-    flex-shrink: 0;
+  justify-content: space-between;
+  flex-shrink: 0;
 
-    width: 100%;
+  width: 100%;
 
-    padding: var(--i-regular) 0 var(--i-medium);
+  padding: var(--i-regular) 0 var(--i-medium);
 
-    /*background-size: contain;
-    background-repeat: no-repeat;
-    background-position: ${isSearched ? 'center' : '75%'} center;
-    background-origin: content-box;
-    background-image: url(${link});*/
-
-    object-fit: cover;
-  `
-);
+  object-fit: cover;
+`;
 
 const Image = styled.img`
   position: absolute;

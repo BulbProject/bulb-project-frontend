@@ -80,7 +80,6 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
       </Flex>
 
       <Item
-        isSearched
         isRequested
         variant={requestedNeed}
         item={category.items.find((item) => item.id === requestedNeed.relatedItem) as ItemType}
