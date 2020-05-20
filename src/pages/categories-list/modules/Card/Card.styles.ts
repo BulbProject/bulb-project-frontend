@@ -1,9 +1,10 @@
+import { Link as RouterLink } from 'react-router-dom';
+
 import styled, { css } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
-
-import { Link as RouterLink } from 'react-router-dom';
+import { Mixin } from 'ustudio-ui/theme';
 
 import ReloadIconEl from '../../../../assets/icons/reload.inline.svg';
 
@@ -13,82 +14,89 @@ const Link = styled(RouterLink)`
   }
 `;
 
-const BaseCard = styled(Flex)`
-  margin-bottom: var(--i-large);
-  padding: var(--i-regular);
-  border: 1px solid var(--c-light);
-  border-radius: var(--border-radius);
-  transition: var(--transition);
-`;
-
 const CardTitle = styled(Text)`
   position: relative;
-  font-weight: 400;
-  line-height: 1.1;
-  margin-bottom: var(--i-large);
-  overflow: hidden;
+
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+
+  margin-bottom: var(--i-large);
+
+  overflow: hidden;
+
+  transition: var(--transition);
+
+  font-weight: 400;
+  line-height: 1.1;
 `;
 
 const CardContent = styled.div`
   position: relative;
 `;
 
-const CardContentContainer = styled.div`
-  opacity: 0;
-  color: var(--c-light);
-  height: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: var(--i-regular) var(--i-large);
-  transition: opacity var(--transition);
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--c-darkest);
-    opacity: 0.7;
-  }
-
-  &:hover {
-    opacity: 1;
-  }
-`;
 const CardDescription = styled.div`
-  overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+
+  overflow: hidden;
+
+  transition: var(--transition);
 `;
 
-const Card = styled(BaseCard)<{ isDisabled: boolean }>(({ isDisabled }) =>
-  isDisabled
-    ? css`
-        cursor: not-allowed;
-        user-select: none;
-      `
-    : css`
-        &:hover {
-          border: 1px solid var(--c-primary);
-          box-shadow: var(--s-primary);
-        }
+const BaseCard = styled(Flex)`
+  height: 100%;
+`;
 
-        &:focus {
-          border: 1px solid var(--c-primary);
-        }
+const ContentCard = styled(BaseCard)<{ isDisabled?: boolean }>(
+  ({ isDisabled }) => css`
+    align-items: center;
 
-        &:active {
-          ${CardTitle} {
-            color: var(--c-primary);
-          }
+    position: relative;
+
+    padding: var(--i-regular) var(--i-large);
+
+    opacity: 1;
+    transition: opacity var(--transition);
+
+    color: ${isDisabled ? 'var(--c-dark)' : 'var(--c-light)'};
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      background-color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'};
+      opacity: 0.7;
+    }
+
+    ${isDisabled
+      ? css`
+          cursor: not-allowed;
+          user-select: none;
+        `
+      : ''}
+
+    ${Mixin.Screen.xs(css`
+      opacity: ${isDisabled ? 1 : 0};
+
+      ${CardDescription}, ${CardTitle} {
+        opacity: ${isDisabled ? 1 : 0};
+      }
+
+      &:hover {
+        opacity: 1;
+
+        ${CardDescription}, ${CardTitle} {
+          opacity: 1;
         }
-      `
+      }
+    `)}
+  `
 );
 
 const ReloadIcon = styled(ReloadIconEl)`
@@ -107,11 +115,10 @@ const ReloadIcon = styled(ReloadIconEl)`
 
 export default {
   Link,
-  Card,
   BaseCard,
   CardTitle,
   CardContent,
   CardDescription,
+  ContentCard,
   ReloadIcon,
-  CardContentContainer,
 };

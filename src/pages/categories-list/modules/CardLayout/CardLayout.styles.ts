@@ -1,4 +1,7 @@
 import styled, { css } from 'styled-components';
+
+import { Mixin } from 'ustudio-ui/theme';
+
 import StyledCard from '../Card/Card.styles';
 
 const imageStyles = (image?: string) =>
@@ -20,20 +23,29 @@ const Cell = styled.div(
 );
 
 const WideCell = styled(Cell)`
-  grid-column: span 2;
+  grid-column: span 1;
 
-  ${StyledCard.CardContent} {
-    width: 65%;
-  }
+  ${Mixin.Screen.xs(css`
+    grid-column: span 2;
+
+    ${StyledCard.CardContent} {
+      width: 65%;
+    }
+  `)}
 `;
 
 const BigCell = styled(Cell)`
-  grid-column: span 2;
-  grid-row: span 2;
+  grid-column: span 1;
+  grid-row: span 1;
 
-  ${StyledCard.CardContent} {
-    width: 65%;
-  }
+  ${Mixin.Screen.xs(css`
+    grid-column: span 2;
+    grid-row: span 2;
+
+    ${StyledCard.CardContent} {
+      width: 65%;
+    }
+  `)}
 `;
 
 export default {
