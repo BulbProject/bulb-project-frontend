@@ -24,21 +24,10 @@ import Styled from './Stepper.styles';
 export const Stepper: React.FC = () => {
   const { push } = useHistory();
 
+  const isXs = useMediaQuery('screen and (min-width: 576px)');
+  const isMd = useMediaQuery('screen and (min-width: 768px)');
+
   const { currentCriterion, criteria, requestedNeed, requestedNeedData, category, dispatch } = useCategoryContext();
-
-  const { title, description } = useMemo(() => currentCriterion, [currentCriterion.id]);
-
-  const steps = useMemo(() => Object.values(criteria), []);
-  const titles = useMemo(() => steps.map((step) => step.title), []);
-
-  const isStepActive = useCallback((stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(title), [
-    title,
-  ]);
-  const activeStep = useMemo((): string => titles.find((stepTitle) => stepTitle === currentCriterion.title) as string, [
-    title,
-  ]);
-  const isLastStep = useMemo((): boolean => titles.indexOf(title) === steps.length - 1, [title]);
-  const isFirstStep = useMemo((): boolean => titles.indexOf(title) === 0, [title]);
 
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
@@ -53,14 +42,29 @@ export const Stepper: React.FC = () => {
     }
   );
 
-  const setStep = (modify: (id: number) => number) => () => {
-    setTimeout(() => {
-      dispatch({
-        type: 'set_current_criterion',
-        payload: modifyId(currentCriterion.id, 1, modify),
-      });
-    }, 100);
-  };
+  const { title, description } = useMemo(() => currentCriterion, [currentCriterion.id]);
+  const steps = useMemo(() => Object.values(criteria), []);
+  const titles = useMemo(() => steps.map((step) => step.title), []);
+  const activeStep = useMemo((): string => titles.find((stepTitle) => stepTitle === currentCriterion.title) as string, [
+    title,
+  ]);
+  const isLastStep = useMemo((): boolean => titles.indexOf(title) === steps.length - 1, [title]);
+  const isFirstStep = useMemo((): boolean => titles.indexOf(title) === 0, [title]);
+
+  const isStepActive = useCallback((stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(title), [
+    title,
+  ]);
+  const setStep = useCallback(
+    (modify: (id: number) => number) => () => {
+      setTimeout(() => {
+        dispatch({
+          type: 'set_current_criterion',
+          payload: modifyId(currentCriterion.id, 1, modify),
+        });
+      }, 100);
+    },
+    [currentCriterion.id]
+  );
 
   useEffect(() => {
     if (!isLoading && !error && Boolean(calculationResponse)) {
@@ -74,10 +78,7 @@ export const Stepper: React.FC = () => {
 
       push(`/categories/${category.id}/${category.version}/calculation-result`);
     }
-  });
-
-  const isXs = useMediaQuery('screen and (min-width: 576px)');
-  const isMd = useMediaQuery('screen and (min-width: 768px)');
+  }, [isLoading, error, Boolean(calculationResponse)]);
 
   const BackButton = ({ appearance = 'text' }: { appearance?: 'text' | 'outlined' }) => (
     <StepperButton appearance={appearance} isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
