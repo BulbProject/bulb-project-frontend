@@ -21,7 +21,7 @@ const Grid = styled.div(
     grid-template-columns: repeat(${elementAmount}, 100%);
     grid-auto-rows: 100vw;
 
-    overflow: scroll;
+    overflow: auto;
     grid-auto-flow: column;
 
     ${Mixin.Screen.xs(css`

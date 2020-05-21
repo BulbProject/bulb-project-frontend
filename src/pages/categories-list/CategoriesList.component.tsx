@@ -21,8 +21,6 @@ const CategoriesList = () => {
   const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
   const [isLoading, setLoading] = useState(true);
 
-  console.log(12);
-
   const { data: categoriesList, error: listError, triggerRequest } = useRequest<CategoriesListEntity[]>(
     getCategoriesConfig()
   );
