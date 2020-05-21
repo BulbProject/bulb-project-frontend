@@ -1,41 +1,40 @@
 import React from 'react';
 
-import { ThemeProvider } from 'ustudio-ui/theme';
+import { createGlobalStyle } from 'styled-components';
 
 import CategoriesList from 'pages/categories-list/CategoriesList.component';
-import Styled from './Main.styles';
 
+import Styled from './Main.styles';
 import { Hero, Content } from './modules';
+
+export const DarkMode = createGlobalStyle`
+  :root {
+    --c-base-strong: var(--c-darkest);
+    --c-base-weak: var(--c-dark);
+    --c-contrast-strong: var(--c-lightest);
+    --c-contrast-weak: var(--c-light);
+    --c-faint-strong: var(--c-dark);
+  }
+`;
 
 const Main = () => {
   return (
-    <ThemeProvider
-      override={{
-        palette: {
-          lightest: '#1a1a1a',
-          light: '#8c8c8c',
-          neutral: '#8c8c8c',
-          dark: '#eee',
-          darkest: '#f5f5f5',
-        },
-      }}
-    >
-      <Styled.Main>
-        <Styled.ScrollWrapper>
-          <Hero />
-        </Styled.ScrollWrapper>
+    <Styled.Main>
+      <Styled.ScrollWrapper>
+        <Hero />
+      </Styled.ScrollWrapper>
 
-        <Styled.ScrollWrapper>
-          <Content />
-        </Styled.ScrollWrapper>
+      <Styled.ScrollWrapper>
+        <Content />
+      </Styled.ScrollWrapper>
 
-        <Styled.ScrollWrapper>
-          <Styled.CategoryListWrapper>
-            <CategoriesList />
-          </Styled.CategoryListWrapper>
-        </Styled.ScrollWrapper>
-      </Styled.Main>
-    </ThemeProvider>
+      <Styled.ScrollWrapper>
+        <Styled.CategoryListWrapper>
+          <CategoriesList />
+        </Styled.CategoryListWrapper>
+      </Styled.ScrollWrapper>
+      <DarkMode />
+    </Styled.Main>
   );
 };
 

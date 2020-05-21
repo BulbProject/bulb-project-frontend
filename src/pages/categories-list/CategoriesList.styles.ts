@@ -51,6 +51,7 @@ const CategoriesHeader = styled.div`
 `;
 
 const Title = styled(Text)`
+  color: var(--c-contrast-strong);
   font-weight: 400;
 `;
 

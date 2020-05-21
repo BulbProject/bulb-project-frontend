@@ -2,63 +2,72 @@ import React from 'react';
 
 import Styled from './Footer.styles';
 
-import prozorroLogo from '../../assets/images/partners/prozorro.png';
-import meGovLogo from '../../assets/images/partners/me-gov.png';
-import tiUkraineLogo from '../../assets/images/partners/transparency-ua.png';
-import openContractingLogo from '../../assets/images/partners/open-contracting.png';
-import ebrdLogo from '../../assets/images/partners/ebrd.png';
-import icfLogo from '../../assets/images/partners/icf.png';
-import cpbLogo from '../../assets/images/partners/cpb.png';
-import ustudioLogo from '../../assets/images/partners/ustudio.png';
+import ProzorroLogo from '../../assets/images/partners/prozorro.png';
+import MeGovLogo from '../../assets/images/partners/me-gov.png';
+import TiUkraineLogo from '../../assets/images/partners/transparency-ua.png';
+import OpenContractingLogo from '../../assets/images/partners/open-contracting.png';
+import EbrdLogo from '../../assets/images/partners/ebrd.png';
+import IcfLogo from '../../assets/images/partners/icf.png';
+import CpbLogo from '../../assets/images/partners/cpb.png';
+import UstudioLogo from '../../assets/images/partners/ustudio.png';
 
 export const Footer = () => {
   const partners = [
     {
       title: 'prozorro',
-      image: prozorroLogo,
+      image: ProzorroLogo,
       href: 'https://prozorro.gov.ua/en',
     },
     {
       title: 'me-gov',
-      image: meGovLogo,
+      image: MeGovLogo,
       href: 'https://www.me.gov.ua',
+      width: 12,
     },
     {
       title: 'cpb',
-      image: cpbLogo,
+      image: CpbLogo,
       href: 'https://cpb.org.ua',
     },
     {
       title: 'ti-ukraine',
-      image: tiUkraineLogo,
+      image: TiUkraineLogo,
       href: 'https://ti-ukraine.org',
     },
     {
       title: 'open-contracting',
-      image: openContractingLogo,
+      image: OpenContractingLogo,
       href: 'https://open-contracting.org',
     },
     {
       title: 'ustudio',
-      image: ustudioLogo,
+      image: UstudioLogo,
       href: 'https://ustudio.company',
     },
     {
       title: 'ebrd',
-      image: ebrdLogo,
+      image: EbrdLogo,
       href: 'https://ebrd.com',
     },
     {
       title: 'icf',
-      image: icfLogo,
+      image: IcfLogo,
       href: 'https://icf.com',
     },
   ];
+
   return (
     <Styled.Footer>
       <Styled.FooterContent alignment={{ vertical: 'center' }}>
-        {partners.map(({ href, title, image }) => (
-          <Styled.PartnerLink key={title} href={href} image={image} target="_blank" rel="noreferrer noopener" />
+        {partners.map(({ href, title, image, width }) => (
+          <Styled.PartnerLink
+            key={title}
+            href={href}
+            image={image}
+            width={width}
+            target="_blank"
+            rel="noreferrer noopener"
+          />
         ))}
       </Styled.FooterContent>
     </Styled.Footer>

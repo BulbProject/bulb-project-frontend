@@ -3,37 +3,37 @@ import Flex from 'ustudio-ui/components/Flex';
 import { Mixin } from 'ustudio-ui/theme';
 
 const PartnerLink = styled.a(
-  ({ color, image }) => `
-  margin: var(--i-small);
-  height: 4rem;
-width: 8rem;
-background-image: url(${image});
+  ({ image, width = 8 }: { image: string; width?: number }) => css`
+    margin: var(--i-small);
+    height: 4rem;
+    width: ${width}rem;
+    background-image: url(${image});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 
-  transition: var(--transition);
+    transition: var(--transition);
 
-  &:hover {
-    color: ${color};
-  }
+    &:hover {
+    }
 
-  &:after {
-    display: none;
-  }
-`
+    &:after {
+      display: none;
+    }
+  `
 );
 
 const Footer = styled.footer`
-  padding: var(--i-regular) 0;
-
-  background-color: var(--c-light);
+  background-color: var(--c-base-weak);
 `;
 
 const FooterContent = styled(Flex)`
   justify-content: center;
   flex-wrap: wrap;
+  padding: var(--i-large);
 
-  ${Mixin.Screen.md(css`
+  ${Mixin.Screen.lg(css`
     justify-content: space-between;
-    flex-wrap: nowrap;
   `)};
 `;
 
