@@ -178,7 +178,12 @@ export const Item = ({
             Contract Notice
           </Button>
 
-          <Specification isOpen={isSpecificationOpen} setOpen={setSpecificationOpen} criterion={variant.criteria[0]} />
+          <Specification
+            isOpen={isSpecificationOpen}
+            setOpen={setSpecificationOpen}
+            criterion={variant.criteria[0]}
+            availableVariant={variant}
+          />
         </Flex>
       </Styled.Content>
     </Styled.Item>

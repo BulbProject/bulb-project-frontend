@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 
@@ -27,4 +27,25 @@ const Tab = styled(Text)`
   z-index: 3;
 `;
 
-export default { Group, GroupTitle, Tab };
+const Overlay = styled.div<{ isActive: boolean }>(
+  ({ isActive }) => css`
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--c-darkest);
+
+    opacity: ${isActive ? 0.5 : 0};
+
+    transition: opacity;
+  `
+);
+
+export default { Group, GroupTitle, Tab, Overlay };
