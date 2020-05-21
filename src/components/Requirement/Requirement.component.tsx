@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import type { Unit } from 'ts4ocds';
 import type { RequirementWithOptionDetails as RequirementProps } from 'ts4ocds/extensions/options';
@@ -32,7 +32,7 @@ export const Requirement = ({
   requestedNeed: StoreRequestedNeed;
   currentCriterion: Criterion;
 }) => {
-  const getValue = () => {
+  const getValue = useCallback(() => {
     if (optionDetails) {
       return (value: string) => value;
     }
@@ -42,9 +42,9 @@ export const Requirement = ({
     }
 
     return undefined;
-  };
+  }, [JSON.stringify(optionDetails), dataType, isDisabled]);
 
-  const setValue = () => {
+  const setValue = useCallback(() => {
     if (optionDetails) {
       return (value: string) => value;
     }
@@ -54,7 +54,7 @@ export const Requirement = ({
     }
 
     return undefined;
-  };
+  }, [JSON.stringify(optionDetails), dataType, isDisabled]);
 
   const hasSingleOptionGroup = useMemo(() => {
     if (optionDetails && 'optionGroups' in optionDetails) {
@@ -62,7 +62,7 @@ export const Requirement = ({
     }
 
     return false;
-  }, []);
+  }, [JSON.stringify(optionDetails)]);
 
   return (
     <Styled.Requirement htmlFor={id}>
@@ -91,7 +91,7 @@ export const Requirement = ({
             props: {
               suffix: (
                 <Text variant="caption" align="right" color={isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'}>
-                  {unit?.name || getLocaleDataType({ dataType })}
+                  {unit?.name || getLocaleDataType(dataType)}
                 </Text>
               ),
               placeholder: description,

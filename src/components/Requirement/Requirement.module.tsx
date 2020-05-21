@@ -78,6 +78,7 @@ export const renderInput = ({
 
       return (
         <Select
+          autocomplete={Object.values(optionsMap).length >= 10}
           isDisabled={isDisabled}
           items={optionsMap}
           defaultValue={defaultValue as string}
@@ -97,6 +98,7 @@ export const renderInput = ({
 
     return (
       <Select
+        autocomplete={groupsMap.flatMap((group) => Object.values(group.items)).length >= 10}
         isDisabled={isDisabled}
         groups={groupsMap}
         defaultValue={defaultValue as string}
