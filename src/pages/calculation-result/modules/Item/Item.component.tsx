@@ -6,11 +6,13 @@ import { Observation } from 'ts4ocds/extensions/metrics';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
+import Button from 'ustudio-ui/components/Button';
 
 import { Classification } from 'shared';
 import { formatNumber } from 'utils';
 
 import Bulb from '../../../../assets/images/bulb.svg';
+import { Specification } from '../Specification';
 
 import { Metrics } from './components';
 import { efficiencyClasses, EfficiencyClass } from './Item.module';
@@ -52,6 +54,8 @@ export const Item = ({
   );
 
   const [imgLink, setImgLink] = useState(Bulb);
+
+  const [isSpecificationOpen, setSpecificationOpen] = useState(false);
 
   return (
     <Styled.Item direction="column">
@@ -142,7 +146,7 @@ export const Item = ({
           setHoveredObservation={setHoveredObservation}
         />
 
-        {/* <Flex direction="column">
+        <Flex direction="column">
           <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
             <Button
               styled={{
@@ -169,10 +173,13 @@ export const Item = ({
             }}
             appearance="text"
             intent="positive"
+            onClick={() => setSpecificationOpen(true)}
           >
             Contract Notice
           </Button>
-        </Flex> */}
+
+          <Specification isOpen={isSpecificationOpen} setOpen={setSpecificationOpen} criterion={variant.criteria[0]} />
+        </Flex>
       </Styled.Content>
     </Styled.Item>
   );
