@@ -10,6 +10,7 @@ const CategoryListWrapper = styled.div`
 
 const Main = styled.main`
   height: 100vh;
+
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
 `;
