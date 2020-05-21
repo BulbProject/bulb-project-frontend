@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 
 import { CategoryCardData } from '../../CategoriesList.types';
-import { BaseCard, ErrorCard, StubCard } from './components';
+
 import Styled from './Card.styles';
+import { BaseCard } from './components/BaseCard';
+import { StubCard } from './components/StubCard';
+import { ErrorCard } from './components/ErrorCard';
 
 export const Card = ({
   categoryVersion: category,
-  version,
   error,
   reload,
 }: {
   categoryVersion?: CategoryCardData;
-  version: string;
   reload: () => void;
   error?: string;
 }) => {
@@ -28,12 +29,12 @@ export const Card = ({
       {isLoading && <StubCard />}
 
       {!isLoading && category && category.status === 'active' && (
-        <Styled.Link key={`${category.id}-${version}`} to={`/categories/${category.id}/${version}`}>
-          <BaseCard {...category} version={version} />
+        <Styled.Link to={`/categories/${category.id}/${category.version}`}>
+          <BaseCard {...category} />
         </Styled.Link>
       )}
 
-      {!isLoading && category && category.status === 'pending' && <BaseCard {...category} version={version} />}
+      {!isLoading && category && category.status === 'pending' && <BaseCard {...category} />}
 
       {!isLoading && error && <ErrorCard updateCategoryData={reloadItem} />}
     </>

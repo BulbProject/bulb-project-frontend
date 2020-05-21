@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { CategoryVersion } from 'types/data';
 import { getCategoryVersionConfig } from 'config';
 
-import { CategoryCard } from './CategoriesList.types';
+import { CategoryCard, CategoryCardData } from './CategoriesList.types';
 
 export const requestData = async <Response>(
   requestConfig: AxiosRequestConfig
@@ -16,7 +16,7 @@ export const requestData = async <Response>(
   }
 };
 
-const transformCategoryData = (categoryVersion?: CategoryVersion) => {
+const transformCategoryData = (categoryVersion?: CategoryVersion): CategoryCardData | undefined => {
   if (!categoryVersion) return undefined;
 
   return {
@@ -24,12 +24,12 @@ const transformCategoryData = (categoryVersion?: CategoryVersion) => {
     title: categoryVersion.category.title,
     status: categoryVersion.status,
     description: categoryVersion.category.description,
-    classification: categoryVersion.category.classification,
     version: categoryVersion.version,
+    image: categoryVersion.category.documents.find((doc) => !doc.relatedItem)?.url,
   };
 };
 
-export const getCategory = async (id: string, version: string) => {
+export const getCategory = async (id: string, version: string): Promise<CategoryCard> => {
   const { data: categoryVersion, error } = await requestData<CategoryVersion>(getCategoryVersionConfig(id, version));
 
   return { id, version, categoryVersion: transformCategoryData(categoryVersion), error };
