@@ -20,15 +20,21 @@ const Main = () => {
         },
       }}
     >
-      <main>
-        <Hero />
+      <Styled.Main>
+        <Styled.ScrollWrapper>
+          <Hero />
+        </Styled.ScrollWrapper>
 
-        <Content />
+        <Styled.ScrollWrapper>
+          <Content />
+        </Styled.ScrollWrapper>
 
-        <Styled.CategoryListWrapper>
-          <CategoriesList />
-        </Styled.CategoryListWrapper>
-      </main>
+        <Styled.ScrollWrapper>
+          <Styled.CategoryListWrapper>
+            <CategoriesList />
+          </Styled.CategoryListWrapper>
+        </Styled.ScrollWrapper>
+      </Styled.Main>
     </ThemeProvider>
   );
 };
