@@ -189,6 +189,7 @@ const Drawer = styled(LibDrawer)`
 `;
 
 const Main = styled.main`
+  display: flex;
   flex-grow: 1;
 
   margin-top: 64px;

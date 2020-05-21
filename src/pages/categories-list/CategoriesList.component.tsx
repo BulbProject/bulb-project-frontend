@@ -4,21 +4,18 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 
-import { motion } from 'framer-motion';
-
 import { getCategoriesConfig } from 'config';
 import { useRequest } from 'hooks';
 
 import { ErrorBoundary, FadeIn, Layout } from 'components';
-import { Container } from 'shared';
 
-import { CategoriesListEntity } from 'types/data';
+import type { CategoriesListEntity } from 'types/data';
 
-import { Card, Error } from './modules';
+import { Card, Error, CardLayout } from './modules';
 
 import Styled from './CategoriesList.styles';
 import { getCategory, sortCategories } from './CategoriesList.module';
-import { CategoryCard } from './CategoriesList.types';
+import type { CategoryCard } from './CategoriesList.types';
 
 const CategoriesList = () => {
   const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
@@ -77,7 +74,7 @@ const CategoriesList = () => {
   return (
     <Layout>
       <ErrorBoundary>
-        <Container>
+        <>
           {isLoading && (
             <FadeIn>
               <Styled.LoaderContainer>
@@ -87,28 +84,25 @@ const CategoriesList = () => {
           )}
 
           {!isLoading && (
-            <FadeIn>
-              <Flex direction="column">
-                <Flex margin={{ bottom: 'large' }}>
-                  <Text variant="h1">Виберіть категорію для проведення розрахунків</Text>
-                </Flex>
-
+            <Flex alignment={{ vertical: 'center' }}>
+              <FadeIn>
                 {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
 
-                {sortCategories(fullCategories)?.map((category, index) => (
-                  <motion.div
-                    key={category.id}
-                    variants={{
-                      visible: { opacity: 1, x: 0 },
-                      hidden: { opacity: 0, x: (index + 1) * -10 },
-                    }}
-                    transition={{ delay: index * 0.2 }}
-                  >
-                    <Card {...category} reload={() => reloadItem(category.id, category.version)} />
-                  </motion.div>
-                ))}
-              </Flex>
-            </FadeIn>
+                <Styled.Grid elementAmount={fullCategories.length + 1}>
+                  <Styled.BigCell>
+                    <Styled.CategoriesHeader>
+                      <Styled.Title variant="h1">Виберіть категорію для проведення розрахунків</Styled.Title>
+                    </Styled.CategoriesHeader>
+                  </Styled.BigCell>
+
+                  {sortCategories(fullCategories)?.map((category, cardIndex) => (
+                    <CardLayout cardIndex={cardIndex} key={category.id}>
+                      <Card {...category} reload={() => reloadItem(category.id, category.version)} />
+                    </CardLayout>
+                  ))}
+                </Styled.Grid>
+              </FadeIn>
+            </Flex>
           )}
 
           {!isLoading && listError && (
@@ -116,7 +110,7 @@ const CategoriesList = () => {
               <Error reloadCategories={triggerRequest} />
             </FadeIn>
           )}
-        </Container>
+        </>
       </ErrorBoundary>
     </Layout>
   );

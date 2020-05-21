@@ -32,6 +32,7 @@ export const Criterion: React.FC<CriterionProps> = ({ requirementGroups }) => {
   return (
     <Flex direction="column">
       <Select
+        autocomplete={requirementGroups.length >= 10}
         placeholder="Виберіть один із доступних варіантів"
         items={requirementGroups.reduce((items, requirementGroup) => {
           return Object.assign(items, {

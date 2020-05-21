@@ -1,9 +1,10 @@
+import { Link as RouterLink } from 'react-router-dom';
+
 import styled, { css } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
-
-import { Link as RouterLink } from 'react-router-dom';
+import { Mixin } from 'ustudio-ui/theme';
 
 import ReloadIconEl from '../../../../assets/icons/reload.inline.svg';
 
@@ -13,42 +14,83 @@ const Link = styled(RouterLink)`
   }
 `;
 
-const BaseCard = styled(Flex)`
-  margin-bottom: var(--i-large);
-  padding: var(--i-regular);
-  border: 1px solid var(--c-light);
-  border-radius: var(--border-radius);
-  transition: var(--transition);
-`;
-
 const CardTitle = styled(Text)`
-  margin-bottom: var(--i-medium);
+  position: relative;
+
+  //best way to do cut long strings
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  margin-bottom: var(--i-large);
+
+  overflow: hidden;
+
+  transition: var(--transition);
+
+  font-weight: 400;
+  line-height: 1.1;
+`;
+
+const CardContent = styled.div`
+  position: relative;
+`;
+
+const CardDescription = styled.div`
+  //best way to do cut long strings
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
 
   transition: var(--transition);
 `;
 
-const Card = styled(BaseCard)<{ isDisabled: boolean }>(({ isDisabled }) =>
-  isDisabled
-    ? css`
-        cursor: not-allowed;
-        user-select: none;
-      `
-    : css`
-        &:hover {
-          border: 1px solid var(--c-primary);
-          box-shadow: var(--s-primary);
-        }
+const BaseCard = styled(Flex)`
+  height: 100%;
+`;
 
-        &:focus {
-          border: 1px solid var(--c-primary);
-        }
+const ContentCard = styled(BaseCard)<{ isDisabled?: boolean }>(
+  ({ isDisabled }) => css`
+    align-items: center;
 
-        &:active {
-          ${CardTitle} {
-            color: var(--c-primary);
-          }
+    position: relative;
+
+    padding: var(--i-regular) var(--i-large);
+
+    opacity: 0.7;
+    transition: opacity var(--transition);
+
+    color: ${isDisabled ? 'var(--c-dark)' : 'var(--c-light)'};
+
+    background-color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'};
+
+    ${isDisabled
+      ? css`
+          cursor: not-allowed;
+          user-select: none;
+        `
+      : ''}
+
+    ${Mixin.Screen.xs(css`
+      opacity: ${isDisabled ? 1 : 0};
+
+      ${CardDescription},
+      ${CardTitle} {
+        opacity: ${isDisabled ? 1 : 0};
+      }
+
+      &:hover {
+        opacity: ${isDisabled ? 1 : 0.7};
+
+        ${CardDescription},
+        ${CardTitle} {
+          opacity: 1;
         }
-      `
+      }
+    `)}
+  `
 );
 
 const ReloadIcon = styled(ReloadIconEl)`
@@ -67,8 +109,10 @@ const ReloadIcon = styled(ReloadIconEl)`
 
 export default {
   Link,
-  Card,
   BaseCard,
   CardTitle,
+  CardContent,
+  CardDescription,
+  ContentCard,
   ReloadIcon,
 };

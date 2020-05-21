@@ -1,34 +1,17 @@
 import React from 'react';
 
-import Flex from 'ustudio-ui/components/Flex';
-import Text from 'ustudio-ui/components/Text';
-import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
-
-import { Classification } from 'shared';
-
-import { CategoryCardProps } from '../../Card.types';
+import { CategoryCardData } from '../../../../CategoriesList.types';
 
 import Styled from '../../Card.styles';
 
-export const BaseCard = ({ title, description, classification, status }: CategoryCardProps) => {
-  const isXs = useMediaQuery('screen and (min-width: 576px)');
-  const isDisabled = status === 'pending';
-
+export const BaseCard = ({ title, description, status }: CategoryCardData) => {
   return (
-    <Styled.Card direction="column" isDisabled={isDisabled}>
-      <Styled.CardTitle variant="h5" color={isDisabled ? 'var(--c-neutral)' : 'var(--c-secondary)'}>
-        {title}
-      </Styled.CardTitle>
+    <Styled.ContentCard isDisabled={status === 'pending'}>
+      <Styled.CardContent>
+        <Styled.CardTitle variant="h2">{title}</Styled.CardTitle>
 
-      {isXs && (
-        <Flex margin={{ bottom: 'regular' }}>
-          <Text color={isDisabled ? 'var(--c-neutral)' : 'var(--c-dark)'} variant="small">
-            {description}
-          </Text>
-        </Flex>
-      )}
-
-      <Classification {...classification} isDisabled={isDisabled} />
-    </Styled.Card>
+        <Styled.CardDescription>{description}</Styled.CardDescription>
+      </Styled.CardContent>
+    </Styled.ContentCard>
   );
 };
