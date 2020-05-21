@@ -12,6 +12,8 @@ const LoaderContainer = styled.div`
   transform: translate(-50%, -50%);
 `;
 
+const computeColumnTemplate = (columnCount: number) => `repeat(auto-fit, minmax(calc(100% / ${columnCount}), 1fr))`;
+
 const Grid = styled.div(
   ({ elementAmount }: { elementAmount: number }) => css`
     display: grid;
@@ -23,7 +25,7 @@ const Grid = styled.div(
     grid-auto-flow: column;
 
     ${Mixin.Screen.xs(css`
-      grid-template-columns: repeat(auto-fit, minmax(calc(100% / 2), 1fr));
+      grid-template-columns: ${computeColumnTemplate(2)};
       grid-auto-rows: calc((100vh - 64px - 118px - var(--i-large) * 2) / 3);
 
       grid-auto-flow: dense;
@@ -32,11 +34,11 @@ const Grid = styled.div(
     `)}
 
     ${Mixin.Screen.lg(css`
-      grid-template-columns: repeat(auto-fit, minmax(calc(100% / 4), 1fr));
+      grid-template-columns: ${computeColumnTemplate(4)};
     `)}
 
   @media screen and (min-width: 1500px) {
-      grid-template-columns: repeat(auto-fit, minmax(calc(100% / 6), 1fr));
+      grid-template-columns: ${computeColumnTemplate(6)};
     }
   `
 );

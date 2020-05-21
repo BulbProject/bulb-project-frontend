@@ -57,22 +57,12 @@ const ContentCard = styled(BaseCard)<{ isDisabled?: boolean }>(
 
     padding: var(--i-regular) var(--i-large);
 
-    opacity: 1;
+    opacity: 0.7;
     transition: opacity var(--transition);
 
     color: ${isDisabled ? 'var(--c-dark)' : 'var(--c-light)'};
 
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-
-      background-color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'};
-      opacity: 0.7;
-    }
+    background-color: ${isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'};
 
     ${isDisabled
       ? css`
@@ -84,14 +74,16 @@ const ContentCard = styled(BaseCard)<{ isDisabled?: boolean }>(
     ${Mixin.Screen.xs(css`
       opacity: ${isDisabled ? 1 : 0};
 
-      ${CardDescription}, ${CardTitle} {
+      ${CardDescription},
+      ${CardTitle} {
         opacity: ${isDisabled ? 1 : 0};
       }
 
       &:hover {
-        opacity: 1;
+        opacity: ${isDisabled ? 1 : 0.7};
 
-        ${CardDescription}, ${CardTitle} {
+        ${CardDescription},
+        ${CardTitle} {
           opacity: 1;
         }
       }

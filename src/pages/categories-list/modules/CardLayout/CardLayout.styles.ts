@@ -4,8 +4,8 @@ import { Mixin } from 'ustudio-ui/theme';
 
 import StyledCard from '../Card/Card.styles';
 
-const imageStyles = (image?: string) =>
-  image
+const Cell = styled.div(({ image }: { image?: string }) => {
+  return image
     ? css`
         background-image: url(${image});
         background-size: cover;
@@ -15,12 +15,7 @@ const imageStyles = (image?: string) =>
         object-fit: cover;
       `
     : '';
-
-const Cell = styled.div(
-  ({ image }: { image?: string }) => css`
-    ${imageStyles(image)};
-  `
-);
+});
 
 const WideCell = styled(Cell)`
   grid-column: span 1;

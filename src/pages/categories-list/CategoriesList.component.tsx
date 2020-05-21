@@ -9,17 +9,19 @@ import { useRequest } from 'hooks';
 
 import { ErrorBoundary, FadeIn, Layout } from 'components';
 
-import { CategoriesListEntity } from 'types/data';
+import type { CategoriesListEntity } from 'types/data';
 
 import { Card, Error, CardLayout } from './modules';
 
 import Styled from './CategoriesList.styles';
 import { getCategory, sortCategories } from './CategoriesList.module';
-import { CategoryCard } from './CategoriesList.types';
+import type { CategoryCard } from './CategoriesList.types';
 
 const CategoriesList = () => {
   const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
   const [isLoading, setLoading] = useState(true);
+
+  console.log(12);
 
   const { data: categoriesList, error: listError, triggerRequest } = useRequest<CategoriesListEntity[]>(
     getCategoriesConfig()
