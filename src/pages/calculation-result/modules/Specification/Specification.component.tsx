@@ -44,15 +44,25 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
   );
 
   useEffect(() => {
-    if (isRequesting) {
+    if (isRequesting && !error) {
       setTimeout(() => {
         setOpen(false);
       }, 100);
     }
-  }, [isRequesting]);
+  }, [isRequesting, error]);
 
   return (
     <>
+      <Alert
+        isOpen={isRequesting && !isLoading}
+        onChange={() => setRequesting(false)}
+        verticalPosition="top"
+        horizontalPosition="center"
+        intent={error ? 'negative' : 'positive'}
+      >
+        {error ? 'Упс, щось пішло не так...' : 'Успіх!'}
+      </Alert>
+
       <Modal
         isOpen={isOpen}
         onChange={setOpen}
