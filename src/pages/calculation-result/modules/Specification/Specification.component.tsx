@@ -13,6 +13,7 @@ import Alert from 'ustudio-ui/components/Alert';
 
 import { useRequest } from 'hooks';
 import { postSpecification } from 'config';
+import { Mixin } from 'ustudio-ui/theme';
 
 import { modes, egps, generateSelectedVariant } from './Specification.module';
 import type { SpecificationProps } from './Specification.types';
@@ -69,7 +70,23 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
         title={<Text variant="h5">{criterion.title}</Text>}
         styled={{
           Modal: css`
-            width: 33%;
+            width: 100%;
+            
+            ${Mixin.Screen.xs(css`
+              width: 75%;
+            `)}
+
+            ${Mixin.Screen.md(css`
+              width: 66%;
+            `)}
+
+            ${Mixin.Screen.lg(css`
+              width: 50%;
+            `)}
+            
+            ${Mixin.Screen.xl(css`
+              width: 33%;
+            `)}
           `,
           Overlay: css`
             background-color: var(--c-darkest);

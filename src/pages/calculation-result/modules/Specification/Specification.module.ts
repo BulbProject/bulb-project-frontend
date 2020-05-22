@@ -13,6 +13,7 @@ export const generateSelectedVariant = ({
   availableVariant: AvailableVariant;
   requirement: Requirement;
 }): SelectedVariant => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { criteria: _, ...restAvailableVariants } = availableVariant;
 
   return {
