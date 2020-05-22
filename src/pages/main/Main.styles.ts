@@ -26,8 +26,27 @@ const Main = styled.main`
   }
 `;
 
+const ScrollIndicators = styled.div`
+  position: fixed;
+  right: var(--i-large);
+  top: 0;
+`;
+
+const Indicator = styled.div(
+  ({ isActive }: { isActive: boolean }) => css`
+    width: 15px;
+    height: 15px;
+
+    margin: var(--i-medium);
+
+    border-radius: 50%;
+
+    background-color: ${isActive ? 'var(--c-primary)' : 'var(--c-light)'};
+  `
+);
+
 const ScrollWrapper = styled.div`
   scroll-snap-align: start;
 `;
 
-export default { CategoryListWrapper, Main, ScrollWrapper };
+export default { CategoryListWrapper, Main, ScrollWrapper, ScrollIndicators, Indicator };
