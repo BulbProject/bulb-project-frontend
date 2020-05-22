@@ -57,8 +57,8 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
       <Alert
         isOpen={isRequesting && !isLoading}
         onChange={() => setRequesting(false)}
-        verticalPosition="top"
-        horizontalPosition="center"
+        verticalPosition={mode === 'json' ? 'top' : 'bottom'}
+        horizontalPosition={mode === 'json' ? 'center' : 'left'}
         intent={error ? 'negative' : 'positive'}
       >
         {error ? 'Упс, щось пішло не так...' : 'Успіх!'}
