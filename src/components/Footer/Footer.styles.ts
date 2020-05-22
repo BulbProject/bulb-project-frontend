@@ -1,12 +1,15 @@
 import styled, { css } from 'styled-components';
+
 import Flex from 'ustudio-ui/components/Flex';
 import { Mixin } from 'ustudio-ui/theme';
 
 const PartnerLink = styled.a(
   ({ image, width = 8 }: { image: string; width?: number }) => css`
-    margin: var(--i-small);
-    height: 4rem;
     width: ${width}rem;
+    height: 4rem;
+
+    margin: var(--i-small);
+
     background-image: url(${image});
     background-size: contain;
     background-repeat: no-repeat;
@@ -14,7 +17,10 @@ const PartnerLink = styled.a(
 
     transition: var(--transition);
 
+    filter: brightness(0);
+
     &:hover {
+      filter: brightness(1);
     }
 
     &:after {

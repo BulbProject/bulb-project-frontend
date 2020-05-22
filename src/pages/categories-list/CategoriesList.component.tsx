@@ -96,7 +96,7 @@ const CategoriesList = () => {
                   </Styled.BigCell>
 
                   {sortCategories(fullCategories)?.map((category, cardIndex) => (
-                    <CardLayout cardIndex={cardIndex} key={category.id}>
+                    <CardLayout cardIndex={cardIndex} image={category.categoryVersion?.image} key={category.id}>
                       <Card {...category} reload={() => reloadItem(category.id, category.version)} />
                     </CardLayout>
                   ))}

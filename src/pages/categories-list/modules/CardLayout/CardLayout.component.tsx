@@ -3,6 +3,7 @@ import React from 'react';
 import StyledCell from './CardLayout.styles';
 
 export const CardLayout: React.FC<{ cardIndex: number; image?: string }> = ({ cardIndex, image, children }) => {
+
   if (cardIndex === 0) {
     return <StyledCell.BigCell image={image}>{children}</StyledCell.BigCell>;
   }

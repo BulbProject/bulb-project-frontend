@@ -8,6 +8,14 @@ const CategoryListWrapper = styled.div`
   ${StyledFooter.Footer} {
     background-color: var(--c-base-strong);
   }
+
+  ${StyledFooter.PartnerLink} {
+    filter: contrast(0);
+
+    &:hover {
+      filter: contrast(1);
+    }
+  }
 `;
 
 const Main = styled.main`

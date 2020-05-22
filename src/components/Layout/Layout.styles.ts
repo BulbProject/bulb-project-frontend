@@ -193,7 +193,6 @@ const Main = styled.main`
   flex-grow: 1;
 
   margin-top: 64px;
-  padding: var(--i-large) 0;
 `;
 
 export default {
