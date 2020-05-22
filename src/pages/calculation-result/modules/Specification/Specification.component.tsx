@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { css } from 'styled-components';
 import { useParams } from 'react-router-dom';
+import download from 'downloadjs';
 
 import Modal from 'ustudio-ui/components/Modal';
 import Flex from 'ustudio-ui/components/Flex';
@@ -28,7 +29,7 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
 
   const [isRequesting, setRequesting] = useState(false);
 
-  const { isLoading, error } = useRequest(
+  const { isLoading, error, data } = useRequest(
     postSpecification({
       categoryId,
       version,
@@ -52,17 +53,25 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
     }
   }, [isRequesting, error]);
 
+  useEffect(() => {
+    if (data && mode === 'rtf') {
+      download(data as string, `${availableVariant.id}-specification.rtf`, 'application/rtf');
+    }
+  }, [Boolean(data)]);
+
   return (
     <>
-      <Alert
-        isOpen={isRequesting && !isLoading}
-        onChange={() => setRequesting(false)}
-        verticalPosition={mode === 'json' ? 'top' : 'bottom'}
-        horizontalPosition={mode === 'json' ? 'center' : 'left'}
-        intent={error ? 'negative' : 'positive'}
-      >
-        {error ? 'Упс, щось пішло не так...' : 'Успіх!'}
-      </Alert>
+      {!isOpen && (
+        <Alert
+          isOpen={isRequesting && !isLoading}
+          onChange={() => setRequesting(false)}
+          verticalPosition={mode === 'json' ? 'top' : 'bottom'}
+          horizontalPosition={mode === 'json' ? 'center' : 'left'}
+          intent={error ? 'negative' : 'positive'}
+        >
+          {error ? 'Упс, щось пішло не так...' : 'Успіх!'}
+        </Alert>
+      )}
 
       <Modal
         isOpen={isOpen}
@@ -155,7 +164,6 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
               // @ts-ignore
               variant="body"
               active={mode}
-              disabledTabs={[modes[1]]}
               tabs={modes.map((title) => ({
                 value: title,
                 children: <Styled.Tab>{title}</Styled.Tab>,
