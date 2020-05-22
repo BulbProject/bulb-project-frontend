@@ -43,6 +43,7 @@ const Overlay = styled.div<{ isActive: boolean }>(
     background-color: var(--c-darkest);
 
     opacity: ${isActive ? 0.5 : 0};
+    pointer-events: none;
 
     transition: opacity;
   `
