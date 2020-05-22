@@ -30,6 +30,8 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
   const [isRequesting, setRequesting] = useState(false);
   const [isDownloading, setDownloading] = useState(false);
   const [isCopying, setCopying] = useState(false);
+  const [isAlertOpen, setAlertOpen] = useState(false);
+
   const idRef = useRef<HTMLTextAreaElement | null>(null);
 
   const { isLoading, error, data } = useRequest<string | SpecificationJSON>(
@@ -58,6 +60,8 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
       setRequesting(false);
       setDownloading(false);
       setOpen(false);
+
+      setAlertOpen(true);
     }
   }, [Boolean(data), isDownloading]);
 
@@ -71,8 +75,8 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
     <>
       {!isOpen && (
         <Alert
-          isOpen={isRequesting && !isLoading}
-          onChange={() => {}}
+          isOpen={isAlertOpen}
+          onChange={() => setAlertOpen(false)}
           verticalPosition={mode === 'json' ? 'top' : 'bottom'}
           horizontalPosition={mode === 'json' ? 'center' : 'left'}
           intent={error ? 'negative' : 'positive'}
@@ -230,6 +234,9 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
 
                 setCopying(false);
                 setOpen(false);
+                setRequesting(false);
+
+                setAlertOpen(true);
               }}
             >
               <textarea rows={1} ref={idRef} value={(data as SpecificationJSON).specificationId} />
