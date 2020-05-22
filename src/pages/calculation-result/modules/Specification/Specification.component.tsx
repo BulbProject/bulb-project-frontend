@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState, MutableRefObject } from 'react';
 import { css } from 'styled-components';
 import { useParams } from 'react-router-dom';
 import download from 'downloadjs';
@@ -17,7 +17,7 @@ import { postSpecification } from 'config';
 import { Mixin } from 'ustudio-ui/theme';
 
 import { modes, egps, generateSelectedVariant } from './Specification.module';
-import type { SpecificationProps } from './Specification.types';
+import type { SpecificationJSON, SpecificationProps } from './Specification.types';
 import Styled from './Specification.styles';
 
 export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criterion, availableVariant }) => {
@@ -29,15 +29,20 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
 
   const [isRequesting, setRequesting] = useState(false);
   const [isDownloading, setDownloading] = useState(false);
+  const [isCopying, setCopying] = useState(false);
+  const idRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const { isLoading, error, data } = useRequest(
+  const { isLoading, error, data } = useRequest<string | SpecificationJSON>(
     postSpecification({
       categoryId,
       version,
       egp,
       mode,
       body: {
-        selectedVariant: generateSelectedVariant({ availableVariant, requirement }),
+        selectedVariant: generateSelectedVariant({
+          availableVariant,
+          requirement,
+        }),
       },
     }),
     {
@@ -55,6 +60,12 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
       setOpen(false);
     }
   }, [Boolean(data), isDownloading]);
+
+  const copyIdToClipboard = () => {
+    (idRef as MutableRefObject<HTMLTextAreaElement>).current.select();
+    document.execCommand('copy');
+    (idRef as MutableRefObject<HTMLTextAreaElement>).current.blur();
+  };
 
   return (
     <>
@@ -105,6 +116,12 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
             <Button
               onClick={() => {
                 setRequesting(true);
+
+                if (mode === 'json') {
+                  setCopying(true);
+                  return;
+                }
+
                 setDownloading(true);
               }}
             >
@@ -188,6 +205,41 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
             />
           </Styled.Group>
         </Flex>
+      </Modal>
+
+      <Modal
+        isOpen={isCopying}
+        onChange={setCopying}
+        title={<Text variant="h5">Ваш ID</Text>}
+        styled={{
+          Modal: css`
+            z-index: calc(var(--l-topmost) + 2);
+          `,
+          Overlay: css`
+            background-color: var(--c-darkest);
+
+            ${isCopying ? 'z-index: calc(var(--l-topmost) + 1) !important;' : ''};
+          `,
+        }}
+      >
+        <Styled.Group>
+          {data && (
+            <Styled.JsonId
+              onClick={() => {
+                copyIdToClipboard();
+
+                setCopying(false);
+                setOpen(false);
+              }}
+            >
+              <textarea rows={1} ref={idRef} value={(data as SpecificationJSON).specificationId} />
+            </Styled.JsonId>
+          )}
+
+          <Text variant="small" color="var(--c-dark)" align="center">
+            Натисніть, щоб скопіювати ідентифікатор Вашої специфікації.
+          </Text>
+        </Styled.Group>
       </Modal>
     </>
   );

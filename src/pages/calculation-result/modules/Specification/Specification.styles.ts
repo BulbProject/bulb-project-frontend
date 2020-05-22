@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
+import { Mixin } from 'ustudio-ui/theme';
 
 const Group = styled(Flex).attrs(() => ({
   direction: 'column',
@@ -51,4 +52,30 @@ const Overlay = styled.div<{ isActive: boolean }>(
   `
 );
 
-export default { Group, GroupTitle, Tab, Overlay };
+const JsonId = styled.button`
+  ${Mixin.Style.inputPadding()};
+  ${Mixin.Font.bodyRegular()};
+
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: var(--i-regular);
+
+  border-radius: var(--border-radius);
+
+  background-color: var(--c-light);
+
+  textarea {
+    width: 100%;
+    text-align: center;
+
+    cursor: pointer;
+
+    background: transparent;
+  }
+`;
+
+export default { Group, GroupTitle, Tab, Overlay, JsonId };

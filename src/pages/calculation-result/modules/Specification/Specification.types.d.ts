@@ -7,3 +7,7 @@ export interface SpecificationProps {
   criterion: Criterion;
   availableVariant: AvailableVariant;
 }
+
+export interface SpecificationJSON {
+  specificationId: string;
+}
