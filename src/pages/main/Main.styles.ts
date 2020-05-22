@@ -28,20 +28,25 @@ const Main = styled.main`
 
 const ScrollIndicators = styled.div`
   position: fixed;
-  right: var(--i-large);
-  top: 0;
+  right: var(--i-medium);
+  top: 50%;
+
+  transform: translateY(-50%);
 `;
 
 const Indicator = styled.div(
   ({ isActive }: { isActive: boolean }) => css`
-    width: 15px;
-    height: 15px;
+    width: 0.5rem;
+    height: 0.5rem;
 
     margin: var(--i-medium);
 
     border-radius: 50%;
 
-    background-color: ${isActive ? 'var(--c-primary)' : 'var(--c-light)'};
+    border: 1px solid var(--c-dark);
+
+    background-color: ${isActive ? 'var(--c-secondary)' : 'var(--c-light)'};
+    transition: background-color var(--transition);
   `
 );
 
