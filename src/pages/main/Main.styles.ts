@@ -7,7 +7,9 @@ import StyledCategories from 'pages/categories-list/CategoriesList.styles';
 
 const CategoryListWrapper = styled(Flex)`
   align-items: center;
+
   min-height: 100vh;
+
   background-image: linear-gradient(to bottom, rgba(26, 26, 26, 1), rgba(26, 26, 26, 1) 75%, rgba(26, 26, 26, 0.975));
 `;
 
@@ -15,7 +17,7 @@ const Main = styled.main`
   height: 100vh;
 
   scroll-snap-type: y mandatory;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   ${StyledCategories.Grid} {
     ${Mixin.Screen.xs(css`

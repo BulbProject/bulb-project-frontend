@@ -21,7 +21,7 @@ const Grid = styled.div(
     grid-template-columns: repeat(${elementAmount}, 100%);
     grid-auto-rows: 100vw;
 
-    overflow-x: scroll;
+    overflow-x: auto;
     scroll-snap-type: x mandatory;
 
     grid-auto-flow: column;

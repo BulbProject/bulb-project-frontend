@@ -62,6 +62,7 @@ const ContentCard = styled(BaseCard)<{ isDisabled?: boolean }>(
 
     &:before {
       content: '';
+
       position: absolute;
       top: 0;
       bottom: 0;
