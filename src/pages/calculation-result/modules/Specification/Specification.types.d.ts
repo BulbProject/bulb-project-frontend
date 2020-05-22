@@ -1,5 +1,5 @@
-import { Criterion } from 'ts4ocds/extensions/requirements';
-import { AvailableVariant } from 'types/data';
+import type { Criterion } from 'ts4ocds/extensions/requirements';
+import type { AvailableVariant } from 'types/data';
 
 export interface SpecificationProps {
   isOpen: boolean;

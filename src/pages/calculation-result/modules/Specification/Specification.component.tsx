@@ -15,7 +15,7 @@ import { useRequest } from 'hooks';
 import { postSpecification } from 'config';
 
 import { modes, egps, generateSelectedVariant } from './Specification.module';
-import { SpecificationProps } from './Specification.types';
+import type { SpecificationProps } from './Specification.types';
 import Styled from './Specification.styles';
 
 export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criterion, availableVariant }) => {

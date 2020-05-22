@@ -1,5 +1,5 @@
-import { AxiosRequestConfig } from 'axios';
-import { Category, CategoryVersion, RequestedNeed, SelectedVariant } from 'types/data';
+import type { AxiosRequestConfig } from 'axios';
+import type { Category, CategoryVersion, RequestedNeed, SelectedVariant } from 'types/data';
 
 const apiServiceBaseUrl = 'https://bulb-api.eprocurement.systems';
 

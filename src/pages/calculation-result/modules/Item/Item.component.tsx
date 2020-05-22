@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { css } from 'styled-components';
 
-import { Observation } from 'ts4ocds/extensions/metrics';
+import type { Observation } from 'ts4ocds/extensions/metrics';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
@@ -18,7 +18,7 @@ import { Metrics } from './components';
 import { efficiencyClasses, EfficiencyClass } from './Item.module';
 
 import Styled from './Item.styles';
-import { ItemProps } from './Item.types';
+import type { ItemProps } from './Item.types';
 
 export const Item = ({
   variant,
