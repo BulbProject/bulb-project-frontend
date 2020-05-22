@@ -17,7 +17,7 @@ import Styled from './CategoriesList.styles';
 import { getCategory, sortCategories } from './CategoriesList.module';
 import type { CategoryCard } from './CategoriesList.types';
 
-const CategoriesList = () => {
+export const CategoriesList = () => {
   const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
   const [isLoading, setLoading] = useState(true);
 
@@ -72,48 +72,52 @@ const CategoriesList = () => {
   }, [categoriesList]);
 
   return (
-    <Layout>
-      <ErrorBoundary>
-        <>
-          {isLoading && (
+    <ErrorBoundary>
+      <>
+        {isLoading && (
+          <FadeIn>
+            <Styled.LoaderContainer>
+              <Spinner appearance={{ size: 64 }} delay={300} />
+            </Styled.LoaderContainer>
+          </FadeIn>
+        )}
+
+        {!isLoading && (
+          <Flex alignment={{ vertical: 'center' }}>
             <FadeIn>
-              <Styled.LoaderContainer>
-                <Spinner appearance={{ size: 64 }} delay={300} />
-              </Styled.LoaderContainer>
+              {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
+
+              <Styled.Grid elementAmount={fullCategories.length + 1}>
+                <Styled.BigCell>
+                  <Styled.CategoriesHeader>
+                    <Styled.Title variant="h1">Виберіть категорію для проведення розрахунків</Styled.Title>
+                  </Styled.CategoriesHeader>
+                </Styled.BigCell>
+
+                {sortCategories(fullCategories)?.map((category, cardIndex) => (
+                  <CardLayout cardIndex={cardIndex} image={category.categoryVersion?.image} key={category.id}>
+                    <Card {...category} reload={() => reloadItem(category.id, category.version)} />
+                  </CardLayout>
+                ))}
+              </Styled.Grid>
             </FadeIn>
-          )}
+          </Flex>
+        )}
 
-          {!isLoading && (
-            <Flex alignment={{ vertical: 'center' }}>
-              <FadeIn>
-                {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
-
-                <Styled.Grid elementAmount={fullCategories.length + 1}>
-                  <Styled.BigCell>
-                    <Styled.CategoriesHeader>
-                      <Styled.Title variant="h1">Виберіть категорію для проведення розрахунків</Styled.Title>
-                    </Styled.CategoriesHeader>
-                  </Styled.BigCell>
-
-                  {sortCategories(fullCategories)?.map((category, cardIndex) => (
-                    <CardLayout cardIndex={cardIndex} image={category.categoryVersion?.image} key={category.id}>
-                      <Card {...category} reload={() => reloadItem(category.id, category.version)} />
-                    </CardLayout>
-                  ))}
-                </Styled.Grid>
-              </FadeIn>
-            </Flex>
-          )}
-
-          {!isLoading && listError && (
-            <FadeIn>
-              <Error reloadCategories={triggerRequest} />
-            </FadeIn>
-          )}
-        </>
-      </ErrorBoundary>
-    </Layout>
+        {!isLoading && listError && (
+          <FadeIn>
+            <Error reloadCategories={triggerRequest} />
+          </FadeIn>
+        )}
+      </>
+    </ErrorBoundary>
   );
 };
 
-export default CategoriesList;
+const CategoriesListPage = () => (
+  <Layout>
+    <CategoriesList />
+  </Layout>
+);
+
+export default CategoriesListPage;

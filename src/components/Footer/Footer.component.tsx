@@ -9,7 +9,7 @@ import OpenContractingLogo from '../../assets/images/partners/open-contracting.p
 import EbrdLogo from '../../assets/images/partners/ebrd.png';
 import IcfLogo from '../../assets/images/partners/icf.png';
 import CpbLogo from '../../assets/images/partners/cpb.png';
-import UstudioLogo from '../../assets/images/partners/ustudio.png';
+import UstudioLogo from '../../assets/images/partners/ustudio.svg';
 
 export const Footer = () => {
   const partners = [

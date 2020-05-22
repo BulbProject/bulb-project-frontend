@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createGlobalStyle } from 'styled-components';
 
-import CategoriesList from 'pages/categories-list/CategoriesList.component';
+import { CategoriesList } from 'pages/categories-list/CategoriesList.component';
 
 import Styled from './Main.styles';
 import { Hero, Content } from './modules';

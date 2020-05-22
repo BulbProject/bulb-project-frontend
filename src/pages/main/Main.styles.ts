@@ -1,21 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import StyledFooter from 'components/Footer/Footer.styles';
+import { Mixin } from 'ustudio-ui/theme';
+
+import StyledCategories from 'pages/categories-list/CategoriesList.styles';
 
 const CategoryListWrapper = styled.div`
   background-image: linear-gradient(to bottom, rgba(26, 26, 26, 1), rgba(26, 26, 26, 1) 75%, rgba(26, 26, 26, 0.975));
-
-  ${StyledFooter.Footer} {
-    background-color: var(--c-base-strong);
-  }
-
-  ${StyledFooter.PartnerLink} {
-    filter: contrast(0);
-
-    &:hover {
-      filter: contrast(1);
-    }
-  }
 `;
 
 const Main = styled.main`
@@ -23,6 +13,12 @@ const Main = styled.main`
 
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
+
+  ${StyledCategories.Grid} {
+    ${Mixin.Screen.xs(css`
+      grid-auto-rows: calc(100vh / 3);
+    `)}
+  }
 `;
 
 const ScrollWrapper = styled.div`

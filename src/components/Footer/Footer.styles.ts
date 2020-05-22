@@ -8,7 +8,7 @@ const PartnerLink = styled.a(
     width: ${width}rem;
     height: 4rem;
 
-    margin: var(--i-small);
+    margin: var(--i-regular);
 
     background-image: url(${image});
     background-size: contain;
@@ -16,7 +16,6 @@ const PartnerLink = styled.a(
     background-position: center;
 
     transition: var(--transition);
-
     filter: brightness(0);
 
     &:hover {
@@ -36,7 +35,7 @@ const Footer = styled.footer`
 const FooterContent = styled(Flex)`
   justify-content: center;
   flex-wrap: wrap;
-  padding: var(--i-large);
+  align-items: center;
 
   ${Mixin.Screen.lg(css`
     justify-content: space-between;
