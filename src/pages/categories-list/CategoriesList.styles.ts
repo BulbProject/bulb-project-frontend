@@ -21,12 +21,14 @@ const Grid = styled.div(
     grid-template-columns: repeat(${elementAmount}, 100%);
     grid-auto-rows: 100vw;
 
-    overflow: scroll;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+
     grid-auto-flow: column;
 
     ${Mixin.Screen.xs(css`
       grid-template-columns: ${computeColumnTemplate(2)};
-      grid-auto-rows: calc((100vh - 64px - 136px) / 3);
+      grid-auto-rows: calc((100vh - 64px - 96px) / 3);
 
       grid-auto-flow: dense;
 
