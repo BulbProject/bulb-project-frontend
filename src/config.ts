@@ -10,6 +10,7 @@ const createRequestConfig = ({
   path,
   params = [],
   query,
+  responseType = 'json',
 }: {
   baseUrl: string;
   method: AxiosRequestConfig['method'];
@@ -17,6 +18,7 @@ const createRequestConfig = ({
   path: string;
   params?: string[];
   query?: Record<string, unknown>;
+  responseType?: 'json' | 'text';
 }): AxiosRequestConfig => ({
   method,
   data: body,
@@ -27,7 +29,7 @@ const createRequestConfig = ({
           .slice(0, -1)}`
       : ''
   }`,
-  responseType: 'json',
+  responseType,
 });
 
 export const getCategoriesConfig = (): AxiosRequestConfig =>
@@ -83,6 +85,7 @@ export const postSpecification = ({
     query: { egp, mode },
     params: [categoryId, version],
     body,
+    responseType: 'text',
   });
 };
 
