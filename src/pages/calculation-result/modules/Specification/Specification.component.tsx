@@ -92,6 +92,11 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
             background-color: var(--c-darkest);
           `,
         }}
+        footer={
+          <Flex alignment={{ horizontal: 'center' }}>
+            <Button onClick={() => setRequesting(true)}>Згенерувати</Button>
+          </Flex>
+        }
       >
         <Styled.Overlay isActive={isLoading}>
           <Spinner />
@@ -167,10 +172,6 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
                 `,
               }}
             />
-          </Styled.Group>
-
-          <Styled.Group>
-            <Button onClick={() => setRequesting(true)}>Згенерувати</Button>
           </Styled.Group>
         </Flex>
       </Modal>
