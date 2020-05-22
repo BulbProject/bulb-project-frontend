@@ -93,6 +93,8 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
           `,
         }}
         footer={
+          // Conflicts with prettier
+          // eslint-disable-next-line react/jsx-wrap-multilines
           <Flex alignment={{ horizontal: 'center' }}>
             <Button onClick={() => setRequesting(true)}>Згенерувати</Button>
           </Flex>
