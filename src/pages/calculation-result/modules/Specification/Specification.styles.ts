@@ -36,6 +36,8 @@ const Overlay = styled.div<{ isActive: boolean }>(
     bottom: 0;
     right: 0;
 
+    z-index: 2;
+
     display: flex;
     align-items: center;
     justify-content: center;

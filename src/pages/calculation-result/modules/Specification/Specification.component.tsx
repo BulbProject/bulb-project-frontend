@@ -28,6 +28,7 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
   const [mode, setMode] = useState(modes[0]);
 
   const [isRequesting, setRequesting] = useState(false);
+  const [isDownloading, setDownloading] = useState(false);
 
   const { isLoading, error, data } = useRequest(
     postSpecification({
@@ -46,25 +47,21 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
   );
 
   useEffect(() => {
-    if (isRequesting && !error) {
-      setTimeout(() => {
-        setOpen(false);
-      }, 100);
-    }
-  }, [isRequesting, error]);
-
-  useEffect(() => {
-    if (data && mode === 'rtf') {
+    if (data && mode === 'rtf' && isDownloading) {
       download(data as string, `${availableVariant.id}-specification.rtf`, 'application/rtf');
+
+      setRequesting(false);
+      setDownloading(false);
+      setOpen(false);
     }
-  }, [Boolean(data)]);
+  }, [Boolean(data), isDownloading]);
 
   return (
     <>
       {!isOpen && (
         <Alert
           isOpen={isRequesting && !isLoading}
-          onChange={() => setRequesting(false)}
+          onChange={() => {}}
           verticalPosition={mode === 'json' ? 'top' : 'bottom'}
           horizontalPosition={mode === 'json' ? 'center' : 'left'}
           intent={error ? 'negative' : 'positive'}
@@ -105,7 +102,14 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
           // Conflicts with prettier
           // eslint-disable-next-line react/jsx-wrap-multilines
           <Flex alignment={{ horizontal: 'center' }}>
-            <Button onClick={() => setRequesting(true)}>Згенерувати</Button>
+            <Button
+              onClick={() => {
+                setRequesting(true);
+                setDownloading(true);
+              }}
+            >
+              Згенерувати
+            </Button>
           </Flex>
         }
       >
