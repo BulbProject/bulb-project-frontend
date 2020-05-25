@@ -4,8 +4,14 @@ import { Mixin } from 'ustudio-ui/theme';
 import Text from 'ustudio-ui/components/Text';
 import StyledLayout from './modules/CardLayout/CardLayout.styles';
 
+const CategoriesListContainer = styled.div`
+  position: relative;
+
+  width: 100%;
+`;
+
 const LoaderContainer = styled.div`
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
 
@@ -58,6 +64,7 @@ const Title = styled(Text)`
 `;
 
 export default {
+  CategoriesListContainer,
   LoaderContainer,
   Grid,
   CategoriesHeader,
