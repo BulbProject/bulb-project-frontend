@@ -1,7 +1,7 @@
 import type { AxiosRequestConfig } from 'axios';
 import type { Category, CategoryVersion, RequestedNeed, SelectedVariant } from 'types/data';
 
-const apiServiceBaseUrl = 'https://bulb-api.eprocurement.systems';
+const apiServiceBaseUrl = 'http://localhost:4242';
 
 const createRequestConfig = ({
   baseUrl,
@@ -18,7 +18,7 @@ const createRequestConfig = ({
   path: string;
   params?: string[];
   query?: Record<string, unknown>;
-  responseType?: 'json' | 'text';
+  responseType?: 'json' | 'blob';
 }): AxiosRequestConfig => ({
   method,
   data: body,
@@ -85,7 +85,7 @@ export const postSpecification = ({
     query: { egp, mode },
     params: [categoryId, version],
     body,
-    responseType: 'text',
+    responseType: mode === 'json' ? mode : 'blob',
   });
 };
 

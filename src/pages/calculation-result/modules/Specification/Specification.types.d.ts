@@ -10,5 +10,5 @@ export interface SpecificationProps {
 }
 
 export interface SpecificationJSON {
-  specificationId: string;
+  id: string;
 }

@@ -248,7 +248,7 @@ export const Specification: FC<SpecificationProps> = ({
               setAlertOpen(true);
             }}
           >
-            <textarea rows={1} ref={idRef} value={data ? (data as SpecificationJSON).specificationId : ''} />
+            <textarea rows={1} ref={idRef} value={data ? (data as SpecificationJSON).id : ''} />
           </Styled.JsonId>
 
           <Text variant="small" color="var(--c-dark)" align="center">
