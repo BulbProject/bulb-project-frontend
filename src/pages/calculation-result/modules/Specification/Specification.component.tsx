@@ -60,8 +60,8 @@ export const Specification: FC<SpecificationProps> = ({
   );
 
   useEffect(() => {
-    if (data && mode === 'rtf' && isDownloading) {
-      download(data as string, `Специфікация на '${categoryTitle}' від ${formatDateTime()}.rtf`, 'application/rtf');
+    if (data && mode === 'docx' && isDownloading) {
+      download(data as string, `Специфікация на '${categoryTitle}' від ${formatDateTime()}.docx`);
 
       setRequesting(false);
       setDownloading(false);
@@ -103,7 +103,7 @@ export const Specification: FC<SpecificationProps> = ({
         styled={{
           Modal: css`
             width: 100%;
-            
+
             ${Mixin.Screen.xs(css`
               width: 75%;
             `)}
@@ -115,7 +115,7 @@ export const Specification: FC<SpecificationProps> = ({
             ${Mixin.Screen.lg(css`
               width: 50%;
             `)}
-            
+
             ${Mixin.Screen.xl(css`
               width: 33%;
             `)}
@@ -226,7 +226,7 @@ export const Specification: FC<SpecificationProps> = ({
       <Modal
         isOpen={isCopying}
         onChange={setCopying}
-        title={<Text variant="h5">Ваш ID</Text>}
+        title={<Text variant="h5">Успішно</Text>}
         styled={{
           Modal: css`
             z-index: calc(var(--l-topmost) + 2);
@@ -248,7 +248,12 @@ export const Specification: FC<SpecificationProps> = ({
               setAlertOpen(true);
             }}
           >
-            <textarea rows={1} ref={idRef} value={data ? (data as SpecificationJSON).specificationId : ''} />
+            <textarea
+              rows={1}
+              ref={idRef}
+              value={data ? (data as SpecificationJSON).id : ''}
+              onChange={() => undefined}
+            />
           </Styled.JsonId>
 
           <Text variant="small" color="var(--c-dark)" align="center">

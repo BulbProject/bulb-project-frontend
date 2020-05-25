@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { CategoryVersion } from 'types/data';
 import { getCategoryVersionConfig } from 'config';
 
-import { CategoryCard, CategoryCardData } from './CategoriesList.types';
+import type { CategoryCard, CategoryCardData } from './CategoriesList.types';
 
 export const requestData = async <Response>(
   requestConfig: AxiosRequestConfig

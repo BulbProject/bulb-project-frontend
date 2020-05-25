@@ -18,7 +18,7 @@ const createRequestConfig = ({
   path: string;
   params?: string[];
   query?: Record<string, unknown>;
-  responseType?: 'json' | 'text';
+  responseType?: 'json' | 'blob';
 }): AxiosRequestConfig => ({
   method,
   data: body,
@@ -85,7 +85,7 @@ export const postSpecification = ({
     query: { egp, mode },
     params: [categoryId, version],
     body,
-    responseType: 'text',
+    responseType: mode === 'json' ? mode : 'blob',
   });
 };
 

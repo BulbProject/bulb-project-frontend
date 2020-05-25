@@ -1,35 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { ThemeProvider } from 'ustudio-ui/theme';
+import ReactFullpage from '@fullpage/react-fullpage';
+import 'fullpage.js/vendors/scrolloverflow';
 
-import CategoriesList from 'pages/categories-list/CategoriesList.component';
+import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
+
+import { CategoriesList } from 'pages/categories-list/CategoriesList.component';
 import Styled from './Main.styles';
-
+import { DarkMode } from './Main.module';
 import { Hero, Content } from './modules';
 
 const Main = () => {
-  return (
-    <ThemeProvider
-      override={{
-        palette: {
-          lightest: '#1a1a1a',
-          light: '#8c8c8c',
-          neutral: '#8c8c8c',
-          dark: '#eee',
-          darkest: '#f5f5f5',
-        },
-      }}
-    >
-      <main>
+  const [isPageMounted, setPageMounted] = useState(false);
+
+  useEffect(() => {
+    setPageMounted(true);
+  }, []);
+
+  const isMd = useMediaQuery('screen and (min-width: 768px)');
+
+  const MainContent = () => (
+    <Styled.Main>
+      <div className="section">
         <Hero />
+      </div>
 
+      <div className="section">
         <Content />
+      </div>
 
+      <div className="section">
         <Styled.CategoryListWrapper>
           <CategoriesList />
         </Styled.CategoryListWrapper>
-      </main>
-    </ThemeProvider>
+      </div>
+
+      <DarkMode />
+    </Styled.Main>
+  );
+
+  return (
+    <>
+      {isPageMounted && isMd && (
+        <ReactFullpage
+          licenseKey="Nu9TbnPK-hA3_269z-aVtu9yF4-g7gX7RCY"
+          navigation
+          scrollOverflow
+          callbacks={['onLeave']}
+          render={() => {
+            return <MainContent />;
+          }}
+        />
+      )}
+
+      {isPageMounted && !isMd && <MainContent />}
+    </>
   );
 };
 

@@ -4,8 +4,14 @@ import { Mixin } from 'ustudio-ui/theme';
 import Text from 'ustudio-ui/components/Text';
 import StyledLayout from './modules/CardLayout/CardLayout.styles';
 
+const CategoriesListContainer = styled.div`
+  position: relative;
+
+  width: 100%;
+`;
+
 const LoaderContainer = styled.div`
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
 
@@ -21,12 +27,14 @@ const Grid = styled.div(
     grid-template-columns: repeat(${elementAmount}, 100%);
     grid-auto-rows: 100vw;
 
-    overflow: auto;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+
     grid-auto-flow: column;
 
     ${Mixin.Screen.xs(css`
       grid-template-columns: ${computeColumnTemplate(2)};
-      grid-auto-rows: calc((100vh - 64px - 118px - var(--i-large) * 2) / 3);
+      grid-auto-rows: calc((100vh - 64px - 96px) / 3);
 
       grid-auto-flow: dense;
 
@@ -51,10 +59,12 @@ const CategoriesHeader = styled.div`
 `;
 
 const Title = styled(Text)`
+  color: var(--c-contrast-strong);
   font-weight: 400;
 `;
 
 export default {
+  CategoriesListContainer,
   LoaderContainer,
   Grid,
   CategoriesHeader,

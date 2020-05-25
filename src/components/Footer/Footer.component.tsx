@@ -1,54 +1,71 @@
 import React from 'react';
-import Flex from 'ustudio-ui/components/Flex';
-import Text from 'ustudio-ui/components/Text';
-import logo from '../../assets/images/logo.svg';
-import { Container } from '../../shared/Container';
-import { SocialLinks } from '../SocialLinks';
 
 import Styled from './Footer.styles';
 
+import ProzorroLogo from '../../assets/images/partners/prozorro.png';
+import MeGovLogo from '../../assets/images/partners/me-gov.png';
+import TiUkraineLogo from '../../assets/images/partners/transparency-ua.png';
+import OpenContractingLogo from '../../assets/images/partners/open-contracting.png';
+import EbrdLogo from '../../assets/images/partners/ebrd.png';
+import IcfLogo from '../../assets/images/partners/icf.png';
+import CpbLogo from '../../assets/images/partners/cpb.png';
+import UstudioLogo from '../../assets/images/partners/ustudio.svg';
+
 export const Footer = () => {
+  const partners = [
+    {
+      title: 'prozorro',
+      image: ProzorroLogo,
+      href: 'https://prozorro.gov.ua/en',
+    },
+    {
+      title: 'me-gov',
+      image: MeGovLogo,
+      href: 'https://www.me.gov.ua',
+      width: 12,
+    },
+    {
+      title: 'cpb',
+      image: CpbLogo,
+      href: 'https://cpb.org.ua',
+    },
+    {
+      title: 'ti-ukraine',
+      image: TiUkraineLogo,
+      href: 'https://ti-ukraine.org',
+    },
+    {
+      title: 'open-contracting',
+      image: OpenContractingLogo,
+      href: 'https://open-contracting.org',
+    },
+    {
+      title: 'ustudio',
+      image: UstudioLogo,
+      href: 'https://ustudio.company',
+      height: 3,
+    },
+    {
+      title: 'ebrd',
+      image: EbrdLogo,
+      href: 'https://ebrd.com',
+      width: 10,
+    },
+    {
+      title: 'icf',
+      image: IcfLogo,
+      href: 'https://icf.com',
+      height: 3,
+    },
+  ];
+
   return (
     <Styled.Footer>
-      <Container>
-        <Styled.FooterContent alignment={{ vertical: 'center' }}>
-          <Styled.ContactContainer direction="column" isInline>
-            <Text variant="h6">Контакти</Text>
-
-            <Text variant="small">
-              <a href="tel:+380442814287">+38 (044) 281-42-87</a>, <a href="tel:0800503400">0-800-503-400</a>
-            </Text>
-
-            <Text variant="small">вул. Бульварно-Кудрявська, 22,</Text>
-
-            <Text variant="small">м. Київ, 01601</Text>
-
-            <Text variant="small">
-              <a href="mailto:feedback@prozorro.ua">feedback@prozorro.ua</a>
-            </Text>
-          </Styled.ContactContainer>
-
-          <Styled.LinksFooterContainer>
-            <SocialLinks />
-          </Styled.LinksFooterContainer>
-
-          <Styled.FooterLogoContainer isInline alignment={{ horizontal: 'center', vertical: 'center' }}>
-            <Styled.LogoImage src={logo} alt="Bulb Project Logo" />
-
-            <Flex direction="column">
-              <Text variant="small">Розроблено </Text>
-
-              <Text variant="small">
-                <a href="https://ustudio.company" target="_blank" rel="noreferrer noopener">
-                  uStudio LLC
-                </a>
-              </Text>
-
-              <Text variant="small">© 2020</Text>
-            </Flex>
-          </Styled.FooterLogoContainer>
-        </Styled.FooterContent>
-      </Container>
+      <Styled.FooterContent alignment={{ vertical: 'center' }}>
+        {partners.map((props) => (
+          <Styled.PartnerLink key={props.title} {...props} target="_blank" rel="noreferrer noopener" />
+        ))}
+      </Styled.FooterContent>
     </Styled.Footer>
   );
 };

@@ -37,8 +37,6 @@ const SingleLayout = styled.section`
 
   ${Container} {
     padding: 0;
-    margin-top: calc(var(--i-large) * -1);
-    margin-bottom: calc(var(--i-large) * -1);
   }
 `;
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { CategoryCardData } from '../../CategoriesList.types';
+import type { CategoryCardData } from '../../CategoriesList.types';
 
 import Styled from './Card.styles';
 import { BaseCard } from './components/BaseCard';

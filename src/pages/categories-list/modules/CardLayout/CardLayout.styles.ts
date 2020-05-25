@@ -5,16 +5,20 @@ import { Mixin } from 'ustudio-ui/theme';
 import StyledCard from '../Card/Card.styles';
 
 const Cell = styled.div(({ image }: { image?: string }) => {
-  return image
-    ? css`
-        background-image: url(${image});
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-origin: content-box;
-        object-fit: cover;
-      `
-    : '';
+  return css`
+    scroll-snap-align: start;
+
+    ${image
+      ? css`
+          background-image: url(${image});
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-origin: content-box;
+          object-fit: cover;
+        `
+      : ''};
+  `;
 });
 
 const WideCell = styled(Cell)`

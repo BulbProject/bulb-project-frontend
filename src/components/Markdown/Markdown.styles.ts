@@ -10,15 +10,17 @@ const Root = styled.article`
 `;
 
 const Divider = styled.hr`
-  background-color: var(--c-light);
+  background-color: var(--c-base-weak);
 `;
 
 const Heading = styled.h1`
+  color: var(--c-contrast-week);
   margin: var(--i-large) 0 0;
   scroll-margin: calc(54px + 2rem) 0 0;
 `;
 
 const Paragraph = styled(Text).attrs(() => ({ variant: 'article' }))`
+  color: var(--c-contrast-strong);
   margin: var(--i-medium) 0;
 `;
 
@@ -26,7 +28,7 @@ const Quote = styled.blockquote`
   border-left: 2px solid var(--c-primary);
   padding-left: var(--i-regular);
   margin: var(--i-regular) 0;
-  color: var(--c-dark);
+  color: var(--c-contrast-weak);
 
   ${Paragraph} {
     margin: 0;
