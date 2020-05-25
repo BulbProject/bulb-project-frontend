@@ -25,7 +25,7 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
 
   const [requirement, setRequirement] = useState(criterion.requirementGroups[0].requirements[0]);
   const [egp, setEgp] = useState(egps[0].toLowerCase());
-  const [mode, setMode] = useState(modes[0]);
+  const [mode, setMode] = useState(modes[0].value);
 
   const [isRequesting, setRequesting] = useState(false);
   const [isDownloading, setDownloading] = useState(false);
@@ -48,7 +48,7 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
       },
     }),
     {
-      isRequesting: isRequesting && isOpen,
+      isRequesting: isRequesting && (isCopying || isDownloading),
       isDefaultLoading: false,
     }
   );
@@ -80,6 +80,11 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
           verticalPosition={mode === 'json' ? 'top' : 'bottom'}
           horizontalPosition={mode === 'json' ? 'center' : 'left'}
           intent={error ? 'negative' : 'positive'}
+          styled={{
+            Alert: css`
+              z-index: calc(var(--l-topmost) + 2);
+            `,
+          }}
         >
           {error ? 'Упс, щось пішло не так...' : 'Успіх!'}
         </Alert>
@@ -122,6 +127,7 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
                 setRequesting(true);
 
                 if (mode === 'json') {
+                  setOpen(false);
                   setCopying(true);
                   return;
                 }
@@ -189,8 +195,8 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
               // @ts-ignore
               variant="body"
               active={mode}
-              tabs={modes.map((title) => ({
-                value: title,
+              tabs={modes.map(({ value, title }) => ({
+                value,
                 children: <Styled.Tab>{title}</Styled.Tab>,
               }))}
               onChange={setMode}
@@ -227,21 +233,17 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
         }}
       >
         <Styled.Group>
-          {data && (
-            <Styled.JsonId
-              onClick={() => {
-                copyIdToClipboard();
+          <Styled.JsonId
+            onClick={() => {
+              copyIdToClipboard();
 
-                setCopying(false);
-                setOpen(false);
-                setRequesting(false);
+              setRequesting(false);
 
-                setAlertOpen(true);
-              }}
-            >
-              <textarea rows={1} ref={idRef} value={(data as SpecificationJSON).specificationId} />
-            </Styled.JsonId>
-          )}
+              setAlertOpen(true);
+            }}
+          >
+            <textarea rows={1} ref={idRef} value={data ? (data as SpecificationJSON).specificationId : ''} />
+          </Styled.JsonId>
 
           <Text variant="small" color="var(--c-dark)" align="center">
             Натисніть, щоб скопіювати ідентифікатор Вашої специфікації.

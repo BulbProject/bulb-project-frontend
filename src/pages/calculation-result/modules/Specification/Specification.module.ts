@@ -4,7 +4,10 @@ import { v4 } from 'uuid';
 
 export const egps = ['Prozorro', 'Procuriosity', 'Інша'];
 
-export const modes = ['json', 'rtf'];
+export const modes = [
+  { value: 'json', title: 'Ідентифікатор' },
+  { value: 'rtf', title: 'Текстовий документ' },
+];
 
 export const generateSelectedVariant = ({
   availableVariant,
