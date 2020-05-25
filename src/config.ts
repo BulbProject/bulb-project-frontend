@@ -1,7 +1,7 @@
 import type { AxiosRequestConfig } from 'axios';
 import type { Category, CategoryVersion, RequestedNeed, SelectedVariant } from 'types/data';
 
-const apiServiceBaseUrl = 'http://localhost:4242';
+const apiServiceBaseUrl = 'https://bulb-api.eprocurement.systems';
 
 const createRequestConfig = ({
   baseUrl,
