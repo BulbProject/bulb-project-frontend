@@ -4,9 +4,9 @@ import Flex from 'ustudio-ui/components/Flex';
 
 import { FadeIn } from 'components/FadeIn';
 import BulbImage from '../../../../assets/images/bulb.svg';
+import ArrowIcon from '../../../../assets/icons/arrow.inline.svg';
 
 import Styled from './Hero.styles';
-import ArrowIcon from '../../../../assets/icons/arrow.inline.svg';
 
 export const Hero = () => {
   return (

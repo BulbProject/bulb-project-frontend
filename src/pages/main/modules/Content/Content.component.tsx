@@ -5,7 +5,6 @@ import { getMainContentFiles } from 'config';
 import { Container } from 'shared';
 import { FadeIn } from 'components/FadeIn';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
-import ArrowIcon from '../../../../assets/icons/arrow.inline.svg';
 
 import { Document } from './components';
 
