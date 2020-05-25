@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import ReactFullpage from '@fullpage/react-fullpage';
 import 'fullpage.js/vendors/scrolloverflow';
 
-import { createGlobalStyle } from 'styled-components';
-
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { CategoriesList } from 'pages/categories-list/CategoriesList.component';
