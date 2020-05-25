@@ -6,3 +6,4 @@ export * from './category-version';
 export * from './requirement-group';
 export * from './categories-list-entity';
 export * from './available-variant';
+export * from './selected-variant';

@@ -2,21 +2,24 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { css } from 'styled-components';
 
-import { Observation } from 'ts4ocds/extensions/metrics';
+import type { Observation } from 'ts4ocds/extensions/metrics';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
+import Button from 'ustudio-ui/components/Button';
 
 import { Classification } from 'shared';
 import { formatNumber } from 'utils';
 
 import Bulb from '../../../../assets/images/bulb.svg';
+import { useCalculationContext } from '../../store';
+import { Specification } from '../Specification';
 
 import { Metrics } from './components';
 import { efficiencyClasses, EfficiencyClass } from './Item.module';
 
 import Styled from './Item.styles';
-import { ItemProps } from './Item.types';
+import type { ItemProps } from './Item.types';
 
 export const Item = ({
   variant,
@@ -26,6 +29,8 @@ export const Item = ({
   hoveredObservation,
   setHoveredObservation,
 }: ItemProps) => {
+  const { category } = useCalculationContext();
+
   const isEconomyObservation = useCallback(
     ({ id }: { id: string }) => id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy',
     []
@@ -52,6 +57,8 @@ export const Item = ({
   );
 
   const [imgLink, setImgLink] = useState(Bulb);
+
+  const [isSpecificationOpen, setSpecificationOpen] = useState(false);
 
   return (
     <Styled.Item direction="column">
@@ -142,8 +149,8 @@ export const Item = ({
           setHoveredObservation={setHoveredObservation}
         />
 
-        {/* <Flex direction="column">
-          <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
+        <Flex direction="column">
+          {/* <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
             <Button
               styled={{
                 Button: css`
@@ -157,7 +164,7 @@ export const Item = ({
             >
               Prozorro Market Teaser
             </Button>
-          </Styled.Link>
+          </Styled.Link> */}
 
           <Button
             styled={{
@@ -169,10 +176,19 @@ export const Item = ({
             }}
             appearance="text"
             intent="positive"
+            onClick={() => setSpecificationOpen(true)}
           >
-            Contract Notice
+            Тендерна документація
           </Button>
-        </Flex> */}
+
+          <Specification
+            isOpen={isSpecificationOpen}
+            setOpen={setSpecificationOpen}
+            criterion={variant.criteria[0]}
+            availableVariant={variant}
+            categoryTitle={category.title}
+          />
+        </Flex>
       </Styled.Content>
     </Styled.Item>
   );
