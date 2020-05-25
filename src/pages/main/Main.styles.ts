@@ -14,9 +14,6 @@ const CategoryListWrapper = styled(Flex)`
 `;
 
 const Main = styled.main`
-  height: 100vh;
-
-  scroll-snap-type: y mandatory;
   overflow-y: auto;
 
   ${StyledCategories.Grid} {
@@ -50,8 +47,4 @@ const Indicator = styled.div(
   `
 );
 
-const ScrollWrapper = styled.div`
-  scroll-snap-align: start;
-`;
-
-export default { CategoryListWrapper, Main, ScrollWrapper, ScrollIndicators, Indicator };
+export default { CategoryListWrapper, Main, ScrollIndicators, Indicator };
