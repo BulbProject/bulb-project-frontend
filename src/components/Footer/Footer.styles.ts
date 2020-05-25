@@ -18,7 +18,8 @@ const PartnerLink = styled.a(
     transition: var(--transition);
     filter: brightness(0);
 
-    &:hover {
+    &:hover,
+    &:focus {
       filter: brightness(1);
     }
 
