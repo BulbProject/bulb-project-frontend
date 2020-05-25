@@ -150,7 +150,7 @@ export const Item = ({
         />
 
         <Flex direction="column">
-          <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
+          {/* <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
             <Button
               styled={{
                 Button: css`
@@ -164,7 +164,7 @@ export const Item = ({
             >
               Prozorro Market Teaser
             </Button>
-          </Styled.Link>
+          </Styled.Link> */}
 
           <Button
             styled={{
@@ -178,7 +178,7 @@ export const Item = ({
             intent="positive"
             onClick={() => setSpecificationOpen(true)}
           >
-            Contract Notice
+            Тендерна документація
           </Button>
 
           <Specification
