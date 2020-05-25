@@ -1,5 +1,5 @@
-import { AxiosRequestConfig } from 'axios';
-import { Category, CategoryVersion, RequestedNeed } from 'types/data';
+import type { AxiosRequestConfig } from 'axios';
+import type { Category, CategoryVersion, RequestedNeed, SelectedVariant } from 'types/data';
 
 const apiServiceBaseUrl = 'https://bulb-api.eprocurement.systems';
 
@@ -9,17 +9,27 @@ const createRequestConfig = ({
   body,
   path,
   params = [],
+  query,
+  responseType = 'json',
 }: {
   baseUrl: string;
   method: AxiosRequestConfig['method'];
   body?: any;
   path: string;
   params?: string[];
+  query?: Record<string, unknown>;
+  responseType?: 'json' | 'text';
 }): AxiosRequestConfig => ({
   method,
   data: body,
-  url: `${baseUrl}/${path}${params?.length ? `/${params.join('/')}` : ''}`,
-  responseType: 'json',
+  url: `${baseUrl}/${path}${params?.length ? `/${params.join('/')}` : ''}${
+    query
+      ? `?${Object.keys(query)
+          .reduce((string, param) => `${string}${param}=${query[param]}&`, ``)
+          .slice(0, -1)}`
+      : ''
+  }`,
+  responseType,
 });
 
 export const getCategoriesConfig = (): AxiosRequestConfig =>
@@ -52,6 +62,30 @@ export const postCalculationConfig = (
     path: 'do/calculation',
     params: [categoryId, version],
     body,
+  });
+};
+
+export const postSpecification = ({
+  categoryId,
+  version,
+  egp,
+  mode,
+  body,
+}: {
+  categoryId: Category['id'];
+  version: CategoryVersion['version'];
+  egp: string;
+  mode: string;
+  body: { selectedVariant: SelectedVariant };
+}): AxiosRequestConfig => {
+  return createRequestConfig({
+    baseUrl: apiServiceBaseUrl,
+    method: 'post',
+    path: `do/specification`,
+    query: { egp, mode },
+    params: [categoryId, version],
+    body,
+    responseType: 'text',
   });
 };
 

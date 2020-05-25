@@ -152,14 +152,14 @@ const CalculationResult: React.FC = () => {
             <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
               {isLoading && <Spinner delay={500} />}
 
-              {!isLoading && (!requestedNeed || !categoryVersion || error?.statusCode === 404) && (
+              {!isLoading && !requestedNeed && !error && (
                 <Text color="negative">
                   Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
                   цієї категорії ☹️
                 </Text>
               )}
 
-              {error && error.statusCode !== 404 && !isLoading && <ErrorPage />}
+              {!isLoading && error && <ErrorPage />}
             </Flex>
           </Container>
         )}
