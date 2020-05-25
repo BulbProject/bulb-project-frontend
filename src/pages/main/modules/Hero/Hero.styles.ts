@@ -209,4 +209,62 @@ const CallToAction = styled.button`
   }
 `;
 
-export default { Hero, HeroText, HeroCaption, HeroDescription, ActionImage, CallToAction, ActionButton, Link };
+const arrowBlink = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  12.5% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 0;
+  }
+`;
+
+const show = keyframes`
+  0% {
+    bottom: -2rem;
+    opacity: 1;
+  }
+
+  12.5% {
+    bottom: 0;
+    opacity: 1;
+  }
+
+  25% {
+    bottom: -2rem;
+    opacity: 0;
+  }
+`;
+
+const Arrow = styled(Flex)`
+  position: absolute;
+  bottom: 0;
+
+  opacity: 0;
+
+  height: 2rem;
+
+  color: var(--c-secondary);
+  background-color: var(--c-darkest);
+
+  animation: ${show} 6s ease-in-out infinite;
+  animation-delay: 1.5s;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+
+    opacity: 0;
+
+    transform: rotate(-90deg);
+
+    animation: ${arrowBlink} 6s ease-in-out infinite;
+    animation-delay: 1.5s;
+  }
+`;
+
+export default { Hero, HeroText, HeroCaption, HeroDescription, ActionImage, CallToAction, ActionButton, Link, Arrow };

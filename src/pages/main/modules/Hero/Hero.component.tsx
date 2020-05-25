@@ -6,6 +6,7 @@ import { FadeIn } from 'components/FadeIn';
 import BulbImage from '../../../../assets/images/bulb.svg';
 
 import Styled from './Hero.styles';
+import ArrowIcon from '../../../../assets/icons/arrow.inline.svg';
 
 export const Hero = () => {
   return (
@@ -39,6 +40,10 @@ export const Hero = () => {
             <Styled.ActionButton variant="h6">Почати розрахунок</Styled.ActionButton>
           </Styled.Link>
         </Flex>
+
+        <Styled.Arrow alignment={{ horizontal: 'center', vertical: 'center' }}>
+          <ArrowIcon />
+        </Styled.Arrow>
       </Styled.Hero>
     </FadeIn>
   );
