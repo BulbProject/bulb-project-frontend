@@ -49,7 +49,7 @@ export const Footer = () => {
       title: 'ebrd',
       image: EbrdLogo,
       href: 'https://ebrd.com',
-      width: 10
+      width: 10,
     },
     {
       title: 'icf',
@@ -62,16 +62,8 @@ export const Footer = () => {
   return (
     <Styled.Footer>
       <Styled.FooterContent alignment={{ vertical: 'center' }}>
-        {partners.map(({ href, title, image, width, height }) => (
-          <Styled.PartnerLink
-            key={title}
-            href={href}
-            image={image}
-            width={width}
-            height={height}
-            target="_blank"
-            rel="noreferrer noopener"
-          />
+        {partners.map((props) => (
+          <Styled.PartnerLink key={props.title} {...props} target="_blank" rel="noreferrer noopener" />
         ))}
       </Styled.FooterContent>
     </Styled.Footer>

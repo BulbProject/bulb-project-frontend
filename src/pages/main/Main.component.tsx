@@ -3,35 +3,12 @@ import React, { useEffect, useState } from 'react';
 import ReactFullpage from '@fullpage/react-fullpage';
 import 'fullpage.js/vendors/scrolloverflow';
 
-import { createGlobalStyle } from 'styled-components';
-
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { CategoriesList } from 'pages/categories-list/CategoriesList.component';
 import Styled from './Main.styles';
+import { DarkMode } from './Main.module';
 import { Hero, Content } from './modules';
-
-export const DarkMode = createGlobalStyle`
-  :root {
-    --c-base-strong: var(--c-darkest);
-    --c-base-weak: var(--c-dark);
-    --c-contrast-strong: var(--c-lightest);
-    --c-contrast-weak: var(--c-light);
-    --c-faint-strong: var(--c-dark);
-  }
-
-  #fp-nav{
-    a{
-      &::after{
-        content: unset;
-      }
-    }
-
-    span{
-      background-color: var(--c-secondary)!important;
-    }
-  }
-`;
 
 const Main = () => {
   const [isPageMounted, setPageMounted] = useState(false);
