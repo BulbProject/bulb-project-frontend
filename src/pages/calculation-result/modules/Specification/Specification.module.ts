@@ -32,3 +32,17 @@ export const generateSelectedVariant = ({
     ],
   };
 };
+
+export const formatDateTime = () => {
+  const toDouble = (number: number): string => (number < 10 ? `0${number}` : `${number}`);
+
+  const now = new Date();
+  const day = now.getDate();
+  const month = now.getMonth() + 1;
+  const year = now.getFullYear();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const second = now.getSeconds();
+
+  return `${day}.${toDouble(month)}.${year} ${hour}_${toDouble(minute)}_${toDouble(second)}`;
+};

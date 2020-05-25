@@ -16,11 +16,17 @@ import { useRequest } from 'hooks';
 import { postSpecification } from 'config';
 import { Mixin } from 'ustudio-ui/theme';
 
-import { modes, egps, generateSelectedVariant } from './Specification.module';
+import { modes, egps, generateSelectedVariant, formatDateTime } from './Specification.module';
 import type { SpecificationJSON, SpecificationProps } from './Specification.types';
 import Styled from './Specification.styles';
 
-export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criterion, availableVariant }) => {
+export const Specification: FC<SpecificationProps> = ({
+  isOpen,
+  setOpen,
+  criterion,
+  availableVariant,
+  categoryTitle,
+}) => {
   const { categoryId, version } = useParams();
 
   const [requirement, setRequirement] = useState(criterion.requirementGroups[0].requirements[0]);
@@ -55,7 +61,7 @@ export const Specification: FC<SpecificationProps> = ({ isOpen, setOpen, criteri
 
   useEffect(() => {
     if (data && mode === 'rtf' && isDownloading) {
-      download(data as string, `${availableVariant.id}-specification.rtf`, 'application/rtf');
+      download(data as string, `Специфікация на '${categoryTitle}' від ${formatDateTime()}.rtf`, 'application/rtf');
 
       setRequesting(false);
       setDownloading(false);

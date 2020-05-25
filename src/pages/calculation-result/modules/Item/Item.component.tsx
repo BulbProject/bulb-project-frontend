@@ -12,6 +12,7 @@ import { Classification } from 'shared';
 import { formatNumber } from 'utils';
 
 import Bulb from '../../../../assets/images/bulb.svg';
+import { useCalculationContext } from '../../store';
 import { Specification } from '../Specification';
 
 import { Metrics } from './components';
@@ -28,6 +29,8 @@ export const Item = ({
   hoveredObservation,
   setHoveredObservation,
 }: ItemProps) => {
+  const { category } = useCalculationContext();
+
   const isEconomyObservation = useCallback(
     ({ id }: { id: string }) => id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy',
     []
@@ -183,6 +186,7 @@ export const Item = ({
             setOpen={setSpecificationOpen}
             criterion={variant.criteria[0]}
             availableVariant={variant}
+            categoryTitle={category.title}
           />
         </Flex>
       </Styled.Content>

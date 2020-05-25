@@ -6,6 +6,7 @@ export interface SpecificationProps {
   setOpen: (isOpen: boolean) => void;
   criterion: Criterion;
   availableVariant: AvailableVariant;
+  categoryTitle: string;
 }
 
 export interface SpecificationJSON {
