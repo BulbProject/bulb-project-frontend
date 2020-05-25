@@ -43,28 +43,32 @@ export const Footer = () => {
       title: 'ustudio',
       image: UstudioLogo,
       href: 'https://ustudio.company',
+      height: 3,
     },
     {
       title: 'ebrd',
       image: EbrdLogo,
       href: 'https://ebrd.com',
+      width: 10
     },
     {
       title: 'icf',
       image: IcfLogo,
       href: 'https://icf.com',
+      height: 3,
     },
   ];
 
   return (
     <Styled.Footer>
       <Styled.FooterContent alignment={{ vertical: 'center' }}>
-        {partners.map(({ href, title, image, width }) => (
+        {partners.map(({ href, title, image, width, height }) => (
           <Styled.PartnerLink
             key={title}
             href={href}
             image={image}
             width={width}
+            height={height}
             target="_blank"
             rel="noreferrer noopener"
           />

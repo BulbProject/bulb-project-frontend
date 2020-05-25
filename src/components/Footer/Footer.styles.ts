@@ -4,9 +4,9 @@ import Flex from 'ustudio-ui/components/Flex';
 import { Mixin } from 'ustudio-ui/theme';
 
 const PartnerLink = styled.a(
-  ({ image, width = 8 }: { image: string; width?: number }) => css`
+  ({ image, width = 8, height = 4 }: { image: string; width?: number; height?: number }) => css`
     width: ${width}rem;
-    height: 4rem;
+    height: ${height}rem;
 
     margin: var(--i-regular);
 
