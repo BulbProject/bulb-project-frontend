@@ -6,8 +6,6 @@ import { maxWidth } from './CalculationResult.module';
 const Wrapper = styled(Flex)`
   max-width: ${maxWidth}px;
 
-  margin: calc(var(--i-large) * -1) 0;
-
   min-height: calc(100vh - 291.77px);
 
   ${Mixin.Screen.xs(css`
