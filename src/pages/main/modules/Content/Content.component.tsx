@@ -33,11 +33,11 @@ export const Content = () => {
 
             {!isLoading && error && (
               <Styled.CentredContainer>
-                <Text color="var(--c-contrast-strong)">На жаль, ми не замогли завантажити файли.</Text>
+                <Text color="var(--c-contrast-strong)">Тут мав бути дуже цікавий контент, але він не завантажився</Text>
 
                 <Flex alignment={{ horizontal: 'center' }} margin={{ top: 'large' }}>
                   <Button intent="positive" onClick={triggerRequest}>
-                    Спробувати ще
+                    Хочу цікавий контент!
                   </Button>
                 </Flex>
               </Styled.CentredContainer>
