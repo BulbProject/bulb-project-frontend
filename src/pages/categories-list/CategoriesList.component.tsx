@@ -68,6 +68,8 @@ export const CategoriesList = () => {
   useEffect(() => {
     if (categoriesList) {
       getFullCategoriesInfo();
+    } else {
+      setLoading(false);
     }
   }, [categoriesList]);
 
@@ -82,7 +84,7 @@ export const CategoriesList = () => {
           </FadeIn>
         )}
 
-        {!isLoading && (
+        {!isLoading && !listError && (
           <Flex alignment={{ vertical: 'center' }}>
             <FadeIn>
               {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
