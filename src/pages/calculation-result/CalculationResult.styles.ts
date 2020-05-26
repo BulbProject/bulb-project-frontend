@@ -9,7 +9,7 @@ const Wrapper = styled(Flex)`
   min-height: calc(100vh - 291.77px);
 
   ${Mixin.Screen.xs(css`
-    min-height: calc(100vh - 182.3px);
+    min-height: calc(100vh - 160px);
   `)};
 
   @media screen and (max-width: 1130px) {
