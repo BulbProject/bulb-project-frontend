@@ -10,4 +10,8 @@ export const GlobalStyles = createGlobalStyle`
     --c-contrast-weak: var(--c-dark);
     --c-faint-strong: var(--c-neutral);
   }
+  
+  h6 {
+    font-variant: all-small-caps !important;
+  }
 `;

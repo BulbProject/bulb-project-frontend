@@ -34,6 +34,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "compression-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.2",
+    "css-loader": "^3.5.3",
     "downloadjs": "^1.4.7",
     "favicons-webpack-plugin": "^3.0.1",
     "file-loader": "^6.0.0",
@@ -80,6 +81,7 @@
     "lint-staged": "^10.2.2",
     "prettier": "^2.0.5",
     "progress-bar-webpack-plugin": "^2.1.0",
+    "style-loader": "^1.2.1",
     "webpack-dev-server": "^3.11.0"
   },
   "lint-staged": {
