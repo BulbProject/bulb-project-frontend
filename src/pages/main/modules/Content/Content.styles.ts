@@ -14,4 +14,12 @@ const DocumentContainer = styled(Flex)`
   align-items: center;
 `;
 
-export default { Content, DocumentContainer };
+const CentredContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+`;
+
+export default { Content, DocumentContainer, CentredContainer };

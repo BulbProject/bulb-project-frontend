@@ -38,6 +38,7 @@ export const getCategory = async (id: string, version: string): Promise<Category
 export const sortCategories = (categories: CategoryCard[]) => {
   const pendingCategories = categories.filter((category) => category.categoryVersion?.status === 'pending');
   const activeCategories = categories.filter((category) => category.categoryVersion?.status === 'active');
+  const categoriesWithoutStatus = categories.filter((category) => !category?.categoryVersion?.status);
 
-  return [...activeCategories, ...pendingCategories];
+  return [...activeCategories, ...pendingCategories, ...categoriesWithoutStatus];
 };
