@@ -226,7 +226,7 @@ export const Specification: FC<SpecificationProps> = ({
       <Modal
         isOpen={isCopying}
         onChange={setCopying}
-        title={<Text variant="h5">Успішно</Text>}
+        title={<Text variant="h5">Ідентифікатор</Text>}
         styled={{
           Modal: css`
             z-index: calc(var(--l-topmost) + 2);
@@ -249,6 +249,7 @@ export const Specification: FC<SpecificationProps> = ({
             }}
           >
             <textarea
+              spellCheck="false"
               rows={1}
               ref={idRef}
               value={data ? (data as SpecificationJSON).id : ''}
