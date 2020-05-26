@@ -49,6 +49,7 @@
     "react-router-dom": "^5.2.0",
     "robotstxt-webpack-plugin": "^7.0.0",
     "styled-components": "^5.0.1",
+    "style-loader": "^1.2.1",
     "terser-webpack-plugin": "^3.0.1",
     "ts4ocds": "^1.0.0-rc.1",
     "typescript": "^3.9.2",
@@ -81,7 +82,6 @@
     "lint-staged": "^10.2.2",
     "prettier": "^2.0.5",
     "progress-bar-webpack-plugin": "^2.1.0",
-    "style-loader": "^1.2.1",
     "webpack-dev-server": "^3.11.0"
   },
   "lint-staged": {
