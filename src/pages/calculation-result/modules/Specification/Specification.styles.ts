@@ -68,6 +68,13 @@ const JsonId = styled.button`
 
   background-color: var(--c-light);
 
+  transition: color var(--transition);
+
+  &:hover,
+  &:focus {
+    color: var(--c-secondary);
+  }
+
   textarea {
     width: 100%;
     text-align: center;
@@ -75,6 +82,7 @@ const JsonId = styled.button`
     cursor: pointer;
 
     background: transparent;
+    pointer-events: none;
   }
 `;
 
