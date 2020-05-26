@@ -3,7 +3,6 @@ import Text from 'ustudio-ui/components/Text';
 import { Classification as ClassificationComponent } from '../../shared/Classification';
 
 const Wrapper = styled.div`
-  margin-top: calc(var(--i-large) * -1);
   padding: var(--i-large) 0;
 
   background-color: #f0f5f2;

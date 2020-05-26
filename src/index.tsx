@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'ustudio-ui/theme';
 
 import { FadeIn, GlobalStyles } from 'components';
+import './styles/fonts.css';
 
 import routes from './routes';
 
@@ -12,7 +13,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider
       override={{
-        font: { body: 'Roboto' },
+        font: { body: 'Roboto', article: 'Lora' },
         palette: {
           lightest: '#f5f5f5',
           light: '#eee',

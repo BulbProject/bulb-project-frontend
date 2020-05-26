@@ -44,12 +44,24 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
         test: /\.(jpe?g|png|svg|webp)$/,
         loader: 'url-loader',
         options: {
           limit: 25000,
         },
         include: [path.resolve(__dirname, 'src/assets')],
+      },
+      {
+        test: /\.(ttf)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 25000,
+        },
+        include: [path.resolve(__dirname, 'src/assets/fonts')],
       },
       {
         test: /\.(jpe?g|png|svg|webp)$/,
