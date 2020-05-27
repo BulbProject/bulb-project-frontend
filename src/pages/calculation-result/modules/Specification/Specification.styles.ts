@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
@@ -83,4 +83,50 @@ const SmallBold = styled(Text)`
   margin: var(--i-medium) 0 var(--i-large);
 `;
 
-export default { Group, GroupTitle, Tab, Overlay, CopyButton, SmallBold };
+const popUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+  
+  25%,
+  50%,
+  75% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+`;
+
+const Tooltip = styled(Text)<{ isShown: boolean }>(
+  ({ isShown }) => css`
+    ${Mixin.Style.inputPadding()};
+    ${Mixin.Font.bodySmall()};
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    z-index: 2;
+
+    opacity: 0;
+
+    transform: translate(-50%, 0);
+
+    transition: var(--transition);
+
+    background-color: var(--c-light);
+
+    ${isShown
+      ? css`
+          animation: ${popUp} 2s ease-in-out;
+        `
+      : ``};
+  `
+);
+
+export default { Group, GroupTitle, Tab, Overlay, CopyButton, SmallBold, Tooltip };

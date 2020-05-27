@@ -36,6 +36,7 @@ export const Specification: FC<SpecificationProps> = ({
   const [isDownloading, setDownloading] = useState(false);
   const [isCopying, setCopying] = useState(false);
   const [isAlertOpen, setAlertOpen] = useState(false);
+  const [isTooltipShown, setTooltipShown] = useState(false);
 
   const idRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -71,12 +72,27 @@ export const Specification: FC<SpecificationProps> = ({
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (isAlertOpen) {
-      const alertTimeout = setTimeout(() => setAlertOpen(false), 5000);
+    if (isAlertOpen && mode === 'docx') {
+      const alertTimeout = setTimeout(() => setAlertOpen(false), 5 * 1000);
 
       return () => clearTimeout(alertTimeout);
     }
-  }, [isAlertOpen]);
+  }, [isAlertOpen, mode]);
+
+  useEffect(() => {
+    if (isCopying) {
+      setAlertOpen(true);
+    }
+  }, [isCopying]);
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (isTooltipShown) {
+      const tooltipTimeout = setTimeout(() => setTooltipShown(false), 2 * 1000);
+
+      return () => clearTimeout(tooltipTimeout);
+    }
+  }, [isTooltipShown]);
 
   const copyIdToClipboard = () => {
     (idRef as MutableRefObject<HTMLTextAreaElement>).current.select();
@@ -214,7 +230,10 @@ export const Specification: FC<SpecificationProps> = ({
 
       <Modal
         isOpen={isCopying}
-        onChange={setCopying}
+        onChange={() => {
+          setCopying(false);
+          setAlertOpen(false);
+        }}
         title={<Text variant="h5">Ідентифікатор</Text>}
         styled={{
           Modal: css`
@@ -244,14 +263,15 @@ export const Specification: FC<SpecificationProps> = ({
             onChange={() => undefined}
           />
 
+          <Styled.Tooltip isShown={isTooltipShown}>Скопійовано!</Styled.Tooltip>
+
           <Styled.CopyButton
             onClick={() => {
               copyIdToClipboard();
 
               setRequesting(false);
 
-              setAlertOpen(true);
-              setCopying(false);
+              setTooltipShown(true);
             }}
             iconAfter={<CopyIcon />}
           >
