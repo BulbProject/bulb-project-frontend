@@ -30,6 +30,12 @@ const WideCell = styled(Cell)`
     ${StyledCard.CardContent} {
       width: 65%;
     }
+
+    ${StyledCard.CardTitle} {
+      ${Mixin.Font.h2()};
+      font-weight: 400;
+      line-height: 1.1;
+    }
   `)}
 `;
 
@@ -43,6 +49,12 @@ const BigCell = styled(Cell)`
 
     ${StyledCard.CardContent} {
       width: 65%;
+    }
+
+    ${StyledCard.CardTitle} {
+      ${Mixin.Font.h2()};
+      font-weight: 400;
+      line-height: 1.1;
     }
   `)}
 `;

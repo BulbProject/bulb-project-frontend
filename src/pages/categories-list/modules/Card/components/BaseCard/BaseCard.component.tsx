@@ -8,9 +8,9 @@ export const BaseCard = ({ title, description, status }: CategoryCardData) => {
   return (
     <Styled.ContentCard isDisabled={status === 'pending'}>
       <Styled.CardContent>
-        <Styled.CardTitle variant="h2">{title}</Styled.CardTitle>
+        <Styled.CardTitle variant="h3">{title}</Styled.CardTitle>
 
-        <Styled.CardDescription>{description}</Styled.CardDescription>
+        <Styled.CardDescription variant="small">{description}</Styled.CardDescription>
       </Styled.CardContent>
     </Styled.ContentCard>
   );
