@@ -4,9 +4,9 @@ import Flex from 'ustudio-ui/components/Flex';
 import { Mixin } from 'ustudio-ui/theme';
 
 const PartnerLink = styled.a(
-  ({ image, width = 8, height = 4 }: { image: string; width?: number; height?: number }) => css`
+  ({ image, width = 9 }: { image: string; width?: number }) => css`
     width: ${width}rem;
-    height: ${height}rem;
+    height: 3rem;
 
     margin: var(--i-regular);
 
@@ -16,11 +16,11 @@ const PartnerLink = styled.a(
     background-position: center;
 
     transition: var(--transition);
-    filter: brightness(0);
+    filter: grayscale(1);
 
     &:hover,
     &:focus {
-      filter: brightness(1);
+      filter: grayscale(0);
     }
 
     &:after {
@@ -29,8 +29,17 @@ const PartnerLink = styled.a(
   `
 );
 
-const Footer = styled.footer`
+const CopyrightLogoLink = styled(PartnerLink)`
+  margin: var(--i-regular) 0;
+`;
+
+const CopyrightText = styled(Flex)`
+  width: auto;
+`;
+
+const Footer = styled.div`
   background-color: var(--c-base-weak);
+  padding: var(--i-regular) 0;
 `;
 
 const FooterContent = styled(Flex)`
@@ -47,4 +56,6 @@ export default {
   Footer,
   FooterContent,
   PartnerLink,
+  CopyrightLogoLink,
+  CopyrightText,
 };
