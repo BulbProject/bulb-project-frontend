@@ -36,10 +36,10 @@ const CardContent = styled.div`
   position: relative;
 `;
 
-const CardDescription = styled.div`
+const CardDescription = styled(Text)`
   //best way to do cut long strings
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 
   overflow: hidden;

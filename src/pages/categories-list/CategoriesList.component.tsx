@@ -92,7 +92,7 @@ export const CategoriesList = () => {
               <Styled.Grid elementAmount={fullCategories.length + 1}>
                 <Styled.BigCell>
                   <Styled.CategoriesHeader>
-                    <Styled.Title variant="h1">Виберіть категорію для проведення розрахунків</Styled.Title>
+                    <Styled.Title variant="h1">Виберіть категорію для&nbsp;проведення розрахунків</Styled.Title>
                   </Styled.CategoriesHeader>
                 </Styled.BigCell>
 
