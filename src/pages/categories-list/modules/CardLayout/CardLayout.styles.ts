@@ -24,6 +24,7 @@ const Cell = styled.div(({ image }: { image?: string }) => {
 const WideCardTitle = () => css`
   ${StyledCard.CardTitle} {
     ${Mixin.Font.h2()};
+
     font-weight: 400;
     line-height: 1.1;
   }
