@@ -161,11 +161,11 @@ export const Item = ({
         <Metrics
           metrics={[
             {
-              id: uuid(),
+              id: '0300',
               title: 'Пропозиції на Prozorro-Market',
               observations: [
                 {
-                  id: uuid(),
+                  id: 'prozorroQuantity',
                   notes: 'Кількість пропозицій',
                   measure: isLed ? 109 : '-',
                   unit: isLed
@@ -175,7 +175,7 @@ export const Item = ({
                     : undefined,
                 },
                 {
-                  id: uuid(),
+                  id: 'prozorroPrice',
                   notes: 'Середня вартість',
                   value: {
                     // @ts-ignore
