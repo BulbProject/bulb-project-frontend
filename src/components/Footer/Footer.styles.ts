@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
+
 import { Mixin } from 'ustudio-ui/theme';
 
 const PartnerLink = styled.a(
@@ -30,11 +32,21 @@ const PartnerLink = styled.a(
 );
 
 const CopyrightLogoLink = styled(PartnerLink)`
-  margin: var(--i-regular) 0 var(--i-regular) var(--i-regular);
+  width: 2rem;
+  height: 2rem;
+
+  margin: 0 0 0 var(--i-medium);
+
+  background-position: center;
 `;
 
-const CopyrightText = styled(Flex)`
+const TextWrapper = styled(Flex)`
   width: auto;
+`;
+
+const CopyrightText = styled(Text)`
+  font-weight: 700;
+  font-size: 0.6rem;
 `;
 
 const Footer = styled.div`
@@ -58,4 +70,5 @@ export default {
   PartnerLink,
   CopyrightLogoLink,
   CopyrightText,
+  TextWrapper,
 };
