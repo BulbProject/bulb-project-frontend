@@ -26,6 +26,7 @@ export const Metrics = ({
     if (observation.value) {
       return observation.value.currency;
     }
+
     if (observation.unit) {
       return observation.unit.name;
     }

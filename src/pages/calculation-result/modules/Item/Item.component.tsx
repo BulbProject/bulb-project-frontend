@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 
 import { css } from 'styled-components';
 
@@ -47,6 +48,10 @@ export const Item = ({
       .flatMap(({ observations }) => observations)
       .filter(isEconomyObservation)
       .sort(({ id }) => (id === 'energyEconomy' ? 1 : -1));
+  }, [JSON.stringify(variant.metrics)]);
+
+  const metrics = useMemo(() => {
+    return variant.metrics.filter(({ observations }) => !observations.filter(isEconomyObservation).length);
   }, [JSON.stringify(variant.metrics)]);
 
   const getUnit = useCallback(
@@ -144,12 +149,52 @@ export const Item = ({
 
         <Metrics
           showTitles={isRequested}
-          metrics={variant.metrics.filter(({ observations }) => !observations.filter(isEconomyObservation).length)}
+          metrics={metrics}
           hoveredObservation={hoveredObservation}
           setHoveredObservation={setHoveredObservation}
         />
 
-        <Flex direction="column">
+        <Metrics
+          metrics={[
+            {
+              id: uuid(),
+              title: 'Пропозиції на Prozorro-Market',
+              observations: [
+                {
+                  id: uuid(),
+                  notes: 'Кількість пропозицій',
+                  measure: item.classification?.id === '31712341-2' ? 109 : '-',
+                  unit:
+                    item.classification?.id === '31712341-2'
+                      ? {
+                          name: 'шт',
+                        }
+                      : undefined,
+                },
+                {
+                  id: uuid(),
+                  notes: 'Середня вартість',
+                  value: {
+                    // @ts-ignore
+                    amount: item.classification?.id === '31712341-2' ? 22.8 : '-',
+                    currency: item.classification?.id === '31712341-2' ? 'UAH' : undefined,
+                  },
+                  unit:
+                    item.classification?.id === '31712341-2'
+                      ? {
+                          name: 'грн',
+                        }
+                      : undefined,
+                },
+              ],
+            },
+          ]}
+          showTitles={isRequested}
+          hoveredObservation={hoveredObservation}
+          setHoveredObservation={setHoveredObservation}
+        />
+
+        <Flex direction="column" margin={{ top: 'regular' }}>
           {/* <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
             <Button
               styled={{
