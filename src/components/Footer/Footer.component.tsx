@@ -2,7 +2,6 @@ import React from 'react';
 
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Grid from 'ustudio-ui/components/Grid/Grid';
-import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 
 import Styled from './Footer.styles';
