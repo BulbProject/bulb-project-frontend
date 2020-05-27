@@ -197,6 +197,21 @@ export const Item = ({
         />
 
         <Flex direction="column" margin={{ top: 'regular' }}>
+          <Button
+            styled={{
+              Button: css`
+                 {
+                  padding: var(--i-regular);
+                }
+              `,
+            }}
+            appearance="text"
+            intent="positive"
+            onClick={() => setSpecificationOpen(true)}
+          >
+            Тендерна документація
+          </Button>
+
           {isLed && (
             <>
               <Button
@@ -217,21 +232,6 @@ export const Item = ({
               <MarketModal isOpen={isMarketModalOpen} setOpen={setMarketModalOpen} id={variant.id} />
             </>
           )}
-
-          <Button
-            styled={{
-              Button: css`
-                 {
-                  padding: var(--i-regular);
-                }
-              `,
-            }}
-            appearance="text"
-            intent="positive"
-            onClick={() => setSpecificationOpen(true)}
-          >
-            Тендерна документація
-          </Button>
 
           <Specification
             isOpen={isSpecificationOpen}
