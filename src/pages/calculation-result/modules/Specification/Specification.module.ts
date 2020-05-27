@@ -2,8 +2,6 @@ import type { Requirement } from 'ts4ocds/extensions/requirements';
 import type { AvailableVariant, SelectedVariant } from 'types/data';
 import { v4 } from 'uuid';
 
-export const egps = ['Prozorro', 'Procuriosity'];
-
 export const modes = [
   { value: 'json', title: 'Ідентифікатор' },
   { value: 'docx', title: 'Текстовий документ' },

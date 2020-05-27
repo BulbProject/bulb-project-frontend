@@ -7,7 +7,6 @@ import Modal from 'ustudio-ui/components/Modal';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import Tabs from 'ustudio-ui/components/Tabs';
-import Select from 'ustudio-ui/components/Select/Select';
 import Button from 'ustudio-ui/components/Button';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Alert from 'ustudio-ui/components/Alert';
@@ -16,7 +15,7 @@ import { useRequest } from 'hooks';
 import { postSpecification } from 'config';
 import { Mixin } from 'ustudio-ui/theme';
 
-import { modes, egps, generateSelectedVariant, formatDateTime } from './Specification.module';
+import { modes, generateSelectedVariant, formatDateTime } from './Specification.module';
 import type { SpecificationJSON, SpecificationProps } from './Specification.types';
 import Styled from './Specification.styles';
 
@@ -30,7 +29,6 @@ export const Specification: FC<SpecificationProps> = ({
   const { categoryId, version } = useParams();
 
   const [requirement, setRequirement] = useState(criterion.requirementGroups[0].requirements[0]);
-  const [egp, setEgp] = useState(egps[0].toLowerCase());
   const [mode, setMode] = useState(modes[0].value);
 
   const [isRequesting, setRequesting] = useState(false);
@@ -44,7 +42,6 @@ export const Specification: FC<SpecificationProps> = ({
     postSpecification({
       categoryId,
       version,
-      egp,
       mode,
       body: {
         selectedVariant: generateSelectedVariant({
@@ -173,24 +170,6 @@ export const Specification: FC<SpecificationProps> = ({
                   }
                 `,
               }}
-            />
-          </Styled.Group>
-
-          <Styled.Group>
-            <Styled.GroupTitle>Виберіть систему</Styled.GroupTitle>
-
-            <Select
-              items={egps.reduce((items, title) => {
-                return Object.assign(items, {
-                  [title.toLowerCase()]: {
-                    value: title.toLowerCase(),
-                    label: title,
-                    isDisabled: title === 'Procuriosity',
-                  },
-                });
-              }, {})}
-              value={egp}
-              onChange={setEgp}
             />
           </Styled.Group>
 
