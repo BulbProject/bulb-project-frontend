@@ -1,23 +1,23 @@
 import React, { FC, useEffect, useRef, useState, MutableRefObject } from 'react';
 import { css } from 'styled-components';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import download from 'downloadjs';
 
 import Modal from 'ustudio-ui/components/Modal';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import Tabs from 'ustudio-ui/components/Tabs';
-import Select from 'ustudio-ui/components/Select/Select';
 import Button from 'ustudio-ui/components/Button';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Alert from 'ustudio-ui/components/Alert';
-
-import { useRequest } from 'hooks';
-import { postSpecification } from 'config';
 import { Mixin } from 'ustudio-ui/theme';
 
-import { modes, egps, generateSelectedVariant, formatDateTime } from './Specification.module';
-import type { SpecificationJSON, SpecificationProps } from './Specification.types';
+import { postSpecification } from 'config';
+import CopyIcon from '../../../../assets/icons/copy.inline.svg';
+
+import { modes, generateSelectedVariant, formatDateTime } from './Specification.module';
+import type { SpecificationProps } from './Specification.types';
 import Styled from './Specification.styles';
 
 export const Specification: FC<SpecificationProps> = ({
@@ -30,46 +30,99 @@ export const Specification: FC<SpecificationProps> = ({
   const { categoryId, version } = useParams();
 
   const [requirement, setRequirement] = useState(criterion.requirementGroups[0].requirements[0]);
-  const [egp, setEgp] = useState(egps[0].toLowerCase());
   const [mode, setMode] = useState(modes[0].value);
 
-  const [isRequesting, setRequesting] = useState(false);
+  const [identificator, setIdentificator] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [isDownloading, setDownloading] = useState(false);
   const [isCopying, setCopying] = useState(false);
   const [isAlertOpen, setAlertOpen] = useState(false);
+  const [isTooltipShown, setTooltipShown] = useState(false);
 
   const idRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const { isLoading, error, data } = useRequest<string | SpecificationJSON>(
-    postSpecification({
-      categoryId,
-      version,
-      egp,
-      mode,
-      body: {
-        selectedVariant: generateSelectedVariant({
-          availableVariant,
-          requirement,
-        }),
-      },
-    }),
-    {
-      isRequesting: isRequesting && (isCopying || isDownloading),
-      isDefaultLoading: false,
+  useEffect(() => {
+    if (isDownloading) {
+      (async () => {
+        try {
+          const { data } = await axios(
+            postSpecification({
+              categoryId,
+              version,
+              mode,
+              body: {
+                selectedVariant: generateSelectedVariant({
+                  availableVariant,
+                  requirement,
+                }),
+              },
+            })
+          );
+
+          download(data as string, `Специфікация на '${categoryTitle}' від ${formatDateTime()}.docx`);
+
+          setDownloading(false);
+          setOpen(false);
+
+          setAlertOpen(true);
+        } catch ({ message }) {
+          setError(message);
+        }
+      })();
     }
-  );
+  }, [isDownloading]);
 
   useEffect(() => {
-    if (data && mode === 'docx' && isDownloading) {
-      download(data as string, `Специфікация на '${categoryTitle}' від ${formatDateTime()}.docx`);
+    if (isCopying) {
+      (async () => {
+        try {
+          const { data } = await axios(
+            postSpecification({
+              categoryId,
+              version,
+              mode,
+              body: {
+                selectedVariant: generateSelectedVariant({
+                  availableVariant,
+                  requirement,
+                }),
+              },
+            })
+          );
 
-      setRequesting(false);
-      setDownloading(false);
-      setOpen(false);
+          setIdentificator(data.id);
 
+          setAlertOpen(true);
+        } catch ({ message }) {
+          setError(message);
+        }
+      })();
+    }
+  }, [isCopying]);
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (isAlertOpen && mode === 'docx') {
+      const alertTimeout = setTimeout(() => setAlertOpen(false), 5 * 1000);
+
+      return () => clearTimeout(alertTimeout);
+    }
+  }, [isAlertOpen, mode]);
+
+  useEffect(() => {
+    if (isCopying) {
       setAlertOpen(true);
     }
-  }, [Boolean(data), isDownloading]);
+  }, [isCopying]);
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (isTooltipShown) {
+      const tooltipTimeout = setTimeout(() => setTooltipShown(false), 2 * 1000);
+
+      return () => clearTimeout(tooltipTimeout);
+    }
+  }, [isTooltipShown]);
 
   const copyIdToClipboard = () => {
     (idRef as MutableRefObject<HTMLTextAreaElement>).current.select();
@@ -130,8 +183,6 @@ export const Specification: FC<SpecificationProps> = ({
           <Flex alignment={{ horizontal: 'center' }}>
             <Button
               onClick={() => {
-                setRequesting(true);
-
                 if (mode === 'json') {
                   setOpen(false);
                   setCopying(true);
@@ -146,7 +197,7 @@ export const Specification: FC<SpecificationProps> = ({
           </Flex>
         }
       >
-        <Styled.Overlay isActive={isLoading}>
+        <Styled.Overlay isActive={isDownloading}>
           <Spinner />
         </Styled.Overlay>
 
@@ -173,24 +224,6 @@ export const Specification: FC<SpecificationProps> = ({
                   }
                 `,
               }}
-            />
-          </Styled.Group>
-
-          <Styled.Group>
-            <Styled.GroupTitle>Виберіть систему</Styled.GroupTitle>
-
-            <Select
-              items={egps.reduce((items, title) => {
-                return Object.assign(items, {
-                  [title.toLowerCase()]: {
-                    value: title.toLowerCase(),
-                    label: title,
-                    isDisabled: title === 'Procuriosity',
-                  },
-                });
-              }, {})}
-              value={egp}
-              onChange={setEgp}
             />
           </Styled.Group>
 
@@ -224,8 +257,11 @@ export const Specification: FC<SpecificationProps> = ({
       </Modal>
 
       <Modal
-        isOpen={isCopying}
-        onChange={setCopying}
+        isOpen={isCopying && Boolean(identificator)}
+        onChange={() => {
+          setCopying(false);
+          setAlertOpen(false);
+        }}
         title={<Text variant="h5">Ідентифікатор</Text>}
         styled={{
           Modal: css`
@@ -239,27 +275,34 @@ export const Specification: FC<SpecificationProps> = ({
         }}
       >
         <Styled.Group>
-          <Styled.JsonId
+          <textarea
+            spellCheck="false"
+            rows={1}
+            ref={idRef}
+            value={identificator as string}
+            onChange={() => undefined}
+          />
+
+          <Styled.Tooltip isShown={isTooltipShown}>Скопійовано!</Styled.Tooltip>
+
+          <Text variant="small" align="center">
+            Скопіюйте цей ідентифікатор та вставте його на майданчику, де збираєтеся проводити закупівлю.
+          </Text>
+
+          <Styled.SmallBold variant="small" align="center">
+            Майте на увазі - дані за цим ідентифікатором зберігаються 7 днів.
+          </Styled.SmallBold>
+
+          <Styled.CopyButton
             onClick={() => {
               copyIdToClipboard();
 
-              setRequesting(false);
-
-              setAlertOpen(true);
+              setTooltipShown(true);
             }}
+            iconAfter={<CopyIcon />}
           >
-            <textarea
-              spellCheck="false"
-              rows={1}
-              ref={idRef}
-              value={data ? (data as SpecificationJSON).id : ''}
-              onChange={() => undefined}
-            />
-          </Styled.JsonId>
-
-          <Text variant="small" color="var(--c-dark)" align="center">
-            Натисніть, щоб скопіювати ідентифікатор Вашої специфікації.
-          </Text>
+            Скопіювати
+          </Styled.CopyButton>
         </Styled.Group>
       </Modal>
     </>

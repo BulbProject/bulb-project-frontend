@@ -68,13 +68,11 @@ export const postCalculationConfig = (
 export const postSpecification = ({
   categoryId,
   version,
-  egp,
   mode,
   body,
 }: {
   categoryId: Category['id'];
   version: CategoryVersion['version'];
-  egp: string;
   mode: string;
   body: { selectedVariant: SelectedVariant };
 }): AxiosRequestConfig => {
@@ -82,7 +80,7 @@ export const postSpecification = ({
     baseUrl: apiServiceBaseUrl,
     method: 'post',
     path: `do/specification`,
-    query: { egp, mode },
+    query: { egp: 'prozorro', mode },
     params: [categoryId, version],
     body,
     responseType: mode === 'json' ? mode : 'blob',
