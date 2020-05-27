@@ -16,7 +16,7 @@ import Bulb from '../../../../assets/images/bulb.svg';
 import { useCalculationContext } from '../../store';
 import { Specification } from '../Specification';
 
-import { Metrics } from './components';
+import { Metrics, MarketModal } from './components';
 import { efficiencyClasses, EfficiencyClass } from './Item.module';
 
 import Styled from './Item.styles';
@@ -31,6 +31,10 @@ export const Item = ({
   setHoveredObservation,
 }: ItemProps) => {
   const { category } = useCalculationContext();
+
+  const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
+
+  const [isMarketModalOpen, setMarketModalOpen] = useState(false);
 
   const isEconomyObservation = useCallback(
     ({ id }: { id: string }) => id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy',
@@ -163,28 +167,26 @@ export const Item = ({
                 {
                   id: uuid(),
                   notes: 'Кількість пропозицій',
-                  measure: item.classification?.id === '31712341-2' ? 109 : '-',
-                  unit:
-                    item.classification?.id === '31712341-2'
-                      ? {
-                          name: 'шт',
-                        }
-                      : undefined,
+                  measure: isLed ? 109 : '-',
+                  unit: isLed
+                    ? {
+                        name: 'шт',
+                      }
+                    : undefined,
                 },
                 {
                   id: uuid(),
                   notes: 'Середня вартість',
                   value: {
                     // @ts-ignore
-                    amount: item.classification?.id === '31712341-2' ? 22.8 : '-',
-                    currency: item.classification?.id === '31712341-2' ? 'UAH' : undefined,
+                    amount: isLed ? 22.8 : '-',
+                    currency: isLed ? 'UAH' : undefined,
                   },
-                  unit:
-                    item.classification?.id === '31712341-2'
-                      ? {
-                          name: 'грн',
-                        }
-                      : undefined,
+                  unit: isLed
+                    ? {
+                        name: 'грн',
+                      }
+                    : undefined,
                 },
               ],
             },
@@ -195,21 +197,26 @@ export const Item = ({
         />
 
         <Flex direction="column" margin={{ top: 'regular' }}>
-          {/* <Styled.Link href="#" target="_blank" rel="noopener noreferrer">
-            <Button
-              styled={{
-                Button: css`
-                   {
-                    width: 100%;
-                    padding: var(--i-regular);
-                  }
-                `,
-              }}
-              appearance="text"
-            >
-              Prozorro Market Teaser
-            </Button>
-          </Styled.Link> */}
+          {isLed && (
+            <>
+              <Button
+                styled={{
+                  Button: css`
+                     {
+                      width: 100%;
+                      padding: var(--i-regular);
+                    }
+                  `,
+                }}
+                appearance="text"
+                onClick={() => setMarketModalOpen(true)}
+              >
+                Prozorro Market
+              </Button>
+
+              <MarketModal isOpen={isMarketModalOpen} setOpen={setMarketModalOpen} id={variant.id} />
+            </>
+          )}
 
           <Button
             styled={{

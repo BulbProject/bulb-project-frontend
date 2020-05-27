@@ -189,14 +189,6 @@ const AdditionalClassification = styled(Flex)`
   }
 `;
 
-const Link = styled.a`
-  &:hover {
-    &:after {
-      display: none;
-    }
-  }
-`;
-
 export default {
   Item,
   ImageContainer,
@@ -205,7 +197,6 @@ export default {
   ItemDescription,
   Classifications,
   AdditionalClassification,
-  Link,
   EfficiencyClass,
   EfficiencyClassesList,
   Economy,
