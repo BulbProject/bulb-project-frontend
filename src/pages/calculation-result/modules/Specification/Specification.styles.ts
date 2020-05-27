@@ -119,7 +119,8 @@ const Tooltip = styled(Text)<{ isShown: boolean }>(
 
     transition: var(--transition);
 
-    background-color: var(--c-light);
+    color: var(--c-white);
+    background-color: var(--c-secondary);
 
     ${isShown
       ? css`

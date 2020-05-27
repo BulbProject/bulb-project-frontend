@@ -8,7 +8,3 @@ export interface SpecificationProps {
   availableVariant: AvailableVariant;
   categoryTitle: string;
 }
-
-export interface SpecificationJSON {
-  id: string;
-}

@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState, MutableRefObject } from 'react';
 import { css } from 'styled-components';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import download from 'downloadjs';
 
 import Modal from 'ustudio-ui/components/Modal';
@@ -12,12 +13,11 @@ import Spinner from 'ustudio-ui/components/Spinner';
 import Alert from 'ustudio-ui/components/Alert';
 import { Mixin } from 'ustudio-ui/theme';
 
-import { useRequest } from 'hooks';
 import { postSpecification } from 'config';
 import CopyIcon from '../../../../assets/icons/copy.inline.svg';
 
 import { modes, generateSelectedVariant, formatDateTime } from './Specification.module';
-import type { SpecificationJSON, SpecificationProps } from './Specification.types';
+import type { SpecificationProps } from './Specification.types';
 import Styled from './Specification.styles';
 
 export const Specification: FC<SpecificationProps> = ({
@@ -32,7 +32,8 @@ export const Specification: FC<SpecificationProps> = ({
   const [requirement, setRequirement] = useState(criterion.requirementGroups[0].requirements[0]);
   const [mode, setMode] = useState(modes[0].value);
 
-  const [isRequesting, setRequesting] = useState(false);
+  const [identificator, setIdentificator] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [isDownloading, setDownloading] = useState(false);
   const [isCopying, setCopying] = useState(false);
   const [isAlertOpen, setAlertOpen] = useState(false);
@@ -40,35 +41,64 @@ export const Specification: FC<SpecificationProps> = ({
 
   const idRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const { isLoading, error, data } = useRequest<string | SpecificationJSON>(
-    postSpecification({
-      categoryId,
-      version,
-      mode,
-      body: {
-        selectedVariant: generateSelectedVariant({
-          availableVariant,
-          requirement,
-        }),
-      },
-    }),
-    {
-      isRequesting: isRequesting && (isCopying || isDownloading),
-      isDefaultLoading: false,
+  useEffect(() => {
+    if (isDownloading) {
+      (async () => {
+        try {
+          const { data } = await axios(
+            postSpecification({
+              categoryId,
+              version,
+              mode,
+              body: {
+                selectedVariant: generateSelectedVariant({
+                  availableVariant,
+                  requirement,
+                }),
+              },
+            })
+          );
+
+          download(data as string, `Специфікация на '${categoryTitle}' від ${formatDateTime()}.docx`);
+
+          setDownloading(false);
+          setOpen(false);
+
+          setAlertOpen(true);
+        } catch ({ message }) {
+          setError(message);
+        }
+      })();
     }
-  );
+  }, [isDownloading]);
 
   useEffect(() => {
-    if (data && mode === 'docx' && isDownloading) {
-      download(data as string, `Специфікация на '${categoryTitle}' від ${formatDateTime()}.docx`);
+    if (isCopying) {
+      (async () => {
+        try {
+          const { data } = await axios(
+            postSpecification({
+              categoryId,
+              version,
+              mode,
+              body: {
+                selectedVariant: generateSelectedVariant({
+                  availableVariant,
+                  requirement,
+                }),
+              },
+            })
+          );
 
-      setRequesting(false);
-      setDownloading(false);
-      setOpen(false);
+          setIdentificator(data.id);
 
-      setAlertOpen(true);
+          setAlertOpen(true);
+        } catch ({ message }) {
+          setError(message);
+        }
+      })();
     }
-  }, [Boolean(data), isDownloading]);
+  }, [isCopying]);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -153,8 +183,6 @@ export const Specification: FC<SpecificationProps> = ({
           <Flex alignment={{ horizontal: 'center' }}>
             <Button
               onClick={() => {
-                setRequesting(true);
-
                 if (mode === 'json') {
                   setOpen(false);
                   setCopying(true);
@@ -169,7 +197,7 @@ export const Specification: FC<SpecificationProps> = ({
           </Flex>
         }
       >
-        <Styled.Overlay isActive={isLoading}>
+        <Styled.Overlay isActive={isDownloading}>
           <Spinner />
         </Styled.Overlay>
 
@@ -229,7 +257,7 @@ export const Specification: FC<SpecificationProps> = ({
       </Modal>
 
       <Modal
-        isOpen={isCopying}
+        isOpen={isCopying && Boolean(identificator)}
         onChange={() => {
           setCopying(false);
           setAlertOpen(false);
@@ -251,7 +279,7 @@ export const Specification: FC<SpecificationProps> = ({
             spellCheck="false"
             rows={1}
             ref={idRef}
-            value={data ? (data as SpecificationJSON).id : ''}
+            value={identificator as string}
             onChange={() => undefined}
           />
 
@@ -268,8 +296,6 @@ export const Specification: FC<SpecificationProps> = ({
           <Styled.CopyButton
             onClick={() => {
               copyIdToClipboard();
-
-              setRequesting(false);
 
               setTooltipShown(true);
             }}
