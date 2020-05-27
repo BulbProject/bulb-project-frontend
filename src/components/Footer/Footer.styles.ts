@@ -13,7 +13,7 @@ const PartnerLink = styled.a(
     background-image: url(${image});
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: bottom;
 
     transition: var(--transition);
     filter: grayscale(1);
@@ -30,7 +30,7 @@ const PartnerLink = styled.a(
 );
 
 const CopyrightLogoLink = styled(PartnerLink)`
-  margin: var(--i-regular) 0;
+  margin: var(--i-regular) 0 var(--i-regular) var(--i-regular);
 `;
 
 const CopyrightText = styled(Flex)`

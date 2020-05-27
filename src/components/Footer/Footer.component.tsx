@@ -69,15 +69,22 @@ export const Footer = () => {
         <Cell xl={{ offset: { before: 1, after: 1 }, size: 1 }}>
           <Flex alignment={{ vertical: 'center', horizontal: 'center' }}>
             <Styled.CopyrightText direction="column" alignment={{ vertical: 'center' }}>
-              <Text variant="caption">Дизайн&nbsp;і&nbsp;розробка</Text>
+              <Text variant="small" styled={{ Text: { fontWeight: 700 } }}>
+                Дизайн&nbsp;і&nbsp;розробка
+              </Text>
 
-              <Text variant="caption">Ustudio&nbsp;Company</Text>
+              <Text variant="small" styled={{ Text: { fontWeight: 700 } }}>
+                Ustudio&nbsp;Company
+              </Text>
 
-              <Text variant="caption">2020</Text>
+              <Text variant="small" styled={{ Text: { fontWeight: 700 } }}>
+                2020
+              </Text>
             </Styled.CopyrightText>
 
             <Styled.CopyrightLogoLink
               image={UstudioLogo}
+              width={3}
               href="https://ustudio.company"
               target="_blank"
               rel="noreferrer noopener"
