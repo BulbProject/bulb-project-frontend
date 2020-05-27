@@ -21,6 +21,14 @@ const Cell = styled.div(({ image }: { image?: string }) => {
   `;
 });
 
+const WideCardTitle = () => css`
+  ${StyledCard.CardTitle} {
+    ${Mixin.Font.h2()};
+    font-weight: 400;
+    line-height: 1.1;
+  }
+`;
+
 const WideCell = styled(Cell)`
   grid-column: span 1;
 
@@ -31,11 +39,7 @@ const WideCell = styled(Cell)`
       width: 65%;
     }
 
-    ${StyledCard.CardTitle} {
-      ${Mixin.Font.h2()};
-      font-weight: 400;
-      line-height: 1.1;
-    }
+    ${WideCardTitle()};
   `)}
 `;
 
@@ -51,11 +55,7 @@ const BigCell = styled(Cell)`
       width: 65%;
     }
 
-    ${StyledCard.CardTitle} {
-      ${Mixin.Font.h2()};
-      font-weight: 400;
-      line-height: 1.1;
-    }
+    ${WideCardTitle()};
   `)}
 `;
 
