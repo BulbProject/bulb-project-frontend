@@ -10,10 +10,11 @@ import Tabs from 'ustudio-ui/components/Tabs';
 import Button from 'ustudio-ui/components/Button';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Alert from 'ustudio-ui/components/Alert';
+import { Mixin } from 'ustudio-ui/theme';
 
 import { useRequest } from 'hooks';
 import { postSpecification } from 'config';
-import { Mixin } from 'ustudio-ui/theme';
+import CopyIcon from '../../../../assets/icons/copy.inline.svg';
 
 import { modes, generateSelectedVariant, formatDateTime } from './Specification.module';
 import type { SpecificationJSON, SpecificationProps } from './Specification.types';
@@ -67,6 +68,15 @@ export const Specification: FC<SpecificationProps> = ({
       setAlertOpen(true);
     }
   }, [Boolean(data), isDownloading]);
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (isAlertOpen) {
+      const alertTimeout = setTimeout(() => setAlertOpen(false), 5000);
+
+      return () => clearTimeout(alertTimeout);
+    }
+  }, [isAlertOpen]);
 
   const copyIdToClipboard = () => {
     (idRef as MutableRefObject<HTMLTextAreaElement>).current.select();
@@ -218,27 +228,35 @@ export const Specification: FC<SpecificationProps> = ({
         }}
       >
         <Styled.Group>
-          <Styled.JsonId
+          <Text variant="small" align="center">
+            Скопіюйте цей ідентифікатор та вставте його на майданчику, де збираєтеся проводити закупівлю.
+          </Text>
+
+          <Styled.SmallBold variant="small" align="center">
+            Майте на увазі - дані за цим ідентифікатором зберігаються 7 днів.
+          </Styled.SmallBold>
+
+          <textarea
+            spellCheck="false"
+            rows={1}
+            ref={idRef}
+            value={data ? (data as SpecificationJSON).id : ''}
+            onChange={() => undefined}
+          />
+
+          <Styled.CopyButton
             onClick={() => {
               copyIdToClipboard();
 
               setRequesting(false);
 
               setAlertOpen(true);
+              setCopying(false);
             }}
+            iconAfter={<CopyIcon />}
           >
-            <textarea
-              spellCheck="false"
-              rows={1}
-              ref={idRef}
-              value={data ? (data as SpecificationJSON).id : ''}
-              onChange={() => undefined}
-            />
-          </Styled.JsonId>
-
-          <Text variant="small" color="var(--c-dark)" align="center">
-            Натисніть, щоб скопіювати ідентифікатор Вашої специфікації.
-          </Text>
+            Скопіювати
+          </Styled.CopyButton>
         </Styled.Group>
       </Modal>
     </>

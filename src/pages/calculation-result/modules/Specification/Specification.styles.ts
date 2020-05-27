@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
+import Button from 'ustudio-ui/components/Button';
 import { Mixin } from 'ustudio-ui/theme';
 
 const Group = styled(Flex).attrs(() => ({
@@ -11,6 +12,19 @@ const Group = styled(Flex).attrs(() => ({
 }))`
   &:not(:last-child) {
     margin-bottom: var(--i-large);
+  }
+
+  textarea {
+    ${Mixin.Style.inputPadding()};
+    ${Mixin.Font.bodySmall()};
+
+    width: 100%;
+    text-align: center;
+
+    cursor: pointer;
+
+    background: var(--c-light);
+    pointer-events: none;
   }
 `;
 
@@ -52,38 +66,21 @@ const Overlay = styled.div<{ isActive: boolean }>(
   `
 );
 
-const JsonId = styled.button`
-  ${Mixin.Style.inputPadding()};
-  ${Mixin.Font.bodyRegular()};
+const CopyButton = styled(Button)`
+  margin: var(--i-regular) 0 0;
 
-  width: 100%;
+  svg {
+    height: 0.75rem;
+    width: auto;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin-bottom: var(--i-regular);
-
-  border-radius: var(--border-radius);
-
-  background-color: var(--c-light);
-
-  transition: color var(--transition);
-
-  &:hover,
-  &:focus {
-    color: var(--c-secondary);
-  }
-
-  textarea {
-    width: 100%;
-    text-align: center;
-
-    cursor: pointer;
-
-    background: transparent;
-    pointer-events: none;
+    margin-left: var(--i-medium);
   }
 `;
 
-export default { Group, GroupTitle, Tab, Overlay, JsonId };
+const SmallBold = styled(Text)`
+  font-weight: 700;
+
+  margin: var(--i-medium) 0 var(--i-large);
+`;
+
+export default { Group, GroupTitle, Tab, Overlay, CopyButton, SmallBold };
