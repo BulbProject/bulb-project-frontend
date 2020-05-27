@@ -8,7 +8,7 @@ const PartnerLink = styled.a(
     width: ${width}rem;
     height: 3rem;
 
-    margin: var(--i-regular);
+    margin: var(--i-regular) var(--i-small);
 
     background-image: url(${image});
     background-size: contain;
