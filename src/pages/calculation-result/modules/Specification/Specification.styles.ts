@@ -21,6 +21,8 @@ const Group = styled(Flex).attrs(() => ({
     width: 100%;
     text-align: center;
 
+    margin-bottom: var(--i-medium);
+
     cursor: pointer;
 
     background: var(--c-light);
@@ -67,8 +69,6 @@ const Overlay = styled.div<{ isActive: boolean }>(
 );
 
 const CopyButton = styled(Button)`
-  margin: var(--i-regular) 0 0;
-
   svg {
     height: 0.75rem;
     width: auto;
@@ -80,7 +80,7 @@ const CopyButton = styled(Button)`
 const SmallBold = styled(Text)`
   font-weight: 700;
 
-  margin: var(--i-medium) 0 var(--i-large);
+  margin: var(--i-medium) 0 var(--i-regular);
 `;
 
 const popUp = keyframes`

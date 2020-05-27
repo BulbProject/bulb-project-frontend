@@ -247,14 +247,6 @@ export const Specification: FC<SpecificationProps> = ({
         }}
       >
         <Styled.Group>
-          <Text variant="small" align="center">
-            Скопіюйте цей ідентифікатор та вставте його на майданчику, де збираєтеся проводити закупівлю.
-          </Text>
-
-          <Styled.SmallBold variant="small" align="center">
-            Майте на увазі - дані за цим ідентифікатором зберігаються 7 днів.
-          </Styled.SmallBold>
-
           <textarea
             spellCheck="false"
             rows={1}
@@ -264,6 +256,14 @@ export const Specification: FC<SpecificationProps> = ({
           />
 
           <Styled.Tooltip isShown={isTooltipShown}>Скопійовано!</Styled.Tooltip>
+
+          <Text variant="small" align="center">
+            Скопіюйте цей ідентифікатор та вставте його на майданчику, де збираєтеся проводити закупівлю.
+          </Text>
+
+          <Styled.SmallBold variant="small" align="center">
+            Майте на увазі - дані за цим ідентифікатором зберігаються 7 днів.
+          </Styled.SmallBold>
 
           <Styled.CopyButton
             onClick={() => {
