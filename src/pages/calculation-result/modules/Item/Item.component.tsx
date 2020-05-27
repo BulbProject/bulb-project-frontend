@@ -229,7 +229,7 @@ export const Item = ({
                 Prozorro Market
               </Button>
 
-              <MarketModal isOpen={isMarketModalOpen} setOpen={setMarketModalOpen} id={variant.id} />
+              <MarketModal isOpen={isMarketModalOpen} setOpen={setMarketModalOpen} />
             </>
           )}
 

@@ -1,32 +1,31 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Link = styled.a`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const Link = styled.a<{ image: string }>(
+  ({ image }) => css`
+    height: 4rem;
+    width: 8rem;
 
-  &:hover {
-    img {
+    margin-bottom: var(--i-regular);
+
+    background-image: url(${image});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    transition: opacity var(--transition);
+
+    &:hover {
       opacity: 0.75;
+
+      &:after {
+        content: unset;
+      }
     }
 
-    &:after {
-      content: unset;
+    &:not(:last-child) {
+      margin-right: var(--i-large);
     }
-  }
+  `
+);
 
-  &:not(:last-child) {
-    margin-right: var(--i-large);
-  }
-`;
-
-const Logo = styled.img`
-  height: 3rem;
-  width: auto;
-
-  margin-bottom: var(--i-regular);
-
-  transition: opacity var(--transition);
-`;
-
-export default { Link, Logo };
+export default { Link };
