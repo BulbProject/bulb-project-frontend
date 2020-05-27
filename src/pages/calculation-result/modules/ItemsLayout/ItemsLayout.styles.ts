@@ -53,7 +53,7 @@ const DoubleLayout = styled.section`
     min-width: ${requestedNeedWidth}px;
 
     ${EfficiencyClassesList} {
-      margin: -0.5px 0 -0.5px var(--i-regular);
+      margin: -0.5px 0;
     }
   }
 
@@ -83,7 +83,7 @@ const TripleLayout = styled.section`
     min-width: ${requestedNeedWidth}px;
 
     ${EfficiencyClassesList} {
-      margin: -0.5px 0 -0.5px var(--i-regular);
+      margin: -0.5px 0;
     }
 
     ${Item} {
@@ -136,7 +136,7 @@ const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(({ quanti
       width: ${requestedNeedWidth}px;
 
       ${EfficiencyClassesList} {
-        margin: -0.5px 0 -0.5px var(--i-regular);
+        margin: -0.5px 0;
       }
 
       ${Item} {
