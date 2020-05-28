@@ -8,19 +8,9 @@ import StyledCategories from 'pages/categories-list/CategoriesList.styles';
 const CategoryListWrapper = styled(Flex)`
   align-items: center;
 
-  min-height: 100vh;
+  height: 100%;
 
   background-image: linear-gradient(to bottom, rgba(26, 26, 26, 1), rgba(26, 26, 26, 1) 75%, rgba(26, 26, 26, 0.975));
 `;
 
-const Main = styled.main`
-  overflow-y: auto;
-
-  ${StyledCategories.Grid} {
-    ${Mixin.Screen.xs(css`
-      grid-auto-rows: calc(100vh / 3);
-    `)}
-  }
-`;
-
-export default { CategoryListWrapper, Main };
+export default { CategoryListWrapper };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import ReactFullpage from '@fullpage/react-fullpage';
 import 'fullpage.js/vendors/scrolloverflow';
+import ReactFullpage from '@fullpage/react-fullpage';
 
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
@@ -20,7 +20,7 @@ const Main = () => {
   const isMd = useMediaQuery('screen and (min-width: 768px)');
 
   const MainContent = () => (
-    <Styled.Main>
+    <main>
       <div className="section">
         <Hero />
       </div>
@@ -36,7 +36,7 @@ const Main = () => {
       </div>
 
       <DarkMode />
-    </Styled.Main>
+    </main>
   );
 
   return (
@@ -46,7 +46,6 @@ const Main = () => {
           licenseKey="Nu9TbnPK-hA3_269z-aVtu9yF4-g7gX7RCY"
           navigation
           scrollOverflow
-          callbacks={['onLeave']}
           render={() => {
             return <MainContent />;
           }}

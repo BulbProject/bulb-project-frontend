@@ -75,7 +75,7 @@ export const CategoriesList = () => {
 
   return (
     <ErrorBoundary>
-      <Styled.CategoriesListContainer>
+      <>
         {isLoading && (
           <FadeIn>
             <Styled.LoaderContainer>
@@ -111,7 +111,7 @@ export const CategoriesList = () => {
             <Error reloadCategories={triggerRequest} />
           </FadeIn>
         )}
-      </Styled.CategoriesListContainer>
+      </>
     </ErrorBoundary>
   );
 };
