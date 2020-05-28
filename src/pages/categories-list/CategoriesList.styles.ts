@@ -34,7 +34,7 @@ const Grid = styled.div(
 
     ${Mixin.Screen.xs(css`
       grid-template-columns: ${computeColumnTemplate(2)};
-      grid-auto-rows: calc((100vh - 64px - 96px) / 3);
+      grid-auto-rows: minmax(calc((100vh - 64px - 112px) / 3), auto);
 
       grid-auto-flow: dense;
 
