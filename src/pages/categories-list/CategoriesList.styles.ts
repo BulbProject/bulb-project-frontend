@@ -34,11 +34,10 @@ const Grid = styled.div(
 
     ${Mixin.Screen.xs(css`
       grid-template-columns: ${computeColumnTemplate(2)};
-      grid-auto-rows: calc((100vh - 64px - 96px) / 3);
+      grid-auto-rows: calc(100% / 3);
+      height: 100%;
 
       grid-auto-flow: dense;
-
-      overflow: hidden;
     `)}
 
     ${Mixin.Screen.lg(css`

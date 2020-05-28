@@ -85,8 +85,8 @@ export const CategoriesList = () => {
         )}
 
         {!isLoading && !listError && (
-          <Flex alignment={{ vertical: 'center' }}>
-            <FadeIn>
+          <Flex alignment={{ vertical: 'center' }} styled={{ Flex: { height: '100%' } }}>
+            <FadeIn height="100%">
               {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
 
               <Styled.Grid elementAmount={fullCategories.length + 1}>
