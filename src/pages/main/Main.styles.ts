@@ -13,4 +13,12 @@ const CategoryListWrapper = styled(Flex)`
   background-image: linear-gradient(to bottom, rgba(26, 26, 26, 1), rgba(26, 26, 26, 1) 75%, rgba(26, 26, 26, 0.975));
 `;
 
-export default { CategoryListWrapper };
+const Main = styled.main`
+  ${StyledCategories.Grid} {
+    ${Mixin.Screen.xs(css`
+      grid-auto-rows: minmax(calc(100vh / 3), auto);
+    `)}
+  }
+`;
+
+export default { CategoryListWrapper, Main };

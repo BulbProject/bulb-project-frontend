@@ -75,7 +75,7 @@ export const CategoriesList = () => {
 
   return (
     <ErrorBoundary>
-      <>
+      <div>
         {isLoading && (
           <FadeIn>
             <Styled.LoaderContainer>
@@ -85,24 +85,22 @@ export const CategoriesList = () => {
         )}
 
         {!isLoading && !listError && (
-          <Flex alignment={{ vertical: 'center' }} styled={{ Flex: { height: '100%' } }}>
-            <FadeIn height="100%">
-              {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
+          <Flex alignment={{ vertical: 'center' }}>
+            {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
 
-              <Styled.Grid elementAmount={fullCategories.length + 1}>
-                <Styled.BigCell>
-                  <Styled.CategoriesHeader>
-                    <Styled.Title variant="h1">Виберіть категорію для&nbsp;проведення розрахунків</Styled.Title>
-                  </Styled.CategoriesHeader>
-                </Styled.BigCell>
+            <Styled.Grid elementAmount={fullCategories.length + 1}>
+              <Styled.BigCell>
+                <Styled.CategoriesHeader>
+                  <Styled.Title variant="h1">Виберіть категорію для&nbsp;проведення розрахунків</Styled.Title>
+                </Styled.CategoriesHeader>
+              </Styled.BigCell>
 
-                {sortCategories(fullCategories).map((category, cardIndex) => (
-                  <CardLayout cardIndex={cardIndex} image={category.categoryVersion?.image} key={category.id}>
-                    <Card {...category} reload={() => reloadItem(category.id, category.version)} />
-                  </CardLayout>
-                ))}
-              </Styled.Grid>
-            </FadeIn>
+              {sortCategories(fullCategories).map((category, cardIndex) => (
+                <CardLayout cardIndex={cardIndex} image={category.categoryVersion?.image} key={category.id}>
+                  <Card {...category} reload={() => reloadItem(category.id, category.version)} />
+                </CardLayout>
+              ))}
+            </Styled.Grid>
           </Flex>
         )}
 
@@ -111,7 +109,7 @@ export const CategoriesList = () => {
             <Error reloadCategories={triggerRequest} />
           </FadeIn>
         )}
-      </>
+      </div>
     </ErrorBoundary>
   );
 };

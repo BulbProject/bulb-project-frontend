@@ -20,7 +20,7 @@ const Main = () => {
   const isMd = useMediaQuery('screen and (min-width: 768px)');
 
   const MainContent = () => (
-    <main>
+    <Styled.Main>
       <div className="section">
         <Hero />
       </div>
@@ -36,7 +36,7 @@ const Main = () => {
       </div>
 
       <DarkMode />
-    </main>
+    </Styled.Main>
   );
 
   return (
