@@ -64,7 +64,7 @@ export const Item = ({
     [JSON.stringify(variant)]
   );
 
-  const [imgLink, setImgLink] = useState(Bulb);
+  const [imgLink, setImgLink] = useState(document);
 
   const [isSpecificationOpen, setSpecificationOpen] = useState(false);
 
@@ -134,7 +134,7 @@ export const Item = ({
           </Styled.EconomyContainer>
         )}
 
-        <Styled.Image src={imgLink} onLoad={() => setImgLink(document)} onError={() => setImgLink(imgLink)} />
+        <Styled.Image src={imgLink} onError={() => setImgLink(Bulb)} />
       </Styled.ImageContainer>
 
       <Styled.Content direction="column">
