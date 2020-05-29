@@ -10,7 +10,5 @@ export interface RequestedNeedProps {
   setSubmitting: (isSubmitting: boolean) => void;
   category: Category;
   requestedNeed: AvailableVariant;
-  hoveredObservation: string;
-  setHoveredObservation: (hoveredObservation: string) => void;
   setNewRequestedNeed: (requestedNeed: StoreRequestedNeed) => void;
 }

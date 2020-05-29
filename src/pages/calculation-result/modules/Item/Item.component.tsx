@@ -21,14 +21,7 @@ import { efficiencyClasses, EfficiencyClass } from './Item.module';
 import Styled from './Item.styles';
 import type { ItemProps } from './Item.types';
 
-export const Item = ({
-  variant,
-  item,
-  document,
-  isRequested = false,
-  hoveredObservation,
-  setHoveredObservation,
-}: ItemProps) => {
+export const Item = ({ variant, item, document, isRequested = false }: ItemProps) => {
   const { category } = useCalculationContext();
 
   const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
@@ -150,14 +143,10 @@ export const Item = ({
           <Text variant="h6">{`Кількість: ${variant.quantity}`}</Text>
         </Styled.ItemDescription>
 
-        <Metrics
-          showTitles={isRequested}
-          metrics={metrics}
-          hoveredObservation={hoveredObservation}
-          setHoveredObservation={setHoveredObservation}
-        />
+        <Metrics isRequested={isRequested} showTitles={isRequested} metrics={metrics} />
 
         <Metrics
+          isRequested={isRequested}
           metrics={[
             {
               id: '0300',
@@ -191,8 +180,6 @@ export const Item = ({
             },
           ]}
           showTitles={isRequested}
-          hoveredObservation={hoveredObservation}
-          setHoveredObservation={setHoveredObservation}
         />
 
         <Flex direction="column" margin={{ top: 'regular' }}>

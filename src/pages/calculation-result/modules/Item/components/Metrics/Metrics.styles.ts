@@ -1,7 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import Flex from 'ustudio-ui/components/Flex';
-import Text from 'ustudio-ui/components/Text';
 
 const Metrics = styled(Flex)`
   padding-top: var(--i-regular);
@@ -23,36 +22,58 @@ const Observation = styled(Flex)`
   }
 `;
 
+const Highlight = styled.div`
+  position: absolute;
+  top: -4px;
+  left: -1rem;
+
+  z-index: 9;
+
+  height: 24px;
+  width: calc(100vw - 1rem);
+
+  background-color: var(--c-light);
+
+  opacity: 0;
+
+  transition: opacity var(--transition);
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
 const ObservationTitle = styled(Flex)`
   white-space: nowrap;
   overflow: hidden;
 
   flex: calc(2 / 3);
+
+  small {
+    position: relative;
+    z-index: 10;
+
+    &:hover + ${Highlight} {
+      opacity: 1;
+    }
+  }
 `;
 
-const ObservationMeasure = styled(Text)`
+const ObservationMeasure = styled(Flex)`
+  justify-content: center;
+
   white-space: nowrap;
 
   flex: calc(1 / 3);
+
+  small {
+    position: relative;
+    z-index: 10;
+
+    &:hover + ${Highlight} {
+      opacity: 1;
+    }
+  }
 `;
-
-const Highlight = styled.div(({ isHovered }: { isHovered: boolean }) => {
-  return css`
-    position: absolute;
-    top: -4px;
-    left: -1rem;
-    right: -1rem;
-
-    z-index: -1;
-
-    height: 24px;
-
-    background-color: var(--c-light);
-
-    opacity: ${isHovered ? 1 : 0};
-
-    transition: var(--transition);
-  `;
-});
 
 export default { Metrics, Metric, Observation, ObservationTitle, ObservationMeasure, Highlight };

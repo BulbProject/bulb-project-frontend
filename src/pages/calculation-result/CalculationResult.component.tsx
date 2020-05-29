@@ -94,8 +94,6 @@ const CalculationResult: React.FC = () => {
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
-  const [hoveredObservation, setHoveredObservation] = useState('');
-
   const itemsQuantity = useMemo(() => (availableVariants || []).length, [availableVariants?.length]);
   const hasMany = useMemo(() => itemsQuantity > 1, [itemsQuantity]);
 
@@ -108,8 +106,6 @@ const CalculationResult: React.FC = () => {
       setSubmitting={setSubmitting}
       category={categoryVersion?.category as Category}
       requestedNeed={availableVariants?.[0] as AvailableVariant}
-      hoveredObservation={hoveredObservation}
-      setHoveredObservation={setHoveredObservation}
       setNewRequestedNeed={setNewRequestedNeed}
       recalculationError={recalculationError?.message}
     />
@@ -129,11 +125,7 @@ const CalculationResult: React.FC = () => {
                   <Styled.Wrapper alignment={{ horizontal: isXl ? 'center' : 'start' }}>
                     {RequestedNeedComponent}
 
-                    <Items
-                      availableVariants={availableVariants}
-                      hoveredObservation={hoveredObservation}
-                      setHoveredObservation={setHoveredObservation}
-                    />
+                    <Items availableVariants={availableVariants} />
                   </Styled.Wrapper>
                 ) : (
                   <Container>{RequestedNeedComponent}</Container>
