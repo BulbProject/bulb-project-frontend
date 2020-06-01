@@ -68,10 +68,10 @@ export const CategoriesList = () => {
   useEffect(() => {
     if (categoriesList) {
       getFullCategoriesInfo();
-    } else {
+    } else if (listError) {
       setLoading(false);
     }
-  }, [categoriesList]);
+  }, [categoriesList, listError]);
 
   return (
     <ErrorBoundary>
