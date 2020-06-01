@@ -13,10 +13,10 @@ import { formatNumber } from 'utils';
 
 import Bulb from '../../../../assets/images/bulb.svg';
 import { useCalculationContext } from '../../store';
+import { CategoryFeature } from '../CategoryFeature';
 import { Specification } from '../Specification';
 
 import { Metrics, MarketModal } from './components';
-import { efficiencyClasses, EfficiencyClass } from './Item.module';
 
 import Styled from './Item.styles';
 import type { ItemProps } from './Item.types';
@@ -32,12 +32,6 @@ export const Item = ({ variant, item, document, isRequested = false }: ItemProps
     ({ id }: { id: string }) => id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy',
     []
   );
-
-  const efficiencyObservation = useMemo(() => {
-    return variant.metrics
-      .flatMap((metric) => metric.observations)
-      .find((observation) => observation.id === 'energyEfficiencyClass');
-  }, [JSON.stringify(variant.metrics)]);
 
   const economyObservations = useMemo(() => {
     return variant.metrics
@@ -64,26 +58,7 @@ export const Item = ({ variant, item, document, isRequested = false }: ItemProps
   return (
     <Styled.Item direction="column">
       <Styled.ImageContainer isReversed={!isRequested}>
-        {isRequested && (
-          <Styled.EfficiencyClassesList>
-            {Object.keys(efficiencyClasses).map((efficiencyClass: string) => (
-              <li key={efficiencyClass}>
-                <Styled.EfficiencyClass efficiencyClass={efficiencyClass as EfficiencyClass} trianglePosition="left">
-                  {efficiencyClass}
-                </Styled.EfficiencyClass>
-              </li>
-            ))}
-          </Styled.EfficiencyClassesList>
-        )}
-
-        {efficiencyObservation && (
-          <Styled.EfficiencyClass
-            efficiencyClass={efficiencyObservation.measure as EfficiencyClass}
-            trianglePosition="right"
-          >
-            {efficiencyObservation.measure}
-          </Styled.EfficiencyClass>
-        )}
+        <CategoryFeature availableVariant={variant} item={item} isItemRequested={isRequested} />
 
         {Boolean(economyObservations.length) && (
           <Styled.EconomyContainer>
