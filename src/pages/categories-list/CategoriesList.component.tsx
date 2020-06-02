@@ -21,10 +21,6 @@ export const CategoriesList = () => {
   const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
   const [isLoading, setLoading] = useState(true);
 
-
-  //need for correct scroll in fullpage.js
-  const categoriesStubs = [0, 1, 2, 3, 4, 5, 6, 7];
-
   const { data: categoriesList, error: listError, triggerRequest } = useRequest<CategoriesListEntity[]>(
     getCategoriesConfig()
   );
@@ -72,7 +68,8 @@ export const CategoriesList = () => {
   useEffect(() => {
     if (categoriesList) {
       getFullCategoriesInfo();
-    } else if (listError) {
+    }
+    if (listError) {
       setLoading(false);
     }
   }, [categoriesList, listError]);
@@ -85,10 +82,12 @@ export const CategoriesList = () => {
             <Styled.LoaderContainer>
               <Spinner appearance={{ size: 64 }} delay={300} />
             </Styled.LoaderContainer>
+
             <Styled.Grid elementAmount={fullCategories.length + 1}>
               <Styled.BigCell />
 
-              {categoriesStubs.map((category, cardIndex) => (
+              {/* need for correct scroll in fullpage.js */}
+              {[...Array(8).keys()].map((category, cardIndex) => (
                 <CardLayout cardIndex={cardIndex} key={category} />
               ))}
             </Styled.Grid>
