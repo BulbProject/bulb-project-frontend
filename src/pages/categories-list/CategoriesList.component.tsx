@@ -68,10 +68,11 @@ export const CategoriesList = () => {
   useEffect(() => {
     if (categoriesList) {
       getFullCategoriesInfo();
-    } else {
+    }
+    if (listError) {
       setLoading(false);
     }
-  }, [categoriesList]);
+  }, [categoriesList, listError]);
 
   return (
     <ErrorBoundary>
@@ -81,6 +82,15 @@ export const CategoriesList = () => {
             <Styled.LoaderContainer>
               <Spinner appearance={{ size: 64 }} delay={300} />
             </Styled.LoaderContainer>
+
+            <Styled.Grid elementAmount={fullCategories.length + 1}>
+              <Styled.BigCell />
+
+              {/* need for correct scroll in fullpage.js */}
+              {[...Array(8).keys()].map((category, cardIndex) => (
+                <CardLayout cardIndex={cardIndex} key={category} />
+              ))}
+            </Styled.Grid>
           </FadeIn>
         )}
 

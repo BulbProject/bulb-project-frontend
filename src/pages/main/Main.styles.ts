@@ -18,7 +18,7 @@ const Main = styled.main`
 
   ${StyledCategories.Grid} {
     ${Mixin.Screen.xs(css`
-      grid-auto-rows: calc(100vh / 3);
+      grid-auto-rows: minmax(calc(100vh / 3), auto);
     `)}
   }
 `;
