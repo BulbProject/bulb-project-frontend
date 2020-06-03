@@ -8,15 +8,7 @@ import { useCalculationContext } from '../../store';
 import { Item } from '../Item';
 import Styled from './Items.styles';
 
-export const Items = ({
-  availableVariants,
-  hoveredObservation,
-  setHoveredObservation,
-}: {
-  availableVariants: AvailableVariant[];
-  hoveredObservation: string;
-  setHoveredObservation: (id: string) => void;
-}) => {
+export const Items = ({ availableVariants }: { availableVariants: AvailableVariant[] }) => {
   const {
     category: { items, documents },
   } = useCalculationContext();
@@ -39,16 +31,7 @@ export const Items = ({
             (document) => document.relatesTo === 'item' && document.relatedItem === relatedItem.id
           );
 
-          return (
-            <Item
-              key={variant.id}
-              variant={variant}
-              item={relatedItem}
-              document={relatedDocument?.url}
-              hoveredObservation={hoveredObservation}
-              setHoveredObservation={setHoveredObservation}
-            />
-          );
+          return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
         })}
       </Styled.AvailableVariants>
     </Styled.Items>

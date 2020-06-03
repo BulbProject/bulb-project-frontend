@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Grid from 'ustudio-ui/components/Grid/Grid';
@@ -14,46 +14,49 @@ import EbrdLogo from '../../assets/images/partners/i-ebrd.png';
 import IcfLogo from '../../assets/images/partners/i-ifc.png';
 import UstudioLogo from '../../assets/images/partners/i-us.png';
 
-export const Footer = () => {
-  const partners = [
-    {
-      title: 'prozorro',
-      image: ProzorroLogo,
-      href: 'https://prozorro.gov.ua/en',
-      width: 8,
-    },
-    {
-      title: 'ti-ukraine',
-      image: TiUkraineLogo,
-      href: 'https://ti-ukraine.org',
-      width: 7,
-    },
-    {
-      title: 'ebrd',
-      image: EbrdLogo,
-      href: 'https://ebrd.com',
-      width: 10,
-    },
-    {
-      title: 'me-gov',
-      image: MeGovLogo,
-      href: 'https://www.me.gov.ua',
-      width: 10,
-    },
-    {
-      title: 'icf',
-      image: IcfLogo,
-      href: 'https://icf.com',
-      width: 4,
-    },
+export const Footer = memo(() => {
+  const partners = useMemo(
+    () => [
+      {
+        title: 'prozorro',
+        image: ProzorroLogo,
+        href: 'https://prozorro.gov.ua/en',
+        width: 8,
+      },
+      {
+        title: 'ti-ukraine',
+        image: TiUkraineLogo,
+        href: 'https://ti-ukraine.org',
+        width: 7,
+      },
+      {
+        title: 'ebrd',
+        image: EbrdLogo,
+        href: 'https://ebrd.com',
+        width: 10,
+      },
+      {
+        title: 'me-gov',
+        image: MeGovLogo,
+        href: 'https://www.me.gov.ua',
+        width: 10,
+      },
+      {
+        title: 'icf',
+        image: IcfLogo,
+        href: 'https://icf.com',
+        width: 4,
+      },
 
-    {
-      title: 'open-contracting',
-      image: OpenContractingLogo,
-      href: 'https://open-contracting.org',
-      width: 6,
-    },
-  ];
+      {
+        title: 'open-contracting',
+        image: OpenContractingLogo,
+        href: 'https://open-contracting.org',
+        width: 6,
+      },
+    ],
+    []
+  );
 
   return (
     <Styled.Footer as="footer">
@@ -84,4 +87,4 @@ export const Footer = () => {
       </Grid>
     </Styled.Footer>
   );
-};
+});

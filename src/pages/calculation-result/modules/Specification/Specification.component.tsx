@@ -32,7 +32,7 @@ export const Specification: FC<SpecificationProps> = ({
   const [requirement, setRequirement] = useState(criterion.requirementGroups[0].requirements[0]);
   const [mode, setMode] = useState(modes[0].value);
 
-  const [identificator, setIdentificator] = useState<string | null>(null);
+  const [identificator, setIdentificator] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [isDownloading, setDownloading] = useState(false);
   const [isCopying, setCopying] = useState(false);

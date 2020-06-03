@@ -5,6 +5,4 @@ export interface ItemProps {
   item: ItemType;
   document?: string;
   isRequested?: boolean;
-  hoveredObservation: string;
-  setHoveredObservation: (id: string) => void;
 }

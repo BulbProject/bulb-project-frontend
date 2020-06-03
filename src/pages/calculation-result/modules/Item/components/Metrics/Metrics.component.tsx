@@ -14,13 +14,11 @@ import Styled from './Metrics.styles';
 export const Metrics = ({
   metrics,
   showTitles,
-  hoveredObservation,
-  setHoveredObservation,
+  isRequested,
 }: {
   metrics: Metric[];
   showTitles: boolean;
-  hoveredObservation: string;
-  setHoveredObservation: (id: string) => void;
+  isRequested: boolean;
 }) => {
   const getObservationUnit = useCallback((observation: Observation) => {
     if (observation.value) {
@@ -63,8 +61,6 @@ export const Metrics = ({
               key={observation.id}
               margin={{ bottom: 'regular' }}
               alignment={areTitlesShown ? undefined : { horizontal: 'center' }}
-              onMouseEnter={() => setHoveredObservation(observation.id)}
-              onMouseLeave={() => setHoveredObservation('')}
             >
               {areTitlesShown && (
                 <Styled.ObservationTitle>
@@ -74,14 +70,14 @@ export const Metrics = ({
                 </Styled.ObservationTitle>
               )}
 
-              <Styled.ObservationMeasure variant="small" align="center">
-                {typeof observation.measure === 'number' ? formatNumber(observation.measure) : observation.measure}
-                {formatNumber(observation.value?.amount)} {getObservationUnit(observation)}
-              </Styled.ObservationMeasure>
+              <Styled.ObservationMeasure>
+                <Text variant="small" align="center">
+                  {typeof observation.measure === 'number' ? formatNumber(observation.measure) : observation.measure}
+                  {formatNumber(observation.value?.amount)} {getObservationUnit(observation)}
+                </Text>
 
-              {isLg && metric.id !== 'economy' && (
-                <Styled.Highlight isHovered={hoveredObservation === observation.id} />
-              )}
+                {isLg && metric.id !== 'economy' && isRequested && <Styled.Highlight />}
+              </Styled.ObservationMeasure>
             </Styled.Observation>
           ))}
         </Styled.Metric>

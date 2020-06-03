@@ -13,22 +13,15 @@ import { formatNumber } from 'utils';
 
 import Bulb from '../../../../assets/images/bulb.svg';
 import { useCalculationContext } from '../../store';
+import { CategoryFeature } from '../CategoryFeature';
 import { Specification } from '../Specification';
 
 import { Metrics, MarketModal } from './components';
-import { efficiencyClasses, EfficiencyClass } from './Item.module';
 
 import Styled from './Item.styles';
 import type { ItemProps } from './Item.types';
 
-export const Item = ({
-  variant,
-  item,
-  document,
-  isRequested = false,
-  hoveredObservation,
-  setHoveredObservation,
-}: ItemProps) => {
+export const Item = ({ variant, item, document, isRequested = false }: ItemProps) => {
   const { category } = useCalculationContext();
 
   const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
@@ -39,12 +32,6 @@ export const Item = ({
     ({ id }: { id: string }) => id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy',
     []
   );
-
-  const efficiencyObservation = useMemo(() => {
-    return variant.metrics
-      .flatMap((metric) => metric.observations)
-      .find((observation) => observation.id === 'energyEfficiencyClass');
-  }, [JSON.stringify(variant.metrics)]);
 
   const economyObservations = useMemo(() => {
     return variant.metrics
@@ -64,33 +51,14 @@ export const Item = ({
     [JSON.stringify(variant)]
   );
 
-  const [imgLink, setImgLink] = useState(Bulb);
+  const [imgLink, setImgLink] = useState(document);
 
   const [isSpecificationOpen, setSpecificationOpen] = useState(false);
 
   return (
     <Styled.Item direction="column">
       <Styled.ImageContainer isReversed={!isRequested}>
-        {isRequested && (
-          <Styled.EfficiencyClassesList>
-            {Object.keys(efficiencyClasses).map((efficiencyClass: string) => (
-              <li key={efficiencyClass}>
-                <Styled.EfficiencyClass efficiencyClass={efficiencyClass as EfficiencyClass} trianglePosition="left">
-                  {efficiencyClass}
-                </Styled.EfficiencyClass>
-              </li>
-            ))}
-          </Styled.EfficiencyClassesList>
-        )}
-
-        {efficiencyObservation && (
-          <Styled.EfficiencyClass
-            efficiencyClass={efficiencyObservation.measure as EfficiencyClass}
-            trianglePosition="right"
-          >
-            {efficiencyObservation.measure}
-          </Styled.EfficiencyClass>
-        )}
+        <CategoryFeature availableVariant={variant} item={item} isItemRequested={isRequested} />
 
         {Boolean(economyObservations.length) && (
           <Styled.EconomyContainer>
@@ -134,7 +102,7 @@ export const Item = ({
           </Styled.EconomyContainer>
         )}
 
-        <Styled.Image src={imgLink} onLoad={() => setImgLink(document)} onError={() => setImgLink(imgLink)} />
+        <Styled.Image src={imgLink} onError={() => setImgLink(Bulb)} />
       </Styled.ImageContainer>
 
       <Styled.Content direction="column">
@@ -150,14 +118,10 @@ export const Item = ({
           <Text variant="h6">{`Кількість: ${variant.quantity}`}</Text>
         </Styled.ItemDescription>
 
-        <Metrics
-          showTitles={isRequested}
-          metrics={metrics}
-          hoveredObservation={hoveredObservation}
-          setHoveredObservation={setHoveredObservation}
-        />
+        <Metrics isRequested={isRequested} showTitles={isRequested} metrics={metrics} />
 
         <Metrics
+          isRequested={isRequested}
           metrics={[
             {
               id: '0300',
@@ -191,8 +155,6 @@ export const Item = ({
             },
           ]}
           showTitles={isRequested}
-          hoveredObservation={hoveredObservation}
-          setHoveredObservation={setHoveredObservation}
         />
 
         <Flex direction="column" margin={{ top: 'regular' }}>

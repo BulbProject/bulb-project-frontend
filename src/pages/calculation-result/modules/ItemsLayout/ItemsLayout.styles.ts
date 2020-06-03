@@ -1,15 +1,21 @@
 import styled, { css } from 'styled-components';
+import { Mixin } from 'ustudio-ui/theme';
 
+import StyledContainer from 'shared/Container/Container.styles';
 import { itemWidth, requestedNeedWidth } from '../../CalculationResult.module';
+
 import StyledItems from '../Items/Items.styles';
 import StyledItem from '../Item/Item.styles';
+import StyledMetric from '../Item/components/Metrics/Metrics.styles';
 import StyledRequestedNeed from '../RequestedNeed/RequestedNeed.styles';
-import StyledContainer from '../../../../shared/Container/Container.styles';
+import StyledLampsFeature from '../CategoryFeature/components/LampsFeature/LampsFeature.styles';
 
 const { Items, AvailableVariants } = StyledItems;
-const { Item, EfficiencyClassesList, Content: ItemContent, Image: ItemImage } = StyledItem;
+const { Item, Content: ItemContent, Image: ItemImage } = StyledItem;
+const { Highlight } = StyledMetric;
 const { RequestedNeed } = StyledRequestedNeed;
 const { Container } = StyledContainer;
+const { EfficiencyClassesList } = StyledLampsFeature;
 
 const getVariantImageStyles = (minWidth: number = 1470) => css`
   ${ItemImage} {
@@ -25,6 +31,10 @@ const SingleLayout = styled.section`
   ${RequestedNeed},
   ${Item} {
     width: 100%;
+
+    ${Highlight} {
+      width: calc(100% + 2rem);
+    }
   }
 
   ${RequestedNeed} {
@@ -32,7 +42,11 @@ const SingleLayout = styled.section`
   }
 
   ${ItemContent} {
-    padding: var(--i-regular) 0;
+    padding: var(--i-regular);
+
+    ${Mixin.Screen.md(css`
+      padding: var(--i-regular) 0;
+    `)}
   }
 
   ${Container} {

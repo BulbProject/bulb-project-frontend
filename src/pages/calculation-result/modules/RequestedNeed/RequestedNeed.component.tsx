@@ -22,8 +22,6 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
   setSubmitting,
   category,
   requestedNeed,
-  hoveredObservation,
-  setHoveredObservation,
   setNewRequestedNeed,
 }) => {
   const isLg = useMediaQuery('screen and (min-width: 832px)');
@@ -88,8 +86,6 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
             return document.relatesTo === 'item' && document.relatedItem === requestedNeed.relatedItem;
           })?.url
         }
-        hoveredObservation={hoveredObservation}
-        setHoveredObservation={setHoveredObservation}
       />
     </Styled.RequestedNeed>
   );
