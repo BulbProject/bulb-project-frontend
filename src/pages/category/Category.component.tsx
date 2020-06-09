@@ -13,6 +13,7 @@ import { CategoryVersion, Criterion } from 'types/data';
 import { sortByValue } from 'utils';
 import { Layout, FadeIn, ErrorBoundary, CategoryHeader } from 'components';
 import { Container } from 'shared';
+import { FormValidationContextProvider } from 'context/FormValidation';
 
 import { Stepper } from './modules';
 import { CategoryContextProvider } from './store';
@@ -47,7 +48,9 @@ const CategoryPage: React.FC = () => {
           <CategoryHeader {...{ title, description, classification }} />
 
           <CategoryContextProvider category={{ id: categoryId as string, version: version as string }} criteria={steps}>
-            <Stepper />
+            <FormValidationContextProvider>
+              <Stepper />
+            </FormValidationContextProvider>
           </CategoryContextProvider>
         </FadeIn>
       </ErrorBoundary>
