@@ -1,5 +1,6 @@
 import React, { FC, createContext, useContext, useReducer } from 'react';
-import { FormValidationContextValue } from './FormValidation.types';
+
+import type { FormValidationContextValue } from './FormValidation.types';
 import { formValidationReducer } from './reducer';
 
 const FormValidationContext = createContext<FormValidationContextValue | undefined>(undefined);
@@ -7,7 +8,13 @@ const FormValidationContext = createContext<FormValidationContextValue | undefin
 export const FormValidationContextProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(formValidationReducer, {});
 
-  return <FormValidationContext.Provider value={{ state, dispatch }}>{children}</FormValidationContext.Provider>;
+  return (
+    <FormValidationContext.Provider
+      value={{ hasValidationFailed: Boolean(Object.keys(state).length), state, dispatch }}
+    >
+      {children}
+    </FormValidationContext.Provider>
+  );
 };
 
 export const useFormValidationContext = () => {

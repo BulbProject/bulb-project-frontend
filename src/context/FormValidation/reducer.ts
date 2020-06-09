@@ -1,6 +1,7 @@
-import { Reducer } from 'react';
-import { FormValidationAction } from './actions';
-import { FormValidationContextState } from './FormValidation.types';
+import type { Reducer } from 'react';
+
+import type { FormValidationAction } from './actions';
+import type { FormValidationContextState } from './FormValidation.types';
 
 export const formValidationReducer: Reducer<FormValidationContextState, FormValidationAction> = (state, action) => {
   switch (action.type) {
@@ -13,10 +14,7 @@ export const formValidationReducer: Reducer<FormValidationContextState, FormVali
       };
     }
     case 'clear_error': {
-      const { id } = action.payload;
-
-      const newState = { ...state };
-      delete newState[id];
+      const { [action.payload.id]: _, ...newState } = state;
 
       return newState;
     }

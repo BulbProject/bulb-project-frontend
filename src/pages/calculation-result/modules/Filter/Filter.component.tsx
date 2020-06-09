@@ -6,6 +6,7 @@ import Flex from 'ustudio-ui/components/Flex';
 import Spinner from 'ustudio-ui/components/Spinner';
 
 import type { StoreRequestedNeed } from 'types/globals';
+import { useFormValidationContext } from '../../../../context/FormValidation';
 
 import { useCalculationContext } from '../../store';
 import { Criterion } from './components';
@@ -19,6 +20,8 @@ export const Filter: React.FC<FilterProps> = ({ error, isLoading, setSubmitting,
     requestedNeed,
     dispatch,
   } = useCalculationContext();
+
+  const { hasValidationFailed } = useFormValidationContext();
 
   const [hasFormChanged, setFormChanged] = useState(false);
 
@@ -37,14 +40,16 @@ export const Filter: React.FC<FilterProps> = ({ error, isLoading, setSubmitting,
             setFormChanged(JSON.stringify(state[id]) !== JSON.stringify(requestedNeed));
           }}
           onSubmit={(state) => {
-            setSubmitting(true);
+            if (!hasValidationFailed) {
+              setSubmitting(true);
 
-            dispatch({
-              type: 'recalculate',
-              payload: state[id] as StoreRequestedNeed,
-            });
+              dispatch({
+                type: 'recalculate',
+                payload: state[id] as StoreRequestedNeed,
+              });
 
-            recalculate(state[id] as StoreRequestedNeed);
+              recalculate(state[id] as StoreRequestedNeed);
+            }
           }}
         >
           <>
@@ -52,7 +57,7 @@ export const Filter: React.FC<FilterProps> = ({ error, isLoading, setSubmitting,
               <Criterion {...criterion} key={criterion.id} />
             ))}
 
-            <Styled.Recalculate type="submit" isDisabled={!hasFormChanged || isLoading}>
+            <Styled.Recalculate type="submit" isDisabled={!hasFormChanged || isLoading || hasValidationFailed}>
               Перерахувати
             </Styled.Recalculate>
 

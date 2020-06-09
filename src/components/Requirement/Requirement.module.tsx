@@ -1,7 +1,10 @@
 import React, { ReactElement } from 'react';
+
 import { css } from 'styled-components';
+
 import type { Option, OptionGroup } from 'ts4ocds/extensions/options';
 import type { DataType } from 'ts4ocds/extensions/requirements';
+
 import { Mixin } from 'ustudio-ui/theme';
 import Checkbox from 'ustudio-ui/components/Checkbox';
 import NumberInput from 'ustudio-ui/components/Input/NumberInput';
@@ -14,12 +17,14 @@ import { sortByValue } from 'utils';
 import { InputProps } from './Requirement.types';
 
 export const renderInput = ({
+  hasError,
   dataType,
   optionGroups,
   isDisabled,
   defaultValue,
   props,
 }: {
+  hasError: boolean;
   dataType?: DataType;
   optionGroups?: OptionGroup[];
   isDisabled?: boolean;
@@ -132,6 +137,13 @@ export const renderInput = ({
             Suffix: css`
               white-space: nowrap;
             `,
+            InputContainer: hasError
+              ? css`
+                  &:after {
+                    background-color: var(--c-negative);
+                  }
+                `
+              : css``,
           }}
         />
       );
@@ -139,3 +151,7 @@ export const renderInput = ({
 };
 
 export const isBoolean = (dataType?: DataType): dataType is 'boolean' => dataType === 'boolean';
+
+export const isNumeric = (dataType?: DataType): dataType is 'number' | 'integer' => {
+  return dataType === 'integer' || dataType === 'number';
+};

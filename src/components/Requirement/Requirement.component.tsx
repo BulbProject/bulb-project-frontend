@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import type { Unit } from 'ts4ocds';
 import type { RequirementWithOptionDetails as RequirementProps } from 'ts4ocds/extensions/options';
@@ -12,8 +12,14 @@ import { getLocaleDataType } from 'utils';
 
 import type { Criterion } from 'types/data';
 import type { StoreRequestedNeed } from 'types/globals';
+import {
+  clearError,
+  setMinMaxValueError,
+  setMinValueError,
+  useFormValidationContext,
+} from '../../context/FormValidation';
 
-import { isBoolean, renderInput } from './Requirement.module';
+import { isBoolean, isNumeric, renderInput } from './Requirement.module';
 import Styled from './Requirement.styles';
 
 export const Requirement = ({
@@ -26,13 +32,74 @@ export const Requirement = ({
   optionDetails,
   requestedNeed,
   currentCriterion,
+  minValue,
+  maxValue,
 }: RequirementProps & {
   isDisabled?: boolean;
   unit?: Unit;
   requestedNeed: StoreRequestedNeed;
   currentCriterion: Criterion;
 }) => {
-  const getValue = useCallback(() => {
+  const { state: validationState, dispatch } = useFormValidationContext();
+
+  const [isErrorResolved, setErrorResolved] = useState(true);
+
+  useEffect(() => {
+    if (validationState[id] && isErrorResolved) {
+      dispatch(clearError(id));
+    }
+  }, [validationState[id], isErrorResolved]);
+
+  const getValue = useMemo(() => {
+    if (isNumeric(dataType)) {
+      if (minValue !== undefined && maxValue !== undefined) {
+        return (value: number) => {
+          if (value < minValue || value > maxValue) {
+            dispatch(setMinMaxValueError(id, [minValue, maxValue]));
+            setErrorResolved(false);
+
+            return value;
+          }
+
+          setErrorResolved(true);
+
+          return value;
+        };
+      }
+
+      if (minValue !== undefined) {
+        return (value: number) => {
+          if (value < minValue) {
+            dispatch(setMinValueError(id, minValue));
+            setErrorResolved(false);
+
+            return value;
+          }
+
+          setErrorResolved(true);
+
+          return value;
+        };
+      }
+
+      if (maxValue !== undefined) {
+        return (value: number) => {
+          if (value > maxValue) {
+            dispatch(setMinValueError(id, maxValue));
+            setErrorResolved(false);
+
+            return value;
+          }
+
+          setErrorResolved(true);
+
+          return value;
+        };
+      }
+
+      return undefined;
+    }
+
     if (optionDetails) {
       return (value: string) => value;
     }
@@ -42,9 +109,9 @@ export const Requirement = ({
     }
 
     return undefined;
-  }, [JSON.stringify(optionDetails), dataType, isDisabled]);
+  }, [Boolean(optionDetails), dataType, isDisabled]);
 
-  const setValue = useCallback(() => {
+  const setValue = useMemo(() => {
     if (optionDetails) {
       return (value: string) => value;
     }
@@ -83,8 +150,9 @@ export const Requirement = ({
           </Styled.Title>
         )}
 
-        <Field name={id} getValue={getValue()} setValue={setValue()}>
+        <Field name={id} getValue={getValue} setValue={setValue}>
           {renderInput({
+            hasError: Boolean(validationState[id]),
             dataType,
             isDisabled,
             defaultValue: requestedNeed[currentCriterion.id]?.[id],
@@ -104,6 +172,12 @@ export const Requirement = ({
               : undefined,
           })}
         </Field>
+
+        {validationState[id] && (
+          <Styled.Error variant="small" color="var(--c-negative)">
+            {validationState[id]}
+          </Styled.Error>
+        )}
       </Flex>
     </Styled.Requirement>
   );

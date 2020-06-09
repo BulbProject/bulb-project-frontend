@@ -1,11 +1,11 @@
-import { Dispatch } from 'react';
-import { FormValidationAction } from './actions';
+import type { Dispatch } from 'react';
+
+import type { FormValidationAction } from './actions';
 
 export type FormValidationContextState = Record<string, string>;
 
-export type FormValidationContextDispatch = Dispatch<FormValidationAction>;
-
 export interface FormValidationContextValue {
+  hasValidationFailed: boolean;
   state: FormValidationContextState;
-  dispatch: FormValidationContextDispatch;
+  dispatch: Dispatch<FormValidationAction>;
 }
