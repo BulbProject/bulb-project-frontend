@@ -6,7 +6,7 @@ import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import { Item as ItemType } from 'types/data';
 import FilterIcon from '../../../../assets/icons/filter.inline.svg';
-import { FormValidationContextProvider } from '../../../../context/FormValidation';
+import { FormValidationContextProvider } from 'context/FormValidation';
 
 import { Filter } from '../Filter';
 import { Item } from '../Item';
