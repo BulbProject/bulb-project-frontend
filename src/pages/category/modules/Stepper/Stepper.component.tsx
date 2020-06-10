@@ -12,6 +12,7 @@ import { useRequest } from 'hooks';
 import { RequestedNeed } from 'types/data';
 
 import { FadeIn } from 'components';
+import { useFormValidationContext } from 'context/FormValidation';
 
 import { useCategoryContext } from '../../store';
 import { Criterion } from '../Form/components';
@@ -32,13 +33,15 @@ export const Stepper: React.FC = () => {
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
 
+  const { hasValidationFailed } = useFormValidationContext();
+
   const { isLoading, error, triggerRequest, data: calculationResponse } = useRequest<RequestedNeed>(
     postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
       requestedNeed: RequestedNeed;
     }),
     {
       dependencies: [requestedNeedData],
-      isRequesting: Boolean(requestedNeedData) && isSubmitting,
+      isRequesting: Boolean(requestedNeedData) && isSubmitting && !hasValidationFailed,
     }
   );
 
@@ -137,17 +140,13 @@ export const Stepper: React.FC = () => {
       <Form
         name={currentCriterion.id}
         watch={(state) => {
-          if (isRequirementGroupFilled({ state, currentCriterion })) {
-            setNextStepAvailable(true);
-          } else {
-            setNextStepAvailable(false);
-          }
+          setNextStepAvailable(isRequirementGroupFilled({ state, currentCriterion }) && !hasValidationFailed);
         }}
         onSubmit={(state) => {
           const newRequestedNeed =
             state?.[currentCriterion.id]?.[currentCriterion.activeRequirementGroup?.id || ''] || {};
 
-          if (isSubmitting) {
+          if (isSubmitting && !hasValidationFailed) {
             dispatch({
               type: 'add_requested_need_data',
               payload: prepareRequestedNeed({

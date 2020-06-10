@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components';
 import Text from 'ustudio-ui/components/Text';
 
 const Requirement = styled.label`
+  position: relative;
+
   display: block;
   width: 100%;
 
@@ -25,4 +27,11 @@ const Title = styled(Text)<{ isBoolean: boolean }>(
   `
 );
 
-export default { Requirement, Title };
+const Error = styled(Text)`
+  position: absolute;
+
+  bottom: -1rem;
+  left: 0;
+`;
+
+export default { Requirement, Title, Error };
