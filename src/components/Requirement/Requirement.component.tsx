@@ -13,11 +13,11 @@ import { getLocaleDataType } from 'utils';
 import type { Criterion } from 'types/data';
 import type { StoreRequestedNeed } from 'types/globals';
 import {
-  clearError,
+  clearError, setMaxValueError,
   setMinMaxValueError,
   setMinValueError,
   useFormValidationContext,
-} from '../../context/FormValidation';
+} from 'context/FormValidation';
 
 import { isBoolean, isNumeric, renderInput } from './Requirement.module';
 import Styled from './Requirement.styles';
@@ -85,7 +85,7 @@ export const Requirement = ({
       if (maxValue !== undefined) {
         return (value: number) => {
           if (value > maxValue) {
-            dispatch(setMinValueError(id, maxValue));
+            dispatch(setMaxValueError(id, maxValue));
             setErrorResolved(false);
 
             return value;
