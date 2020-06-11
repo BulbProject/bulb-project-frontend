@@ -14,6 +14,7 @@ export const formValidationReducer: Reducer<FormValidationContextState, FormVali
       };
     }
     case 'clear_error': {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [action.payload.id]: _, ...newState } = state;
 
       return newState;
