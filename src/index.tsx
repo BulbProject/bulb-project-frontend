@@ -7,6 +7,9 @@ import { ThemeProvider } from 'ustudio-ui/theme';
 import { FadeIn, GlobalStyles } from 'components';
 import './styles/fonts.css';
 
+// Polyfills for old browsers
+import 'core-js';
+
 import routes from './routes';
 
 const App: React.FC = () => {
