@@ -1,7 +1,7 @@
 import { modifyId } from './utils';
 
 describe('modifyId', () => {
-  describe('With incorrect id', () => {
+  describe('When id includes not just numbers', () => {
     it('Should throw an error', () => {
       // @ts-expect-error
       expect(() => modifyId('01020a')).toThrow(new TypeError('Id should include only numbers'));
@@ -12,18 +12,14 @@ describe('modifyId', () => {
     describe('position is < 0', () => {
       it('Should throw an error', () => {
         // @ts-expect-error
-        expect(() => modifyId('010203', -5)).toThrow(
-          new RangeError('Position should be positive number no more than a half of id length')
-        );
+        expect(() => modifyId('010203', -5)).toThrow(RangeError);
       });
     });
 
-    describe('position is more than a half of id length', () => {
+    describe('When position is more than a half of id digits count', () => {
       it('Should throw an error', () => {
         // @ts-expect-error
-        expect(() => modifyId('010203', 6)).toThrow(
-          new RangeError('Position should be positive number no more than a half of id length')
-        );
+        expect(() => modifyId('010203', 6)).toThrow(RangeError);
       });
     });
   });

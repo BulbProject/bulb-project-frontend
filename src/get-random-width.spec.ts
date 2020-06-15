@@ -3,12 +3,6 @@ import { getRandomWidth } from './utils';
 describe('getRandomWidth', () => {
   jest.spyOn(Math, 'random').mockReturnValue(1);
 
-  describe('With correct arguments', () => {
-    it('Should return random width', () => { 
-      expect(getRandomWidth(2, 5)).toBe('5%');
-    });
-  });
-
   describe('When min > max', () => {
     it('Should throw an error', () => {
       expect(() => getRandomWidth(5, 2)).toThrow(new RangeError('Min should be less than max.'));
@@ -40,19 +34,25 @@ describe('getRandomWidth', () => {
 
   describe('When min is equal to max', () => {
     it('Should throw an error', () => {
-      expect(() => getRandomWidth(3, 3)).toThrow(new RangeError('Min should not be equal to max.'));
+      expect(() => getRandomWidth(3, 3)).toThrow(RangeError);
     });
   });
 
   describe('When min < 0', () => {
     it('Should throw an error', () => {
-      expect(() => getRandomWidth(-1, 6)).toThrow(new RangeError('Min should be a positive number.'));
+      expect(() => getRandomWidth(-1, 6)).toThrow(RangeError);
     });
   });
 
   describe('When max < 0', () => {
     it('Should throw an error', () => {
-      expect(() => getRandomWidth(2, -1)).toThrow(new RangeError('Max should be a positive number.'));
+      expect(() => getRandomWidth(2, -1)).toThrow(RangeError);
+    });
+  });
+
+  describe('With correct arguments', () => {
+    it('Should return random width', () => {
+      expect(getRandomWidth(2, 5)).toBe('5%');
     });
   });
 });

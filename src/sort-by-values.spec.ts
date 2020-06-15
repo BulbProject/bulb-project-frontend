@@ -1,9 +1,7 @@
 import { sortByValue } from './utils';
 
 describe('sortByValue', () => {
-  describe('When value of secondObject is greater than the value of firstObject', () => {
-    it('Should swap values', () => {
-      expect([{ 1: '0102' }, { 1: '0101' }].sort(sortByValue(1))).toStrictEqual([{ 1: '0101' }, { 1: '0102' }]);
-    });
+  it('Should sort an unsorted array of objects by the value of specified key', () => {
+    expect([{ 1: '0102' }, { 1: '0101' }].sort(sortByValue(1))).toStrictEqual([{ 1: '0101' }, { 1: '0102' }]);
   });
 });
