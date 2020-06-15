@@ -5,23 +5,21 @@ describe('getRandomWidth', () => {
 
   describe('When min > max', () => {
     it('Should throw an error', () => {
-      expect(() => getRandomWidth(5, 2)).toThrow(new RangeError('Min should be less than max.'));
+      expect(() => getRandomWidth(5, 2)).toThrow(RangeError);
     });
   });
 
   describe('When min and max are undefined', () => {
     it('Should throw an error', () => {
       // @ts-expect-error
-      expect(() => getRandomWidth(undefined, undefined)).toThrow(
-        new ReferenceError('Min and max should be positive numbers.')
-      );
+      expect(() => getRandomWidth(undefined, undefined)).toThrow(ReferenceError);
     });
   });
 
   describe('When min === undefined', () => {
     it('Should throw an error', () => {
       // @ts-expect-error
-      expect(() => getRandomWidth(undefined, 5)).toThrow(new ReferenceError('Min should be a positive number.'));
+      expect(() => getRandomWidth(undefined, 5)).toThrow(ReferenceError);
     });
   });
 

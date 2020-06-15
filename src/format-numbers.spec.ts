@@ -8,7 +8,7 @@ describe('formatNumber', () => {
     });
   });
 
-  describe('When number&apos; digit count is less than or equals 3', () => {
+  describe('When number\'s digit count is less than or equals 3', () => {
     it('Should return the same number', () => {
       expect(formatNumber(12)).toBe('12');
     });
