@@ -13,7 +13,8 @@ import { getLocaleDataType } from 'utils';
 import type { Criterion } from 'types/data';
 import type { StoreRequestedNeed } from 'types/globals';
 import {
-  clearError, setMaxValueError,
+  clearError,
+  setMaxValueError,
   setMinMaxValueError,
   setMinValueError,
   useFormValidationContext,

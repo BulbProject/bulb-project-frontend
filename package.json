@@ -35,6 +35,7 @@
     "babel-plugin-styled-components": "^1.10.7",
     "clean-webpack-plugin": "^3.0.0",
     "compression-webpack-plugin": "^4.0.0",
+    "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
     "css-loader": "^3.5.3",
     "downloadjs": "^1.4.7",
