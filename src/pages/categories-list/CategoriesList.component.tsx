@@ -4,8 +4,8 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 
-import { getCategoriesConfig } from 'config';
-import { useRequest } from 'hooks';
+import { getCategoriesConfig, getMainContentFiles } from 'config';
+import { useRequest } from 'honks';
 
 import { ErrorBoundary, FadeIn, Layout } from 'components';
 
@@ -16,14 +16,21 @@ import { Card, Error, CardLayout } from './modules';
 import Styled from './CategoriesList.styles';
 import { getCategory, sortCategories } from './CategoriesList.module';
 import type { CategoryCard } from './CategoriesList.types';
+import axios from 'axios';
 
 export const CategoriesList = () => {
   const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
   const [isLoading, setLoading] = useState(true);
 
-  const { data: categoriesList, error: listError, triggerRequest } = useRequest<CategoriesListEntity[]>(
-    getCategoriesConfig()
+  const { onPending, onFail, onSuccess, isSuccess, result, isFail, sendRequest } = useRequest<CategoriesListEntity[]>(
+    async () => {
+      const { data } = await axios(getCategoriesConfig());
+
+      return data;
+    }
   );
+
+  const categoriesList = isSuccess(result) ? result.data : null;
 
   const getFullCategoriesInfo = async () => {
     setLoading(true);
@@ -66,61 +73,69 @@ export const CategoriesList = () => {
   };
 
   useEffect(() => {
+    (async () => sendRequest())();
+
     if (categoriesList) {
       getFullCategoriesInfo();
     }
-    if (listError) {
+    if (isFail(result)) {
       setLoading(false);
     }
-  }, [categoriesList, listError]);
+  }, [categoriesList, isFail(result)]);
 
   return (
     <ErrorBoundary>
       <Styled.CategoriesListContainer>
-        {isLoading && (
-          <FadeIn>
-            <Styled.LoaderContainer>
-              <Spinner appearance={{ size: 64 }} delay={300} />
-            </Styled.LoaderContainer>
-
-            <Styled.Grid elementAmount={fullCategories.length + 1}>
-              <Styled.BigCell />
-
-              {/* need for correct scroll in fullpage.js */}
-              {[...Array(8).keys()].map((category, cardIndex) => (
-                <CardLayout cardIndex={cardIndex} key={category} />
-              ))}
-            </Styled.Grid>
-          </FadeIn>
-        )}
-
-        {!isLoading && !listError && (
-          <Flex alignment={{ vertical: 'center' }}>
+        {onPending(() => {
+          return (
             <FadeIn>
-              {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
+              <Styled.LoaderContainer>
+                <Spinner appearance={{ size: 64 }} delay={300} />
+              </Styled.LoaderContainer>
 
               <Styled.Grid elementAmount={fullCategories.length + 1}>
-                <Styled.BigCell>
-                  <Styled.CategoriesHeader>
-                    <Styled.Title variant="h1">Виберіть категорію для&nbsp;проведення розрахунків</Styled.Title>
-                  </Styled.CategoriesHeader>
-                </Styled.BigCell>
+                <Styled.BigCell />
 
-                {sortCategories(fullCategories).map((category, cardIndex) => (
-                  <CardLayout cardIndex={cardIndex} image={category.categoryVersion?.image} key={category.id}>
-                    <Card {...category} reload={() => reloadItem(category.id, category.version)} />
-                  </CardLayout>
+                {/* need for correct scroll in fullpage.js */}
+                {[...Array(8).keys()].map((category, cardIndex) => (
+                  <CardLayout cardIndex={cardIndex} key={category} />
                 ))}
               </Styled.Grid>
             </FadeIn>
-          </Flex>
-        )}
+          );
+        })}
 
-        {!isLoading && listError && (
-          <FadeIn>
-            <Error reloadCategories={triggerRequest} />
-          </FadeIn>
-        )}
+        {onSuccess((names) => {
+          return (
+            <Flex alignment={{ vertical: 'center' }}>
+              <FadeIn>
+                {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
+
+                <Styled.Grid elementAmount={fullCategories.length + 1}>
+                  <Styled.BigCell>
+                    <Styled.CategoriesHeader>
+                      <Styled.Title variant="h1">Виберіть категорію для&nbsp;проведення розрахунків</Styled.Title>
+                    </Styled.CategoriesHeader>
+                  </Styled.BigCell>
+
+                  {sortCategories(fullCategories).map((category, cardIndex) => (
+                    <CardLayout cardIndex={cardIndex} image={category.categoryVersion?.image} key={category.id}>
+                      <Card {...category} reload={() => reloadItem(category.id, category.version)} />
+                    </CardLayout>
+                  ))}
+                </Styled.Grid>
+              </FadeIn>
+            </Flex>
+          );
+        })}
+
+        {onFail(() => {
+          return (
+            <FadeIn>
+              <Error reloadCategories={sendRequest} />
+            </FadeIn>
+          );
+        })}
       </Styled.CategoriesListContainer>
     </ErrorBoundary>
   );
