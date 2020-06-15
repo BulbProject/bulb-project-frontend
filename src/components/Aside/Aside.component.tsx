@@ -7,9 +7,10 @@ import Flex from 'ustudio-ui/components/Flex';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Text from 'ustudio-ui/components/Text';
 
-import { useRequest } from 'hooks';
+import { useRequest } from 'honks';
+import axios from 'axios';
 
-import { getInfoFiles } from 'config';
+import { getInfoFiles, getMainContentFiles } from 'config';
 
 import { FadeIn } from '../FadeIn';
 import Styled from './Aside.styles';
@@ -17,14 +18,16 @@ import Styled from './Aside.styles';
 export const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
   const [isMounted, setMounted] = useState(false);
 
-  const { isLoading, data: filesList, error, triggerRequest } = useRequest<{ name: string }[]>(getInfoFiles(), {
-    isRequesting: isMounted,
+  const { onPending, onSuccess, onFail, isSuccess, result, sendRequest } = useRequest<{ name: string }[]>(async () => {
+    const { data } = await axios(getInfoFiles());
+
+    return data;
   });
 
-  useEffect(() => {
-    setMounted(true);
+  const filesList = isSuccess(result) ? result.data : null;
 
-    return () => setMounted(false);
+  useEffect(() => {
+    (async () => sendRequest())();
   }, []);
 
   return (
@@ -33,17 +36,18 @@ export const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
 
       <Flex margin={{ top: 'large' }}>
         <Flex as="nav" direction="column" alignment={{ horizontal: 'start', vertical: 'start' }}>
-          {isLoading && (
-            <Flex alignment={{ horizontal: 'center' }}>
-              <FadeIn>
-                <Spinner appearance={{ size: 48 }} delay={300} />
-              </FadeIn>
-            </Flex>
-          )}
+          {onPending(() => {
+            return (
+              <Flex alignment={{ horizontal: 'center' }}>
+                <FadeIn>
+                  <Spinner appearance={{ size: 48 }} delay={300} />
+                </FadeIn>
+              </Flex>
+            );
+          })}
 
-          {!isLoading &&
-            !error &&
-            filesList?.map(({ name }) => {
+          {onSuccess((names) => {
+            return names.map(({ name }) => {
               const infoPageUrl = name.replace(/\.md/, '');
 
               return (
@@ -58,23 +62,26 @@ export const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
                   <Link to={`/info/${encodeURI(infoPageUrl)}`}>{infoPageUrl}</Link>
                 </Flex>
               );
-            })}
+            });
+          })}
 
-          {!isLoading && error && (
-            <FadeIn>
-              <Flex alignment={{ horizontal: 'center' }} direction="column">
-                <Flex margin={{ bottom: 'large' }}>
-                  <Text align="center" color="var(--c-negative)">
-                    Упс, щось пішло не так :(
-                  </Text>
+          {onFail(() => {
+            return (
+              <FadeIn>
+                <Flex alignment={{ horizontal: 'center' }} direction="column">
+                  <Flex margin={{ bottom: 'large' }}>
+                    <Text align="center" color="var(--c-negative)">
+                      Упс, щось пішло не так :(
+                    </Text>
+                  </Flex>
+
+                  <Button onClick={sendRequest}>
+                    <Styled.ReloadIcon />
+                  </Button>
                 </Flex>
-
-                <Button onClick={() => triggerRequest()}>
-                  <Styled.ReloadIcon />
-                </Button>
-              </Flex>
-            </FadeIn>
-          )}
+              </FadeIn>
+            );
+          })}
         </Flex>
       </Flex>
     </>
