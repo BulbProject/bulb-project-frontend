@@ -1,4 +1,4 @@
-import { sortByValue } from './utils';
+import { sortByValue } from './index';
 
 describe('sortByValue', () => {
   it('Should sort an unsorted array of objects by the value of specified key', () => {

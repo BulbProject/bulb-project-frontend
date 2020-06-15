@@ -1,4 +1,4 @@
-import { modifyId } from './utils';
+import { modifyId } from './index';
 
 describe('modifyId', () => {
   describe('When id includes not just numbers', () => {

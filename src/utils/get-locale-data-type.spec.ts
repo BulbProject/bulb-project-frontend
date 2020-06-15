@@ -1,4 +1,4 @@
-import { getLocaleDataType } from './utils';
+import { getLocaleDataType } from './index';
 
 describe('getLocaleDataType', () => {
   describe('When locale is not defined', () => {

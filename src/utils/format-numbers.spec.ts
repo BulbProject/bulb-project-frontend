@@ -1,4 +1,4 @@
-import { formatNumber } from './utils';
+import { formatNumber } from './index';
 
 describe('formatNumber', () => {
   describe('When number is undefined', () => {

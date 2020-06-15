@@ -1,4 +1,4 @@
-import { getRandomWidth } from './utils';
+import { getRandomWidth } from './index';
 
 describe('getRandomWidth', () => {
   jest.spyOn(Math, 'random').mockReturnValue(1);
