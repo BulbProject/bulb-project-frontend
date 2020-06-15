@@ -7,7 +7,8 @@
     "lint": "eslint --fix --quiet --ext .ts --ext .tsx .",
     "format": "prettier --write ./**/*",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --color --mode development --config webpack.dev.js",
-    "build": "cross-env NODE_ENV=production webpack --mode production --progress --config webpack.prod.js"
+    "build": "cross-env NODE_ENV=production webpack --mode production --progress --config webpack.prod.js",
+    "test": "jest"
   },
   "dependencies": {
     "@babel/core": "^7.9.6",
@@ -19,6 +20,7 @@
     "@babel/preset-typescript": "^7.9.0",
     "@fullpage/react-fullpage": "^0.1.17",
     "@types/downloadjs": "^1.4.2",
+    "@types/jest": "^26.0.0",
     "@types/node": "^14.0.5",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
@@ -42,6 +44,7 @@
     "framer-motion": "^1.10.3",
     "fullpage.js": "^3.0.8",
     "html-webpack-plugin": "^4.3.0",
+    "jest": "^26.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
@@ -51,8 +54,9 @@
     "style-loader": "^1.2.1",
     "styled-components": "^5.1.1",
     "terser-webpack-plugin": "^3.0.1",
+    "ts-jest": "^26.1.0",
     "ts4ocds": "^1.0.0-rc.1",
-    "typescript": "^3.9.2",
+    "typescript": "^3.9.5",
     "url-loader": "^4.1.0",
     "ustudio-ui": "^1.3.0-beta.2",
     "uuid": "^8.0.0",

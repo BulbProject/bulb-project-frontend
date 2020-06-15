@@ -1,7 +1,8 @@
 {
   "root": true,
   "env": {
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "extends": ["airbnb", "plugin:prettier/recommended", "prettier/@typescript-eslint"],
   "plugins": ["@typescript-eslint", "import"],
