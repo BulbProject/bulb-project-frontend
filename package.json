@@ -20,7 +20,6 @@
     "@babel/preset-typescript": "^7.9.0",
     "@fullpage/react-fullpage": "^0.1.17",
     "@types/downloadjs": "^1.4.2",
-    "@types/jest": "^26.0.0",
     "@types/node": "^14.0.5",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
@@ -45,7 +44,6 @@
     "framer-motion": "^1.10.3",
     "fullpage.js": "^3.0.8",
     "html-webpack-plugin": "^4.3.0",
-    "jest": "^26.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
@@ -55,7 +53,6 @@
     "style-loader": "^1.2.1",
     "styled-components": "^5.1.1",
     "terser-webpack-plugin": "^3.0.1",
-    "ts-jest": "^26.1.0",
     "ts4ocds": "^1.0.0-rc.1",
     "typescript": "^3.9.5",
     "url-loader": "^4.1.0",
@@ -70,6 +67,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.0.1",
     "@typescript-eslint/parser": "^3.0.1",
+    "@types/jest": "^26.0.0",
     "error-overlay-webpack-plugin": "^0.4.1",
     "eslint": "^7.1.0",
     "eslint-config-airbnb": "^18.0.1",
@@ -84,9 +82,11 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.2",
     "husky": "^4.2.1",
+    "jest": "^26.0.1",
     "lint-staged": "^10.2.6",
     "prettier": "^2.0.5",
     "progress-bar-webpack-plugin": "^2.1.0",
+    "ts-jest": "^26.1.0",
     "webpack-dev-server": "^3.11.0"
   },
   "lint-staged": {
