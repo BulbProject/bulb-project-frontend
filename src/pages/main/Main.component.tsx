@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+// @ts-ignore
 import ReactFullpage from '@fullpage/react-fullpage';
 import 'fullpage.js/vendors/scrolloverflow';
 
