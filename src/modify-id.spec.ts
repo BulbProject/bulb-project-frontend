@@ -4,7 +4,7 @@ describe('modifyId', () => {
   describe('When id includes not just numbers', () => {
     it('Should throw an error', () => {
       // @ts-expect-error
-      expect(() => modifyId('01020a')).toThrow(new TypeError('Id should include only numbers'));
+      expect(() => modifyId('01020a')).toThrow(TypeError);
     });
   });
 

@@ -28,7 +28,7 @@ describe('getRandomWidth', () => {
   describe('When max === undefined', () => {
     it('Should throw an error', () => {
       // @ts-expect-error
-      expect(() => getRandomWidth(3, undefined)).toThrow(new ReferenceError('Max should be a positive number.'));
+      expect(() => getRandomWidth(3, undefined)).toThrow(ReferenceError);
     });
   });
 
