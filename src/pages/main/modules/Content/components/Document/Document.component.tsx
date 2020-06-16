@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import Flex from 'ustudio-ui/components/Flex';
 import Spinner from 'ustudio-ui/components/Spinner';

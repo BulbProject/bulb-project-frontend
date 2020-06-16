@@ -25,13 +25,11 @@ import Styled from './Info.styles';
 const InfoComponent = () => {
   const { goBack } = useHistory();
   const { infoFileName } = useParams();
-  const { onPending, onSuccess, onFail, isFail, result, sendRequest } = useRequest<{ content: string }, AxiosError>(
-    async () => {
-      const { data } = await axios(getInfoFile(infoFileName as string));
+  const { onPending, onSuccess, onFail, sendRequest } = useRequest<{ content: string }, AxiosError>(async () => {
+    const { data } = await axios(getInfoFile(infoFileName as string));
 
-      return data;
-    }
-  );
+    return data;
+  });
 
   useEffect(() => {
     (async () => sendRequest())();

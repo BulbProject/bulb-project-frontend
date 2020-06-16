@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -10,21 +10,17 @@ import Text from 'ustudio-ui/components/Text';
 import { useRequest } from 'honks';
 import axios from 'axios';
 
-import { getInfoFiles, getMainContentFiles } from 'config';
+import { getInfoFiles } from 'config';
 
 import { FadeIn } from '../FadeIn';
 import Styled from './Aside.styles';
 
 export const Aside = ({ closeDrawer }: { closeDrawer: () => void }) => {
-  const [isMounted, setMounted] = useState(false);
-
-  const { onPending, onSuccess, onFail, isSuccess, result, sendRequest } = useRequest<{ name: string }[]>(async () => {
+  const { onPending, onSuccess, onFail, sendRequest } = useRequest<{ name: string }[]>(async () => {
     const { data } = await axios(getInfoFiles());
 
     return data;
   });
-
-  const filesList = isSuccess(result) ? result.data : null;
 
   useEffect(() => {
     (async () => sendRequest())();
