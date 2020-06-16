@@ -8,7 +8,8 @@ import { useHistory } from 'react-router-dom';
 
 import { modifyId, sortByValue, prepareRequestedNeed } from 'utils';
 import { postCalculationConfig } from 'config';
-import { useRequest } from 'hooks';
+import { useRequest } from 'honks';
+import axios from 'axios';
 import { RequestedNeed } from 'types/data';
 
 import { FadeIn } from 'components';
@@ -35,15 +36,19 @@ export const Stepper: React.FC = () => {
 
   const { hasValidationFailed } = useFormValidationContext();
 
-  const { isLoading, error, triggerRequest, data: calculationResponse } = useRequest<RequestedNeed>(
-    postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
-      requestedNeed: RequestedNeed;
-    }),
-    {
-      dependencies: [requestedNeedData],
-      isRequesting: Boolean(requestedNeedData) && isSubmitting && !hasValidationFailed,
+  const { isSuccess, isFail, isPending, onPending, onSuccess, onFail, sendRequest, result } = useRequest<RequestedNeed>(
+    async () => {
+      const { data } = await axios(
+        postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
+          requestedNeed: RequestedNeed;
+        })
+      );
+
+      return data;
     }
   );
+
+  const calculationResponse = isSuccess(result) ? result.data : null;
 
   const { title, description } = useMemo(() => currentCriterion, [currentCriterion.id]);
   const steps = useMemo(() => Object.values(criteria), []);
@@ -70,7 +75,11 @@ export const Stepper: React.FC = () => {
   );
 
   useEffect(() => {
-    if (!isLoading && !error && Boolean(calculationResponse)) {
+    (async () => sendRequest())();
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess(result) && Boolean(calculationResponse)) {
       sessionStorage.setItem(
         `${category.id}/${category.version}`,
         JSON.stringify({
@@ -81,7 +90,7 @@ export const Stepper: React.FC = () => {
 
       push(`/categories/${category.id}/${category.version}/calculation-result`);
     }
-  }, [isLoading, error, Boolean(calculationResponse)]);
+  }, [isSuccess(result), Boolean(calculationResponse)]);
 
   const BackButton = ({ appearance = 'text' }: { appearance?: 'text' | 'outlined' }) => (
     <StepperButton appearance={appearance} isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
@@ -101,19 +110,27 @@ export const Stepper: React.FC = () => {
     </Flex>
   );
 
+  // TODO: @drizzer14 take a look at onFail
   return (
     <Flex direction="column">
-      {isLoading && isSubmitting && (
-        <FadeIn>
-          <Overlay isActive={isLoading && isSubmitting} error={error?.message} triggerRequest={triggerRequest} />
-        </FadeIn>
-      )}
+      {isSubmitting &&
+        onPending(() => (
+          <FadeIn>
+            <Overlay
+              isActive={isPending() && isSubmitting}
+              error={onFail((error) => error) as string | undefined}
+              triggerRequest={sendRequest}
+            />
+          </FadeIn>
+        ))}
 
-      {error && !isLoading && (
-        <Alert onChange={triggerRequest} isOpen={Boolean(error)} horizontalPosition="center" verticalPosition="top">
-          Упс, щось пішло не так...
-        </Alert>
-      )}
+      {onFail(() => {
+        return (
+          <Alert onChange={sendRequest} isOpen={isFail(result)} horizontalPosition="center" verticalPosition="top">
+            Упс, щось пішло не так...
+          </Alert>
+        );
+      })}
 
       <Styled.Stepper alignment={{ horizontal: 'center' }} length={steps.length}>
         {isMd ? (

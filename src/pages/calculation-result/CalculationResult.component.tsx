@@ -11,7 +11,8 @@ import { Container } from 'shared';
 
 import type { AvailableVariant, Category, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
 import { getCategoryVersionConfig, postCalculationConfig } from 'config';
-import { useRequest } from 'hooks';
+import { useRequest } from 'honks';
+import axios from 'axios';
 
 import type { StoreRequestedNeed } from 'types/globals';
 import { prepareRequestedNeed } from 'utils';
@@ -23,7 +24,7 @@ import { RequestedNeed } from './modules/RequestedNeed';
 
 import { CalculationContextProvider } from './store';
 import Styled from './CalculationResult.styles';
-
+//TODO: @drizzer14 look at component
 const CalculationResult: React.FC = () => {
   const isLg = useMediaQuery('screen and (min-width: 832px)');
   const isXl = useMediaQuery(`screen and (min-width: ${maxWidth}px)`);
@@ -33,38 +34,53 @@ const CalculationResult: React.FC = () => {
   const [isSubmitting, setSubmitting] = useState(false);
   const [requestedNeed, setRequestedNeed] = useState<StoreRequestedNeed | null>(null);
   const [newRequestedNeed, setNewRequestedNeed] = useState<StoreRequestedNeed | null>(null);
-  const [availableVariants, setAvailableVariants] = useState<AvailableVariant[] | null>([]);
+  const [availableVariants, setAvailableVariants] = useState<AvailableVariant[] | null>(null);
 
-  const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
-    getCategoryVersionConfig(categoryId as string, version as string)
-  );
+  const { isSuccess, isFail, onPending, onFail, result, sendRequest } = useRequest<CategoryVersion>(async () => {
+    const { data } = await axios(getCategoryVersionConfig(categoryId as string, version as string));
+
+    return data;
+  });
 
   const {
-    isLoading: isRecalculating,
-    error: recalculationError,
-    triggerRequest: recalculate,
-    data: calculationResponse,
-  } = useRequest<{ availableVariants: AvailableVariant[]; category: string; version: string }>(
-    postCalculationConfig(categoryId as string, version as string, {
-      requestedNeed: newRequestedNeed ? prepareRequestedNeed(newRequestedNeed) : ({} as RequestedNeedType),
-    }),
-    {
-      dependencies: [newRequestedNeed],
-      isRequesting: isSubmitting && Boolean(newRequestedNeed),
-      isDefaultLoading: false,
-    }
-  );
+    isPending: isRecalculationPending,
+    onFail: onRecalculationFail,
+    isFail: isRecalculationFailed,
+    sendRequest: recalculate,
+    result: calculationResponse,
+  } = useRequest<{ availableVariants: AvailableVariant[]; category: string; version: string }>(async () => {
+    const { data } = await axios(
+      postCalculationConfig(categoryId as string, version as string, {
+        requestedNeed: newRequestedNeed ? prepareRequestedNeed(newRequestedNeed) : ({} as RequestedNeedType),
+      })
+    );
+
+    return data;
+  });
+
+  const categoryVersion = isSuccess(result) ? result.data : null;
 
   useEffect(() => {
-    if (newRequestedNeed) {
-      recalculate();
-
-      setSubmitting(false);
+    if (!availableVariants) {
+      (async () => {
+        await sendRequest();
+        await recalculate();
+      })();
     }
-  }, [newRequestedNeed]);
+  }, []);
 
   useEffect(() => {
-    if (!isRecalculating && !recalculationError && newRequestedNeed) {
+    if (isSubmitting && Boolean(newRequestedNeed)) {
+      (async () => {
+        await recalculate();
+
+        setSubmitting(false);
+      })();
+    }
+  }, [newRequestedNeed, isSubmitting, Boolean(newRequestedNeed)]);
+
+  useEffect(() => {
+    if (!isRecalculationPending && !isRecalculationFailed(calculationResponse) && newRequestedNeed) {
       sessionStorage.setItem(
         `${categoryId}/${version}`,
         JSON.stringify({
@@ -79,7 +95,7 @@ const CalculationResult: React.FC = () => {
 
       setNewRequestedNeed(null);
     }
-  }, [isRecalculating]);
+  }, [isRecalculationPending]);
 
   useEffect(() => {
     const sessionStorageData = sessionStorage.getItem(`${categoryId}/${version}`);
@@ -102,19 +118,19 @@ const CalculationResult: React.FC = () => {
       hasMany={hasMany}
       isDrawerOpen={isDrawerOpen}
       setDrawerOpen={setDrawerOpen}
-      isRecalculating={isRecalculating}
+      isRecalculating={isRecalculationPending()}
       setSubmitting={setSubmitting}
       category={categoryVersion?.category as Category}
       requestedNeed={availableVariants?.[0] as AvailableVariant}
       setNewRequestedNeed={setNewRequestedNeed}
-      recalculationError={recalculationError?.message}
+      recalculationError={onRecalculationFail((error) => error.message) as string | undefined}
     />
   );
 
   return (
     <Layout>
       <ErrorBoundary>
-        {requestedNeed && categoryVersion && availableVariants && !isLoading && !error ? (
+        {requestedNeed && categoryVersion && availableVariants && !isFail(result) ? (
           <CalculationContextProvider
             category={categoryVersion.category}
             requestedNeed={requestedNeed as StoreRequestedNeed}
@@ -142,16 +158,20 @@ const CalculationResult: React.FC = () => {
         ) : (
           <Container>
             <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
-              {isLoading && <Spinner delay={500} />}
+              {onPending(() => (
+                <Spinner delay={500} />
+              ))}
 
-              {!isLoading && !requestedNeed && !error && (
+              {!requestedNeed && !isFail(result) && (
                 <Text color="negative">
                   Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
                   цієї категорії ☹️
                 </Text>
               )}
 
-              {!isLoading && error && <ErrorPage />}
+              {onFail(() => (
+                <ErrorPage />
+              ))}
             </Flex>
           </Container>
         )}
