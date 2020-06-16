@@ -8,7 +8,8 @@ import Spinner from 'ustudio-ui/components/Spinner';
 import Text from 'ustudio-ui/components/Text';
 
 import { getCategoryVersionConfig } from 'config';
-import { useRequest } from 'hooks';
+import { useRequest } from 'honks';
+import axios from 'axios';
 import { CategoryVersion, Criterion } from 'types/data';
 import { sortByValue } from 'utils';
 import { Layout, FadeIn, ErrorBoundary, CategoryHeader } from 'components';
@@ -24,49 +25,59 @@ const CategoryPage: React.FC = () => {
   const { categoryId, version } = useParams();
   const { goBack } = useHistory();
 
-  const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
-    getCategoryVersionConfig(categoryId as string, version as string)
-  );
+  const { result, onSuccess, isSuccess, sendRequest, onPending, onFail } = useRequest<CategoryVersion>(async () => {
+    const { data } = await axios(getCategoryVersionConfig(categoryId as string, version as string));
 
-  const { category: { title, description, criteria, classification } = {} } = (categoryVersion ||
-    {}) as CategoryVersion;
-
-  const [steps, setSteps] = useState<Criterion[]>([]);
+    return data;
+  });
 
   useEffect(() => {
-    if (criteria) {
-      const sortedCriteria = criteria.sort(sortByValue('id'));
+    (async () => sendRequest())();
+  }, []);
 
-      setSteps(sortedCriteria);
-    }
-  }, [criteria]);
-
-  return !(error || isLoading) ? (
+  return (
     <Layout>
-      <ErrorBoundary>
-        <FadeIn>
-          <CategoryHeader {...{ title, description, classification }} />
+      {onSuccess(({ category: { title, description, classification, criteria } }) => {
+        const sortedCriteria = criteria.sort(sortByValue('id'));
 
-          <CategoryContextProvider category={{ id: categoryId as string, version: version as string }} criteria={steps}>
-            <FormValidationContextProvider>
-              <Stepper />
-            </FormValidationContextProvider>
-          </CategoryContextProvider>
-        </FadeIn>
-      </ErrorBoundary>
-    </Layout>
-  ) : (
-    <Layout>
-      <FadeIn>
-        <Styled.Wrapper>
-          <Container>
-            <Flex direction="column" alignment={{ horizontal: 'center' }}>
-              {isLoading && <Spinner appearance={{ size: 48 }} delay={300} />}
+        return (
+          <ErrorBoundary>
+            <FadeIn>
+              <CategoryHeader {...{ title, description, classification }} />
+              <CategoryContextProvider
+                category={{ id: categoryId as string, version: version as string }}
+                criteria={sortedCriteria}
+              >
+                <FormValidationContextProvider>
+                  <Stepper />
+                </FormValidationContextProvider>
+              </CategoryContextProvider>
+            </FadeIn>
+          </ErrorBoundary>
+        );
+      })}
 
-              {error && (
-                <>
+      {onPending(() => {
+        return (
+          <FadeIn>
+            <Styled.Wrapper>
+              <Container>
+                <Flex direction="column" alignment={{ horizontal: 'center' }}>
+                  <Spinner appearance={{ size: 48 }} delay={300} />
+                </Flex>
+              </Container>
+            </Styled.Wrapper>
+          </FadeIn>
+        );
+      })}
+
+      {onFail(() => {
+        return (
+          <FadeIn>
+            <Styled.Wrapper>
+              <Container>
+                <Flex direction="column" alignment={{ horizontal: 'center' }}>
                   <Text>На жаль, ми не змогли завантажити цю категорію.</Text>
-
                   <Grid xs={{ gap: 32 }}>
                     <Cell>
                       <Flex alignment={{ horizontal: 'end' }}>
@@ -82,12 +93,12 @@ const CategoryPage: React.FC = () => {
                       </Flex>
                     </Cell>
                   </Grid>
-                </>
-              )}
-            </Flex>
-          </Container>
-        </Styled.Wrapper>
-      </FadeIn>
+                </Flex>
+              </Container>
+            </Styled.Wrapper>
+          </FadeIn>
+        );
+      })}
     </Layout>
   );
 };

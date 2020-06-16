@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useRequest } from 'honks';
 import { getMainContentFiles } from 'config';
 import { Container } from 'shared';
