@@ -5,7 +5,8 @@ import Text from 'ustudio-ui/components/Text';
 import Spinner from 'ustudio-ui/components/Spinner';
 
 import { getCategoriesConfig } from 'config';
-import { useRequest } from 'hooks';
+import { useRequest } from 'honks';
+import axios from 'axios';
 
 import { ErrorBoundary, FadeIn, Layout } from 'components';
 
@@ -21,9 +22,13 @@ export const CategoriesList = () => {
   const [fullCategories, setFullCategories] = useState([] as CategoryCard[]);
   const [isLoading, setLoading] = useState(true);
 
-  const { data: categoriesList, error: listError, triggerRequest } = useRequest<CategoriesListEntity[]>(
-    getCategoriesConfig()
-  );
+  const { onFail, isFail, isSuccess, result, sendRequest } = useRequest<CategoriesListEntity[]>(async () => {
+    const { data } = await axios(getCategoriesConfig());
+
+    return data;
+  });
+
+  const categoriesList = isSuccess(result) ? result.data : null;
 
   const getFullCategoriesInfo = async () => {
     setLoading(true);
@@ -66,13 +71,14 @@ export const CategoriesList = () => {
   };
 
   useEffect(() => {
+    (async () => sendRequest())();
+  }, []);
+
+  useEffect(() => {
     if (categoriesList) {
       getFullCategoriesInfo();
     }
-    if (listError) {
-      setLoading(false);
-    }
-  }, [categoriesList, listError]);
+  }, [categoriesList]);
 
   return (
     <ErrorBoundary>
@@ -94,7 +100,7 @@ export const CategoriesList = () => {
           </FadeIn>
         )}
 
-        {!isLoading && !listError && (
+        {!isLoading && !isFail(result) && (
           <Flex alignment={{ vertical: 'center' }}>
             <FadeIn>
               {!fullCategories?.length && <Text variant="h3">Тут ще немає категорій</Text>}
@@ -116,11 +122,13 @@ export const CategoriesList = () => {
           </Flex>
         )}
 
-        {!isLoading && listError && (
-          <FadeIn>
-            <Error reloadCategories={triggerRequest} />
-          </FadeIn>
-        )}
+        {onFail(() => {
+          return (
+            <FadeIn>
+              <Error reloadCategories={sendRequest} />
+            </FadeIn>
+          );
+        })}
       </Styled.CategoriesListContainer>
     </ErrorBoundary>
   );

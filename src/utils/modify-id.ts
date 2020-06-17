@@ -8,10 +8,9 @@ export const modifyId = (id: string, position: number, modifyCallback: (id: numb
   }
 
   const actualPosition = (position - 1) * 2;
-  const modifiedId = Math.min(Math.abs(modifyCallback(+id.slice(actualPosition, actualPosition + 2))) || 1, 99);
-  
+  const modifiedId = Math.min(Math.abs(modifyCallback(+id.slice(actualPosition, actualPosition + 2))), 99);
+
   return `${id.slice(0, actualPosition)}${modifiedId > 9 ? modifiedId : `0${modifiedId}`}${id.slice(
     actualPosition + 2
   )}`;
 };
-

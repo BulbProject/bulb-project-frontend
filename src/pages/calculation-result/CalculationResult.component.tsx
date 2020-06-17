@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import Text from 'ustudio-ui/components/Text';
@@ -6,12 +6,14 @@ import Spinner from 'ustudio-ui/components/Spinner';
 import Flex from 'ustudio-ui/components/Flex';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
+import { useRequest } from 'honks';
+import axios from 'axios';
+
 import { Layout, ErrorBoundary, ErrorPage, FadeIn } from 'components';
 import { Container } from 'shared';
 
-import type { AvailableVariant, Category, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
+import type { AvailableVariant, CategoryVersion, RequestedNeed as RequestedNeedType } from 'types/data';
 import { getCategoryVersionConfig, postCalculationConfig } from 'config';
-import { useRequest } from 'hooks';
 
 import type { StoreRequestedNeed } from 'types/globals';
 import { prepareRequestedNeed } from 'utils';
@@ -33,53 +35,7 @@ const CalculationResult: React.FC = () => {
   const [isSubmitting, setSubmitting] = useState(false);
   const [requestedNeed, setRequestedNeed] = useState<StoreRequestedNeed | null>(null);
   const [newRequestedNeed, setNewRequestedNeed] = useState<StoreRequestedNeed | null>(null);
-  const [availableVariants, setAvailableVariants] = useState<AvailableVariant[] | null>([]);
-
-  const { data: categoryVersion, isLoading, error } = useRequest<CategoryVersion>(
-    getCategoryVersionConfig(categoryId as string, version as string)
-  );
-
-  const {
-    isLoading: isRecalculating,
-    error: recalculationError,
-    triggerRequest: recalculate,
-    data: calculationResponse,
-  } = useRequest<{ availableVariants: AvailableVariant[]; category: string; version: string }>(
-    postCalculationConfig(categoryId as string, version as string, {
-      requestedNeed: newRequestedNeed ? prepareRequestedNeed(newRequestedNeed) : ({} as RequestedNeedType),
-    }),
-    {
-      dependencies: [newRequestedNeed],
-      isRequesting: isSubmitting && Boolean(newRequestedNeed),
-      isDefaultLoading: false,
-    }
-  );
-
-  useEffect(() => {
-    if (newRequestedNeed) {
-      recalculate();
-
-      setSubmitting(false);
-    }
-  }, [newRequestedNeed]);
-
-  useEffect(() => {
-    if (!isRecalculating && !recalculationError && newRequestedNeed) {
-      sessionStorage.setItem(
-        `${categoryId}/${version}`,
-        JSON.stringify({
-          payload: newRequestedNeed,
-          response: calculationResponse,
-        })
-      );
-      setRequestedNeed(newRequestedNeed);
-      // availableVariants are supposed to be defined in here
-      // @ts-ignore
-      setAvailableVariants(calculationResponse?.availableVariants);
-
-      setNewRequestedNeed(null);
-    }
-  }, [isRecalculating]);
+  const [availableVariants, setAvailableVariants] = useState<AvailableVariant[] | null>(null);
 
   useEffect(() => {
     const sessionStorageData = sessionStorage.getItem(`${categoryId}/${version}`);
@@ -92,6 +48,69 @@ const CalculationResult: React.FC = () => {
     }
   }, []);
 
+  const {
+    onSuccess: onCategorySuccess,
+    onPending: onCategoryPending,
+    onFail: onCategoryFail,
+    sendRequest: requestCategory,
+  } = useRequest<CategoryVersion>(async () => {
+    const { data } = await axios(getCategoryVersionConfig(categoryId as string, version as string));
+
+    return data;
+  });
+
+  const {
+    isPending: isCalculationPending,
+    onFail: onCalculationFail,
+    isFail: hasCalculationFailed,
+    sendRequest: calculate,
+    result: calculationResponse,
+  } = useRequest<{ availableVariants: AvailableVariant[]; category: string; version: string }>(async () => {
+    const { data } = await axios(
+      postCalculationConfig(categoryId as string, version as string, {
+        requestedNeed: newRequestedNeed ? prepareRequestedNeed(newRequestedNeed) : ({} as RequestedNeedType),
+      })
+    );
+
+    return data;
+  });
+
+  useEffect(() => {
+    if (!availableVariants) {
+      (async () => {
+        await requestCategory();
+      })();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isSubmitting && Boolean(newRequestedNeed)) {
+      (async () => {
+        await calculate();
+
+        setSubmitting(false);
+      })();
+    }
+  }, [newRequestedNeed, isSubmitting, Boolean(newRequestedNeed)]);
+
+  useEffect(() => {
+    if (!isCalculationPending() && !hasCalculationFailed(calculationResponse) && newRequestedNeed) {
+      sessionStorage.setItem(
+        `${categoryId}/${version}`,
+        JSON.stringify({
+          payload: newRequestedNeed,
+          response: calculationResponse?.data,
+        })
+      );
+      setRequestedNeed(newRequestedNeed);
+      // availableVariants are supposed to be defined in here
+      // @ts-ignore
+      setAvailableVariants(calculationResponse?.data.availableVariants);
+
+      setNewRequestedNeed(null);
+    }
+  }, [isCalculationPending()]);
+
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const itemsQuantity = useMemo(() => (availableVariants || []).length, [availableVariants?.length]);
@@ -102,59 +121,69 @@ const CalculationResult: React.FC = () => {
       hasMany={hasMany}
       isDrawerOpen={isDrawerOpen}
       setDrawerOpen={setDrawerOpen}
-      isRecalculating={isRecalculating}
+      isRecalculating={isCalculationPending()}
       setSubmitting={setSubmitting}
-      category={categoryVersion?.category as Category}
       requestedNeed={availableVariants?.[0] as AvailableVariant}
       setNewRequestedNeed={setNewRequestedNeed}
-      recalculationError={recalculationError?.message}
+      recalculationError={onCalculationFail((error) => error.message) as string | undefined}
     />
   );
 
   return (
     <Layout>
       <ErrorBoundary>
-        {requestedNeed && categoryVersion && availableVariants && !isLoading && !error ? (
-          <CalculationContextProvider
-            category={categoryVersion.category}
-            requestedNeed={requestedNeed as StoreRequestedNeed}
-          >
-            <FadeIn>
-              <ItemsLayout itemsQuantity={itemsQuantity}>
-                {hasMany ? (
-                  <Styled.Wrapper alignment={{ horizontal: isXl ? 'center' : 'start' }}>
-                    {RequestedNeedComponent}
+        {
+          onCategoryPending<ReactElement>(() => {
+            return (
+              <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
+                <Spinner delay={500} />
+              </Flex>
+            );
+          }) as ReactElement
+        }
 
-                    <Items availableVariants={availableVariants} />
-                  </Styled.Wrapper>
-                ) : (
-                  <Container>{RequestedNeedComponent}</Container>
-                )}
-              </ItemsLayout>
-            </FadeIn>
+        {
+          onCategorySuccess(({ category }) => {
+            if (requestedNeed && availableVariants) {
+              return (
+                <CalculationContextProvider category={category} requestedNeed={requestedNeed as StoreRequestedNeed}>
+                  <FadeIn>
+                    <ItemsLayout itemsQuantity={itemsQuantity}>
+                      {hasMany ? (
+                        <Styled.Wrapper alignment={{ horizontal: isXl ? 'center' : 'start' }}>
+                          {RequestedNeedComponent}
 
-            {!isLg && (
-              <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
-                <FilterIcon />
-              </Styled.MobileFilterButton>
-            )}
-          </CalculationContextProvider>
-        ) : (
-          <Container>
-            <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
-              {isLoading && <Spinner delay={500} />}
+                          <Items availableVariants={availableVariants} />
+                        </Styled.Wrapper>
+                      ) : (
+                        <Container>{RequestedNeedComponent}</Container>
+                      )}
+                    </ItemsLayout>
+                  </FadeIn>
 
-              {!isLoading && !requestedNeed && !error && (
-                <Text color="negative">
-                  Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
-                  цієї категорії ☹️
-                </Text>
-              )}
+                  {!isLg && (
+                    <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
+                      <FilterIcon />
+                    </Styled.MobileFilterButton>
+                  )}
+                </CalculationContextProvider>
+              );
+            }
 
-              {!isLoading && error && <ErrorPage />}
-            </Flex>
-          </Container>
-        )}
+            return (
+              <Container>
+                <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
+                  <Text color="negative">
+                    Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
+                    цієї категорії ☹️
+                  </Text>
+                </Flex>
+              </Container>
+            );
+          }) as ReactElement
+        }
+
+        {onCategoryFail(() => <ErrorPage />) as ReactElement}
       </ErrorBoundary>
     </Layout>
   );

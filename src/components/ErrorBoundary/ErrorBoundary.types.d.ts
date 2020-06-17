@@ -5,5 +5,5 @@ export interface State {
 }
 
 export interface Props {
-  children: ReactElement | ReactElement[];
+  children?: ReactElement | ReactElement[];
 }

@@ -8,7 +8,8 @@ import { useHistory } from 'react-router-dom';
 
 import { modifyId, sortByValue, prepareRequestedNeed } from 'utils';
 import { postCalculationConfig } from 'config';
-import { useRequest } from 'hooks';
+import { useRequest } from 'honks';
+import axios from 'axios';
 import { RequestedNeed } from 'types/data';
 
 import { FadeIn } from 'components';
@@ -35,15 +36,15 @@ export const Stepper: React.FC = () => {
 
   const { hasValidationFailed } = useFormValidationContext();
 
-  const { isLoading, error, triggerRequest, data: calculationResponse } = useRequest<RequestedNeed>(
-    postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
-      requestedNeed: RequestedNeed;
-    }),
-    {
-      dependencies: [requestedNeedData],
-      isRequesting: Boolean(requestedNeedData) && isSubmitting && !hasValidationFailed,
-    }
-  );
+  const { isSuccess, onPending, onFail, sendRequest: postCalculation, result } = useRequest<RequestedNeed>(async () => {
+    const { data } = await axios(
+      postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
+        requestedNeed: RequestedNeed;
+      })
+    );
+
+    return data;
+  });
 
   const { title, description } = useMemo(() => currentCriterion, [currentCriterion.id]);
   const steps = useMemo(() => Object.values(criteria), []);
@@ -57,6 +58,7 @@ export const Stepper: React.FC = () => {
   const isStepActive = useCallback((stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(title), [
     title,
   ]);
+
   const setStep = useCallback(
     (modify: (id: number) => number) => () => {
       setTimeout(() => {
@@ -70,18 +72,24 @@ export const Stepper: React.FC = () => {
   );
 
   useEffect(() => {
-    if (!isLoading && !error && Boolean(calculationResponse)) {
+    if (isSubmitting && requestedNeedData) {
+      postCalculation();
+    }
+  }, [isSubmitting, requestedNeedData]);
+
+  useEffect(() => {
+    if (isSuccess(result)) {
       sessionStorage.setItem(
         `${category.id}/${category.version}`,
         JSON.stringify({
           payload: requestedNeed,
-          response: calculationResponse,
+          response: result.data,
         })
       );
 
       push(`/categories/${category.id}/${category.version}/calculation-result`);
     }
-  }, [isLoading, error, Boolean(calculationResponse)]);
+  }, [isSuccess(result)]);
 
   const BackButton = ({ appearance = 'text' }: { appearance?: 'text' | 'outlined' }) => (
     <StepperButton appearance={appearance} isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
@@ -103,17 +111,20 @@ export const Stepper: React.FC = () => {
 
   return (
     <Flex direction="column">
-      {isLoading && isSubmitting && (
-        <FadeIn>
-          <Overlay isActive={isLoading && isSubmitting} error={error?.message} triggerRequest={triggerRequest} />
-        </FadeIn>
-      )}
+      {isSubmitting &&
+        onPending(() => (
+          <FadeIn>
+            <Overlay isActive error={onFail((error) => error) as string | undefined} triggerRequest={postCalculation} />
+          </FadeIn>
+        ))}
 
-      {error && !isLoading && (
-        <Alert onChange={triggerRequest} isOpen={Boolean(error)} horizontalPosition="center" verticalPosition="top">
-          Упс, щось пішло не так...
-        </Alert>
-      )}
+      {onFail(() => {
+        return (
+          <Alert onChange={postCalculation} isOpen horizontalPosition="center" verticalPosition="top">
+            Упс, щось пішло не так...
+          </Alert>
+        );
+      })}
 
       <Styled.Stepper alignment={{ horizontal: 'center' }} length={steps.length}>
         {isMd ? (
