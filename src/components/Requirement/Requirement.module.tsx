@@ -2,8 +2,10 @@ import React, { ReactElement } from 'react';
 
 import { css } from 'styled-components';
 
-import type { Option, OptionGroup } from 'ts4ocds/extensions/options';
+import type { Option, OptionGroup, OptionDetails } from 'ts4ocds/extensions/options';
 import type { DataType } from 'ts4ocds/extensions/requirements';
+
+import { Unit } from 'ts4ocds';
 
 import { Mixin } from 'ustudio-ui/theme';
 import Checkbox from 'ustudio-ui/components/Checkbox';
@@ -15,6 +17,18 @@ import type { Group, Item } from 'ustudio-ui/components/Select/select.types';
 import { sortByValue } from 'utils';
 
 import { InputProps } from './Requirement.types';
+
+export const parseOptionGroupsDescription = ({
+  optionDetails,
+  unit,
+}: {
+  optionDetails: OptionDetails;
+  unit?: Unit;
+}) => {
+  return (
+    'optionGroups' in optionDetails && `${optionDetails.optionGroups[0].description}${unit ? `, ${unit.name}` : ''}`
+  );
+};
 
 export const renderInput = ({
   hasError,

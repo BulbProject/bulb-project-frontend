@@ -16,7 +16,7 @@ export const RequirementGroup: React.FC<RequirementGroupProps & { isDisabled?: b
 
   return (
     <FieldSet name={id}>
-      <Flex margin={{ top: 'regular' }} direction="column">
+      <Flex margin={currentCriterion.requirementGroups.length > 1 ? { top: 'regular' } : undefined} direction="column">
         {requirements.sort(sortByValue('id')).map((requirement) => (
           <Requirement
             {...requirement}

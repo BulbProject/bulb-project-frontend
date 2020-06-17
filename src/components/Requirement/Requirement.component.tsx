@@ -20,7 +20,7 @@ import {
   useFormValidationContext,
 } from 'context/FormValidation';
 
-import { isBoolean, isNumeric, renderInput } from './Requirement.module';
+import { isBoolean, isNumeric, renderInput, parseOptionGroupsDescription } from './Requirement.module';
 import Styled from './Requirement.styles';
 
 export const Requirement = ({
@@ -137,17 +137,15 @@ export const Requirement = ({
       <Flex
         direction={isBoolean(dataType) ? 'row' : 'column'}
         alignment={{ vertical: 'center' }}
-        margin={{ top: 'medium' }}
+        margin={currentCriterion.requirementGroups.length > 1 ? { top: 'medium' } : undefined}
       >
-        {title && (
+        {(title || hasSingleOptionGroup) && (
           <Styled.Title
             variant="caption"
             isBoolean={isBoolean(dataType)}
             color={isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'}
           >
-            {optionDetails && 'optionGroups' in optionDetails && hasSingleOptionGroup
-              ? optionDetails.optionGroups[0].description
-              : title}
+            {hasSingleOptionGroup ? parseOptionGroupsDescription({ optionDetails, unit }) : title}
           </Styled.Title>
         )}
 
