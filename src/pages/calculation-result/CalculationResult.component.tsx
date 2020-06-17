@@ -44,7 +44,7 @@ const CalculationResult: React.FC = () => {
       const parsedData = JSON.parse(sessionStorageData);
 
       setRequestedNeed(parsedData.payload);
-      setAvailableVariants(parsedData.response.data.availableVariants);
+      setAvailableVariants(parsedData.response.availableVariants);
     }
   }, []);
 
@@ -99,7 +99,7 @@ const CalculationResult: React.FC = () => {
         `${categoryId}/${version}`,
         JSON.stringify({
           payload: newRequestedNeed,
-          response: calculationResponse,
+          response: calculationResponse?.data,
         })
       );
       setRequestedNeed(newRequestedNeed);
