@@ -7,6 +7,7 @@ import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 import { Item as ItemType } from 'types/data';
 import { FormValidationContextProvider } from 'context/FormValidation';
 import FilterIcon from '../../../../assets/icons/filter.inline.svg';
+import { useCalculationContext } from '../../store';
 
 import { Filter } from '../Filter';
 import { Item } from '../Item';
@@ -21,10 +22,10 @@ export const RequestedNeed: React.FC<RequestedNeedProps> = ({
   recalculationError,
   isRecalculating,
   setSubmitting,
-  category,
   requestedNeed,
   setNewRequestedNeed,
 }) => {
+  const { category } = useCalculationContext();
   const isLg = useMediaQuery('screen and (min-width: 832px)');
 
   return (

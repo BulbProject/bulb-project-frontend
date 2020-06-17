@@ -9,7 +9,7 @@ export const getRandomWidth = (min: number, max: number) => {
 
   if (max === undefined) {
     throw new ReferenceError('Max should be a positive number.');
-  }  
+  }
 
   if (min < 0) {
     throw new RangeError('Min should be a positive number.');

@@ -1,5 +1,5 @@
-import { AvailableVariant, Category } from 'types/data';
-import { StoreRequestedNeed } from 'types/globals';
+import type { AvailableVariant } from 'types/data';
+import type { StoreRequestedNeed } from 'types/globals';
 
 export interface RequestedNeedProps {
   hasMany: boolean;
@@ -8,7 +8,6 @@ export interface RequestedNeedProps {
   recalculationError?: string;
   isRecalculating: boolean;
   setSubmitting: (isSubmitting: boolean) => void;
-  category: Category;
   requestedNeed: AvailableVariant;
   setNewRequestedNeed: (requestedNeed: StoreRequestedNeed) => void;
 }

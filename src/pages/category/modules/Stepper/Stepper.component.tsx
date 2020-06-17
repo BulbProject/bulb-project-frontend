@@ -36,19 +36,15 @@ export const Stepper: React.FC = () => {
 
   const { hasValidationFailed } = useFormValidationContext();
 
-  const { isSuccess, isFail, isPending, onPending, onSuccess, onFail, sendRequest, result } = useRequest<RequestedNeed>(
-    async () => {
-      const { data } = await axios(
-        postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
-          requestedNeed: RequestedNeed;
-        })
-      );
+  const { isSuccess, onPending, onFail, sendRequest: postCalculation, result } = useRequest<RequestedNeed>(async () => {
+    const { data } = await axios(
+      postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
+        requestedNeed: RequestedNeed;
+      })
+    );
 
-      return data;
-    }
-  );
-
-  const calculationResponse = isSuccess(result) ? result.data : null;
+    return data;
+  });
 
   const { title, description } = useMemo(() => currentCriterion, [currentCriterion.id]);
   const steps = useMemo(() => Object.values(criteria), []);
@@ -62,6 +58,7 @@ export const Stepper: React.FC = () => {
   const isStepActive = useCallback((stepTitle: string): boolean => titles.indexOf(stepTitle) <= titles.indexOf(title), [
     title,
   ]);
+
   const setStep = useCallback(
     (modify: (id: number) => number) => () => {
       setTimeout(() => {
@@ -75,22 +72,24 @@ export const Stepper: React.FC = () => {
   );
 
   useEffect(() => {
-    (async () => sendRequest())();
-  }, []);
+    if (isSubmitting && requestedNeedData) {
+      postCalculation();
+    }
+  }, [isSubmitting, requestedNeedData]);
 
   useEffect(() => {
-    if (isSuccess(result) && Boolean(calculationResponse)) {
+    if (isSuccess(result)) {
       sessionStorage.setItem(
         `${category.id}/${category.version}`,
         JSON.stringify({
           payload: requestedNeed,
-          response: calculationResponse,
+          response: result.data,
         })
       );
 
       push(`/categories/${category.id}/${category.version}/calculation-result`);
     }
-  }, [isSuccess(result), Boolean(calculationResponse)]);
+  }, [isSuccess(result)]);
 
   const BackButton = ({ appearance = 'text' }: { appearance?: 'text' | 'outlined' }) => (
     <StepperButton appearance={appearance} isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
@@ -110,23 +109,18 @@ export const Stepper: React.FC = () => {
     </Flex>
   );
 
-  // TODO: @drizzer14 take a look at onFail
   return (
     <Flex direction="column">
       {isSubmitting &&
         onPending(() => (
           <FadeIn>
-            <Overlay
-              isActive={isPending() && isSubmitting}
-              error={onFail((error) => error) as string | undefined}
-              triggerRequest={sendRequest}
-            />
+            <Overlay isActive error={onFail((error) => error) as string | undefined} triggerRequest={postCalculation} />
           </FadeIn>
         ))}
 
       {onFail(() => {
         return (
-          <Alert onChange={sendRequest} isOpen={isFail(result)} horizontalPosition="center" verticalPosition="top">
+          <Alert onChange={postCalculation} isOpen horizontalPosition="center" verticalPosition="top">
             Упс, щось пішло не так...
           </Alert>
         );

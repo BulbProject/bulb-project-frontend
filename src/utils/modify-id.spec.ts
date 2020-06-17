@@ -25,12 +25,6 @@ describe('modifyId', () => {
   });
 
   describe('When modifiedCallback is incorrect', () => {
-    describe('when 0', () => {
-      it('should return 1', () => {
-        expect(modifyId('01', 1, () => 0)).toBe('01');
-      });
-    });
-
     describe('when -1', () => {
       it('should return 1', () => {
         expect(modifyId('01', 1, () => -1)).toBe('01');

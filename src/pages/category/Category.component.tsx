@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
 import Grid from 'ustudio-ui/components/Grid/Grid';
@@ -7,10 +7,11 @@ import Flex from 'ustudio-ui/components/Flex';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Text from 'ustudio-ui/components/Text';
 
-import { getCategoryVersionConfig } from 'config';
 import { useRequest } from 'honks';
 import axios from 'axios';
-import { CategoryVersion, Criterion } from 'types/data';
+
+import { getCategoryVersionConfig } from 'config';
+import { CategoryVersion } from 'types/data';
 import { sortByValue } from 'utils';
 import { Layout, FadeIn, ErrorBoundary, CategoryHeader } from 'components';
 import { Container } from 'shared';
@@ -25,14 +26,14 @@ const CategoryPage: React.FC = () => {
   const { categoryId, version } = useParams();
   const { goBack } = useHistory();
 
-  const { result, onSuccess, isSuccess, sendRequest, onPending, onFail } = useRequest<CategoryVersion>(async () => {
+  const { onSuccess, sendRequest: requestCategory, onPending, onFail } = useRequest<CategoryVersion>(async () => {
     const { data } = await axios(getCategoryVersionConfig(categoryId as string, version as string));
 
     return data;
   });
 
   useEffect(() => {
-    (async () => sendRequest())();
+    requestCategory();
   }, []);
 
   return (
