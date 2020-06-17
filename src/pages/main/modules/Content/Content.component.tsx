@@ -2,17 +2,19 @@ import React, { useEffect, useMemo } from 'react';
 
 import axios from 'axios';
 import { useRequest } from 'honks';
-import { getMainContentFiles } from 'config';
-import { Container } from 'shared';
-import { FadeIn } from 'components/FadeIn';
-import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
+import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 import Spinner from 'ustudio-ui/components/Spinner';
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
-import Styled from './Content.styles';
+
+import { getMainContentFiles } from 'config';
+import { Container } from 'shared';
+import { FadeIn } from 'components';
+
 import { Document } from './components';
+import Styled from './Content.styles';
 
 export const Content = () => {
   const { onSuccess, onFail, onPending, isSuccess, result, sendRequest } = useRequest<{ name: string }[]>(async () => {
