@@ -2,14 +2,16 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Form } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
-import Alert from 'ustudio-ui/components/Alert';
+import Text from 'ustudio-ui/components/Text';
+import Modal from 'ustudio-ui/components/Modal'
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 import { useHistory } from 'react-router-dom';
+import { css } from 'styled-components';
 
 import { modifyId, sortByValue, prepareRequestedNeed } from 'utils';
 import { postCalculationConfig } from 'config';
 import { useRequest } from 'honks';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { RequestedNeed } from 'types/data';
 
 import { FadeIn } from 'components';
@@ -33,10 +35,14 @@ export const Stepper: React.FC = () => {
 
   const [isNextStepAvailable, setNextStepAvailable] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const { hasValidationFailed } = useFormValidationContext();
 
-  const { isSuccess, onPending, onFail, sendRequest: postCalculation, result } = useRequest<RequestedNeed>(async () => {
+  const { isSuccess, onPending, onFail, sendRequest: postCalculation, result, isFail } = useRequest<
+    RequestedNeed,
+    AxiosError
+  >(async () => {
     const { data } = await axios(
       postCalculationConfig(category.id, category.version, { requestedNeed: requestedNeedData } as {
         requestedNeed: RequestedNeed;
@@ -91,6 +97,13 @@ export const Stepper: React.FC = () => {
     }
   }, [isSuccess(result)]);
 
+  useEffect(() => {
+    if (isFail(result)) {
+      setModalOpen(true);
+      setSubmitting(false);
+    }
+  }, [isFail(result)]);
+
   const BackButton = ({ appearance = 'text' }: { appearance?: 'text' | 'outlined' }) => (
     <StepperButton appearance={appearance} isActive={!isFirstStep} onClick={setStep((id) => id - 1)}>
       Назад
@@ -118,11 +131,23 @@ export const Stepper: React.FC = () => {
           </FadeIn>
         ))}
 
-      {onFail(() => {
+      {onFail((error) => {
         return (
-          <Alert onChange={postCalculation} isOpen horizontalPosition="center" verticalPosition="top">
-            Упс, щось пішло не так...
-          </Alert>
+          <Modal
+            isOpen={isModalOpen}
+            onChange={() => setModalOpen(false)}
+            title="Помилка"
+            styled={{
+              Overlay: css`
+              background-color: var(--c-darkest);
+            `,
+              Title: css`
+            color: var(--c-negative)
+            `,
+            }}
+          >
+            <Text>{error.response?.data.message || error.message}</Text>
+          </Modal>
         );
       })}
 
