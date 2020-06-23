@@ -2,7 +2,7 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const eslint = require('.eslintrc.js');
+const eslint = require('./.eslintrc.js');
 
 module.exports = {
   entry: [path.resolve(__dirname, 'src/index.tsx')],
