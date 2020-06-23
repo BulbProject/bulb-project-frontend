@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
-import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
+import { useMedia } from 'shared/hooks';
 
 import { ErrorBoundary, Container } from 'shared/components';
-import { useLayoutVariant } from 'core/layout';
 import type { AvailableVariant } from 'shared/entity/data';
 import { useCalculation } from 'shared/context/calculation';
 import { useCategory } from 'core/context/category-provider';
@@ -19,10 +18,8 @@ import layoutConfig from './layout.config';
 import Styled from './calculation-result.styles';
 
 const CalculationResult: React.FC = () => {
-  useLayoutVariant('full');
-
-  const isLg = useMediaQuery('screen and (min-width: 832px)');
-  const isXl = useMediaQuery(`screen and (min-width: ${layoutConfig.maxWidth}px)`);
+  const isLg = useMedia('screen and (min-width: 832px)');
+  const isXl = useMedia(`screen and (min-width: ${layoutConfig.maxWidth}px)`);
 
   const { calculationData: availableVariants, calculationPayload, dispatch } = useCalculation();
 
@@ -62,7 +59,7 @@ const CalculationResult: React.FC = () => {
         <>
           <ItemsLayout itemsQuantity={itemsQuantity}>
             {hasMany ? (
-              <Styled.Wrapper alignment={{ horizontal: isXl ? 'center' : 'start' }}>
+              <Styled.Wrapper alignment={{ horizontal: isXl() ? 'center' : 'start' }}>
                 {RequestedNeedComponent}
 
                 <Items availableVariants={availableVariants} />
@@ -72,7 +69,7 @@ const CalculationResult: React.FC = () => {
             )}
           </ItemsLayout>
 
-          {!isLg && (
+          {!isLg() && (
             <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
               <FilterIcon />
             </Styled.MobileFilterButton>

@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from 'react';
 import { Form as FormComponent, FormFieldSet } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
-import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
+import { useMedia } from 'shared/hooks';
 
 import { useFormValidator } from 'shared/context/form-validator';
 import { prepareRequestedNeed } from 'shared/utils';
@@ -43,8 +43,8 @@ export const Form: FC = ({ children }) => {
   const { currentStep, setNextStepAvailable, isFirstStep } = useStepperState();
   const { dispatch, formData, isSubmitting, setSubmitting, selectedRequirementGroups } = useCalculation();
 
-  const isXs = useMediaQuery('screen and (min-width: 576px)');
-  const isMd = useMediaQuery('screen and (min-width: 768px)');
+  const isXs = useMedia('screen and (min-width: 576px)');
+  const isMd = useMedia('screen and (min-width: 768px)');
 
   return (
     <FormComponent
@@ -80,7 +80,7 @@ export const Form: FC = ({ children }) => {
     >
       {children as ReactElement}
 
-      {isMd ? (
+      {isMd() ? (
         <Styled.Container isContainer>
           <Cell xs={{ size: 2 }}>
             <BackButton appearance="text" />

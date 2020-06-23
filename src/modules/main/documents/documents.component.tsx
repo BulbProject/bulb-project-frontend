@@ -3,7 +3,7 @@ import React, { FC, useEffect, useMemo } from 'react';
 
 import axios, { AxiosError } from 'axios';
 
-import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
+import { useMedia } from 'shared/hooks';
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
@@ -34,13 +34,13 @@ export const Documents: FC = () => {
 
   const fileNames = useMemo(() => (isResolved(result) ? result.data : null), [result]);
 
-  const isLg = useMediaQuery('screen and (min-width: 992px)');
+  const isLg = useMedia('screen and (min-width: 992px)');
 
   const documentsDirection = useMemo(() => {
     if ((fileNames ?? []).length > 2) return 'column';
 
-    return isLg ? 'row' : 'column';
-  }, [fileNames, isLg]);
+    return isLg() ? 'row' : 'column';
+  }, [fileNames, isLg()]);
 
   return (
     <Styled.Content>

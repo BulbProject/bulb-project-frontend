@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
+import { useMedia } from 'shared/hooks';
 
 import Styled from './items-layout.styles';
 
 export const ItemsLayout: FC<{ itemsQuantity: number }> = ({ itemsQuantity, children }) => {
-  const isLg = useMediaQuery('screen and (min-width: 832px)');
+  const isLg = useMedia('screen and (min-width: 832px)');
 
   switch (itemsQuantity) {
     case 1: {
@@ -18,7 +18,7 @@ export const ItemsLayout: FC<{ itemsQuantity: number }> = ({ itemsQuantity, chil
     }
     default: {
       return (
-        <Styled.ManyLayout quantity={itemsQuantity} isLg={isLg}>
+        <Styled.ManyLayout quantity={itemsQuantity} isLg={isLg()}>
           {children}
         </Styled.ManyLayout>
       );

@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from 'styled-components';
 import Drawer from 'ustudio-ui/components/Drawer';
 import Flex from 'ustudio-ui/components/Flex';
-import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
+import { useMedia } from 'shared/hooks';
 
 import { useCategory } from 'core/context/category-provider';
 import type { AvailableVariant, Item as ItemType } from 'shared/entity/data';
@@ -22,7 +22,7 @@ export const RequestedNeed: React.FC<{
 }> = ({ hasMany, isDrawerOpen, setDrawerOpen, requestedNeed }) => {
   const { category } = useCategory();
 
-  const isLg = useMediaQuery('screen and (min-width: 832px)');
+  const isLg = useMedia('screen and (min-width: 832px)');
 
   return (
     <Styled.RequestedNeed direction="column">
@@ -49,7 +49,7 @@ export const RequestedNeed: React.FC<{
           isOpen={isDrawerOpen}
           onChange={() => setDrawerOpen(false)}
           showOverlay
-          position={isLg ? 'left' : 'right'}
+          position={isLg() ? 'left' : 'right'}
           styled={{
             Drawer: css`
               width: 320px;

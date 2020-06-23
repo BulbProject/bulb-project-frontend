@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
-import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
+import { useMedia } from 'shared/hooks';
 
 import { sortByValue } from 'shared/utils';
 
@@ -11,7 +11,7 @@ import { Step } from './step';
 import Styled from './stepper.styles';
 
 export const Stepper: FC = () => {
-  const isMd = useMediaQuery('screen and (min-width: 768px)');
+  const isMd = useMedia('screen and (min-width: 768px)');
 
   const { steps, currentStep, stepsTitles } = useStepperState();
 
@@ -23,7 +23,7 @@ export const Stepper: FC = () => {
   return (
     <Flex direction="column">
       <Styled.Stepper alignment={{ horizontal: 'center' }} length={Object.keys(steps).length}>
-        {isMd ? (
+        {isMd() ? (
           Object.values(steps)
             .sort(sortByValue('id'))
             .map((step, index) => (
@@ -39,7 +39,7 @@ export const Stepper: FC = () => {
       </Styled.Stepper>
 
       {currentStep.description && (
-        <Styled.Description align="center" variant={isMd ? 'h3' : 'body'}>
+        <Styled.Description align="center" variant={isMd() ? 'h3' : 'body'}>
           {currentStep.description}
         </Styled.Description>
       )}

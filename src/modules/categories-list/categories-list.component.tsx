@@ -9,8 +9,6 @@ import useAsync from 'honks/use-async';
 import { ErrorBoundary, Loader } from 'shared/components';
 import type { CategoriesListItem, CategoryVersion } from 'shared/entity/data';
 import { useApi } from 'core/context/api-provider';
-import type { Variant } from 'core/layout/layout-variant';
-import { useLayoutVariant } from 'core/layout';
 
 import { Card } from './card';
 import { CardLayout } from './card-layout';
@@ -54,11 +52,7 @@ const sortCategories = (categories: CategoryCard[]): CategoryCard[] => {
   return [...activeCategories, ...pendingCategories, ...categoriesWithoutStatus];
 };
 
-const CategoriesList: FC<{
-  layoutVariant?: Variant;
-}> = ({ layoutVariant = 'full' }) => {
-  useLayoutVariant(layoutVariant);
-
+const CategoriesList: FC = () => {
   const [categoriesVersions, setCategoriesVersions] = useState<CategoryCard[]>([]);
   const [isLoading, setLoading] = useState(true);
 

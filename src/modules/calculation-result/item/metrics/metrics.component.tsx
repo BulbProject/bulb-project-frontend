@@ -5,7 +5,7 @@ import type { Metric, Observation } from 'ts4ocds/extensions/metrics';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
-import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
+import { useMedia } from 'shared/hooks';
 
 import { formatNumber } from 'shared/utils';
 
@@ -28,8 +28,8 @@ export const Metrics: FC<{
     return '';
   }, []);
 
-  const isLg = useMediaQuery('screen and (min-width: 832px)');
-  const areTitlesShown = useMemo(() => !isLg || showTitles, [isLg, showTitles]);
+  const isLg = useMedia('screen and (min-width: 832px)');
+  const areTitlesShown = useMemo(() => !isLg() || showTitles, [isLg(), showTitles]);
 
   return (
     <Styled.Metrics direction="column">
@@ -72,7 +72,7 @@ export const Metrics: FC<{
                   {formatNumber(observation.value?.amount)} {getObservationUnit(observation)}
                 </Text>
 
-                {isLg && metric.id !== 'economy' && isRequested && <Styled.Highlight />}
+                {isLg() && metric.id !== 'economy' && isRequested && <Styled.Highlight />}
               </Styled.ObservationMeasure>
             </Styled.Observation>
           ))}

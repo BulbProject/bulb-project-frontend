@@ -83,7 +83,10 @@ module.exports = {
     },
   },
   rules: {
-    '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { varsIgnorePattern: '^_', argsIgnorePattern: '^_', ignoreRestSiblings: true },
+    ],
     '@typescript-eslint/explicit-function-return-type': [
       'warn',
       {

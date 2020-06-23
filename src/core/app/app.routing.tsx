@@ -4,6 +4,8 @@ import { RouteProps } from 'react-router-dom';
 
 import Calculation from 'shared/context/calculation';
 import CategoryProvider from 'core/context/category-provider';
+// eslint-disable-next-line boundaries/no-private,boundaries/allowed-types
+import { FullLayout } from '../layout/variants/full-layout';
 
 const MainPage = lazy(async () => import('../../modules/main/main.component'));
 const CategoriesListPage = lazy(async () => import('../../modules/categories-list/categories-list.component'));
@@ -19,14 +21,20 @@ export const routes: RouteProps[] = [
   },
   {
     path: '/categories',
-    component: CategoriesListPage,
+    render: () => (
+      <FullLayout>
+        <CategoriesListPage />
+      </FullLayout>
+    ),
   },
   {
     path: '/categories/:categoryId/:version',
     render: () => (
       <CategoryProvider>
         <Calculation>
-          <CategoryPage />
+          <FullLayout>
+            <CategoryPage />
+          </FullLayout>
         </Calculation>
       </CategoryProvider>
     ),
@@ -36,17 +44,27 @@ export const routes: RouteProps[] = [
     render: () => (
       <CategoryProvider>
         <Calculation>
-          <CalculationResult />
+          <FullLayout>
+            <CalculationResult />
+          </FullLayout>
         </Calculation>
       </CategoryProvider>
     ),
   },
   {
     path: '/info/:infoFileName',
-    component: ResourcePage,
+    render: () => (
+      <FullLayout>
+        <ResourcePage />
+      </FullLayout>
+    ),
   },
   {
     path: '*',
-    component: NotFoundPage,
+    render: () => (
+      <FullLayout>
+        <NotFoundPage />
+      </FullLayout>
+    ),
   },
 ].map((route) => ({ ...route, exact: true }));
