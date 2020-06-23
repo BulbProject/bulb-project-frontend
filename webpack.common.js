@@ -28,8 +28,8 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
-    alias: eslint.settings['import/resolver'].alias.map.reduce((map, alias) => {
-      return Object.assign(map, { [alias[0]]: path.resolve(__dirname, alias[1].slice(2)) });
+    alias: eslint.settings['import/resolver'].alias.map.reduce((map, [alias, aliasPath]) => {
+      return Object.assign(map, { [alias]: path.resolve(__dirname, aliasPath.slice(2)) });
     }, {}),
   },
   module: {

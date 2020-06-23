@@ -4,7 +4,12 @@ const aliases = [
   ['modules', './src/modules'],
   ['app', './src/core/app'],
   ['theme', './src/core/theme'],
-  ['components', './src/shared/components']
+  ['components', './src/shared/components'],
+  ['config', './src/shared/config'],
+  ['context', './src/shared/context'],
+  ['entity', './src/shared/entity'],
+  ['utils', './src/shared/utils'],
+  ['hooks', './src/shared/hooks'],
 ];
 
 module.exports = {
@@ -44,19 +49,22 @@ module.exports = {
       'assets',
       'core',
       'app',
-      'context',
       'layout',
       'theme',
+      'modules',
+      'shared',
       'components',
+      'context',
       'config',
       'entity',
       'utils',
-      'modules',
-      'shared',
+      'hooks',
     ],
     'boundaries/alias': aliases.reduce((aliasesMap, [alias, path]) => {
       return Object.assign(aliasesMap, { [alias]: path });
     }, {}),
+    'boundaries/ignore': ['src/index.tsx'],
+    'boundaries/no-import-ignored': true,
     react: {
       version: 'detect',
     },
@@ -87,9 +95,9 @@ module.exports = {
       {
         allow: {
           assets: [],
-          core: ['modules', 'shared'],
+          core: ['core', 'modules', 'shared'],
           modules: ['assets', 'core', 'shared'],
-          shared: ['assets', 'core'],
+          shared: ['shared', 'assets', 'core'],
         },
       },
     ],
