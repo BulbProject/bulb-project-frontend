@@ -12,7 +12,7 @@ export const getDocumentsConfig = (): AxiosRequestConfig => {
   return createRequestConfig({
     baseUrl: documetsProviderConfig.baseUrl,
     method: 'get',
-    path: `entries/BulbProject/bulb-project-frontend/${documetsProviderConfig.branch}/${documetsProviderConfig.path}`,
+    path: `${documetsProviderConfig.branch}/${documetsProviderConfig.path}`,
   });
 };
 
@@ -20,6 +20,6 @@ export const getDocumentConfig = (fileName: string): AxiosRequestConfig => {
   return createRequestConfig({
     baseUrl: documetsProviderConfig.baseUrl,
     method: 'get',
-    path: `entries/BulbProject/bulb-project-frontend/${documetsProviderConfig.branch}/${documetsProviderConfig.path}/${fileName}.md`,
+    path: `${documetsProviderConfig.branch}/${documetsProviderConfig.path}/${fileName}.md`,
   });
 };

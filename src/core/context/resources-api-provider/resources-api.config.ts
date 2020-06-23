@@ -13,7 +13,7 @@ export const getResourcesConfig = (): AxiosRequestConfig => {
   return createRequestConfig({
     baseUrl: resourcesApiConfig.baseUrl,
     method: 'get',
-    path: `entries/BulbProject/bulb-project-frontend/${resourcesApiConfig.branch}/${resourcesApiConfig.path}`,
+    path: `${resourcesApiConfig.branch}/${resourcesApiConfig.path}`,
   });
 };
 
@@ -21,6 +21,6 @@ export const getResourceFileConfig = (fileName: string): AxiosRequestConfig => {
   return createRequestConfig({
     baseUrl: resourcesApiConfig.baseUrl,
     method: 'get',
-    path: `entries/BulbProject/bulb-project-frontend/${resourcesApiConfig.branch}/${resourcesApiConfig.path}/${fileName}.md`,
+    path: `${resourcesApiConfig.branch}/${resourcesApiConfig.path}/${fileName}.md`,
   });
 };
