@@ -12,6 +12,7 @@ import useAsync from 'honks/use-async';
 
 import { Container, Markdown } from 'shared/components';
 import { useResourcesApi } from 'core/context/resources-api-provider';
+import { useLayoutVariant } from 'core/layout/layout-variant';
 
 import ArrowIcon from '../../assets/icons/arrow.inline.svg';
 import ReloadIcon from '../../assets/icons/reload.inline.svg';
@@ -19,6 +20,8 @@ import ReloadIcon from '../../assets/icons/reload.inline.svg';
 import Styled from './resource.styles';
 
 const Resource: FC = () => {
+  useLayoutVariant('full');
+
   const { goBack } = useHistory();
   // @ToDo: rename to resourceFileName
   const { infoFileName } = useParams();
@@ -35,7 +38,7 @@ const Resource: FC = () => {
 
   useEffect(() => {
     getResourceFile();
-  }, []);
+  }, [infoFileName]);
 
   return (
     <Container>
