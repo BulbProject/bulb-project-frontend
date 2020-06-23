@@ -1,14 +1,16 @@
 import React, { FC, createContext, useContext, useReducer, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useAsync from 'honks/use-async';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
-import Alert from 'ustudio-ui/components/Alert';
+import { css } from 'styled-components';
+import Modal from 'ustudio-ui/components/Modal';
+import Text from 'ustudio-ui/components/Text';
 
 import type { AvailableVariant, RequestedNeed } from 'shared/entity/data';
 import { useApi } from 'core/context/api-provider';
 import { useCategory } from 'core/context/category-provider';
-import { Overlay } from '../../../modules/category/stepper/overlay';
+import { Overlay } from 'modules/category/stepper/overlay';
 
 import type { CalculationState } from './entity';
 import { CalculationDispatcher } from './entity/calculation.actions';
@@ -24,6 +26,7 @@ const CalculationContext = createContext<CalculationValue | undefined>(undefined
 
 const Calculation: FC = ({ children }) => {
   const [isSubmitting, setSubmitting] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const [state, _dispatch] = useReducer(calculationReducer, {
     formData: {},
@@ -35,9 +38,12 @@ const Calculation: FC = ({ children }) => {
   const { postCalculationConfig } = useApi();
   const { category, version } = useCategory();
 
-  const { call: postCalculation, isResolved, result, onPending, onReject } = useAsync<{
-    availableVariants: AvailableVariant[];
-  }>(async () => {
+  const { call: postCalculation, isResolved, isRejected, result, onPending, onReject } = useAsync<
+    {
+      availableVariants: AvailableVariant[];
+    },
+    AxiosError
+  >(async () => {
     const { data } = await axios(
       postCalculationConfig(category.id, version, { requestedNeed: state?.calculationPayload } as {
         requestedNeed: RequestedNeed;
@@ -73,6 +79,13 @@ const Calculation: FC = ({ children }) => {
     }
   }, [isResolved(result), isSubmitting]);
 
+  useEffect(() => {
+    if (isRejected(result)) {
+      setModalOpen(true);
+      setSubmitting(false);
+    }
+  }, [isRejected(result)]);
+
   return (
     <CalculationContext.Provider
       value={{
@@ -84,15 +97,23 @@ const Calculation: FC = ({ children }) => {
     >
       {isSubmitting && onPending(() => <Overlay isActive triggerRequest={postCalculation} />)}
 
-      {onReject(({ message }) => {
+      {onReject((error) => {
         return (
-          <>
-            <Alert onChange={postCalculation} isOpen horizontalPosition="center" verticalPosition="top">
-              Упс, щось пішло не так...
-            </Alert>
-
-            <Overlay isActive error={message} triggerRequest={postCalculation} />
-          </>
+          <Modal
+            isOpen={isModalOpen}
+            onChange={() => setModalOpen(false)}
+            title="Помилка"
+            styled={{
+              Overlay: css`
+                background-color: var(--c-darkest);
+              `,
+              Title: css`
+                color: var(--c-negative);
+              `,
+            }}
+          >
+            <Text>{error.response?.data.message || error.message}</Text>
+          </Modal>
         );
       })}
 
