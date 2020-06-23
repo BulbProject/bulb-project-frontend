@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 
 import { css } from 'styled-components';
 
@@ -48,6 +48,10 @@ export const Item: FC<{
   }, [variant.id]);
 
   const [imgLink, setImgLink] = useState(document);
+
+  useEffect(() => {
+    setImgLink(document);
+  }, [document]);
 
   const [isSpecificationOpen, setSpecificationOpen] = useState(false);
 
