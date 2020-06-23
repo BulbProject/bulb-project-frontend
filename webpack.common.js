@@ -1,5 +1,7 @@
 const path = require('path');
 
+const Dotenv = require('dotenv-webpack');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const eslint = require('./.eslintrc.js');
@@ -75,6 +77,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv({
+      systemvars: true
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
       favicon: path.resolve(__dirname, 'public/favicon.svg'),

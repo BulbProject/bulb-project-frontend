@@ -15,7 +15,7 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "baseUrl": "./src",
-    "types": ["./src/globals.d.ts", "jest", "node"]
+    "types": ["node", "jest"]
   },
   "include": [
     "./src/**/*.ts",

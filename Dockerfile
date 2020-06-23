@@ -1,15 +1,17 @@
 FROM node:lts-slim as builder
 
 ARG APP_PORT
-ARG NODE_ENV
+ARG BACKEND_URL
 
 WORKDIR /usr/src/bulb-project-frontend
 
-COPY package.json tsconfig.json webpack.common.js webpack.prod.js .babelrc.js .eslintrc.json yarn.lock ./
+COPY package.json tsconfig.json webpack.common.js webpack.prod.js .babelrc.js .eslintrc.js yarn.lock ./
 COPY src/ ./src
 COPY public/ ./public
 
-RUN yarn --production && yarn cache clean --force && yarn build
+ENV BACKEND_URL=$BACKEND_URL
+
+RUN yarn --production && yarn cache clean --force && BACKEND_URL=$BACKEND_URL yarn build
 
 FROM nginx:alpine
 

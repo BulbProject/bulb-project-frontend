@@ -4,7 +4,7 @@ import type { Category, CategoryVersion, RequestedNeed, SelectedVariant } from '
 import { createRequestConfig } from 'shared/utils';
 
 const apiConfig = {
-  baseUrl: 'https://bulb-api.eprocurement.systems',
+  baseUrl: process.env.BACKEND_URL ?? '',
 };
 
 export const getCategoriesConfig = (): AxiosRequestConfig =>

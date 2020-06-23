@@ -151,6 +151,7 @@ module.exports = {
 
     'id-length': 'warn',
     'no-console': 'warn',
+    'no-process-env': 'off',
     'no-underscore-dangle': 'off',
     'sort-imports': 'off',
   },
