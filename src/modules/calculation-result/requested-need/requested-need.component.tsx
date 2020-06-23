@@ -75,7 +75,7 @@ export const RequestedNeed: React.FC<{
         variant={requestedNeed}
         item={category.items.find((item) => item.id === requestedNeed.relatedItem) as ItemType}
         document={
-          category.documents.find((document) => {
+          (category?.documents ?? []).find((document) => {
             return document.relatesTo === 'item' && document.relatedItem === requestedNeed.relatedItem;
           })?.url
         }

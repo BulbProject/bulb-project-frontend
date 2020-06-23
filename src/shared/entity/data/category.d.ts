@@ -38,5 +38,5 @@ export interface Category {
    */
   items: Item[];
 
-  documents: Document[];
+  documents?: Document[];
 }
