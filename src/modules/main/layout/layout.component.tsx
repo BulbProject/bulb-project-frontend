@@ -35,17 +35,16 @@ export const Layout: FC = () => {
   return (
     <Styled.Main>
       {[
-        // eslint-disable-next-line react/jsx-key
-        <Hero />,
-        // eslint-disable-next-line react/jsx-key
-        <Documents />,
-        // eslint-disable-next-line react/jsx-key
-        <Styled.CategoryListWrapper>
-          <CategoriesList layoutVariant="empty" />
-        </Styled.CategoryListWrapper>,
-      ].map((component) => (
+        Hero,
+        Documents,
+        () => (
+          <Styled.CategoryListWrapper>
+            <CategoriesList layoutVariant="empty" />
+          </Styled.CategoryListWrapper>
+        ),
+      ].map((Component) => (
         <div key={uuid()} className="section">
-          {component}
+          <Component />
         </div>
       ))}
 
