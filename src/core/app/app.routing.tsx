@@ -4,8 +4,7 @@ import { RouteProps } from 'react-router-dom';
 
 import Calculation from 'shared/context/calculation';
 import CategoryProvider from 'core/context/category-provider';
-// eslint-disable-next-line boundaries/no-private,boundaries/allowed-types
-import { FullLayout } from '../layout/variants/full-layout';
+import { FullLayout } from 'core/layout';
 
 const MainPage = lazy(async () => import('../../modules/main/main.component'));
 const CategoriesListPage = lazy(async () => import('../../modules/categories-list/categories-list.component'));
