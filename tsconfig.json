@@ -15,8 +15,11 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "baseUrl": "./src",
-    "types": ["./typings.d.ts", "jest"]
+    "types": ["./src/globals.d.ts", "jest", "node"]
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }

@@ -1,0 +1,95 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import Text from 'ustudio-ui/components/Text';
+import Flex from 'ustudio-ui/components/Flex';
+import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
+
+import { ErrorBoundary, Container } from 'shared/components';
+import { useLayoutVariant } from 'core/layout';
+import type { AvailableVariant } from 'shared/entity/data';
+import { useCalculation } from 'shared/context/calculation';
+import FilterIcon from '../../assets/icons/filter.inline.svg';
+import { useCategory } from '../../core/context/category-provider';
+
+import { Items } from './items';
+import { ItemsLayout } from './items-layout';
+import { RequestedNeed } from './requested-need';
+import layoutConfig from './layout.config';
+import Styled from './calculation-result.styles';
+
+const CalculationResult: React.FC = () => {
+  useLayoutVariant('full');
+
+  const isLg = useMediaQuery('screen and (min-width: 832px)');
+  const isXl = useMediaQuery(`screen and (min-width: ${layoutConfig.maxWidth}px)`);
+
+  const { calculationData: availableVariants, calculationPayload, dispatch } = useCalculation();
+
+  const {
+    category: { id: categoryId },
+    version,
+  } = useCategory();
+
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+  const itemsQuantity = useMemo(() => (availableVariants ?? []).length, [availableVariants?.length]);
+  const hasMany = useMemo(() => itemsQuantity > 1, [itemsQuantity]);
+
+  useEffect(() => {
+    const sessionStorageData = sessionStorage.getItem(`${categoryId}/${version}`);
+
+    if (sessionStorageData) {
+      const parsedData = JSON.parse(sessionStorageData);
+
+      dispatch.addCalculationPayload(parsedData.payload);
+      dispatch.addCalculationData(parsedData.response.availableVariants);
+    }
+  }, []);
+
+  const RequestedNeedComponent = (
+    <RequestedNeed
+      hasMany={hasMany}
+      isDrawerOpen={isDrawerOpen}
+      setDrawerOpen={setDrawerOpen}
+      requestedNeed={availableVariants?.[0] as AvailableVariant}
+    />
+  );
+
+  return (
+    <ErrorBoundary>
+      {calculationPayload && availableVariants ? (
+        <>
+          <ItemsLayout itemsQuantity={itemsQuantity}>
+            {hasMany ? (
+              <Styled.Wrapper alignment={{ horizontal: isXl ? 'center' : 'start' }}>
+                {RequestedNeedComponent}
+
+                <Items availableVariants={availableVariants} />
+              </Styled.Wrapper>
+            ) : (
+              <Container>{RequestedNeedComponent}</Container>
+            )}
+          </ItemsLayout>
+
+          {!isLg && (
+            <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
+              <FilterIcon />
+            </Styled.MobileFilterButton>
+          )}
+        </>
+      ) : (
+        <Container>
+          <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
+            <Text color="negative">
+              Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для цієї
+              категорії ☹️
+            </Text>
+          </Flex>
+        </Container>
+      )}
+    </ErrorBoundary>
+  );
+};
+
+export default CalculationResult;

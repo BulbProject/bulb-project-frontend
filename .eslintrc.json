@@ -2,17 +2,20 @@
   "root": true,
   "env": {
     "browser": true,
-    "jest": true
+    "es6": true
   },
-  "extends": ["airbnb", "plugin:prettier/recommended", "prettier/@typescript-eslint"],
-  "plugins": ["@typescript-eslint", "import"],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
+  "extends": [
+    "airbnb",
+    "es/browser",
+    "plugin:import/typescript",
+    "plugin:sonarjs/recommended",
+    "plugin:promise/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/react",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["react", "react-hooks", "jsx-a11y", "sonarjs", "promise", "immutable", "import", "prettier"],
   "settings": {
     "react": {
       "version": "detect"
@@ -27,61 +30,72 @@
       },
       "alias": {
         "map": [
-          ["components", "./src/components"],
+          ["core", "./src/core"],
           ["shared", "./src/shared"],
-          ["config", "./src/config"],
-          ["pages", "./src/pages"],
-          ["types", "./src/types"],
-          ["utils", "./src/utils"],
-          ["hooks", "./src/hooks"],
-          ["assets", "./src/assets"],
-          ["context", "./src/context"]
+          ["modules", "./src/modules"],
+          ["assets", "./src/assets"]
         ],
         "extensions": [".ts", ".tsx", ".js", ".jsx", ".json", ".md"]
       }
     }
   },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "ignorePatterns": ["lib/**/*", "node_modules/**/*"],
   "rules": {
-    "@typescript-eslint/no-unused-vars": "warn",
-    "@typescript-eslint/member-ordering": "warn",
-    "import/named": "off",
-    "import/extensions": "off",
-    "import/no-cycle": "warn",
-    "import/prefer-default-export": "off",
-    "jsx-a11y/anchor-is-valid": [
+    "immutable/no-let": "error",
+    "immutable/no-mutation": "error",
+    "unicorn/filename-case": [
       "error",
       {
-        "components": ["Link"],
-        "specialLink": ["hrefLeft", "hrefRight"],
-        "aspects": ["invalidHref", "preferButton"]
+        "case": "kebabCase"
       }
     ],
-    "jsx-a11y/label-has-associated-control": [
-      "error",
-      {
-        "labelComponents": ["label"],
-        "labelAttributes": ["htmlFor"],
-        "controlComponents": ["input"]
-      }
-    ],
-    "no-console": "warn",
-    "no-restricted-globals": "off",
-    "no-empty-function": "warn",
-    "no-unused-vars": "warn",
-    "no-useless-constructor": "off",
-    "react/jsx-curly-newline": "off",
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [".tsx"]
-      }
-    ],
-    "react/jsx-props-no-spreading": "off",
-    "react/jsx-one-expression-per-line": "off",
-    "react/jsx-wrap-multilines": "warn",
-    "react/prop-types": "off",
-    "react/jsx-indent": "off",
     "prettier/prettier": "warn",
-    "spaced-comment": "warn"
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+    "react/prop-types": "off",
+    "import/extensions": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "import/no-cycle": "error",
+    "react/require-default-props": "warn",
+    "react/default-props-match-prop-types": "warn",
+    "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
+    "@typescript-eslint/explicit-function-return-type": [
+      "warn",
+      {
+        "allowExpressions": true,
+        "allowTypedFunctionExpressions": true
+      }
+    ],
+    "no-underscore-dangle": "off",
+    "sort-imports": "off",
+    "unicorn/no-fn-reference-in-iterator": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/member-ordering": "error",
+    "@typescript-eslint/generic-type-naming": "off",
+    "react/jsx-fragments": "off",
+    "react/jsx-boolean-value": ["error", "never"],
+    "@typescript-eslint/no-base-to-string": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/no-unnecessary-condition": "warn",
+    "sonarjs/cognitive-complexity": ["error", 20],
+    "id-length": "warn",
+    "react/jsx-handler-names": ["warn", {
+      "eventHandlerPrefix": "on",
+      "eventHandlerPropPrefix": "on",
+      "checkLocalVariables": true
+    }]
   }
 }
