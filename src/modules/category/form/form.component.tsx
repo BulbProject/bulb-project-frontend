@@ -59,8 +59,7 @@ export const Form: FC = ({ children }) => {
         );
       }}
       onSubmit={(state) => {
-        const recentRequirementGroup =
-          state?.[currentStep.id]?.[selectedRequirementGroups?.[currentStep.id]?.id ?? ''] || {};
+        const recentRequirementGroup = state[currentStep.id][selectedRequirementGroups?.[currentStep.id]?.id ?? ''];
 
         if (isSubmitting && !hasValidationFailed) {
           dispatch.addCalculationPayload(

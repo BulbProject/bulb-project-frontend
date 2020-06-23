@@ -1,19 +1,19 @@
 declare module '*.webp' {
-  const content: any;
+  const content: unknown;
   export default content;
 }
 
 declare module '*.svg' {
-  const content: any;
+  const content: unknown;
   export default content;
 }
 
 declare module '*.ttf' {
-  const content: any;
+  const content: unknown;
   export default content;
 }
 
 declare module '*.png' {
-  const content: any;
+  const content: unknown;
   export default content;
 }

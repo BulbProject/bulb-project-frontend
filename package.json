@@ -4,7 +4,7 @@
   "author": "uStudio Front-end Crew",
   "repository": "https://github.com/BulbProject/bulb-project-frontend.git",
   "scripts": {
-    "lint": "eslint --fix --quiet --ext .ts --ext .tsx .",
+    "lint": "eslint --ext .ts --ext .tsx ./src --ignore-pattern '*.spec.ts'",
     "format": "prettier --write ./**/*",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --color --mode development --config webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --mode production --progress --config webpack.prod.js",

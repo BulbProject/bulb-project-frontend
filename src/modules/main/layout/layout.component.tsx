@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
+// @ToDo: extract CategoriesList to a shared component
+// eslint-disable-next-line boundaries/allowed-types
 import CategoriesList from 'modules/categories-list/categories-list.component';
 
 import { Documents } from '../documents';

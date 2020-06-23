@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
 import { Mixin } from 'ustudio-ui/theme';
 import Text from 'ustudio-ui/components/Text';
@@ -10,7 +10,8 @@ const CategoriesListContainer = styled.div`
   width: 100%;
 `;
 
-const computeColumnTemplate = (columnCount: number) => `repeat(auto-fit, minmax(calc(100% / ${columnCount}), 1fr))`;
+const computeColumnTemplate = (columnCount: number): FlattenSimpleInterpolation =>
+  css`repeat(auto-fit, minmax(calc(100% / ${columnCount}), 1fr))`;
 
 const Grid = styled.div(
   ({ elementAmount }: { elementAmount: number }) => css`

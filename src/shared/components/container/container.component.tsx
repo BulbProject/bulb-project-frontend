@@ -5,7 +5,15 @@ import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 import Styled from './container.styles';
 
-const containerCellProps = (size: number) => {
+const containerCellProps = (
+  size: number
+): {
+  size: number;
+  offset: {
+    before: number;
+    after: number;
+  };
+} => {
   return {
     size,
     offset: { before: (12 - size) / 2, after: (12 - size) / 2 },

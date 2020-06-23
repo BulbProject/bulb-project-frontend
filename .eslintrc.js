@@ -140,13 +140,6 @@ module.exports = {
     '@typescript-eslint/no-unnecessary-condition': 'warn',
     'sonarjs/cognitive-complexity': ['error', 20],
     'id-length': 'warn',
-    'react/jsx-handler-names': [
-      'warn',
-      {
-        eventHandlerPrefix: 'on',
-        eventHandlerPropPrefix: 'on',
-        checkLocalVariables: true,
-      },
-    ],
+    'react/jsx-handler-names': 'off',
   },
 };

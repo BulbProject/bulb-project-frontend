@@ -33,7 +33,7 @@ const transformCategoryData = (categoryVersion?: CategoryVersion): CategoryCardD
     status,
     description,
     version,
-    image: documents.find((document) => !document.relatedItem)?.url,
+    image: documents?.find((document) => !document.relatedItem)?.url,
   };
 };
 
@@ -46,7 +46,7 @@ const getCategory = async (
   return { id, version, categoryVersion: transformCategoryData(categoryVersion) };
 };
 
-const sortCategories = (categories: CategoryCard[]) => {
+const sortCategories = (categories: CategoryCard[]): CategoryCard[] => {
   const pendingCategories = categories.filter((category) => category.categoryVersion?.status === 'pending');
   const activeCategories = categories.filter((category) => category.categoryVersion?.status === 'active');
   const categoriesWithoutStatus = categories.filter((category) => !category?.categoryVersion?.status);
@@ -127,7 +127,7 @@ const CategoriesList: FC<{
           return (
             !isLoading && (
               <Flex alignment={{ vertical: 'center' }}>
-                {!categoriesVersions?.length && <Text variant="h3">Тут ще немає категорій</Text>}
+                {!categoriesVersions.length && <Text variant="h3">Тут ще немає категорій</Text>}
 
                 <Styled.Grid elementAmount={categoriesVersions.length + 1}>
                   <Styled.BigCell>

@@ -3,7 +3,7 @@ import Flex from 'ustudio-ui/components/Flex';
 
 import { efficiencyClasses, EfficiencyClass as EfficiencyClassType } from './entity';
 
-const getEfficiencyColor = (efficiencyClass: EfficiencyClassType) => {
+const getEfficiencyColor = (efficiencyClass: EfficiencyClassType): string => {
   switch (efficiencyClass) {
     case 'A++':
       return '#33a357';

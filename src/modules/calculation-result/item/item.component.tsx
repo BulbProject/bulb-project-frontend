@@ -20,7 +20,7 @@ import { Metrics } from './metrics';
 
 import Styled from './item.styles';
 
-const isEconomyObservation = ({ id }: { id: string }) => {
+const isEconomyObservation = ({ id }: { id: string }): boolean => {
   return id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy';
 };
 
@@ -62,7 +62,7 @@ export const Item: FC<{
 
         {Boolean(economyObservations.length) && <Economy economyObservations={economyObservations} />}
 
-        <Styled.Image src={imgLink} onError={() => setImgLink(Bulb)} />
+        <Styled.Image src={imgLink} onError={() => setImgLink(Bulb as string)} />
       </Styled.ImageContainer>
 
       <Styled.Content direction="column">

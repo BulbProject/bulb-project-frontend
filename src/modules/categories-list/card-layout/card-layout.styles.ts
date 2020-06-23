@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
 import { Mixin } from 'ustudio-ui/theme';
 
@@ -21,7 +21,7 @@ const Cell = styled.div<{ image?: string }>(({ image }) => {
   `;
 });
 
-const wideCardTitle = () => css`
+const wideCardTitle = (): FlattenSimpleInterpolation => css`
   ${StyledCard.CardTitle} {
     ${Mixin.Font.h2()};
 

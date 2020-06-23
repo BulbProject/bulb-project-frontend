@@ -7,10 +7,16 @@ import { isBoolean } from '../utils';
 
 import Styled from './title.styles';
 
-const parseOptionGroupsDescription = ({ optionDetails, unit }: { optionDetails: OptionDetails; unit?: Unit }) => {
-  return (
-    'optionGroups' in optionDetails && `${optionDetails.optionGroups[0].description}${unit ? `, ${unit.name}` : ''}`
-  );
+const parseOptionGroupsDescription = ({
+  optionDetails,
+  unit,
+}: {
+  optionDetails: OptionDetails;
+  unit?: Unit;
+}): string | undefined => {
+  if ('optionGroups' in optionDetails) {
+    return `${optionDetails.optionGroups[0].description}${unit ? `, ${unit.name}` : ''}`;
+  }
 };
 
 export const Title: FC<{

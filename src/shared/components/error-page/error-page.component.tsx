@@ -27,7 +27,7 @@ export const ErrorPage: FC = () => {
         </Flex>
 
         <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'space-around', vertical: 'center' }}>
-          <Button appearance="text" onClick={() => window.location.reload()}>
+          <Button appearance="text" onClick={window.location.reload}>
             Оновити сторінку
           </Button>
 
