@@ -9,8 +9,8 @@ import { ErrorBoundary, Container } from 'shared/components';
 import { useLayoutVariant } from 'core/layout';
 import type { AvailableVariant } from 'shared/entity/data';
 import { useCalculation } from 'shared/context/calculation';
+import { useCategory } from 'core/context/category-provider';
 import FilterIcon from '../../assets/icons/filter.inline.svg';
-import { useCategory } from '../../core/context/category-provider';
 
 import { Items } from './items';
 import { ItemsLayout } from './items-layout';
