@@ -83,6 +83,21 @@ module.exports = {
     },
   },
   rules: {
+    '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
+    '@typescript-eslint/explicit-function-return-type': [
+      'warn',
+      {
+        allowExpressions: true,
+        allowTypedFunctionExpressions: true,
+      },
+    ],
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/member-ordering': 'error',
+    '@typescript-eslint/generic-type-naming': 'off',
+    '@typescript-eslint/no-base-to-string': 'off',
+    '@typescript-eslint/unbound-method': 'off',
+    '@typescript-eslint/no-unnecessary-condition': 'warn',
+
     'boundaries/no-private': [
       'error',
       {
@@ -101,45 +116,39 @@ module.exports = {
         },
       },
     ],
+
     'immutable/no-let': 'error',
     'immutable/no-mutation': 'error',
+
+    'import/extensions': 'off',
+    'import/prefer-default-export': 'off',
+    'import/no-cycle': 'error',
+
+    'prettier/prettier': 'warn',
+
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
+    'react/prop-types': 'off',
+    'react/jsx-one-expression-per-line': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'warn',
+    'react/default-props-match-prop-types': 'warn',
+    'react/jsx-fragments': 'off',
+    'react/jsx-boolean-value': ['error', 'never'],
+    'react/jsx-handler-names': 'off',
+
+    'sonarjs/cognitive-complexity': ['error', 20],
+
+    'unicorn/no-fn-reference-in-iterator': 'off',
     'unicorn/filename-case': [
       'error',
       {
         case: 'kebabCase',
       },
     ],
-    'prettier/prettier': 'warn',
-    'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
-    'react/prop-types': 'off',
-    'import/extensions': 'off',
-    'react/jsx-one-expression-per-line': 'off',
-    'import/prefer-default-export': 'off',
-    'react/jsx-props-no-spreading': 'off',
-    'import/no-cycle': 'error',
-    'react/require-default-props': 'warn',
-    'react/default-props-match-prop-types': 'warn',
-    '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
-    '@typescript-eslint/explicit-function-return-type': [
-      'warn',
-      {
-        allowExpressions: true,
-        allowTypedFunctionExpressions: true,
-      },
-    ],
+
+    'id-length': 'warn',
+    'no-console': 'warn',
     'no-underscore-dangle': 'off',
     'sort-imports': 'off',
-    'unicorn/no-fn-reference-in-iterator': 'off',
-    '@typescript-eslint/ban-ts-comment': 'off',
-    '@typescript-eslint/member-ordering': 'error',
-    '@typescript-eslint/generic-type-naming': 'off',
-    'react/jsx-fragments': 'off',
-    'react/jsx-boolean-value': ['error', 'never'],
-    '@typescript-eslint/no-base-to-string': 'off',
-    '@typescript-eslint/unbound-method': 'off',
-    '@typescript-eslint/no-unnecessary-condition': 'warn',
-    'sonarjs/cognitive-complexity': ['error', 20],
-    'id-length': 'warn',
-    'react/jsx-handler-names': 'off',
   },
 };
