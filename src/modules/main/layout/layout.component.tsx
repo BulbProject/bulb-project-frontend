@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { v4 as uuid } from 'uuid';
 
 import CategoriesList from 'modules/categories-list/categories-list.component';
 
@@ -35,18 +34,19 @@ export const Layout: FC = () => {
   return (
     <Styled.Main>
       {[
-        Hero,
-        Documents,
-        () => (
-          <Styled.CategoryListWrapper>
-            <CategoriesList layoutVariant="empty" />
-          </Styled.CategoryListWrapper>
-        ),
-      ].map((Component) => (
-        <div key={uuid()} className="section">
-          <Component />
-        </div>
-      ))}
+        <Hero key="Hero" />,
+        <Documents key="Documents" />,
+        <Styled.CategoryListWrapper key="CategoryListWrapper">
+          <CategoriesList layoutVariant="empty" />
+        </Styled.CategoryListWrapper>,
+      ].map((component, index) => {
+        return (
+          // eslint-disable-next-line react/no-array-index-key
+          <div key={`${index}`} className="section">
+            {component}
+          </div>
+        );
+      })}
 
       <DarkMode />
     </Styled.Main>

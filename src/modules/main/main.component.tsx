@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import useMount from 'honks/use-mount';
 import useMediaQuery from 'ustudio-ui/hooks/use-media-query';
 
 // Type declarations are missing for this package
@@ -13,30 +12,25 @@ import DocumentsApiProvider from './documents-api-provider';
 import { Layout } from './layout';
 
 const Main: FC = () => {
-  const hasMounted = useMount();
   const isMd = useMediaQuery('screen and (min-width: 768px)');
 
   useLayoutVariant('empty');
 
-  if (hasMounted()) {
-    return (
-      <DocumentsApiProvider>
-        {isMd ? (
-          <ReactFullpage
-            licenseKey="Nu9TbnPK-hA3_269z-aVtu9yF4-g7gX7RCY"
-            navigation
-            scrollOverflow
-            callbacks={['onLeave']}
-            render={Layout}
-          />
-        ) : (
-          <Layout />
-        )}
-      </DocumentsApiProvider>
-    );
-  }
-
-  return null;
+  return (
+    <DocumentsApiProvider>
+      {isMd ? (
+        <ReactFullpage
+          licenseKey="Nu9TbnPK-hA3_269z-aVtu9yF4-g7gX7RCY"
+          navigation
+          scrollOverflow
+          callbacks={['onLeave']}
+          render={Layout}
+        />
+      ) : (
+        <Layout />
+      )}
+    </DocumentsApiProvider>
+  );
 };
 
 export default Main;
