@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { LayoutVariantProvider, LayoutVariant, Variant } from './layout-variant';
 
 export const Layout: FC = ({ children }) => {
-  const [variant, setVariant] = useState<Variant>('full');
+  const [variant, setVariant] = useState<Variant>('empty');
 
   return (
     <>
