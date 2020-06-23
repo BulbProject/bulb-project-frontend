@@ -6,7 +6,7 @@ ARG NODE_ENV
 WORKDIR /usr/src/bulb-project-frontend
 
 COPY package.json tsconfig.json webpack.common.js webpack.prod.js .babelrc.js .eslintrc.json yarn.lock ./
-COPY src ./src
+COPY src/ ./src
 COPY public/ ./public
 
 RUN yarn --production && yarn cache clean --force && yarn build
