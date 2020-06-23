@@ -59,7 +59,8 @@ export const Form: FC = ({ children }) => {
         );
       }}
       onSubmit={(state) => {
-        const recentRequirementGroup = state[currentStep.id][selectedRequirementGroups?.[currentStep.id]?.id ?? ''];
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        const recentRequirementGroup = state?.[currentStep.id]?.[selectedRequirementGroups?.[currentStep.id]?.id ?? ''];
 
         if (isSubmitting && !hasValidationFailed) {
           dispatch.addCalculationPayload(
@@ -102,7 +103,7 @@ export const Form: FC = ({ children }) => {
 
           <Cell>
             <Styled.MobileButtonsContainer xs={{ gap: 32 }}>
-              {!isFirstStep && isXs && (
+              {!isFirstStep && isXs() && (
                 <Cell>
                   <BackButton appearance="outlined" />
                 </Cell>
@@ -112,7 +113,7 @@ export const Form: FC = ({ children }) => {
                 <ForwardButton appearance="contained" onFinish={() => setSubmitting(true)} />
               </Cell>
 
-              {!isFirstStep && !isXs && (
+              {!isFirstStep && !isXs() && (
                 <Cell>
                   <BackButton appearance="outlined" />
                 </Cell>

@@ -1,28 +1,25 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useMedia = function (query: string): () => boolean {
-  // eslint-disable-next-line immutable/no-let
-  let { current: isMatching } = useRef<boolean>(false);
+  const [isMatching, setMatching] = useState(false);
 
-  const handleChange = useCallback((match: MediaQueryListEvent): void => {
-    isMatching = match.matches;
+  const handleChange = useCallback(<M extends MediaQueryListEvent | MediaQueryList>(match: M): void => {
+    setMatching(match.matches);
   }, []);
 
   useEffect(() => {
     const match = window.matchMedia(query);
 
-    handleChange((match as unknown) as MediaQueryListEvent);
+    handleChange(match);
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (match.addEventListener) {
+    if (match.addEventListener !== undefined) {
       match.addEventListener('change', handleChange);
     } else {
       match.addListener(handleChange);
     }
 
     return () => {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (match.removeEventListener) {
+      if (match.removeEventListener !== undefined) {
         match.removeEventListener('change', handleChange);
       } else {
         match.removeListener(handleChange);
@@ -30,5 +27,5 @@ export const useMedia = function (query: string): () => boolean {
     };
   }, []);
 
-  return useCallback(() => isMatching, []);
+  return useCallback(() => isMatching, [isMatching]);
 };
