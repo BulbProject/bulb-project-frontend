@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  bulb-frontend:
+    container_name: 'bulb-frontend-${APP_ENV}'
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BACKEND_URL=${BACKEND_URL}
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    expose:
+      - ${APP_PORT}
+    environment:
+      - APP_PORT=${APP_PORT}

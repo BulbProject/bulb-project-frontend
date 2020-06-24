@@ -1,14 +1,11 @@
 {
   "compilerOptions": {
     "strict": true,
-    "target": "esnext",
-    "module": "esnext",
+    "target": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
-    "lib": [
-      "dom",
-      "es2017"
-    ],
+    "lib": ["dom", "esnext"],
     "jsx": "preserve",
     "allowJs": true,
     "skipLibCheck": true,
@@ -16,14 +13,13 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "baseUrl": "./src",
+    "types": ["node", "jest"]
   },
   "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
