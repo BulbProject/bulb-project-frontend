@@ -1,5 +1,6 @@
 FROM node:lts-slim as builder
 
+ARG APP_ENV
 ARG APP_PORT
 ARG BACKEND_URL
 
@@ -9,9 +10,10 @@ COPY package.json tsconfig.json webpack.common.js webpack.prod.js .babelrc.js .e
 COPY src/ ./src
 COPY public/ ./public
 
+ENV APP_ENV=$APP_ENV
 ENV BACKEND_URL=$BACKEND_URL
 
-RUN yarn --production && yarn cache clean --force && BACKEND_URL=$BACKEND_URL yarn build
+RUN yarn --production && yarn cache clean --force && BACKEND_URL=$BACKEND_URL APP_ENV=$APP_ENV yarn build
 
 FROM nginx:alpine
 
