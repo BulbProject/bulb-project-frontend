@@ -51,7 +51,7 @@ export const routes: RouteProps[] = [
     ),
   },
   {
-    path: '/info/:infoFileName',
+    path: '/info/:resourceFileName',
     render: () => (
       <FullLayout>
         <ResourcePage />

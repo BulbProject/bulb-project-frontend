@@ -20,14 +20,13 @@ import Styled from './resource.styles';
 
 const Resource: FC = () => {
   const { goBack } = useHistory();
-  // @ToDo: rename to resourceFileName
-  const { infoFileName } = useParams();
+  const { resourceFileName } = useParams();
 
   const { getResourceFileConfig } = useResourcesApi();
 
   const { onPending, onResolve, onReject, call: getResourceFile } = useAsync<{ content: string }, AxiosError>(
     async () => {
-      const { data } = await axios(getResourceFileConfig(infoFileName as string));
+      const { data } = await axios(getResourceFileConfig(resourceFileName as string));
 
       return data;
     }
@@ -35,12 +34,12 @@ const Resource: FC = () => {
 
   useEffect(() => {
     getResourceFile();
-  }, [infoFileName]);
+  }, [resourceFileName]);
 
   return (
     <Container>
       <Helmet>
-        <title>{infoFileName}</title>
+        <title>{resourceFileName}</title>
       </Helmet>
 
       {onPending(() => {

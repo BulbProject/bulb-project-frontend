@@ -5,8 +5,7 @@ import { gitHubApiConfig } from 'shared/config';
 
 const resourcesApiConfig = {
   ...gitHubApiConfig,
-  // @ToDo: rename path to `resources`
-  path: 'info',
+  path: 'resources',
 };
 
 export const getResourcesConfig = (): AxiosRequestConfig => {
