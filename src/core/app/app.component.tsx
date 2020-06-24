@@ -27,6 +27,22 @@ export const App: FC = () => {
         },
       }}
     >
+      {process.env.APP_ENV === 'DEV' && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: '50%',
+            zIndex: 1000,
+            transform: 'translateX(-50%)',
+            fontSize: 20,
+            color: 'red',
+            userSelect: 'none',
+          }}
+        >
+          Development build
+        </div>
+      )}
       <ApiProvider>
         <ResourcesApiProvider>
           <BrowserRouter>
