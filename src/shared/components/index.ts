@@ -7,3 +7,4 @@ export * from './error-boundary';
 export * from './classification';
 export * from './fallback-button';
 export * from './category-header';
+export * from './fade';

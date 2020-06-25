@@ -6,7 +6,7 @@ import Text from 'ustudio-ui/components/Text';
 import axios from 'axios';
 import useAsync from 'honks/use-async';
 
-import { ErrorBoundary, Loader } from 'shared/components';
+import { ErrorBoundary, Loader, Fade } from 'shared/components';
 import type { CategoriesListItem } from 'shared/entity/data';
 import { useApi } from 'core/context/api-provider';
 
@@ -38,41 +38,45 @@ const CategoriesList: FC = () => {
   }, []);
 
   return (
-    <ErrorBoundary>
-      <Styled.CategoriesListContainer>
-        {onPending(() => (
-          <Loader size={64} />
-        ))}
+    <Fade>
+      <ErrorBoundary>
+        <Styled.CategoriesListContainer>
+          {onPending(() => (
+            <Loader size={64} />
+          ))}
 
-        {onResolve((categories) => (
-          <Flex alignment={{ vertical: 'center' }}>
-            {categories.length > 0 ? (
-              <Styled.Grid elementAmount={categories.length + 1}>
-                <Styled.BigCell>
-                  <Styled.CategoriesHeader>
-                    <Styled.Title variant="h1">Виберіть категорію для&nbsp;проведення розрахунків</Styled.Title>
-                  </Styled.CategoriesHeader>
-                </Styled.BigCell>
+          {onResolve((categories) => (
+            <Fade>
+              <Flex alignment={{ vertical: 'center' }}>
+                {categories.length > 0 ? (
+                  <Styled.Grid elementAmount={categories.length + 1}>
+                    <Styled.BigCell>
+                      <Styled.CategoriesHeader>
+                        <Styled.Title variant="h1">Виберіть категорію для&nbsp;проведення розрахунків</Styled.Title>
+                      </Styled.CategoriesHeader>
+                    </Styled.BigCell>
 
-                {sortCategories(categories).map((category, cardIndex) => {
-                  return (
-                    <CardLayout cardIndex={cardIndex} image={category?.image} key={category.id}>
-                      <Card category={category} />
-                    </CardLayout>
-                  );
-                })}
-              </Styled.Grid>
-            ) : (
-              <Text variant="h3">Нажаль в систему ще не додано ні одної категорії</Text>
-            )}
-          </Flex>
-        ))}
+                    {sortCategories(categories).map((category, cardIndex) => {
+                      return (
+                        <CardLayout cardIndex={cardIndex} image={category?.image} key={category.id}>
+                          <Card category={category} />
+                        </CardLayout>
+                      );
+                    })}
+                  </Styled.Grid>
+                ) : (
+                  <Text variant="h3">Нажаль в систему ще не додано ні одної категорії</Text>
+                )}
+              </Flex>
+            </Fade>
+          ))}
 
-        {onReject(() => (
-          <Error reloadCategories={getCategories} />
-        ))}
-      </Styled.CategoriesListContainer>
-    </ErrorBoundary>
+          {onReject(() => (
+            <Error reloadCategories={getCategories} />
+          ))}
+        </Styled.CategoriesListContainer>
+      </ErrorBoundary>
+    </Fade>
   );
 };
 

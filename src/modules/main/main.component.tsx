@@ -6,6 +6,7 @@ import React, { FC } from 'react';
 import ReactFullpage from '@fullpage/react-fullpage';
 import 'fullpage.js/vendors/scrolloverflow';
 import { useMedia } from 'shared/hooks';
+import { Fade } from 'shared/components/fade';
 
 import DocumentsApiProvider from './documents-api-provider';
 
@@ -15,19 +16,21 @@ const Main: FC = () => {
   const isMd = useMedia('screen and (min-width: 768px)');
 
   return (
-    <DocumentsApiProvider>
-      {isMd() ? (
-        <ReactFullpage
-          licenseKey="Nu9TbnPK-hA3_269z-aVtu9yF4-g7gX7RCY"
-          navigation
-          scrollOverflow
-          callbacks={['onLeave']}
-          render={Layout}
-        />
-      ) : (
-        <Layout />
-      )}
-    </DocumentsApiProvider>
+    <Fade>
+      <DocumentsApiProvider>
+        {isMd() ? (
+          <ReactFullpage
+            licenseKey="Nu9TbnPK-hA3_269z-aVtu9yF4-g7gX7RCY"
+            navigation
+            scrollOverflow
+            callbacks={['onLeave']}
+            render={Layout}
+          />
+        ) : (
+          <Layout />
+        )}
+      </DocumentsApiProvider>
+    </Fade>
   );
 };
 
