@@ -15,6 +15,7 @@ const Requirement = styled.label`
 const Error = styled(Text)`
   position: absolute;
 
+  top: 100%;
   bottom: -1rem;
   left: 0;
 `;
