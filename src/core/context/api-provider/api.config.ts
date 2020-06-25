@@ -11,7 +11,7 @@ export const getCategoriesConfig = (): AxiosRequestConfig =>
   createRequestConfig({
     baseUrl: apiConfig.baseUrl,
     method: 'get',
-    path: 'categories',
+    path: 'categories-details',
   });
 
 export const getCategoryVersionConfig = (
