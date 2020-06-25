@@ -5,7 +5,7 @@ import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 import { useMedia } from 'shared/hooks';
 
-import { ErrorBoundary, Container } from 'shared/components';
+import { ErrorBoundary, Container, Loader } from 'shared/components';
 import type { AvailableVariant } from 'shared/entity/data';
 import { useCalculation } from 'shared/context/calculation';
 import { useCategory } from 'core/context/category-provider';
@@ -20,6 +20,8 @@ import Styled from './calculation-result.styles';
 const CalculationResult: React.FC = () => {
   const isLg = useMedia('screen and (min-width: 832px)');
   const isXl = useMedia(`screen and (min-width: ${layoutConfig.maxWidth}px)`);
+
+  const [isLoading, setLoading] = useState(true);
 
   const { calculationData: availableVariants, calculationPayload, dispatch } = useCalculation();
 
@@ -42,6 +44,7 @@ const CalculationResult: React.FC = () => {
       dispatch.addCalculationPayload(parsedData.payload);
       dispatch.addCalculationData(parsedData.response.availableVariants);
     }
+    setLoading(false);
   }, []);
 
   const RequestedNeedComponent = (
@@ -55,35 +58,43 @@ const CalculationResult: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      {calculationPayload && availableVariants ? (
+      {isLoading ? (
+        <Loader />
+      ) : (
         <>
-          <ItemsLayout itemsQuantity={itemsQuantity}>
-            {hasMany ? (
-              <Styled.Wrapper alignment={{ horizontal: isXl() ? 'center' : 'start' }}>
-                {RequestedNeedComponent}
+          {calculationPayload && availableVariants && (
+            <>
+              <ItemsLayout itemsQuantity={itemsQuantity}>
+                {hasMany ? (
+                  <Styled.Wrapper alignment={{ horizontal: isXl() ? 'center' : 'start' }}>
+                    {RequestedNeedComponent}
 
-                <Items availableVariants={availableVariants} />
-              </Styled.Wrapper>
-            ) : (
-              <Container>{RequestedNeedComponent}</Container>
-            )}
-          </ItemsLayout>
+                    <Items availableVariants={availableVariants} />
+                  </Styled.Wrapper>
+                ) : (
+                  <Container>{RequestedNeedComponent}</Container>
+                )}
+              </ItemsLayout>
 
-          {!isLg() && (
-            <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
-              <FilterIcon />
-            </Styled.MobileFilterButton>
+              {!isLg() && (
+                <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
+                  <FilterIcon />
+                </Styled.MobileFilterButton>
+              )}
+            </>
+          )}
+
+          {(!calculationPayload || !availableVariants) && (
+            <Container>
+              <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
+                <Text color="negative">
+                  Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
+                  цієї категорії ☹️
+                </Text>
+              </Flex>
+            </Container>
           )}
         </>
-      ) : (
-        <Container>
-          <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
-            <Text color="negative">
-              Нажаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для цієї
-              категорії ☹️
-            </Text>
-          </Flex>
-        </Container>
       )}
     </ErrorBoundary>
   );
