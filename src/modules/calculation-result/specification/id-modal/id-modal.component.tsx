@@ -22,7 +22,8 @@ export const IdModal: FC<{
   isCopying: boolean;
   setCopying(value: boolean): void;
   setAlertOpen(value: boolean): void;
-}> = ({ identificator, isCopying, setAlertOpen, setCopying }) => {
+  setIdentificator(identificator: string): void;
+}> = ({ identificator, isCopying, setAlertOpen, setCopying, setIdentificator }) => {
   const idRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [isTooltipShown, setTooltipShown] = useState(false);
@@ -42,6 +43,7 @@ export const IdModal: FC<{
       onChange={() => {
         setCopying(false);
         setAlertOpen(false);
+        setIdentificator('');
       }}
       title={<Text variant="h5">Ідентифікатор</Text>}
       styled={{
