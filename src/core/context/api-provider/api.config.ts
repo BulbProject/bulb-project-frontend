@@ -12,6 +12,9 @@ export const getCategoriesConfig = (): AxiosRequestConfig =>
     baseUrl: apiConfig.baseUrl,
     method: 'get',
     path: 'categories',
+    query: {
+      details: true,
+    },
   });
 
 export const getCategoryVersionConfig = (

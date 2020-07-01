@@ -6,8 +6,6 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
 
-import ReloadIconEl from '../../../assets/icons/reload.inline.svg';
-
 const Link = styled(RouterLink)`
   &:after {
     display: none;
@@ -106,20 +104,6 @@ const ContentCard = styled(BaseCard)<{ isDisabled?: boolean }>(
   `
 );
 
-const ReloadIcon = styled(ReloadIconEl)`
-  width: 2rem;
-  height: 2rem;
-
-  display: inline-block;
-
-  color: var(--c-primary);
-  transition: var(--transition);
-
-  &:hover {
-    transform: rotate(90deg);
-  }
-`;
-
 const Styled = {
   Link,
   BaseCard,
@@ -127,7 +111,6 @@ const Styled = {
   CardContent,
   CardDescription,
   ContentCard,
-  ReloadIcon,
 };
 
 export default Styled;

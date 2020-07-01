@@ -10,7 +10,7 @@ import { Helmet } from 'react-helmet';
 import axios, { AxiosError } from 'axios';
 import useAsync from 'honks/use-async';
 
-import { Container, Markdown } from 'shared/components';
+import { Container, Markdown, Fade } from 'shared/components';
 import { useResourcesApi } from 'core/context/resources-api-provider';
 
 import ArrowIcon from '../../assets/icons/arrow.inline.svg';
@@ -37,51 +37,57 @@ const Resource: FC = () => {
   }, [resourceFileName]);
 
   return (
-    <Container>
-      <Helmet>
-        <title>{resourceFileName}</title>
-      </Helmet>
+    <Fade>
+      <Container>
+        <Helmet>
+          <title>{resourceFileName}</title>
+        </Helmet>
 
-      {onPending(() => {
-        return (
-          <Styled.CenteredContainer>
-            <Spinner appearance={{ size: 64 }} delay={300} />
-          </Styled.CenteredContainer>
-        );
-      })}
+        {onPending(() => {
+          return (
+            <Styled.CenteredContainer>
+              <Spinner appearance={{ size: 64 }} delay={300} />
+            </Styled.CenteredContainer>
+          );
+        })}
 
-      {onResolve(({ content }) => {
-        return <Markdown source={content} />;
-      })}
+        {onResolve(({ content }) => {
+          return (
+            <Fade>
+              <Markdown source={content} />
+            </Fade>
+          );
+        })}
 
-      {onReject(({ code }) => {
-        return (
-          <Flex direction="column" alignment={{ horizontal: 'center' }}>
-            <Flex margin={{ top: 'large', bottom: 'regular' }}>
-              <Text variant="h3" align="center" color="var(--c-negative)">
-                Хм, щось пішло не так...
-              </Text>
+        {onReject(({ code }) => {
+          return (
+            <Flex direction="column" alignment={{ horizontal: 'center' }}>
+              <Flex margin={{ top: 'large', bottom: 'regular' }}>
+                <Text variant="h3" align="center" color="var(--c-negative)">
+                  Хм, щось пішло не так...
+                </Text>
+              </Flex>
+
+              <Flex alignment={{ horizontal: 'center' }}>
+                <Styled.ActionButton onClick={() => goBack()}>
+                  <ArrowIcon />
+                  Назад
+                </Styled.ActionButton>
+
+                {code === '404' && (
+                  <Flex isInline margin={{ left: 'regular' }}>
+                    <Styled.ActionButton onClick={getResourceFile}>
+                      <ReloadIcon />
+                      Оновити сторінку
+                    </Styled.ActionButton>
+                  </Flex>
+                )}
+              </Flex>
             </Flex>
-
-            <Flex alignment={{ horizontal: 'center' }}>
-              <Styled.ActionButton onClick={() => goBack()}>
-                <ArrowIcon />
-                Назад
-              </Styled.ActionButton>
-
-              {code === '404' && (
-                <Flex isInline margin={{ left: 'regular' }}>
-                  <Styled.ActionButton onClick={getResourceFile}>
-                    <ReloadIcon />
-                    Оновити сторінку
-                  </Styled.ActionButton>
-                </Flex>
-              )}
-            </Flex>
-          </Flex>
-        );
-      })}
-    </Container>
+          );
+        })}
+      </Container>
+    </Fade>
   );
 };
 

@@ -31,7 +31,10 @@ export const Filter: FC<{
         <Form
           name={id}
           watch={(state) => {
-            setFormChanged(JSON.stringify(state[id]) !== JSON.stringify(formData));
+            setFormChanged(
+              JSON.stringify(state[id]) !== JSON.stringify(formData) &&
+                !JSON.stringify(state[id], (_, val) => (val === undefined ? 'undefined' : val)).includes('undefined')
+            );
           }}
           onSubmit={(state) => {
             if (!hasValidationFailed) {

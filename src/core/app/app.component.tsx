@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { ThemeProvider } from 'ustudio-ui/theme';
 
+import { Fade } from 'shared/components/fade';
+
 import { Layout } from '../layout';
 
 import ApiProvider from '../context/api-provider';
@@ -27,23 +29,43 @@ export const App: FC = () => {
         },
       }}
     >
-      <ApiProvider>
-        <ResourcesApiProvider>
-          <BrowserRouter>
-            <Layout>
-              <Suspense fallback={<div />}>
-                <Switch>
-                  {routes.map((route) => (
-                    <Route {...route} key={route.path as string} />
-                  ))}
-                </Switch>
-              </Suspense>
-            </Layout>
-          </BrowserRouter>
-        </ResourcesApiProvider>
-      </ApiProvider>
+      <Fade>
+        {process.env.APP_ENV === 'DEV' && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: '50%',
+              zIndex: 1000,
+              transform: 'translateX(-50%)',
+              fontSize: 20,
+              color: 'red',
+              userSelect: 'none',
+              pointerEvents: 'none',
+              opacity: '0.4',
+            }}
+          >
+            Development build
+          </div>
+        )}
+        <ApiProvider>
+          <ResourcesApiProvider>
+            <BrowserRouter>
+              <Layout>
+                <Suspense fallback={<div />}>
+                  <Switch>
+                    {routes.map((route) => (
+                      <Route {...route} key={route.path as string} />
+                    ))}
+                  </Switch>
+                </Suspense>
+              </Layout>
+            </BrowserRouter>
+          </ResourcesApiProvider>
+        </ApiProvider>
 
-      <GlobalStyles />
+        <GlobalStyles />
+      </Fade>
     </ThemeProvider>
   );
 };

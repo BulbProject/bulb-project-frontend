@@ -7,16 +7,19 @@ import { isBoolean } from '../utils';
 
 import Styled from './title.styles';
 
-const parseOptionGroupsDescription = ({
-  optionDetails,
-  unit,
-}: {
-  optionDetails: OptionDetails;
-  unit?: Unit;
-}): string | undefined => {
-  if ('optionGroups' in optionDetails) {
-    return `${optionDetails.optionGroups[0].description}${unit ? `, ${unit.name}` : ''}`;
+const titleGenerator = (
+  title: string,
+  hasSingleOptionGroup: boolean,
+  optionDetails: OptionDetails,
+  unit?: Unit
+): string => {
+  const safeUnit = unit ? `, ${unit.name}` : '';
+
+  if (hasSingleOptionGroup && 'optionGroups' in optionDetails && optionDetails.optionGroups[0].description) {
+    return `${optionDetails.optionGroups[0].description}${safeUnit}`;
   }
+
+  return `${title}${safeUnit}`;
 };
 
 export const Title: FC<{
@@ -25,7 +28,7 @@ export const Title: FC<{
   hasSingleOptionGroup: boolean;
   optionDetails: OptionDetails;
   unit?: Unit;
-  title?: string;
+  title: string;
 }> = ({ dataType, isDisabled, hasSingleOptionGroup, optionDetails, unit, title }) => {
   return (
     <Styled.Title
@@ -33,7 +36,7 @@ export const Title: FC<{
       isBoolean={isBoolean(dataType)}
       color={isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'}
     >
-      {hasSingleOptionGroup ? parseOptionGroupsDescription({ optionDetails, unit }) : title}
+      {titleGenerator(title, hasSingleOptionGroup, optionDetails, unit)}
     </Styled.Title>
   );
 };

@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 
-import { CategoryCardData } from '../../entity';
+import { CategoriesListItem } from 'shared/entity/data';
 
 import Styled from '../card.styles';
 
-export const BaseCard: FC<CategoryCardData> = ({ title, description, status }) => {
+export const BaseCard: FC<CategoriesListItem> = ({ title, description, status }) => {
   return (
     <Styled.ContentCard isDisabled={status === 'pending'}>
       <Styled.CardContent>

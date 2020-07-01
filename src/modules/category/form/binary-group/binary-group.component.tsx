@@ -1,4 +1,4 @@
-import { useMount } from 'honks';
+import useMount from 'honks/use-mount';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { css } from 'styled-components';
 

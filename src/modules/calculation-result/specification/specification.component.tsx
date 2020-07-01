@@ -174,6 +174,7 @@ export const Specification: FC<{
         isCopying={isCopying}
         setCopying={setCopying}
         setAlertOpen={setAlertOpen}
+        setIdentificator={setIdentificator}
       />
     </>
   );
