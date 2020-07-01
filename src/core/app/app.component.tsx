@@ -41,6 +41,8 @@ export const App: FC = () => {
               fontSize: 20,
               color: 'red',
               userSelect: 'none',
+              pointerEvents: 'none',
+              opacity: '0.4',
             }}
           >
             Development build
