@@ -1,5 +1,6 @@
 import { Dispatch } from 'react';
-import { AvailableVariant, RequestedNeed, RequirementGroup } from 'shared/entity/data';
+import { RequestedNeed, RequirementGroup } from 'shared/entity/data';
+import { CalculationResponse } from './calculation-response';
 
 export type CalculationAction = SetActiveRequirementGroup | AddFormData | AddCalculationPayload | AddCalculationData;
 
@@ -27,7 +28,7 @@ export class CalculationDispatcher {
     });
   }
 
-  public addCalculationData(payload: AvailableVariant[]): void {
+  public addCalculationData(payload: CalculationResponse): void {
     return this.dispatch({
       type: 'add_calculation_data',
       payload,
@@ -58,5 +59,5 @@ interface AddCalculationPayload {
 
 interface AddCalculationData {
   type: 'add_calculation_data';
-  payload: AvailableVariant[];
+  payload: CalculationResponse;
 }

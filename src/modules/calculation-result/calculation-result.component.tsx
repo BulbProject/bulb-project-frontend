@@ -23,7 +23,9 @@ const CalculationResult: React.FC = () => {
 
   const [isLoading, setLoading] = useState(true);
 
-  const { calculationData: availableVariants, calculationPayload, dispatch } = useCalculation();
+  const { calculationData, calculationPayload, dispatch } = useCalculation();
+
+  const { availableVariants } = calculationData ?? {};
 
   const {
     category: { id: categoryId },
@@ -42,7 +44,7 @@ const CalculationResult: React.FC = () => {
       const parsedData = JSON.parse(sessionStorageData);
 
       dispatch.addCalculationPayload(parsedData.payload);
-      dispatch.addCalculationData(parsedData.response.availableVariants);
+      dispatch.addCalculationData(parsedData.response);
     }
     setLoading(false);
   }, []);
