@@ -7,7 +7,7 @@ import { css } from 'styled-components';
 import Modal from 'ustudio-ui/components/Modal';
 import Text from 'ustudio-ui/components/Text';
 
-import type { AvailableVariant, RequestedNeed } from 'shared/entity/data';
+import type { RequestedNeed } from 'shared/entity/data';
 import { useApi } from 'core/context/api-provider';
 import { useCategory } from 'core/context/category-provider';
 import { Overlay } from 'modules/category/stepper/overlay';
@@ -15,6 +15,7 @@ import { Overlay } from 'modules/category/stepper/overlay';
 import type { CalculationState } from './entity';
 import { CalculationDispatcher } from './entity/calculation.actions';
 import { calculationReducer } from './entity/calculation.reducer';
+import { CalculationResponse } from './entity/calculation-response';
 
 interface CalculationValue extends CalculationState {
   isSubmitting: boolean;
@@ -39,9 +40,7 @@ const Calculation: FC = ({ children }) => {
   const { category, version } = useCategory();
 
   const { call: postCalculation, isResolved, isRejected, result, onPending, onReject } = useAsync<
-    {
-      availableVariants: AvailableVariant[];
-    },
+    CalculationResponse,
     AxiosError
   >(async () => {
     const { data } = await axios(
@@ -71,7 +70,7 @@ const Calculation: FC = ({ children }) => {
         })
       );
 
-      dispatch.addCalculationData(result.data.availableVariants);
+      dispatch.addCalculationData(result.data);
 
       setSubmitting(false);
 
