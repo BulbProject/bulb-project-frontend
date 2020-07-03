@@ -23,9 +23,13 @@ const generateSelectedVariant = ({
   requirement,
 }: {
   availableVariant: AvailableVariant;
-  requirement: Requirement;
+  requirement?: Requirement;
 }): SelectedVariant => {
   const { criteria: _, ...restAvailableVariants } = availableVariant;
+
+  if (requirement === undefined) {
+    return { ...restAvailableVariants, requirementResponses: undefined };
+  }
 
   return {
     ...restAvailableVariants,
@@ -60,7 +64,7 @@ const formatDateTime = (): string => {
 export const Specification: FC<{
   isOpen: boolean;
   setOpen: (isOpen: boolean) => void;
-  criterion: Criterion;
+  criterion?: Criterion;
   availableVariant: AvailableVariant;
   categoryTitle: string;
 }> = ({ isOpen, setOpen, criterion, availableVariant, categoryTitle }) => {
@@ -69,7 +73,7 @@ export const Specification: FC<{
     version,
   } = useCategory();
 
-  const [requirement, setRequirement] = useState(criterion.requirementGroups[0].requirements[0]);
+  const [requirement, setRequirement] = useState(criterion?.requirementGroups[0].requirements[0]);
   const [mode, setMode] = useState(modes[0].value);
 
   const { postSpecificationConfig } = useApi();
