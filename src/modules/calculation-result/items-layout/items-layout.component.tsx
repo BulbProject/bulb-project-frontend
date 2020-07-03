@@ -2,23 +2,28 @@ import React, { FC } from 'react';
 import { useMedia } from 'shared/hooks';
 
 import Styled from './items-layout.styles';
+import { useCategory } from '../../../core/context/category-provider';
 
 export const ItemsLayout: FC<{ itemsQuantity: number }> = ({ itemsQuantity, children }) => {
   const isLg = useMedia('screen and (min-width: 832px)');
+
+  const { category } = useCategory();
+
+  const shouldShiftImage = category.id === '31500000-1';
 
   switch (itemsQuantity) {
     case 1: {
       return <Styled.SingleLayout>{children}</Styled.SingleLayout>;
     }
     case 2: {
-      return <Styled.DoubleLayout>{children}</Styled.DoubleLayout>;
+      return <Styled.DoubleLayout shouldShiftImage={shouldShiftImage}>{children}</Styled.DoubleLayout>;
     }
     case 3: {
-      return <Styled.TripleLayout>{children}</Styled.TripleLayout>;
+      return <Styled.TripleLayout shouldShiftImage={shouldShiftImage}>{children}</Styled.TripleLayout>;
     }
     default: {
       return (
-        <Styled.ManyLayout quantity={itemsQuantity} isLg={isLg()}>
+        <Styled.ManyLayout quantity={itemsQuantity} isLg={isLg()} shouldShiftImage={shouldShiftImage}>
           {children}
         </Styled.ManyLayout>
       );
