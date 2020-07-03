@@ -23,7 +23,7 @@ interface CalculationValue extends CalculationState {
   setSubmitting(value: boolean): void;
 }
 
-const CalculationContext = createContext<CalculationValue | undefined>(undefined);
+export const CalculationContext = createContext<CalculationValue | undefined>(undefined);
 
 const Calculation: FC = ({ children }) => {
   const [isSubmitting, setSubmitting] = useState(false);
