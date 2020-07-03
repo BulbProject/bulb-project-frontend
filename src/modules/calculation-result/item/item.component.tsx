@@ -11,6 +11,7 @@ import { AvailableVariant, Item as ItemType } from 'shared/entity/data';
 import { useCategory } from 'core/context/category-provider';
 import { useCalculation } from 'shared/context/calculation';
 import Bulb from '../../../assets/images/bulb.svg';
+import recommendedBadge from '../../../assets/images/recommended-badge.svg';
 
 import { CategoryFeature } from '../category-feature';
 import { Specification } from '../specification';
@@ -20,8 +21,6 @@ import { MarketModal } from './market-modal';
 import { Metrics } from './metrics';
 
 import Styled from './item.styles';
-
-import recommended from '../../../assets/images/recommended-logo.svg';
 
 const isEconomyObservation = ({ id }: { id: string }): boolean => {
   return id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy';
@@ -65,7 +64,7 @@ export const Item: FC<{
   return (
     <Styled.Item direction="column">
       {variant.id === recommendedVariant && (
-        <Styled.RecommendedVariant title="Рекомендовано" src={recommended} alt="Recommended variant" />
+        <Styled.RecommendedVariant title="Рекомендований варіант" src={recommendedBadge} alt="Рекомендований варіант" />
       )}
       <Styled.ImageContainer isReversed={!isRequested}>
         <CategoryFeature availableVariant={variant} item={item} isItemRequested={isRequested} />
