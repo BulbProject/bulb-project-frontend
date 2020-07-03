@@ -71,7 +71,11 @@ export const Item: FC<{
 
         {Boolean(economyObservations.length) && <Economy economyObservations={economyObservations} />}
 
-        <Styled.Image src={imgLink} onError={() => setImgLink(Bulb as string)} />
+        {category.id === '31110000-0' ? (
+          <Styled.SmallImage src={imgLink} onError={() => setImgLink(Bulb as string)} />
+        ) : (
+          <Styled.Image src={imgLink} onError={() => setImgLink(Bulb as string)} />
+        )}
       </Styled.ImageContainer>
 
       <Styled.Content direction="column">
