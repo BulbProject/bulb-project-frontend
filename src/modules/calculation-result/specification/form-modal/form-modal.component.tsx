@@ -43,7 +43,7 @@ export const FormModal: FC<{
     <Modal
       isOpen={isOpen}
       onChange={setOpen}
-      title={<Text variant="h5">{criterion ? criterion.title : 'Тендерна документація'}</Text>}
+      title={<Text variant="h5">{criterion?.title ?? 'Тендерна документація'}</Text>}
       styled={{
         Modal: css`
             width: 100%;
