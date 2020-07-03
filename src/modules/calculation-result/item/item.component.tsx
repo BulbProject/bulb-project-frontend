@@ -29,7 +29,8 @@ export const Item: FC<{
   item: ItemType;
   document?: string;
   isRequested?: boolean;
-}> = ({ variant, item, document, isRequested = false }) => {
+  showMetrics?: boolean;
+}> = ({ variant, item, document, isRequested = false, showMetrics = false }) => {
   const { category } = useCategory();
 
   const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
@@ -78,7 +79,7 @@ export const Item: FC<{
           <Text variant="h6">{`Кількість: ${variant.quantity}`}</Text>
         </Styled.ItemDescription>
 
-        <Metrics isRequested={isRequested} showTitles={isRequested} metrics={metrics} />
+        <Metrics isRequested={isRequested} showTitles={showMetrics} metrics={metrics} />
 
         <Metrics
           isRequested={isRequested}
@@ -115,7 +116,7 @@ export const Item: FC<{
               ],
             },
           ]}
-          showTitles={isRequested}
+          showTitles={showMetrics}
         />
 
         <Flex direction="column" margin={{ top: 'regular' }}>
