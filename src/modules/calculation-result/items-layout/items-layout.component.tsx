@@ -1,15 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
+
 import { useMedia } from 'shared/hooks';
+import { useCategory } from 'core/context/category-provider';
 
 import Styled from './items-layout.styles';
-import { useCategory } from '../../../core/context/category-provider';
 
 export const ItemsLayout: FC<{ itemsQuantity: number }> = ({ itemsQuantity, children }) => {
   const isLg = useMedia('screen and (min-width: 832px)');
 
   const { category } = useCategory();
 
-  const shouldShiftImage = category.id === '31500000-1';
+  const shouldShiftImage = useMemo(() => ['31500000-1'].includes(category.id), [category.id]);
 
   switch (itemsQuantity) {
     case 1: {
