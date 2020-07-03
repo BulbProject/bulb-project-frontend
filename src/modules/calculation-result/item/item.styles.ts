@@ -13,8 +13,6 @@ const ImageContainer = styled(Flex)`
   width: 100%;
 
   padding: var(--i-regular) 0 var(--i-medium);
-
-  object-fit: contain;
 `;
 
 const RecommendedVariant = styled.img`

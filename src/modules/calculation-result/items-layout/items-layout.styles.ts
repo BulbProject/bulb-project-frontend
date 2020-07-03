@@ -22,7 +22,7 @@ const { EfficiencyClassesList } = StyledLampsFeature;
 
 const { itemWidth, requestedNeedWidth } = layoutConfig;
 
-interface ShiftImageInterface {
+interface ShouldShiftImage {
   shouldShiftImage: boolean;
 }
 
@@ -63,7 +63,7 @@ const SingleLayout = styled.section`
   }
 `;
 
-const DoubleLayout = styled.section<ShiftImageInterface>(
+const DoubleLayout = styled.section<ShouldShiftImage>(
   ({ shouldShiftImage }) => css`
     display: flex;
     justify-content: center;
@@ -85,7 +85,7 @@ const DoubleLayout = styled.section<ShiftImageInterface>(
       min-width: ${itemWidth}px;
       width: 50%;
 
-      ${shouldShiftImage && getVariantImageStyles()};
+      ${shouldShiftImage ? getVariantImageStyles() : ''};
     }
 
     ${ItemContent} {
@@ -99,7 +99,7 @@ const DoubleLayout = styled.section<ShiftImageInterface>(
   `
 );
 
-const TripleLayout = styled.section<ShiftImageInterface>(
+const TripleLayout = styled.section<ShouldShiftImage>(
   ({ shouldShiftImage }) => css`
     display: flex;
     justify-content: center;
@@ -129,7 +129,7 @@ const TripleLayout = styled.section<ShiftImageInterface>(
       ${Item} {
         width: 50%;
 
-        ${shouldShiftImage && getVariantImageStyles(1980)};
+        ${shouldShiftImage ? getVariantImageStyles(1980) : ''};
       }
 
       &:after {
@@ -180,7 +180,7 @@ const ManyLayout = styled.section<{ quantity: number; isLg: boolean; shouldShift
         ${Item} {
           width: ${100 / variantsQuantity}%;
 
-          ${shouldShiftImage && getVariantImageStyles(1980)};
+          ${shouldShiftImage ? getVariantImageStyles(1980) : ''};
         }
 
         &:after {
