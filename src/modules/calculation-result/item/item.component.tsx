@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState, useContext } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 
 import { css } from 'styled-components';
 
@@ -9,6 +9,7 @@ import Button from 'ustudio-ui/components/Button';
 import { Classification } from 'shared/components';
 import { AvailableVariant, Item as ItemType } from 'shared/entity/data';
 import { useCategory } from 'core/context/category-provider';
+import { useCalculation } from 'shared/context/calculation';
 import Bulb from '../../../assets/images/bulb.svg';
 
 import { CategoryFeature } from '../category-feature';
@@ -17,8 +18,6 @@ import { Economy } from './economy';
 
 import { MarketModal } from './market-modal';
 import { Metrics } from './metrics';
-
-import { CalculationContext } from '../../../shared/context/calculation';
 
 import Styled from './item.styles';
 
@@ -36,11 +35,9 @@ export const Item: FC<{
 }> = ({ variant, item, document, isRequested = false }) => {
   const { category } = useCategory();
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const { calculationData } = useContext(CalculationContext);
+  const { calculationData } = useCalculation();
 
-  const { recommendedVariant } = calculationData;
+  const { recommendedVariant } = calculationData ?? {};
 
   const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
 
@@ -68,10 +65,7 @@ export const Item: FC<{
   return (
     <Styled.Item direction="column">
       {variant.id === recommendedVariant && (
-        <Styled.RecommendedVariantContainer>
-          <Styled.RecommendedVariant src={recommended} alt="Recommended variant" />
-          <Styled.TooltipText>Рекомедований варіант</Styled.TooltipText>
-        </Styled.RecommendedVariantContainer>
+        <Styled.RecommendedVariant title="Рекомендовано" src={recommended} alt="Recommended variant" />
       )}
       <Styled.ImageContainer isReversed={!isRequested}>
         <CategoryFeature availableVariant={variant} item={item} isItemRequested={isRequested} />
