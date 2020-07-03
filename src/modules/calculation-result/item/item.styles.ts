@@ -14,7 +14,7 @@ const ImageContainer = styled(Flex)`
 
   padding: var(--i-regular) 0 var(--i-medium);
 
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 const RecommendedVariant = styled.img`
@@ -43,18 +43,8 @@ const Image = styled.img`
 
   height: 100%;
   width: auto;
-`;
 
-const SmallImage = styled.img`
-  position: absolute;
-
-  top: 0;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  height: 30%;
-  width: auto;
+  object-fit: scale-down;
 `;
 
 const Item = styled(Flex)`
@@ -103,7 +93,6 @@ const Styled = {
   ImageContainer,
   RecommendedVariant,
   Image,
-  SmallImage,
   Content,
   ItemDescription,
   Classifications,
