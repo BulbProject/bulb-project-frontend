@@ -4,15 +4,19 @@ import { useCalculation } from 'shared/context/calculation';
 import { useMedia } from 'shared/hooks';
 import { Items } from '../items';
 import { Container } from '../../../shared/components/container';
-import { ItemsLayout } from '../items-layout';
 import { PartialLayout } from '../partial-layout';
+import { ItemsLayout } from '../items-layout';
 import { RequestedNeed } from '../requested-need';
 import { AvailableVariant } from '../../../shared/entity/data';
 
 import Styled from '../calculation-result.styles';
 import layoutConfig from '../layout.config';
 
-export const Layout: React.FC<{ availableVariants: AvailableVariant[], hasMany: boolean, itemsQuantity: any }> = ({ availableVariants, hasMany, itemsQuantity }) => {
+export const Layout: React.FC<{ availableVariants: AvailableVariant[]; hasMany: boolean; itemsQuantity: any }> = ({
+  availableVariants,
+  hasMany,
+  itemsQuantity,
+}) => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const { calculationData } = useCalculation();
   const isXl = useMedia(`screen and (min-width: ${layoutConfig.maxWidth}px)`);
@@ -42,13 +46,11 @@ export const Layout: React.FC<{ availableVariants: AvailableVariant[], hasMany: 
           </Styled.Wrapper>
         </PartialLayout>
       )}
-
       {requestedVariant && (
         <ItemsLayout itemsQuantity={itemsQuantity}>
           {hasMany ? (
             <Styled.Wrapper alignment={{ horizontal: isXl() ? 'center' : 'start' }}>
               {RequestedNeedComponent}
-
               <Items
                 availableVariants={availableVariants}
                 isDrawerOpen={isDrawerOpen}
