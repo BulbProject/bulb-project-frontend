@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState, useContext } from 'react';
 
 import { css } from 'styled-components';
 
@@ -18,7 +18,11 @@ import { Economy } from './economy';
 import { MarketModal } from './market-modal';
 import { Metrics } from './metrics';
 
+import { CalculationContext } from '../../../shared/context/calculation';
+
 import Styled from './item.styles';
+
+import recommended from '../../../assets/images/recommended-logo.svg';
 
 const isEconomyObservation = ({ id }: { id: string }): boolean => {
   return id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy';
@@ -31,6 +35,12 @@ export const Item: FC<{
   isRequested?: boolean;
 }> = ({ variant, item, document, isRequested = false }) => {
   const { category } = useCategory();
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  const { calculationData } = useContext(CalculationContext);
+
+  const { recommendedVariant } = calculationData;
 
   const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
 
@@ -57,6 +67,12 @@ export const Item: FC<{
 
   return (
     <Styled.Item direction="column">
+      {variant.id === recommendedVariant && (
+        <Styled.RecommendedVariantContainer>
+          <Styled.RecommendedVariant src={recommended} alt="Recommended variant" />
+          <Styled.TooltipText>Рекомедований варіант</Styled.TooltipText>
+        </Styled.RecommendedVariantContainer>
+      )}
       <Styled.ImageContainer isReversed={!isRequested}>
         <CategoryFeature availableVariant={variant} item={item} isItemRequested={isRequested} />
 

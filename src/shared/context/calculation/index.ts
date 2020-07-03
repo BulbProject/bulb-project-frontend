@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/no-cycle
-export { default, useCalculation } from './calculation.context';
+export { default, useCalculation, CalculationContext } from './calculation.context';
