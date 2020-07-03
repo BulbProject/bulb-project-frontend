@@ -45,6 +45,18 @@ const Image = styled.img`
   width: auto;
 `;
 
+const SmallImage = styled.img`
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  height: 30%;
+  width: auto;
+`;
+
 const Item = styled(Flex)`
   position: relative;
 
@@ -91,6 +103,7 @@ const Styled = {
   ImageContainer,
   RecommendedVariant,
   Image,
+  SmallImage,
   Content,
   ItemDescription,
   Classifications,
