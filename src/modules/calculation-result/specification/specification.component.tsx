@@ -28,7 +28,7 @@ const generateSelectedVariant = ({
   const { criteria: _, ...restAvailableVariants } = availableVariant;
 
   if (requirement === undefined) {
-    return { ...restAvailableVariants, requirementResponses: undefined };
+    return { ...restAvailableVariants };
   }
 
   return {

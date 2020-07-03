@@ -43,7 +43,7 @@ export const FormModal: FC<{
     <Modal
       isOpen={isOpen}
       onChange={setOpen}
-      title={<Text variant="h5">{criterion?.title}</Text>}
+      title={<Text variant="h5">{criterion ? criterion.title : 'Тендерна документація'}</Text>}
       styled={{
         Modal: css`
             width: 100%;
@@ -92,7 +92,7 @@ export const FormModal: FC<{
       {(isDownloading && <Loader size={32} />) as ReactElement}
 
       <Flex direction="column" alignment={{ horizontal: 'center' }}>
-        {criterion === undefined ? null : (
+        {criterion && (
           <SpecificationStyles.Group>
             <Styled.GroupTitle>{criterion.description}</Styled.GroupTitle>
 
