@@ -89,7 +89,7 @@ const TripleLayout = styled.section`
     }
 
     ${Item} {
-      width: 50%;
+      width: 100%;
 
       ${getVariantImageStyles(1980)};
     }

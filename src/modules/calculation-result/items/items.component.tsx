@@ -7,16 +7,22 @@ import { useCategory } from 'core/context/category-provider';
 import { Item } from '../item';
 import Styled from './items.styles';
 import { FilterDrawer } from '../filter-drawer';
+import { useCalculation } from '../../../shared/context/calculation';
 
 export const Items: FC<{
   availableVariants: AvailableVariant[];
   isDrawerOpen: boolean;
   setDrawerOpen: (isDrawerOpen: boolean) => void;
   showFilter?: boolean;
-}> = ({ availableVariants, isDrawerOpen, setDrawerOpen, showFilter = false }) => {
+  noRequested?: boolean;
+}> = ({ availableVariants, isDrawerOpen, setDrawerOpen, showFilter = false, noRequested = false  }) => {
   const {
     category: { items, documents },
   } = useCategory();
+
+  const { calculationData } = useCalculation();
+
+  const { requestedVariant } = calculationData ?? {};
 
   return (
     <Styled.Items direction="column">
@@ -32,7 +38,7 @@ export const Items: FC<{
           </Text>
         </Styled.ItemsTitle>
 
-        {availableVariants.slice(1).map((variant) => {
+        {availableVariants.slice(Number(Boolean(requestedVariant))).map((variant) => {
           const relatedItem = items.find((item) => item.id === variant.relatedItem) as ItemType;
 
           const relatedDocument = documents?.find(

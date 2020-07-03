@@ -18,7 +18,7 @@ export const PartialLayout: FC<{ itemsQuantity: number }> = ({ itemsQuantity, ch
     }
     default: {
       return (
-        <Styled.ManyLayout quantity={itemsQuantity} isLg={isLg()}>
+        <Styled.ManyLayout quantity={itemsQuantity - 1} isLg={isLg()}>
           {children}
         </Styled.ManyLayout>
       );
