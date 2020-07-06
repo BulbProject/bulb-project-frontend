@@ -11,7 +11,7 @@ const Items = styled(Flex)<{ noRequestedVariant: boolean }>(
     position: relative;
 
     @media screen and (min-width: 1130px) {
-      max-width: ${noRequestedVariant && '100%'};
+      max-width: ${noRequestedVariant ? '100%' : 'calc(100% - 450px)'};
     }
 
     &:before,
