@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { ErrorBoundary, CategoryHeader, Fade } from 'shared/components';
 import { FormValidator } from 'shared/context/form-validator';
 import { useCalculation } from 'shared/context/calculation';
-import { useCategory } from '../../core/context/category-provider';
+import { useCategory } from 'core/context/category-provider';
 
 import { Form } from './form';
 import { Stepper } from './stepper';
