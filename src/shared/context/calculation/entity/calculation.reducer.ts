@@ -26,6 +26,12 @@ export const calculationReducer: Reducer<CalculationState, CalculationAction> = 
         },
       };
     }
+    case 'set_form_data': {
+      return {
+        ...state,
+        formData: action.payload,
+      };
+    }
     case 'add_calculation_payload': {
       return {
         ...state,

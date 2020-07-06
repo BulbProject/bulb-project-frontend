@@ -2,7 +2,12 @@ import { Dispatch } from 'react';
 import { RequestedNeed, RequirementGroup } from 'shared/entity/data';
 import { CalculationResponse } from './calculation-response';
 
-export type CalculationAction = SetActiveRequirementGroup | AddFormData | AddCalculationPayload | AddCalculationData;
+export type CalculationAction =
+  | SetActiveRequirementGroup
+  | AddFormData
+  | SetFormData
+  | AddCalculationPayload
+  | AddCalculationData;
 
 export class CalculationDispatcher {
   public constructor(private readonly dispatch: Dispatch<CalculationAction>) {}
@@ -17,6 +22,13 @@ export class CalculationDispatcher {
   public addFormData(payload: AddFormData['payload']): void {
     return this.dispatch({
       type: 'add_form_data',
+      payload,
+    });
+  }
+
+  public setFormData(payload: SetFormData['payload']): void {
+    return this.dispatch({
+      type: 'set_form_data',
       payload,
     });
   }
@@ -50,6 +62,11 @@ interface AddFormData {
     criterionId: string;
     requirements: Record<string, unknown>;
   };
+}
+
+interface SetFormData {
+  type: 'set_form_data';
+  payload: Record<string, Record<string, unknown>>;
 }
 
 interface AddCalculationPayload {
