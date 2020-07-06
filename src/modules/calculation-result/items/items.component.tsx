@@ -15,7 +15,7 @@ export const Items: FC<{
   setDrawerOpen: (isDrawerOpen: boolean) => void;
   showFilter?: boolean;
   isRequestedNeedAbsent?: boolean;
-}> = ({ availableVariants, isDrawerOpen, setDrawerOpen, showFilter = false, isRequestedNeedAbsent = false }) => {
+}> = ({ availableVariants, isDrawerOpen, setDrawerOpen, isRequestedNeedAbsent = false }) => {
   const {
     category: { items, documents },
   } = useCategory();
@@ -25,12 +25,15 @@ export const Items: FC<{
   return (
     <Styled.Items direction="column" isRequestedNeedAbsent={isRequestedNeedAbsent}>
       <Styled.AvailableVariants>
-        <Styled.ItemsTitle>
-          <Text variant="body" appearance="bold" color="var(--c-dark)">
-            {itemsQuantity > 1 ? 'Більш енергоефективні варіанти' : 'Більш енергоефективний варіант'}
-            {showFilter && <FilterDrawer isDrawerOpen={isDrawerOpen} setDrawerOpen={setDrawerOpen} />}
-          </Text>
-        </Styled.ItemsTitle>
+        {isRequestedNeedAbsent ? (
+          <FilterDrawer isDrawerOpen={isDrawerOpen} setDrawerOpen={setDrawerOpen} />
+        ) : (
+          <Styled.ItemsTitle>
+            <Text variant="body" appearance="bold" color="var(--c-dark)">
+              {itemsQuantity > 1 ? 'Більш енергоефективні варіанти' : 'Більш енергоефективний варіант'}
+            </Text>
+          </Styled.ItemsTitle>
+        )}
 
         {availableVariants.map((variant) => {
           const relatedItem = items.find((item) => item.id === variant.relatedItem) as ItemType;
