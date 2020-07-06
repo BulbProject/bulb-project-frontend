@@ -31,8 +31,8 @@ export const Item: FC<{
   item: ItemType;
   document?: string;
   isRequested?: boolean;
-  showMetrics?: boolean;
-}> = ({ variant, item, document, isRequested = false, showMetrics = false }) => {
+  showMetricsTitles?: boolean;
+}> = ({ variant, item, document, isRequested = false, showMetricsTitles = false }) => {
   const { category } = useCategory();
 
   const { calculationData } = useCalculation();
@@ -88,7 +88,7 @@ export const Item: FC<{
           <Text variant="h6">{`Кількість: ${variant.quantity}`}</Text>
         </Styled.ItemDescription>
 
-        <Metrics isRequested={isRequested} showTitles={showMetrics} metrics={metrics} />
+        <Metrics isRequested={isRequested} showTitles={showMetricsTitles} metrics={metrics} />
 
         <Metrics
           isRequested={isRequested}
@@ -125,7 +125,7 @@ export const Item: FC<{
               ],
             },
           ]}
-          showTitles={showMetrics}
+          showTitles={showMetricsTitles}
         />
 
         <Flex direction="column" margin={{ top: 'regular' }}>

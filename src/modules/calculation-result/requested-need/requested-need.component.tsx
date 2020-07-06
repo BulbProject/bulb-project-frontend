@@ -38,7 +38,7 @@ export const RequestedNeed: FC<{
 
       <Item
         isRequested
-        showMetrics
+        showMetricsTitles
         variant={requestedNeed}
         item={category.items.find((item) => item.id === requestedNeed.relatedItem) as ItemType}
         document={
