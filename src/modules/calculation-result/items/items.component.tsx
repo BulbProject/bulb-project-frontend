@@ -25,15 +25,19 @@ export const Items: FC<{
   return (
     <Styled.Items direction="column" isRequestedNeedAbsent={isRequestedNeedAbsent}>
       <Styled.AvailableVariants>
-        {isRequestedNeedAbsent ? (
-          <FilterDrawer isDrawerOpen={isDrawerOpen} setDrawerOpen={setDrawerOpen} />
-        ) : (
-          <Styled.ItemsTitle>
+        <Styled.ItemsTitle>
+          {isRequestedNeedAbsent ? (
+            <FilterDrawer
+              isDrawerOpen={isDrawerOpen}
+              setDrawerOpen={setDrawerOpen}
+              isRequestedNeedAbsent={isRequestedNeedAbsent}
+            />
+          ) : (
             <Text variant="body" appearance="bold" color="var(--c-dark)">
               {itemsQuantity > 1 ? 'Більш енергоефективні варіанти' : 'Більш енергоефективний варіант'}
             </Text>
-          </Styled.ItemsTitle>
-        )}
+          )}
+        </Styled.ItemsTitle>
 
         {availableVariants.map((variant) => {
           const relatedItem = items.find((item) => item.id === variant.relatedItem) as ItemType;

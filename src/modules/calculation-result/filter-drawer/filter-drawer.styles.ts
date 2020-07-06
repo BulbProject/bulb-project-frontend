@@ -1,19 +1,26 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from 'ustudio-ui/components/Button';
 
-const FilterButton = styled(Button)`
-  svg {
-    width: 0.7rem;
+interface IsRequestedNeedAbsent {
+  isRequestedNeedAbsent: boolean;
+}
+const FilterButton = styled(Button)<IsRequestedNeedAbsent>(
+  ({ isRequestedNeedAbsent }) => css`
+    position: ${isRequestedNeedAbsent ? 'fixed' : 'relative'};
 
-    margin-left: var(--i-medium);
-    margin-top: 1px;
-  }
+    svg {
+      width: 0.7rem;
 
-  @media screen and (max-width: 832px) {
-    visibility: hidden;
-    pointer-events: none;
-  }
-`;
+      margin-left: var(--i-medium);
+      margin-top: 1px;
+    }
+
+    @media screen and (max-width: 832px) {
+      visibility: hidden;
+      pointer-events: none;
+    }
+  `
+);
 
 const DrawerButton = styled.button`
   display: flex;
