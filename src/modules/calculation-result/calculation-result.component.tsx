@@ -8,9 +8,9 @@ import { useMedia } from 'shared/hooks';
 import { ErrorBoundary, Container, Loader, Fade } from 'shared/components';
 import { useCalculation } from 'shared/context/calculation';
 import { useCategory } from 'core/context/category-provider';
+import FilterIcon from '../../assets/icons/filter.inline.svg';
 
 import { Layout } from './layout';
-import FilterIcon from '../../assets/icons/filter.inline.svg';
 
 import Styled from './calculation-result.styles';
 
