@@ -1,5 +1,4 @@
 import React, { FC, createContext, useContext, useReducer, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import useAsync from 'honks/use-async';
 import axios, { AxiosError } from 'axios';
 
@@ -58,8 +57,6 @@ const Calculation: FC = ({ children }) => {
     }
   }, [state?.calculationPayload?.id, isSubmitting]);
 
-  const { push } = useHistory();
-
   useEffect(() => {
     if (isResolved(result) && isSubmitting) {
       sessionStorage.setItem(
@@ -73,8 +70,6 @@ const Calculation: FC = ({ children }) => {
       dispatch.addCalculationData(result.data);
 
       setSubmitting(false);
-
-      push(`/categories/${category.id}/${version}/calculation-result`);
     }
   }, [isResolved(result), isSubmitting]);
 

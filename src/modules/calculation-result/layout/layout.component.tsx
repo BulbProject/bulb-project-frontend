@@ -1,51 +1,39 @@
 import React, { FC, useMemo } from 'react';
 
 import { useMedia } from 'shared/hooks';
-import { Items } from '../items';
-import { PartialLayout } from '../partial-layout';
-import { ItemsLayout } from '../items-layout';
-
-import { AvailableVariant } from '../../../shared/entity/data';
+import { AvailableVariant } from 'shared/entity/data';
+import { Container } from 'shared/components/container';
 
 import Styled from '../calculation-result.styles';
 import layoutConfig from '../layout.config';
-import { Container } from '../../../shared/components/container';
 import { RequestedNeed } from '../requested-need';
+import { Items } from '../items';
+import { ItemsLayout } from '../items-layout';
 
-export const FullLayout: FC<{
+export const Layout: FC<{
   availableVariants: AvailableVariant[];
   hasMany: boolean;
   itemsQuantity: number;
   requestedVariant?: string;
   isDrawerOpen: boolean;
   setDrawerOpen: (isDrawerOpen: boolean) => void;
-}> = ({
-  availableVariants,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  hasMany,
-  itemsQuantity,
-  requestedVariant,
-  isDrawerOpen,
-  setDrawerOpen,
-}) => {
-  // Const [isDrawerOpen, setDrawerOpen] = useState(false);
-
+}> = ({ availableVariants, hasMany, itemsQuantity, requestedVariant, isDrawerOpen, setDrawerOpen }) => {
   const isXl = useMedia(`screen and (min-width: ${layoutConfig.maxWidth}px)`);
 
   const requestedNeed = useMemo(
     () => availableVariants.find((variant) => variant.relatedItem === requestedVariant) as AvailableVariant,
-    [requestedVariant]
+    [requestedVariant, JSON.stringify(availableVariants)]
   );
 
   const items = useMemo(() => {
     return requestedVariant
       ? availableVariants.filter((variant) => variant.relatedItem !== requestedVariant)
       : availableVariants;
-  }, [requestedNeed]);
+  }, [requestedVariant, JSON.stringify(availableVariants)]);
 
   if (requestedVariant === undefined) {
     return (
-      <PartialLayout itemsQuantity={itemsQuantity}>
+      <ItemsLayout itemsQuantity={itemsQuantity}>
         <Styled.Wrapper alignment={{ horizontal: isXl() ? 'center' : 'start' }}>
           <Items
             availableVariants={items}
@@ -55,7 +43,7 @@ export const FullLayout: FC<{
             noRequestedVariant
           />
         </Styled.Wrapper>
-      </PartialLayout>
+      </ItemsLayout>
     );
   }
 
@@ -70,7 +58,7 @@ export const FullLayout: FC<{
             requestedNeed={requestedNeed}
           />
 
-          <Items availableVariants={items} isDrawerOpen={isDrawerOpen} setDrawerOpen={setDrawerOpen} showFilter />
+          <Items availableVariants={items} isDrawerOpen={isDrawerOpen} setDrawerOpen={setDrawerOpen} />
         </Styled.Wrapper>
       ) : (
         <Container>
