@@ -154,8 +154,6 @@ const TripleLayout = styled.section<ShouldShiftImage>(
 
 const ManyLayout = styled.section<{ quantity: number; isLg: boolean; shouldShiftImage: boolean }>(
   ({ quantity, isLg, shouldShiftImage }) => {
-    const variantsQuantity = quantity - 1;
-
     return css`
       display: flex;
       justify-content: center;
@@ -178,7 +176,8 @@ const ManyLayout = styled.section<{ quantity: number; isLg: boolean; shouldShift
 
       ${Items} {
         ${Item} {
-          width: ${100 / variantsQuantity}%;
+          min-width: ${itemWidth}px;
+          width: ${100 / quantity}%;
 
           ${shouldShiftImage ? getVariantImageStyles(1980) : ''};
         }

@@ -12,12 +12,18 @@ import Styled from './filter-drawer.styles';
 export const FilterDrawer: FC<{
   isDrawerOpen: boolean;
   setDrawerOpen: (isDrawerOpen: boolean) => void;
-}> = ({ isDrawerOpen, setDrawerOpen }) => {
+  isRequestedNeedAbsent: boolean;
+}> = ({ isDrawerOpen, setDrawerOpen, isRequestedNeedAbsent }) => {
   const isLg = useMedia('screen and (min-width: 832px)');
 
   return (
     <>
-      <Styled.FilterButton appearance="text" onClick={() => setDrawerOpen(!isDrawerOpen)} iconAfter={<FilterIcon />}>
+      <Styled.FilterButton
+        appearance="text"
+        onClick={() => setDrawerOpen(!isDrawerOpen)}
+        iconAfter={<FilterIcon />}
+        isRequestedNeedAbsent={isRequestedNeedAbsent}
+      >
         Змінити умови
       </Styled.FilterButton>
 
