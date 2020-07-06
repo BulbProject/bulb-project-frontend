@@ -14,8 +14,8 @@ export const Items: FC<{
   isDrawerOpen: boolean;
   setDrawerOpen: (isDrawerOpen: boolean) => void;
   showFilter?: boolean;
-  noRequestedVariant?: boolean;
-}> = ({ availableVariants, isDrawerOpen, setDrawerOpen, showFilter = false, noRequestedVariant = false }) => {
+  isRequestedNeedAbsent?: boolean;
+}> = ({ availableVariants, isDrawerOpen, setDrawerOpen, showFilter = false, isRequestedNeedAbsent = false }) => {
   const {
     category: { items, documents },
   } = useCategory();
@@ -23,7 +23,7 @@ export const Items: FC<{
   const itemsQuantity = useMemo(() => availableVariants.length - 1, [availableVariants.length]);
 
   return (
-    <Styled.Items direction="column" noRequestedVariant={noRequestedVariant}>
+    <Styled.Items direction="column" isRequestedNeedAbsent={isRequestedNeedAbsent}>
       <Styled.AvailableVariants>
         <Styled.ItemsTitle>
           <Text variant="body" appearance="bold" color="var(--c-dark)">

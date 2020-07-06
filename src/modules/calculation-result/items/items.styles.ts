@@ -6,12 +6,12 @@ const getShadowGradient = (direction: 'left' | 'right'): FlattenSimpleInterpolat
   return css`linear-gradient(to ${direction}, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0))`;
 };
 
-const Items = styled(Flex)<{ noRequestedVariant: boolean }>(
-  ({ noRequestedVariant }) => css`
+const Items = styled(Flex)<{ isRequestedNeedAbsent: boolean }>(
+  ({ isRequestedNeedAbsent }) => css`
     position: relative;
 
     @media screen and (min-width: 1130px) {
-      max-width: ${noRequestedVariant ? '100%' : 'calc(100% - 450px)'};
+      max-width: ${isRequestedNeedAbsent ? '100%' : 'calc(100% - 450px)'};
     }
 
     &:before,
