@@ -9,7 +9,9 @@ import Button from 'ustudio-ui/components/Button';
 import { Classification } from 'shared/components';
 import { AvailableVariant, Item as ItemType } from 'shared/entity/data';
 import { useCategory } from 'core/context/category-provider';
+import { useCalculation } from 'shared/context/calculation';
 import Bulb from '../../../assets/images/bulb.svg';
+import recommendedBadge from '../../../assets/images/recommended-badge.svg';
 
 import { CategoryFeature } from '../category-feature';
 import { Specification } from '../specification';
@@ -32,6 +34,10 @@ export const Item: FC<{
   showMetrics?: boolean;
 }> = ({ variant, item, document, isRequested = false, showMetrics = false }) => {
   const { category } = useCategory();
+
+  const { calculationData } = useCalculation();
+
+  const { recommendedVariant } = calculationData ?? {};
 
   const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
 
@@ -58,6 +64,9 @@ export const Item: FC<{
 
   return (
     <Styled.Item direction="column">
+      {variant.id === recommendedVariant && (
+        <Styled.RecommendedVariant title="Рекомендований варіант" src={recommendedBadge} alt="Рекомендований варіант" />
+      )}
       <Styled.ImageContainer isReversed={!isRequested}>
         <CategoryFeature availableVariant={variant} item={item} isItemRequested={isRequested} />
 

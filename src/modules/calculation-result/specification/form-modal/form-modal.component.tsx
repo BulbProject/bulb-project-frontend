@@ -19,8 +19,8 @@ import Styled from './form-modal.styles';
 export const FormModal: FC<{
   isOpen: boolean;
   isDownloading: boolean;
-  requirement: Requirement;
-  criterion: Criterion;
+  requirement?: Requirement;
+  criterion?: Criterion;
   mode: string;
   setOpen(value: boolean): void;
   setDownloading(value: boolean): void;
@@ -43,7 +43,7 @@ export const FormModal: FC<{
     <Modal
       isOpen={isOpen}
       onChange={setOpen}
-      title={<Text variant="h5">{criterion.title}</Text>}
+      title={<Text variant="h5">{criterion?.title ?? 'Тендерна документація'}</Text>}
       styled={{
         Modal: css`
             width: 100%;
@@ -92,32 +92,33 @@ export const FormModal: FC<{
       {(isDownloading && <Loader size={32} />) as ReactElement}
 
       <Flex direction="column" alignment={{ horizontal: 'center' }}>
-        <SpecificationStyles.Group>
-          <Styled.GroupTitle>{criterion.description}</Styled.GroupTitle>
+        {criterion && (
+          <SpecificationStyles.Group>
+            <Styled.GroupTitle>{criterion.description}</Styled.GroupTitle>
 
-          <Tabs
-            // Tabs props declaration miss this prop
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            variant="body"
-            active={JSON.stringify(requirement)}
-            tabs={criterion.requirementGroups
-              .flatMap(({ requirements }) => requirements)
-              .map((tabRequirement) => ({
-                value: JSON.stringify(tabRequirement),
-                children: <Styled.Tab>{tabRequirement.title}</Styled.Tab>,
-              }))}
-            onChange={(value: string) => setRequirement(JSON.parse(value))}
-            styled={{
-              Tabs: css`
-                &:before {
-                  background: var(--c-primary);
-                }
-              `,
-            }}
-          />
-        </SpecificationStyles.Group>
-
+            <Tabs
+              // Tabs props declaration miss this prop
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              variant="body"
+              active={JSON.stringify(requirement)}
+              tabs={criterion.requirementGroups
+                .flatMap(({ requirements }) => requirements)
+                .map((tabRequirement) => ({
+                  value: JSON.stringify(tabRequirement),
+                  children: <Styled.Tab>{tabRequirement.title}</Styled.Tab>,
+                }))}
+              onChange={(value: string) => setRequirement(JSON.parse(value))}
+              styled={{
+                Tabs: css`
+                  &:before {
+                    background: var(--c-primary);
+                  }
+                `,
+              }}
+            />
+          </SpecificationStyles.Group>
+        )}
         <SpecificationStyles.Group>
           <Styled.GroupTitle>Оберіть бажаний формат</Styled.GroupTitle>
 
