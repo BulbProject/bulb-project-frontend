@@ -18,14 +18,14 @@ const DarkMode = createGlobalStyle`
     --c-contrast-weak: var(--c-light);
     --c-faint-strong: var(--c-dark);
   }
-  
+
   #fp-nav {
     a {
       &:after {
         content: unset;
       }
     }
-    
+
     span {
       background-color: var(--c-secondary) !important;
     }
@@ -39,7 +39,7 @@ export const Layout: FC = () => {
         <Hero key="Hero" />,
         <Documents key="Documents" />,
         <Styled.CategoryListWrapper key="CategoryListWrapper">
-          <CategoriesList layoutVariant="empty" />
+          <CategoriesList />
         </Styled.CategoryListWrapper>,
       ].map((component, index) => {
         return (
