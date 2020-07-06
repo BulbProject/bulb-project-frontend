@@ -19,7 +19,7 @@ const CalculationResult: React.FC = () => {
 
   const { calculationData, calculationPayload, dispatch } = useCalculation();
 
-  const { availableVariants } = calculationData ?? {};
+  const { availableVariants, requestedVariant } = calculationData ?? {};
   const itemsQuantity = useMemo(() => (availableVariants ?? []).length, [availableVariants?.length]);
   const hasMany = useMemo(() => itemsQuantity > 1, [itemsQuantity]);
 
@@ -51,7 +51,12 @@ const CalculationResult: React.FC = () => {
           <>
             {calculationPayload && availableVariants && (
               <>
-                <Layout itemsQuantity={itemsQuantity} hasMany={hasMany} availableVariants={availableVariants} />
+                <Layout
+                  itemsQuantity={itemsQuantity}
+                  hasMany={hasMany}
+                  availableVariants={availableVariants}
+                  requestedVariant={requestedVariant}
+                />
 
                 {!isLg() && (
                   <Styled.MobileFilterButton onClick={() => setDrawerOpen(!isDrawerOpen)}>
