@@ -40,7 +40,7 @@ export const Layout: FC<{
             isDrawerOpen={isDrawerOpen}
             setDrawerOpen={setDrawerOpen}
             showFilter
-            noRequestedVariant
+            isRequestedNeedAbsent
           />
         </Styled.Wrapper>
       </ItemsLayout>
