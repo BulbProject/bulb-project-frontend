@@ -4,10 +4,9 @@ import Drawer from 'ustudio-ui/components/Drawer';
 
 import { FormValidator } from 'shared/context/form-validator';
 import { useMedia } from 'shared/hooks';
-
-import { Filter } from '../filter';
 import FilterIcon from '../../../assets/icons/filter.inline.svg';
 
+import { Filter } from '../filter';
 import Styled from './filter-drawer.styles';
 
 export const FilterDrawer: FC<{
