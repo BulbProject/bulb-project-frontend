@@ -1,19 +1,20 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
-import { useMedia } from 'shared/hooks';
 
+import { useMedia } from 'shared/hooks';
 import { ErrorBoundary, Container, Loader, Fade } from 'shared/components';
 import { useCalculation } from 'shared/context/calculation';
 import { useCategory } from 'core/context/category-provider';
+
 import { Layout } from './layout';
 import FilterIcon from '../../assets/icons/filter.inline.svg';
 
 import Styled from './calculation-result.styles';
 
-const CalculationResult: React.FC = () => {
+const CalculationResult: FC = () => {
   const isLg = useMedia('screen and (min-width: 832px)');
   const [isLoading, setLoading] = useState(true);
 

@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
-
 import { css } from 'styled-components';
 
 import Text from 'ustudio-ui/components/Text';
@@ -8,8 +7,9 @@ import Button from 'ustudio-ui/components/Button';
 
 import { Classification } from 'shared/components';
 import { AvailableVariant, Item as ItemType } from 'shared/entity/data';
-import { useCategory } from 'core/context/category-provider';
 import { useCalculation } from 'shared/context/calculation';
+import { useCategory } from 'core/context/category-provider';
+
 import Bulb from '../../../assets/images/bulb.svg';
 import recommendedBadge from '../../../assets/images/recommended-badge.svg';
 

@@ -1,12 +1,11 @@
 import React, { FC, useState } from 'react';
 import { Form } from 'formfish';
-
 import Flex from 'ustudio-ui/components/Flex';
 
 import { useFormValidator } from 'shared/context/form-validator';
-import { useCategory } from 'core/context/category-provider';
 import { useCalculation } from 'shared/context/calculation';
 import { prepareRequestedNeed } from 'shared/utils';
+import { useCategory } from 'core/context/category-provider';
 
 import { Criterion } from './criterion';
 
