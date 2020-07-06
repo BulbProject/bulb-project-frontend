@@ -2,7 +2,7 @@ import React, { FC, useMemo } from 'react';
 
 import { useMedia } from 'shared/hooks';
 import { AvailableVariant } from 'shared/entity/data';
-import { Container } from 'shared/components/container';
+import { Container } from 'shared/components';
 
 import Styled from '../calculation-result.styles';
 import layoutConfig from '../layout.config';
