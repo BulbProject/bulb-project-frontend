@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import Text from 'ustudio-ui/components/Text';
 
 import type { AvailableVariant, Item as ItemType } from 'shared/entity/data';
@@ -20,11 +20,14 @@ export const Items: FC<{
     category: { items, documents },
   } = useCategory();
 
+  const itemsQuantity = useMemo(() => availableVariants.length - 1, [availableVariants.length]);
+
   return (
     <Styled.Items direction="column" noRequestedVariant={noRequestedVariant}>
       <Styled.AvailableVariants>
         <Styled.ItemsTitle>
           <Text variant="body" appearance="bold" color="var(--c-dark)">
+            {itemsQuantity > 1 ? 'Більш енергоефективні варіанти' : 'Більш енергоефективний варіант'}
             {showFilter && <FilterDrawer isDrawerOpen={isDrawerOpen} setDrawerOpen={setDrawerOpen} />}
           </Text>
         </Styled.ItemsTitle>
