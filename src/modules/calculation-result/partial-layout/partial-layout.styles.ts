@@ -16,7 +16,11 @@ const { Item, Content: ItemContent, Image: ItemImage } = StyledItem;
 const { Highlight } = StyledMetric;
 const { Container } = StyledContainer;
 
-const { itemWidth, requestedNeedWidth } = layoutConfig;
+const { itemWidth } = layoutConfig;
+
+interface ShouldShiftImage {
+  shouldShiftImage: boolean;
+}
 
 const getVariantImageStyles = (minWidth = 1470): FlattenSimpleInterpolation => css`
   ${ItemImage} {
@@ -50,73 +54,29 @@ const SingleLayout = styled.section`
   }
 `;
 
-const DoubleLayout = styled.section`
-  display: flex;
-  justify-content: center;
+const DoubleLayout = styled.section<ShouldShiftImage>(
+  ({ shouldShiftImage }) => css`
+    display: flex;
+    justify-content: center;
 
-  ${Items} {
-    width: 50%;
-  }
+    ${Items} {
+      width: 100%;
+      min-width: ${itemWidth}px;
+      ${shouldShiftImage ? getVariantImageStyles() : ''};
+    }
 
-  ${Items} {
-    min-width: ${itemWidth}px;
-    width: 50%;
-
-    ${getVariantImageStyles()};
-  }
-
-  ${ItemContent} {
-    padding: var(--i-regular);
-  }
-
-  ${Item} {
-    width: 100%;
-    min-width: ${requestedNeedWidth}px;
-  }
-`;
-
-const TripleLayout = styled.section`
-  display: flex;
-  justify-content: center;
-
-  ${ItemContent} {
-    padding: var(--i-regular);
-  }
-
-  ${Items} {
-    ${AvailableVariants} {
-      overflow-x: visible;
+    ${ItemContent} {
+      padding: var(--i-regular);
     }
 
     ${Item} {
       width: 100%;
-
-      ${getVariantImageStyles(1980)};
     }
+  `
+);
 
-    &:after {
-      content: '';
-    }
-
-    @media screen and (min-width: 800px) {
-      width: calc(100% - 450px);
-
-      ${AvailableVariants} {
-        overflow-x: auto;
-      }
-    }
-
-    @media screen and (min-width: 1140px) {
-      width: calc(8 / 13 * 100%);
-      min-width: ${itemWidth * 2}px;
-    }
-  }
-`;
-
-const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(({ quantity, isLg }) => {
-  const variantsQuantity = quantity - 1;
-
-  return css`
+const TripleLayout = styled.section<ShouldShiftImage>(
+  ({ shouldShiftImage }) => css`
     display: flex;
     justify-content: center;
 
@@ -125,18 +85,22 @@ const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(({ quanti
     }
 
     ${Items} {
-      ${Item} {
-        width: ${100 / variantsQuantity}%;
+      ${AvailableVariants} {
+        overflow-x: visible;
+      }
 
-        ${getVariantImageStyles(1980)};
+      ${Item} {
+        width: ${100 / 3}%;
+
+        ${shouldShiftImage ? getVariantImageStyles(1980) : ''};
       }
 
       &:after {
-        content: ${isLg ? `''` : 'unset'};
+        content: '';
       }
 
       @media screen and (min-width: 800px) {
-        width: calc(100% - 450px);
+        width: 100%;
 
         ${AvailableVariants} {
           overflow-x: auto;
@@ -144,11 +108,49 @@ const ManyLayout = styled.section<{ quantity: number; isLg: boolean }>(({ quanti
       }
 
       @media screen and (min-width: 1140px) {
-        width: 100%;
+        width: calc(8 / 13 * 100%);
+        min-width: ${itemWidth * 2}px;
       }
     }
-  `;
-});
+  `
+);
+
+const ManyLayout = styled.section<{ quantity: number; isLg: boolean; shouldShiftImage: boolean }>(
+  ({ quantity, isLg, shouldShiftImage }) => {
+    return css`
+      display: flex;
+      justify-content: center;
+
+      ${ItemContent} {
+        padding: var(--i-regular);
+      }
+
+      ${Items} {
+        ${Item} {
+          width: ${100 / quantity}%;
+
+          ${shouldShiftImage ? getVariantImageStyles(1980) : ''};
+        }
+
+        &:after {
+          content: ${isLg ? `''` : 'unset'};
+        }
+
+        @media screen and (min-width: 800px) {
+          width: 100%;
+
+          ${AvailableVariants} {
+            overflow-x: auto;
+          }
+        }
+
+        @media screen and (min-width: 1140px) {
+          width: 100%;
+        }
+      }
+    `;
+  }
+);
 
 const Styled = { SingleLayout, DoubleLayout, TripleLayout, ManyLayout };
 

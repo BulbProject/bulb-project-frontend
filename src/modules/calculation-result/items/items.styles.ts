@@ -6,39 +6,40 @@ const getShadowGradient = (direction: 'left' | 'right'): FlattenSimpleInterpolat
   return css`linear-gradient(to ${direction}, rgba(216, 216, 216, 0.5), rgba(222, 222, 222, 0))`;
 };
 
-const Items = styled(Flex)`
-  position: relative;
+const Items = styled(Flex)<{ noRequestedVariant: boolean }>(
+  ({ noRequestedVariant }) => css`
+    position: relative;
 
-  @media screen and (min-width: 1130px) {
-    max-width: calc(100% - 450px);
-  }
+    @media screen and (min-width: 1130px) {
+      max-width: ${noRequestedVariant && '100%'};
+    }
 
-  &:before,
-  &:after {
-    position: absolute;
-    top: 0;
-    bottom: 0;
+    &:before,
+    &:after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
 
-    z-index: 2;
+      z-index: 2;
 
-    width: 30px;
+      width: 30px;
 
-    pointer-events: none;
-  }
+      pointer-events: none;
+    }
+    &:before {
+      content: '';
+      left: 0;
 
-  &:before {
-    content: '';
-    left: 0;
+      background-image: ${getShadowGradient('right')};
+    }
 
-    background-image: ${getShadowGradient('right')};
-  }
+    &:after {
+      right: 0;
 
-  &:after {
-    right: 0;
-
-    background-image: ${getShadowGradient('left')};
-  }
-`;
+      background-image: ${getShadowGradient('left')};
+    }
+  `
+);
 
 const AvailableVariants = styled(Flex)`
   position: relative;
