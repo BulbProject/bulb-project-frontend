@@ -1,6 +1,6 @@
 import React, { FC, createContext, useContext, useReducer, useEffect, useState } from 'react';
-import useAsync from 'honks/use-async';
 import axios, { AxiosError } from 'axios';
+import useAsync from 'honks/use-async';
 
 import { css } from 'styled-components';
 import Modal from 'ustudio-ui/components/Modal';
@@ -38,7 +38,7 @@ const Calculation: FC = ({ children }) => {
   const { postCalculationConfig } = useApi();
   const { category, version } = useCategory();
 
-  const { call: postCalculation, isResolved, isRejected, result, onPending, onReject } = useAsync<
+  const { call: postCalculation, isResolved, isRejected, result, onPending, isPending, onReject } = useAsync<
     CalculationResponse,
     AxiosError
   >(async () => {
@@ -68,8 +68,6 @@ const Calculation: FC = ({ children }) => {
       );
 
       dispatch.addCalculationData(result.data);
-
-      setSubmitting(false);
     }
   }, [isResolved(result), isSubmitting]);
 
@@ -79,6 +77,12 @@ const Calculation: FC = ({ children }) => {
       setSubmitting(false);
     }
   }, [isRejected(result)]);
+
+  useEffect(() => {
+    if (!isPending()) {
+      setSubmitting(false);
+    }
+  }, [isPending()]);
 
   return (
     <CalculationContext.Provider
@@ -120,7 +124,7 @@ export const useCalculation = (): CalculationValue => {
   const context = useContext(CalculationContext);
 
   if (context === undefined) {
-    throw new ReferenceError('Use CalculationState inside its provider.');
+    throw new ReferenceError('Use Calculation inside its provider.');
   }
 
   return context;
