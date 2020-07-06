@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
 
 import { useCategory } from 'core/context/category-provider';
@@ -9,7 +9,7 @@ import { FilterDrawer } from '../filter-drawer';
 
 import Styled from './requested-need.styles';
 
-export const RequestedNeed: React.FC<{
+export const RequestedNeed: FC<{
   hasMany: boolean;
   isDrawerOpen: boolean;
   setDrawerOpen: (isDrawerOpen: boolean) => void;

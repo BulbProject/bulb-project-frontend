@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { css } from 'styled-components';
 import Drawer from 'ustudio-ui/components/Drawer';
-import { FormValidator } from 'shared/context/form-validator';
-import { useMedia } from '../../../shared/hooks';
 
+import { FormValidator } from 'shared/context/form-validator';
+
+import { useMedia } from '../../../shared/hooks';
 import { Filter } from '../filter';
 import FilterIcon from '../../../assets/icons/filter.inline.svg';
+
 import Styled from './filter-drawer.styles';
 
-export const FilterDrawer: React.FC<{
+export const FilterDrawer: FC<{
   isDrawerOpen: boolean;
   setDrawerOpen: (isDrawerOpen: boolean) => void;
 }> = ({ isDrawerOpen, setDrawerOpen }) => {

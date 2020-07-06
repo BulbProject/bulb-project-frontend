@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { FieldSet } from 'formfish';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
@@ -25,7 +25,7 @@ const filterRequirementGroups = ({ calculationPayload }: { calculationPayload: R
   return predicateIds.includes(id);
 };
 
-export const Criterion: React.FC<CriterionProps> = ({ id, title, requirementGroups }) => {
+export const Criterion: FC<CriterionProps> = ({ id, title, requirementGroups }) => {
   const { calculationPayload, dispatch } = useCalculation();
 
   const hasMounted = useMount();

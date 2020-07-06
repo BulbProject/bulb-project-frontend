@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
 
 import { useCategory } from 'core/context/category-provider';
@@ -6,7 +6,7 @@ import type { RequirementGroup as RequirementGroupProps } from 'shared/entity/da
 import { Requirement } from 'shared/components';
 import { modifyId } from 'shared/utils';
 
-export const RequirementGroup: React.FC<RequirementGroupProps> = ({ id, requirements }) => {
+export const RequirementGroup: FC<RequirementGroupProps> = ({ id, requirements }) => {
   const { category } = useCategory();
 
   const hasSingleRequirement = useMemo(() => requirements.length === 1, []);
