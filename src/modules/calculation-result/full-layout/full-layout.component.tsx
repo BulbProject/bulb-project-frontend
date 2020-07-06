@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import { useMedia } from 'shared/hooks';
 import { Items } from '../items';
@@ -12,19 +12,23 @@ import layoutConfig from '../layout.config';
 import { Container } from '../../../shared/components/container';
 import { RequestedNeed } from '../requested-need';
 
-export const Layout: FC<{
+export const FullLayout: FC<{
   availableVariants: AvailableVariant[];
   hasMany: boolean;
   itemsQuantity: number;
   requestedVariant?: string;
+  isDrawerOpen: boolean;
+  setDrawerOpen: (isDrawerOpen: boolean) => void;
 }> = ({
   availableVariants,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   hasMany,
   itemsQuantity,
   requestedVariant,
+  isDrawerOpen,
+  setDrawerOpen,
 }) => {
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  // Const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const isXl = useMedia(`screen and (min-width: ${layoutConfig.maxWidth}px)`);
 

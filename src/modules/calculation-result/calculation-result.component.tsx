@@ -8,7 +8,7 @@ import { useMedia } from 'shared/hooks';
 import { ErrorBoundary, Container, Loader, Fade } from 'shared/components';
 import { useCalculation } from 'shared/context/calculation';
 import { useCategory } from 'core/context/category-provider';
-import { Layout } from './layout';
+import { FullLayout } from './full-layout';
 import FilterIcon from '../../assets/icons/filter.inline.svg';
 
 import Styled from './calculation-result.styles';
@@ -51,11 +51,13 @@ const CalculationResult: React.FC = () => {
           <>
             {calculationPayload && availableVariants && (
               <>
-                <Layout
+                <FullLayout
                   itemsQuantity={itemsQuantity}
                   hasMany={hasMany}
                   availableVariants={availableVariants}
                   requestedVariant={requestedVariant}
+                  isDrawerOpen={isDrawerOpen}
+                  setDrawerOpen={setDrawerOpen}
                 />
 
                 {!isLg() && (

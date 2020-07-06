@@ -27,14 +27,14 @@ export const FilterDrawer: React.FC<{
         position={isLg() ? 'left' : 'right'}
         styled={{
           Drawer: css`
-              width: 320px;
-              z-index: var(--l-topmost);
-            `,
+            width: 320px;
+            z-index: var(--l-topmost);
+          `,
           Overlay: css`
-              background-color: var(--c-darkest);
+            background-color: var(--c-darkest);
 
-              z-index: calc(var(--l-topmost) - 1);
-            `,
+            z-index: calc(var(--l-topmost) - 1);
+          `,
         }}
       >
         <Styled.DrawerButton onClick={() => setDrawerOpen(false)} />
@@ -44,5 +44,5 @@ export const FilterDrawer: React.FC<{
         </FormValidator>
       </Drawer>
     </>
-  )
+  );
 };
