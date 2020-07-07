@@ -7,7 +7,7 @@ import Styled from './items-layout.styles';
 
 export const ItemsLayout: FC<{ itemsQuantity: number; isRequestedNeedAbsent?: boolean }> = ({
   itemsQuantity,
-  isRequestedNeedAbsent = false,
+  isRequestedNeedAbsent,
   children,
 }) => {
   const isLg = useMedia('screen and (min-width: 832px)');
