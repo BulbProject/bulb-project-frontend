@@ -44,12 +44,24 @@ export const Items: FC<{
           )}
         </Styled.ItemsTitle>
 
-        {availableVariants.map((variant) => {
+        {availableVariants.map((variant, index) => {
           const relatedItem = items.find((item) => item.id === variant.relatedItem) as ItemType;
 
           const relatedDocument = documents?.find(
             (document) => document.relatesTo === 'item' && document.relatedItem === relatedItem.id
           );
+
+          if (isRequestedNeedAbsent && index === 0) {
+            return (
+              <Item
+                key={variant.id}
+                variant={variant}
+                item={relatedItem}
+                document={relatedDocument?.url}
+                showMetricsTitles
+              />
+            );
+          }
 
           return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
         })}

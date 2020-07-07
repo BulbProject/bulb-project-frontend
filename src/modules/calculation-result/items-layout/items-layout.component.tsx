@@ -5,9 +5,9 @@ import { useCategory } from 'core/context/category-provider';
 
 import Styled from './items-layout.styles';
 
-export const ItemsLayout: FC<{ itemsQuantity: number; isRequestedNeedAbsent: boolean }> = ({
+export const ItemsLayout: FC<{ itemsQuantity: number; isRequestedNeedAbsent?: boolean }> = ({
   itemsQuantity,
-  isRequestedNeedAbsent,
+  isRequestedNeedAbsent = false,
   children,
 }) => {
   const isLg = useMedia('screen and (min-width: 832px)');
