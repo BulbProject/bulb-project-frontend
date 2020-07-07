@@ -51,19 +51,15 @@ export const Items: FC<{
             (document) => document.relatesTo === 'item' && document.relatedItem === relatedItem.id
           );
 
-          if (isRequestedNeedAbsent && index === 0) {
-            return (
-              <Item
-                key={variant.id}
-                variant={variant}
-                item={relatedItem}
-                document={relatedDocument?.url}
-                showMetricsTitles
-              />
-            );
-          }
-
-          return <Item key={variant.id} variant={variant} item={relatedItem} document={relatedDocument?.url} />;
+          return (
+            <Item
+              key={variant.id}
+              variant={variant}
+              item={relatedItem}
+              document={relatedDocument?.url}
+              showMetricsTitles={isRequestedNeedAbsent && index === 0}
+            />
+          );
         })}
       </Styled.AvailableVariants>
     </Styled.Items>
