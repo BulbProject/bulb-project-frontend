@@ -4,6 +4,7 @@ import Button from 'ustudio-ui/components/Button';
 interface IsRequestedNeedAbsent {
   isRequestedNeedAbsent: boolean;
 }
+
 const FilterButton = styled(Button)<IsRequestedNeedAbsent>(
   ({ isRequestedNeedAbsent }) => css`
     position: ${isRequestedNeedAbsent ? 'fixed' : 'relative'};

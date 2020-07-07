@@ -33,7 +33,7 @@ export const Layout: FC<{
 
   if (requestedVariant === undefined) {
     return (
-      <ItemsLayout itemsQuantity={itemsQuantity}>
+      <ItemsLayout itemsQuantity={itemsQuantity} isRequestedNeedAbsent>
         <Styled.Wrapper alignment={{ horizontal: isXl() ? 'center' : 'start' }}>
           <Items
             availableVariants={items}
