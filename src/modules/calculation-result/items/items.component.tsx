@@ -21,20 +21,23 @@ export const Items: FC<{
   } = useCategory();
 
   const itemsQuantity = useMemo(() => availableVariants.length - 1, [availableVariants.length]);
-  const isCriteriaAbsent = availableVariants[0].criteria !== undefined || availableVariants[0].criteria === [];
+  const areCriteriaAbsent = useMemo(() => {
+    return availableVariants[0].criteria !== undefined || availableVariants[0]?.criteria.length === 0;
+  }, [availableVariants]);
 
   return (
     <Styled.Items direction="column" isRequestedNeedAbsent={isRequestedNeedAbsent}>
       <Styled.AvailableVariants>
         <Styled.ItemsTitle>
-          {isRequestedNeedAbsent && !isCriteriaAbsent && (
+          {isRequestedNeedAbsent && !areCriteriaAbsent && (
             <FilterDrawer
               isDrawerOpen={isDrawerOpen}
               setDrawerOpen={setDrawerOpen}
               isRequestedNeedAbsent={isRequestedNeedAbsent}
             />
           )}
-          {!isRequestedNeedAbsent && isCriteriaAbsent && (
+
+          {!isRequestedNeedAbsent && areCriteriaAbsent && (
             <Text variant="body" appearance="bold" color="var(--c-dark)">
               {itemsQuantity > 1 ? 'Більш енергоефективні варіанти' : 'Більш енергоефективний варіант'}
             </Text>
