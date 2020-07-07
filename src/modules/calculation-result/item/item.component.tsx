@@ -66,6 +66,7 @@ export const Item: FC<{
       {variant.id === recommendedVariant && (
         <Styled.RecommendedVariant title="Рекомендований варіант" src={recommendedBadge} alt="Рекомендований варіант" />
       )}
+
       <Styled.ImageContainer isReversed={!isRequested}>
         <CategoryFeature availableVariant={variant} item={item} isItemRequested={isRequested} />
 

@@ -19,6 +19,7 @@ export const OptionGroup: FC<{
   return (
     <Field requirement={requirement} isDisabled={isDisabled}>
       <Select
+        placeholder="Виберіть один із доступних варіантів"
         autocomplete={Object.values(optionsMap).length >= 10}
         isDisabled={isDisabled}
         items={optionsMap}

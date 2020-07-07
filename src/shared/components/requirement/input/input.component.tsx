@@ -18,7 +18,16 @@ export const Input: FC<{
   isDisabled?: boolean;
   defaultValue?: unknown;
   requirement: RequirementWithOptionDetails;
-}> = ({ hasError, requirement, isDisabled, defaultValue, placeholder, suffix }): ReactElement => {
+  showOptionGroupsCarousel?: boolean;
+}> = ({
+  hasError,
+  requirement,
+  isDisabled,
+  defaultValue,
+  placeholder,
+  suffix,
+  showOptionGroupsCarousel,
+}): ReactElement => {
   const { dataType } = useMemo(() => requirement, []);
 
   const optionGroups = useMemo(
@@ -47,6 +56,7 @@ export const Input: FC<{
         requirement={requirement}
         defaultValue={defaultValue as string}
         isDisabled={isDisabled}
+        showCarousel={showOptionGroupsCarousel}
       />
     );
   }

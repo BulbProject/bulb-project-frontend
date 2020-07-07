@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Mixin } from 'ustudio-ui/theme';
 
 const ValuesListTitle = css`
@@ -43,6 +43,25 @@ const Dropdown = ({ isOpen }: { isOpen: boolean }) => css`
   }
 `;
 
-const Styled = { ValuesListTitle, ValuesListItem, MultiValuesListItem, Dropdown };
+const SelectedGroupContainer = styled.div<{ hasSelectedGroup: boolean; $height: string }>(
+  ({ hasSelectedGroup, $height }) => css`
+    width: 100%;
+    height: ${$height};
+
+    margin-top: ${hasSelectedGroup ? 'var(--i-regular)' : 0};
+
+    transition: height var(--transition);
+
+    overflow-y: ${$height === 'auto' ? 'visible' : 'hidden'};
+  `
+);
+
+const Styled = {
+  ValuesListTitle,
+  ValuesListItem,
+  MultiValuesListItem,
+  Dropdown,
+  SelectedGroupContainer,
+};
 
 export default Styled;
