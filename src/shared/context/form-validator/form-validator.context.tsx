@@ -1,6 +1,8 @@
-import React, { FC, createContext, useContext, useReducer } from 'react';
+import React, { FC, createContext, useContext, useReducer, useMemo } from 'react';
 
 import { useStepperState } from 'modules/category/stepper-state';
+
+import { useCalculation } from '../calculation';
 
 import { FormValidatorValue, formValidatorReducer, FormValidatorDispatcher } from './entity';
 
@@ -8,12 +10,21 @@ const FormValidatorContext = createContext<FormValidatorValue | undefined>(undef
 
 export const FormValidator: FC = ({ children }) => {
   const [state, dispatch] = useReducer(formValidatorReducer, {});
+  const { selectedRequirementGroups } = useCalculation();
   const { currentStep } = useStepperState();
+
+  const currentRequirementGroup = useMemo(() => selectedRequirementGroups[currentStep.id], [
+    selectedRequirementGroups[currentStep.id],
+  ]);
 
   return (
     <FormValidatorContext.Provider
       value={{
-        hasValidationFailed: Boolean(Object.keys(state).length) && Object.keys(state).includes(currentStep.id),
+        hasValidationFailed:
+          Object.keys(state).length > 0 &&
+          Object.keys(state).some((id) => {
+            return currentRequirementGroup && id.startsWith(currentRequirementGroup.id.slice(0, 4));
+          }),
         state,
         dispatch: new FormValidatorDispatcher(dispatch),
       }}
