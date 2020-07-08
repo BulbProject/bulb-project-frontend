@@ -53,6 +53,11 @@ const Chevron = styled.button<{ $direction: 'left' | 'right'; $isVisible: boolea
     svg {
       transform: rotateY(${Number(Boolean($direction === 'left')) * 180}deg);
     }
+
+    &:hover,
+    &:focus {
+      color: var(--c-primary-light);
+    }
   `
 );
 
