@@ -39,8 +39,8 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
     | undefined;
 
   useEffect(() => {
-    if (selectedCardIndex && selectedCardIndex > 2) {
-      setShift(Math.min(listWidth - carouselWidth, 16 * 7 * (selectedCardIndex - 2) - 16 * 4.5));
+    if (selectedCardIndex) {
+      setShift(Math.min(listWidth - carouselWidth, 16 * 7 * (selectedCardIndex - 1)));
     }
   }, [hasMounted]);
 
@@ -65,9 +65,8 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
 
   const onCardClick = useCallback((card: HTMLButtonElement) => {
     const bodyWidth = document.querySelector('body')?.clientWidth as number;
-    const cardOffset = Number(
-      (card.getBoundingClientRect().x - (bodyWidth - carouselWidth) / 2 - carouselWidth / 2 + 16 * 2.5).toFixed()
-    );
+    const cardOffset =
+      card.getBoundingClientRect().left - (bodyWidth - carouselWidth) / 2 - carouselWidth / 2 + 16 * 3.5;
 
     if (cardOffset > 0 && shouldShiftRight) {
       return setShift(Math.min(listWidth - carouselWidth, shift + cardOffset));

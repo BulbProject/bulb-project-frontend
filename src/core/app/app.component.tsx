@@ -1,5 +1,6 @@
 import React, { FC, Suspense } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { ThemeProvider } from 'ustudio-ui/theme';
 
@@ -13,6 +14,22 @@ import ResourcesApiProvider from '../context/resources-api-provider';
 import { GlobalStyles } from '../theme';
 
 import { routes } from './app.routing';
+
+const Center = styled.div`
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 10000;
+
+  width: 2px;
+  height: 100vh;
+
+  background-color: red;
+
+  opacity: 0.1;
+
+  transform: translateX(-50%);
+`;
 
 export const App: FC = () => {
   return (
@@ -48,6 +65,9 @@ export const App: FC = () => {
             Development build
           </div>
         )}
+
+        <Center />
+
         <ApiProvider>
           <ResourcesApiProvider>
             <BrowserRouter>

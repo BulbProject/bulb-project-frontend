@@ -35,6 +35,8 @@ const Title = styled(Text)`
 
 const Card = styled.button<{ isCardSelected: boolean }>(
   ({ isCardSelected }) => css`
+    width: 7rem;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
