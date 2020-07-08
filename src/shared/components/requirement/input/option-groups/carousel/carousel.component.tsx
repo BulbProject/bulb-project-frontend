@@ -34,6 +34,16 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
 
   const dependencies = [shift, listWidth, carouselWidth];
 
+  const selectedCardIndex = useMemo(() => selectedCard && Number(selectedCard.slice(6, 8)), [selectedCard]) as
+    | number
+    | undefined;
+
+  useEffect(() => {
+    if (selectedCardIndex && selectedCardIndex > 2) {
+      setShift(Math.min(listWidth - carouselWidth, 16 * 7 * (selectedCardIndex - 2) - 16 * 4.5));
+    }
+  }, [hasMounted]);
+
   const shouldShiftLeft = useMemo(() => shift > 0, dependencies);
 
   const shiftLeft = useCallback(() => {
@@ -53,18 +63,40 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
     }
   }, dependencies);
 
+  const onCardClick = useCallback((card: HTMLButtonElement) => {
+    const bodyWidth = document.querySelector('body')?.clientWidth as number;
+    const cardOffset = Number(
+      (card.getBoundingClientRect().x - (bodyWidth - carouselWidth) / 2 - carouselWidth / 2 + 16 * 2.5).toFixed()
+    );
+
+    if (cardOffset > 0 && shouldShiftRight) {
+      return setShift(Math.min(listWidth - carouselWidth, shift + cardOffset));
+    }
+
+    if (cardOffset < 0 && shouldShiftLeft) {
+      return setShift(Math.max(0, shift + cardOffset));
+    }
+  }, dependencies);
+
   return (
     <Flex>
       <Styled.Chevron onClick={shiftLeft} $isVisible={shouldShiftLeft} $direction="left">
         <ChevronIcon />
       </Styled.Chevron>
 
-      <Styled.Carousel ref={carouselRef}>
+      <Styled.Carousel ref={carouselRef} showLeftShadow={shouldShiftLeft} showRightShadow={shouldShiftRight}>
         <Styled.List ref={listRef} currentIndex={0} shift={shift}>
           {cards.map((card) => {
             return (
               <Styled.ListItem key={card.id}>
-                <Card {...card} isCardSelected={selectedCard === card.id} onCardSelect={onCardSelect} />
+                <Card
+                  {...card}
+                  isCardSelected={selectedCard === card.id}
+                  onCardSelect={(id: string, cardElement: HTMLButtonElement) => {
+                    onCardSelect(id);
+                    onCardClick(cardElement);
+                  }}
+                />
               </Styled.ListItem>
             );
           })}

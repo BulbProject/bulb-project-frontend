@@ -10,8 +10,10 @@ import type { Group } from 'ustudio-ui/components/Select/select.types';
 
 import { sortByValue } from 'shared/utils';
 import { useCategory } from 'core/context/category-provider';
-
+import { useStepperState } from 'modules/category/stepper-state';
+import { useCalculation } from 'shared/context/calculation';
 import { Title } from '../../title';
+
 import { Field } from '../field';
 import { OptionGroup } from '../option-group';
 import { mapOptionsToItems } from '../utils';
@@ -31,6 +33,9 @@ export const OptionGroups: FC<{
     category: { documents },
   } = useCategory();
 
+  const { formData } = useCalculation();
+  const { currentStep } = useStepperState();
+
   const groupsMap: Group[] = useMemo(() => {
     return optionGroups.sort(sortByValue('id')).map((optionGroup) => {
       return {
@@ -40,7 +45,24 @@ export const OptionGroups: FC<{
     }, {});
   }, [optionGroups]);
 
-  const [selectedGroup, setSelectedGroup] = useState<OptionGroupType | undefined>();
+  const preselectedGroup = useMemo(() => {
+    const isRequirementInForm = Boolean(
+      // `formData` at some moment in time can not contain `currentStep.id`
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      Object.keys((formData?.[currentStep.id] as Record<string, string>) || {}).find(
+        (requirementId) => requirementId === requirement.id
+      )
+    );
+
+    if (isRequirementInForm) {
+      return optionGroups.find(({ options }) => {
+        return options.map(({ value }) => value).includes(defaultValue);
+      });
+    }
+  }, []);
+
+  const [selectedGroup, setSelectedGroup] = useState<OptionGroupType | undefined>(preselectedGroup);
+  const [hasSelectedOnce, setSelectedOnce] = useState(false);
 
   const [selectedGroupRef, selectedGroupHeight] = useAutoTransition<HTMLDivElement>(
     (div) => div.getBoundingClientRect().height,
@@ -52,10 +74,12 @@ export const OptionGroups: FC<{
       <Carousel
         selectedCard={selectedGroup?.id as string | undefined}
         onCardSelect={(id: string) => {
-          if (selectedGroup !== undefined && id === selectedGroup.id) {
+          setSelectedOnce(true);
+
+          if (id !== selectedGroup?.id) {
             setSelectedGroup(undefined);
-          } else {
-            setSelectedGroup(optionGroups.find(({ id: optionGroupId }) => id === optionGroupId));
+
+            setTimeout(() => setSelectedGroup(optionGroups.find(({ id: optionGroupId }) => id === optionGroupId)), 150);
           }
         }}
         cards={optionGroups.map(({ id }) => {
@@ -69,11 +93,15 @@ export const OptionGroups: FC<{
         })}
       />
 
-      <Styled.SelectedGroupContainer hasSelectedGroup={selectedGroup !== undefined} $height={selectedGroupHeight}>
+      <Styled.SelectedGroupContainer hasSelectedGroup={hasSelectedOnce} $height={selectedGroupHeight}>
         <div ref={selectedGroupRef}>
           {selectedGroup && (
             <Flex direction="column" margin={{ bottom: 'small' }}>
-              <Title dataType={requirement.dataType} title={selectedGroup.description as string} />
+              <Title
+                dataType={requirement.dataType}
+                title={selectedGroup.description as string}
+                color="var(--c-primary)"
+              />
 
               <OptionGroup
                 optionGroup={selectedGroup}

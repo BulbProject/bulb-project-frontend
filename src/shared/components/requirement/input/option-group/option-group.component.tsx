@@ -9,12 +9,12 @@ import Styled from './option-group.styles';
 import { mapOptionsToItems } from '../utils';
 
 export const OptionGroup: FC<{
-  optionGroup: OptionGroupType;
+  optionGroup?: OptionGroupType;
   requirement: RequirementWithOptionDetails;
   isDisabled?: boolean;
-  defaultValue: string;
+  defaultValue?: string;
 }> = ({ optionGroup, requirement, isDisabled, defaultValue }) => {
-  const optionsMap = useMemo(() => mapOptionsToItems(optionGroup.options), [optionGroup.options]);
+  const optionsMap = useMemo(() => (optionGroup ? mapOptionsToItems(optionGroup.options) : {}), [optionGroup?.options]);
 
   return (
     <Field requirement={requirement} isDisabled={isDisabled}>

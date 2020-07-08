@@ -21,6 +21,10 @@ const IconContainer = styled.figure`
 const Icon = styled.img`
   width: auto;
   height: 100%;
+
+  filter: invert(0);
+
+  transition: filter var(--transition);
 `;
 
 const Title = styled(Text)`
@@ -36,10 +40,15 @@ const Card = styled.button<{ isCardSelected: boolean }>(
     justify-content: center;
     align-items: center;
 
-    &:hover {
+    &:hover,
+    &:focus {
       ${IconContainer} {
         border-color: var(--c-primary);
       }
+    }
+
+    &:focus {
+      color: var(--c-primary);
     }
 
     ${isCardSelected
@@ -47,6 +56,10 @@ const Card = styled.button<{ isCardSelected: boolean }>(
           ${IconContainer} {
             background-color: var(--c-primary);
             border-color: var(--c-primary);
+
+            ${Icon} {
+              filter: invert(100%);
+            }
           }
 
           ${Title} {

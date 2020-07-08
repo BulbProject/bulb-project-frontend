@@ -43,6 +43,18 @@ export const Field: FC<{
     }
   }, [validationState[id], isErrorResolved]);
 
+  const setValue = useMemo(() => {
+    if (optionDetails !== undefined) {
+      return (value: string) => value;
+    }
+
+    if (isBoolean(dataType) && isDisabled) {
+      return () => true;
+    }
+
+    return undefined;
+  }, [JSON.stringify(optionDetails), dataType, isDisabled]);
+
   const getValue = useMemo(() => {
     if (isNumeric(dataType)) {
       if (minValue !== undefined && maxValue !== undefined) {
@@ -72,28 +84,8 @@ export const Field: FC<{
       return undefined;
     }
 
-    if (optionDetails !== undefined) {
-      return (value: string) => value;
-    }
-
-    if (isBoolean(dataType) && isDisabled) {
-      return () => true;
-    }
-
-    return undefined;
+    return setValue;
   }, [Boolean(optionDetails), dataType, isDisabled]);
-
-  const setValue = useMemo(() => {
-    if (optionDetails !== undefined) {
-      return (value: string) => value;
-    }
-
-    if (isBoolean(dataType) && isDisabled) {
-      return () => true;
-    }
-
-    return undefined;
-  }, [JSON.stringify(optionDetails), dataType, isDisabled]);
 
   return (
     <FormField name={id} getValue={getValue} setValue={setValue}>

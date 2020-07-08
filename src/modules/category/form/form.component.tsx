@@ -7,6 +7,7 @@ import { useFormValidator } from 'shared/context/form-validator';
 import { prepareRequestedNeed } from 'shared/utils';
 import type { FormData } from 'shared/entity';
 import { useCalculation } from 'shared/context/calculation';
+import type { RequirementGroup } from 'shared/entity/data';
 
 import { useStepperState } from '../stepper-state';
 import { Criteria } from './criteria';
@@ -16,19 +17,19 @@ import { ForwardButton, BackButton } from './buttons';
 const isRequirementGroupFilled = ({
   state,
   currentStepId,
-  requirementGroupId,
+  requirementGroup,
 }: {
   state: FormFieldSet;
   currentStepId: string;
-  requirementGroupId?: string;
+  requirementGroup?: RequirementGroup;
 }): boolean => {
   const criterion = state[currentStepId] as Record<string, unknown>;
-  const requirementGroup = criterion?.[requirementGroupId ?? ''];
+  const formRequirementGroup = criterion?.[requirementGroup?.id ?? ''] as Record<string, unknown> | undefined;
 
   return (
-    Boolean(requirementGroup) &&
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    !JSON.stringify(requirementGroup, (key, value) => {
+    Boolean(formRequirementGroup) &&
+    Object.keys(formRequirementGroup ?? {}).length === requirementGroup?.requirements.length &&
+    !JSON.stringify(formRequirementGroup, (key, value) => {
       if (value === undefined) {
         return 'undefined';
       }
@@ -54,11 +55,12 @@ export const Form: FC = ({ children }) => {
           isRequirementGroupFilled({
             state,
             currentStepId: currentStep.id,
-            requirementGroupId: selectedRequirementGroups[currentStep.id]?.id,
+            requirementGroup: selectedRequirementGroups[currentStep.id],
           }) && !hasValidationFailed
         );
       }}
       onSubmit={(state) => {
+        // `state` at some moment in time can not contain `currentStep.id` an so on
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         const recentRequirementGroup = state?.[currentStep.id]?.[selectedRequirementGroups?.[currentStep.id]?.id ?? ''];
 

@@ -1,4 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
+
+import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
 
 const ValuesListTitle = css`
@@ -37,7 +39,7 @@ const MultiValuesListItem = css`
   }
 `;
 
-const Dropdown = ({ isOpen }: { isOpen: boolean }) => css`
+const Dropdown = ({ isOpen }: { isOpen: boolean }): FlattenSimpleInterpolation => css`
   div {
     height: ${isOpen ? `200px` : 0};
   }
@@ -50,11 +52,20 @@ const SelectedGroupContainer = styled.div<{ hasSelectedGroup: boolean; $height: 
 
     margin-top: ${hasSelectedGroup ? 'var(--i-regular)' : 0};
 
-    transition: height var(--transition);
+    opacity: ${Number(!$height.includes('0'))};
+
+    transition: var(--transition);
 
     overflow-y: ${$height === 'auto' ? 'visible' : 'hidden'};
   `
 );
+
+const Title = styled(Text)`
+  margin-bottom: var(--i-small);
+
+  ${Mixin.Font.bodyBold()};
+  color: var(--c-primary);
+`;
 
 const Styled = {
   ValuesListTitle,
@@ -62,6 +73,7 @@ const Styled = {
   MultiValuesListItem,
   Dropdown,
   SelectedGroupContainer,
+  Title,
 };
 
 export default Styled;

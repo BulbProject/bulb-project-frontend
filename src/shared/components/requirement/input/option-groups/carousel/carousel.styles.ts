@@ -1,14 +1,42 @@
 import styled, { css } from 'styled-components';
 
-const Carousel = styled.div`
-  width: 100%;
+const Carousel = styled.div<{ showLeftShadow: boolean; showRightShadow: boolean }>(
+  ({ showLeftShadow, showRightShadow }) => css`
+    position: relative;
 
-  margin: 0 var(--i-regular);
+    width: 100%;
 
-  display: flex;
+    margin: 0 var(--i-regular);
 
-  overflow-x: hidden;
-`;
+    display: flex;
+
+    overflow-x: hidden;
+
+    &:before,
+    &:after {
+      position: absolute;
+
+      width: 3rem;
+      height: 100%;
+
+      z-index: 2;
+    }
+
+    &:before {
+      content: ${showLeftShadow ? `''` : 'unset'};
+
+      left: 0;
+      background-image: linear-gradient(to right, rgba(245, 245, 245, 0.9), rgba(255, 255, 255, 0));
+    }
+
+    &:after {
+      content: ${showRightShadow ? `''` : 'unset'};
+
+      right: 0;
+      background-image: linear-gradient(to left, rgba(245, 245, 245, 0.9), rgba(255, 255, 255, 0));
+    }
+  `
+);
 
 const List = styled.ul<{ currentIndex: number; shift: number }>(
   ({ currentIndex: _, shift }) => css`
@@ -46,7 +74,7 @@ const Chevron = styled.button<{ $direction: 'left' | 'right'; $isVisible: boolea
 
     opacity: ${Number(Boolean($isVisible))};
 
-    transition: opacity var(--transition);
+    transition: var(--transition);
 
     pointer-events: ${$isVisible ? 'auto' : 'none'};
 

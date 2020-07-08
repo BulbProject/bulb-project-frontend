@@ -34,13 +34,10 @@ export const Title: FC<{
   optionDetails?: OptionDetails;
   unit?: Unit;
   title: string;
-}> = ({ dataType, isDisabled, hasSingleOptionGroup, optionDetails, unit, title }) => {
+  color?: string;
+}> = ({ dataType, isDisabled, hasSingleOptionGroup, optionDetails, unit, title, color = 'var(--c-darkest)' }) => {
   return (
-    <Styled.Title
-      variant="caption"
-      isBoolean={isBoolean(dataType)}
-      color={isDisabled ? 'var(--c-neutral)' : 'var(--c-darkest)'}
-    >
+    <Styled.Title variant="caption" isBoolean={isBoolean(dataType)} color={isDisabled ? 'var(--c-neutral)' : color}>
       {titleGenerator(title, hasSingleOptionGroup, optionDetails, unit)}
     </Styled.Title>
   );
