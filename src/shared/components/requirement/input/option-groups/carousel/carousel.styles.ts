@@ -1,5 +1,9 @@
 import styled, { css } from 'styled-components';
 
+import { carouselConfig } from './carousel.config';
+
+const { cardWidth } = carouselConfig;
+
 const Carousel = styled.div<{ showLeftShadow: boolean; showRightShadow: boolean }>(
   ({ showLeftShadow, showRightShadow }) => css`
     position: relative;
@@ -53,7 +57,7 @@ const List = styled.ul<{ currentIndex: number; shift: number }>(
 );
 
 const ListItem = styled.li`
-  width: 7rem;
+  width: ${cardWidth / 16}rem;
 
   display: flex;
   justify-content: center;

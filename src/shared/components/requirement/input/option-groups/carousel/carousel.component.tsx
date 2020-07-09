@@ -7,6 +7,9 @@ import { Card } from './card';
 
 import type { CarouselCard } from './entity';
 import Styled from './carousel.styles';
+import { carouselConfig } from './carousel.config';
+
+const { cardWidth } = carouselConfig;
 
 const getRefWidth = <R extends MutableRefObject<HTMLElement | null>>(ref: R): number => {
   return ref.current?.getBoundingClientRect().width ?? 0;
@@ -42,7 +45,10 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
     if (selectedCardIndex) {
       setShift(
         Math.min(
-          Math.max((selectedCardIndex - 1) * 16 * 7 + 16 * (selectedCardIndex - 1) + 16 * 3.5 - carouselWidth / 2, 0),
+          Math.max(
+            (selectedCardIndex - 1) * cardWidth + 16 * (selectedCardIndex - 1) + cardWidth / 2 - carouselWidth / 2,
+            0
+          ),
           listWidth - carouselWidth
         )
       );
@@ -93,7 +99,7 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
   const onCardClick = useCallback((card: HTMLButtonElement) => {
     const bodyWidth = document.querySelector('body')?.clientWidth as number;
     const cardOffset =
-      card.getBoundingClientRect().left - (bodyWidth - carouselWidth) / 2 - carouselWidth / 2 + 16 * 3.5;
+      card.getBoundingClientRect().left - (bodyWidth - carouselWidth) / 2 - carouselWidth / 2 + cardWidth / 2;
 
     if (cardOffset > 0 && shouldShiftRight) {
       return setShift(Math.min(listWidth - carouselWidth, shift + cardOffset));
