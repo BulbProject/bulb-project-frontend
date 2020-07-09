@@ -26,6 +26,11 @@ export const OptionGroup: FC<{
         defaultValue={defaultValue}
         styled={{
           ValuesListItem: Styled.ValuesListItem,
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          Dropdown: ({ isOpen }: { isOpen: boolean }) =>
+            // eslint-disable-next-line new-cap
+            Styled.Dropdown({ isOpen, quantity: Object.keys(optionsMap).length }),
         }}
       />
     </Field>
