@@ -10,5 +10,5 @@ export interface AvailableVariant {
   metrics: Metric[];
   avgValue: Value;
   relatedProducts: string[];
-  criteria: [Criterion];
+  criteria?: [Criterion];
 }

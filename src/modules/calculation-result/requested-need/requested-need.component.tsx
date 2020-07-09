@@ -1,28 +1,21 @@
-import React from 'react';
-import { css } from 'styled-components';
-import Drawer from 'ustudio-ui/components/Drawer';
+import React, { FC } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
-import { useMedia } from 'shared/hooks';
 
 import { useCategory } from 'core/context/category-provider';
 import type { AvailableVariant, Item as ItemType } from 'shared/entity/data';
-import { FormValidator } from 'shared/context/form-validator';
-import FilterIcon from '../../../assets/icons/filter.inline.svg';
 
-import { Filter } from '../filter';
 import { Item } from '../item';
+import { FilterDrawer } from '../filter-drawer';
 
 import Styled from './requested-need.styles';
 
-export const RequestedNeed: React.FC<{
+export const RequestedNeed: FC<{
   hasMany: boolean;
   isDrawerOpen: boolean;
   setDrawerOpen: (isDrawerOpen: boolean) => void;
   requestedNeed: AvailableVariant;
 }> = ({ hasMany, isDrawerOpen, setDrawerOpen, requestedNeed }) => {
   const { category } = useCategory();
-
-  const isLg = useMedia('screen and (min-width: 832px)');
 
   return (
     <Styled.RequestedNeed direction="column">
@@ -40,38 +33,12 @@ export const RequestedNeed: React.FC<{
         >
           Те, що Ви шукали
         </Styled.Title>
-
-        <Styled.FilterButton appearance="text" onClick={() => setDrawerOpen(!isDrawerOpen)} iconAfter={<FilterIcon />}>
-          Змінити умови
-        </Styled.FilterButton>
-
-        <Drawer
-          isOpen={isDrawerOpen}
-          onChange={() => setDrawerOpen(false)}
-          showOverlay
-          position={isLg() ? 'left' : 'right'}
-          styled={{
-            Drawer: css`
-              width: 320px;
-              z-index: var(--l-topmost);
-            `,
-            Overlay: css`
-              background-color: var(--c-darkest);
-
-              z-index: calc(var(--l-topmost) - 1);
-            `,
-          }}
-        >
-          <Styled.DrawerButton onClick={() => setDrawerOpen(false)} />
-
-          <FormValidator>
-            <Filter recalculate={() => setDrawerOpen(false)} />
-          </FormValidator>
-        </Drawer>
+        <FilterDrawer isDrawerOpen={isDrawerOpen} setDrawerOpen={setDrawerOpen} />
       </Flex>
 
       <Item
         isRequested
+        showMetricsTitles
         variant={requestedNeed}
         item={category.items.find((item) => item.id === requestedNeed.relatedItem) as ItemType}
         document={

@@ -1,12 +1,11 @@
 import React, { FC, useState } from 'react';
 import { Form } from 'formfish';
-
 import Flex from 'ustudio-ui/components/Flex';
 
 import { useFormValidator } from 'shared/context/form-validator';
-import { useCategory } from 'core/context/category-provider';
 import { useCalculation } from 'shared/context/calculation';
 import { prepareRequestedNeed } from 'shared/utils';
+import { useCategory } from 'core/context/category-provider';
 
 import { Criterion } from './criterion';
 
@@ -33,13 +32,17 @@ export const Filter: FC<{
           watch={(state) => {
             setFormChanged(
               JSON.stringify(state[id]) !== JSON.stringify(formData) &&
-                !JSON.stringify(state[id], (_, val) => (val === undefined ? 'undefined' : val)).includes('undefined')
+                !JSON.stringify(state[id], (_, value) => (value === undefined ? 'undefined' : value)).includes(
+                  'undefined'
+                )
             );
           }}
           onSubmit={(state) => {
             if (!hasValidationFailed()) {
               setSubmitting(true);
               recalculate();
+
+              dispatch.setFormData(state[id] as Record<string, Record<string, unknown>>);
 
               dispatch.addCalculationPayload(
                 prepareRequestedNeed(state[id] as Record<string, Record<string, unknown>>)
