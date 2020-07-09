@@ -152,56 +152,58 @@ const TripleLayout = styled.section<ShouldShiftImage>(
   `
 );
 
-const ManyLayout = styled.section<{ quantity: number; isLg: boolean; shouldShiftImage: boolean }>(
-  ({ quantity, isLg, shouldShiftImage }) => {
-    const variantsQuantity = quantity - 1;
+const ManyLayout = styled.section<{
+  quantity: number;
+  isLg: boolean;
+  shouldShiftImage: boolean;
+  isRequestedNeedAbsent: boolean;
+}>(({ quantity, isLg, shouldShiftImage, isRequestedNeedAbsent }) => {
+  return css`
+    display: flex;
+    justify-content: center;
 
-    return css`
-      display: flex;
-      justify-content: center;
+    ${RequestedNeed} {
+      width: ${requestedNeedWidth}px;
 
-      ${RequestedNeed} {
-        width: ${requestedNeedWidth}px;
+      ${EfficiencyClassesList} {
+        margin: -0.5px 0;
+      }
 
-        ${EfficiencyClassesList} {
-          margin: -0.5px 0;
-        }
+      ${Item} {
+        width: 100%;
+      }
+    }
 
-        ${Item} {
-          width: 100%;
+    ${ItemContent} {
+      padding: var(--i-regular);
+    }
+
+    ${Items} {
+      ${Item} {
+        min-width: ${itemWidth}px;
+        width: ${100 / quantity}%;
+
+        ${shouldShiftImage ? getVariantImageStyles(1980) : ''};
+      }
+
+      &:after {
+        content: ${isLg ? `''` : 'unset'};
+      }
+
+      @media screen and (min-width: 800px) {
+        width: ${isRequestedNeedAbsent ? '100%' : 'calc(100% - 450px)'};
+
+        ${AvailableVariants} {
+          overflow-x: auto;
         }
       }
 
-      ${ItemContent} {
-        padding: var(--i-regular);
+      @media screen and (min-width: 1140px) {
+        width: 100%;
       }
-
-      ${Items} {
-        ${Item} {
-          width: ${100 / variantsQuantity}%;
-
-          ${shouldShiftImage ? getVariantImageStyles(1980) : ''};
-        }
-
-        &:after {
-          content: ${isLg ? `''` : 'unset'};
-        }
-
-        @media screen and (min-width: 800px) {
-          width: calc(100% - 450px);
-
-          ${AvailableVariants} {
-            overflow-x: auto;
-          }
-        }
-
-        @media screen and (min-width: 1140px) {
-          width: 100%;
-        }
-      }
-    `;
-  }
-);
+    }
+  `;
+});
 
 const Styled = { SingleLayout, DoubleLayout, TripleLayout, ManyLayout };
 

@@ -2,14 +2,6 @@ const aliases = [
   ['core', './src/core'],
   ['shared', './src/shared'],
   ['modules', './src/modules'],
-  ['app', './src/core/app'],
-  ['theme', './src/core/theme'],
-  ['components', './src/shared/components'],
-  ['config', './src/shared/config'],
-  ['context', './src/shared/context'],
-  ['entity', './src/shared/entity'],
-  ['utils', './src/shared/utils'],
-  ['hooks', './src/shared/hooks'],
 ];
 
 module.exports = {

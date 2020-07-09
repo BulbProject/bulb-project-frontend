@@ -5,7 +5,11 @@ import { useCategory } from 'core/context/category-provider';
 
 import Styled from './items-layout.styles';
 
-export const ItemsLayout: FC<{ itemsQuantity: number }> = ({ itemsQuantity, children }) => {
+export const ItemsLayout: FC<{ itemsQuantity: number; isRequestedNeedAbsent?: boolean }> = ({
+  itemsQuantity,
+  isRequestedNeedAbsent,
+  children,
+}) => {
   const isLg = useMedia('screen and (min-width: 832px)');
 
   const { category } = useCategory();
@@ -24,7 +28,12 @@ export const ItemsLayout: FC<{ itemsQuantity: number }> = ({ itemsQuantity, chil
     }
     default: {
       return (
-        <Styled.ManyLayout quantity={itemsQuantity} isLg={isLg()} shouldShiftImage={shouldShiftImage}>
+        <Styled.ManyLayout
+          quantity={itemsQuantity}
+          isLg={isLg()}
+          shouldShiftImage={shouldShiftImage}
+          isRequestedNeedAbsent={isRequestedNeedAbsent}
+        >
           {children}
         </Styled.ManyLayout>
       );
