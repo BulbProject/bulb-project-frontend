@@ -47,7 +47,14 @@ const isRequirementGroupFilled = ({
 export const Form: FC = ({ children }) => {
   const { hasValidationFailed } = useFormValidator();
   const { currentStep, setNextStepAvailable, isFirstStep } = useStepperState();
-  const { dispatch, formData, isSubmitting, setSubmitting, selectedRequirementGroups } = useCalculation();
+  const {
+    dispatch,
+    formData,
+    isSubmitting,
+    setSubmitting,
+    selectedRequirementGroups,
+    calculationPayload,
+  } = useCalculation();
 
   const isXs = useMedia('screen and (min-width: 576px)');
   const isMd = useMedia('screen and (min-width: 768px)');
@@ -68,6 +75,10 @@ export const Form: FC = ({ children }) => {
         // `state` at some moment in time can not contain `currentStep.id` an so on
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         const recentRequirementGroup = state?.[currentStep.id]?.[selectedRequirementGroups?.[currentStep.id]?.id ?? ''];
+
+        if (calculationPayload) {
+          dispatch.addCalculationPayload(undefined);
+        }
 
         if (isSubmitting && !hasValidationFailed(currentStep.id)) {
           dispatch.addCalculationPayload(

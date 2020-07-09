@@ -21,7 +21,7 @@ export class CalculationDispatcher {
     });
   }
 
-  public addCalculationPayload(payload: RequestedNeed): void {
+  public addCalculationPayload(payload?: RequestedNeed): void {
     return this.dispatch({
       type: 'add_calculation_payload',
       payload,
@@ -54,7 +54,7 @@ interface AddFormData {
 
 interface AddCalculationPayload {
   type: 'add_calculation_payload';
-  payload: RequestedNeed;
+  payload?: RequestedNeed;
 }
 
 interface AddCalculationData {
