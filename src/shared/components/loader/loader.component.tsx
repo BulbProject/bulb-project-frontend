@@ -4,45 +4,41 @@ import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Spinner from 'ustudio-ui/components/Spinner';
 
-import { Fade } from '../fade';
-
 export const Loader: FC<{
   size?: number;
 }> = ({ size = 32 }) => {
   return (
-    <Fade>
-      <Flex
-        alignment={{ horizontal: 'center', vertical: 'center' }}
-        styled={{
-          Flex: css`
-            height: 100%;
+    <Flex
+      alignment={{ horizontal: 'center', vertical: 'center' }}
+      styled={{
+        Flex: css`
+          height: 100%;
+
+          position: absolute;
+
+          z-index: 10;
+
+          top: 50%;
+          left: 50%;
+
+          transform: translate(-50%, -50%);
+
+          &:before {
+            content: '';
 
             position: absolute;
 
-            z-index: 10;
+            background-color: var(--c-darkest);
 
-            top: 50%;
-            left: 50%;
+            width: 100%;
+            height: 100%;
 
-            transform: translate(-50%, -50%);
-
-            &:before {
-              content: '';
-
-              position: absolute;
-
-              background-color: var(--c-darkest);
-
-              width: 100%;
-              height: 100%;
-
-              opacity: 0.25;
-            }
-          `,
-        }}
-      >
-        <Spinner appearance={{ size }} delay={500} />
-      </Flex>
-    </Fade>
+            opacity: 0.25;
+          }
+        `,
+      }}
+    >
+      <Spinner appearance={{ size }} delay={500} />
+    </Flex>
   );
 };

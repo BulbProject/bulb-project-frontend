@@ -119,6 +119,7 @@ export const FormModal: FC<{
             />
           </SpecificationStyles.Group>
         )}
+
         <SpecificationStyles.Group>
           <Styled.GroupTitle>Оберіть бажаний формат</Styled.GroupTitle>
 
