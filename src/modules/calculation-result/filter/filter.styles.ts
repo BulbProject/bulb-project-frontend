@@ -4,6 +4,8 @@ import Button from 'ustudio-ui/components/Button';
 
 const Wrapper = styled.div`
   position: relative;
+
+  width: 100%;
 `;
 
 const Recalculate = styled(Button)`

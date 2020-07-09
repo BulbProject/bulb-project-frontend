@@ -98,8 +98,12 @@ export const Input: FC<{
               `,
               InputContainer: hasError
                 ? css`
+                    border-bottom-color: transparent;
+
                     &:after {
                       background-color: var(--c-negative);
+
+                      transform: scaleX(1);
                     }
                   `
                 : css``,
