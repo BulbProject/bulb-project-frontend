@@ -1,7 +1,7 @@
 import React, { FC, ReactElement, useMemo } from 'react';
 import { css } from 'styled-components';
 
-import { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
+import type { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 
 import Checkbox from 'ustudio-ui/components/Checkbox';
 import NumberInput from 'ustudio-ui/components/Input/NumberInput';

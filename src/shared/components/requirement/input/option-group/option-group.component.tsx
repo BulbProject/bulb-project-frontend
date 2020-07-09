@@ -1,12 +1,12 @@
 import React, { FC, useMemo } from 'react';
-import { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
+import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 
 import Select from 'ustudio-ui/components/Select/Select';
+
 import { Field } from '../field';
+import { mapOptionsToItems } from '../utils';
 
 import Styled from './option-group.styles';
-
-import { mapOptionsToItems } from '../utils';
 
 export const OptionGroup: FC<{
   optionGroup?: OptionGroupType;

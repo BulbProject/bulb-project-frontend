@@ -1,15 +1,17 @@
 import React, { FC, ReactElement } from 'react';
 import { Form as FormComponent, FormFieldSet } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
-import { useMedia } from 'shared/hooks';
 
 import { useFormValidator } from 'shared/context/form-validator';
 import { prepareRequestedNeed } from 'shared/utils';
-import type { FormData } from 'shared/entity';
 import { useCalculation } from 'shared/context/calculation';
+import { useMedia } from 'shared/hooks';
+
+import type { FormData } from 'shared/entity';
 import type { RequirementGroup } from 'shared/entity/data';
 
 import { useStepperState } from '../stepper-state';
+
 import { Criteria } from './criteria';
 import Styled from './form.styles';
 import { ForwardButton, BackButton } from './buttons';
@@ -26,9 +28,12 @@ const isRequirementGroupFilled = ({
   const criterion = state[currentStepId] as Record<string, unknown>;
   const formRequirementGroup = criterion?.[requirementGroup?.id ?? ''] as Record<string, unknown> | undefined;
 
+  const areAllRequirementsConsidered =
+    Object.keys(formRequirementGroup ?? {}).length === requirementGroup?.requirements.length;
+
   return (
     Boolean(formRequirementGroup) &&
-    Object.keys(formRequirementGroup ?? {}).length === requirementGroup?.requirements.length &&
+    areAllRequirementsConsidered &&
     !JSON.stringify(formRequirementGroup, (key, value) => {
       if (value === undefined) {
         return 'undefined';
