@@ -43,7 +43,7 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
       setShift(
         Math.min(
           Math.max((selectedCardIndex - 1) * 16 * 7 + 16 * (selectedCardIndex - 1) + 16 * 3.5 - carouselWidth / 2, 0),
-          listWidth - carouselWidth / 2
+          listWidth - carouselWidth
         )
       );
     }
