@@ -13,7 +13,8 @@ export const OptionGroup: FC<{
   requirement: RequirementWithOptionDetails;
   isDisabled?: boolean;
   defaultValue?: string;
-}> = ({ optionGroup, requirement, isDisabled, defaultValue }) => {
+  isDefaultOpen?: boolean;
+}> = ({ optionGroup, requirement, isDisabled, defaultValue, isDefaultOpen }) => {
   const optionsMap = useMemo(() => (optionGroup ? mapOptionsToItems(optionGroup.options) : {}), [optionGroup?.options]);
 
   return (
@@ -24,6 +25,7 @@ export const OptionGroup: FC<{
         isDisabled={isDisabled}
         items={optionsMap}
         defaultValue={defaultValue}
+        isDefaultOpen={isDefaultOpen}
         styled={{
           ValuesListItem: Styled.ValuesListItem,
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

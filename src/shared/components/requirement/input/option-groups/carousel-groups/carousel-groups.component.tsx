@@ -95,6 +95,7 @@ export const CarouselGroups: FC<{
                 requirement={requirement}
                 defaultValue={defaultValue}
                 isDisabled={isDisabled}
+                isDefaultOpen
               />
             </Flex>
           )}
