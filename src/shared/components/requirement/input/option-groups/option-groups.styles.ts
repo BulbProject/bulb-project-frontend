@@ -45,21 +45,6 @@ const Dropdown = ({ isOpen }: { isOpen: boolean }): FlattenSimpleInterpolation =
   }
 `;
 
-const SelectedGroupContainer = styled.div<{ hasSelectedGroup: boolean; $height: string }>(
-  ({ hasSelectedGroup, $height }) => css`
-    width: 100%;
-    height: ${$height};
-
-    margin-top: ${hasSelectedGroup ? 'var(--i-regular)' : 0};
-
-    opacity: ${Number(!$height.includes('0'))};
-
-    transition: var(--transition);
-
-    overflow-y: ${$height === 'auto' ? 'visible' : 'hidden'};
-  `
-);
-
 const Title = styled(Text)`
   margin-bottom: var(--i-small);
 
@@ -72,7 +57,6 @@ const Styled = {
   ValuesListItem,
   MultiValuesListItem,
   Dropdown,
-  SelectedGroupContainer,
   Title,
 };
 

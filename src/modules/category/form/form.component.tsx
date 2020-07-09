@@ -61,7 +61,7 @@ export const Form: FC = ({ children }) => {
             state,
             currentStepId: currentStep.id,
             requirementGroup: selectedRequirementGroups[currentStep.id],
-          }) && !hasValidationFailed
+          }) && !hasValidationFailed(currentStep.id)
         );
       }}
       onSubmit={(state) => {
@@ -69,7 +69,7 @@ export const Form: FC = ({ children }) => {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         const recentRequirementGroup = state?.[currentStep.id]?.[selectedRequirementGroups?.[currentStep.id]?.id ?? ''];
 
-        if (isSubmitting && !hasValidationFailed) {
+        if (isSubmitting && !hasValidationFailed(currentStep.id)) {
           dispatch.addCalculationPayload(
             prepareRequestedNeed({
               ...formData,

@@ -37,7 +37,7 @@ export const Filter: FC<{
             );
           }}
           onSubmit={(state) => {
-            if (!hasValidationFailed) {
+            if (!hasValidationFailed()) {
               setSubmitting(true);
               recalculate();
 
@@ -52,7 +52,7 @@ export const Filter: FC<{
               <Criterion {...criterion} key={criterion.id} />
             ))}
 
-            <Styled.Recalculate type="submit" isDisabled={!hasFormChanged || hasValidationFailed}>
+            <Styled.Recalculate type="submit" isDisabled={!hasFormChanged || hasValidationFailed()}>
               Перерахувати
             </Styled.Recalculate>
           </>

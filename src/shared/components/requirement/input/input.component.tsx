@@ -19,6 +19,7 @@ export const Input: FC<{
   defaultValue?: unknown;
   requirement: RequirementWithOptionDetails;
   showOptionGroupsCarousel?: boolean;
+  criterionId?: string;
 }> = ({
   hasError,
   requirement,
@@ -27,6 +28,7 @@ export const Input: FC<{
   placeholder,
   suffix,
   showOptionGroupsCarousel,
+  criterionId,
 }): ReactElement => {
   const { dataType } = useMemo(() => requirement, []);
 
@@ -57,6 +59,7 @@ export const Input: FC<{
         defaultValue={defaultValue as string}
         isDisabled={isDisabled}
         showCarousel={showOptionGroupsCarousel}
+        criterionId={criterionId}
       />
     );
   }

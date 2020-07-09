@@ -83,6 +83,7 @@ export const Requirement: FC<
             maxValue,
           }}
           showOptionGroupsCarousel={showCarousel}
+          criterionId={criterion.id}
         />
 
         {validationState[id] && (
