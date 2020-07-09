@@ -68,6 +68,28 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
     }
   }, dependencies);
 
+  useEffect(() => {
+    const handleShift = (_event: Event): void => {
+      const event = _event as KeyboardEvent;
+
+      if (event.key === 'ArrowRight' && shouldShiftRight) {
+        shiftRight();
+      }
+
+      if (event.key === 'ArrowLeft' && shouldShiftLeft) {
+        shiftLeft();
+      }
+    };
+
+    if (hasMounted) {
+      document.addEventListener('keydown', handleShift);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleShift);
+    };
+  }, [hasMounted, shiftLeft, shouldShiftLeft, shiftRight, shouldShiftRight]);
+
   const onCardClick = useCallback((card: HTMLButtonElement) => {
     const bodyWidth = document.querySelector('body')?.clientWidth as number;
     const cardOffset =
