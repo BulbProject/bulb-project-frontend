@@ -1,4 +1,5 @@
 import React, { FC, useMemo } from 'react';
+import { css } from 'styled-components';
 import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 
 import Select from 'ustudio-ui/components/Select/Select';
@@ -33,6 +34,11 @@ export const OptionGroup: FC<{
           Dropdown: ({ isOpen }: { isOpen: boolean }) =>
             // eslint-disable-next-line new-cap
             Styled.Dropdown({ isOpen, quantity: Object.keys(optionsMap).length }),
+          Overlay: isDefaultOpen
+            ? css`
+                display: none;
+              `
+            : css``,
         }}
       />
     </Field>
