@@ -34,13 +34,18 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
 
   const dependencies = [shift, listWidth, carouselWidth];
 
-  const selectedCardIndex = useMemo(() => selectedCard && Number(selectedCard.slice(6, 8)), [selectedCard]) as
-    | number
-    | undefined;
+  const selectedCardIndex = useMemo(() => selectedCard && Math.floor(Number(selectedCard.slice(6, 8))), [
+    selectedCard,
+  ]) as number | undefined;
 
   useEffect(() => {
     if (selectedCardIndex) {
-      setShift(Math.min(listWidth - carouselWidth, 16 * 7 * (selectedCardIndex - 1)));
+      setShift(
+        Math.min(
+          Math.max((selectedCardIndex - 1) * 16 * 7 + 16 * (selectedCardIndex - 1) + 16 * 3.5 - carouselWidth / 2, 0),
+          listWidth - carouselWidth / 2
+        )
+      );
     }
   }, [hasMounted]);
 
