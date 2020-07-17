@@ -35,7 +35,7 @@ const isRequirementGroupFilled = ({
     Boolean(formRequirementGroup) &&
     areAllRequirementsConsidered &&
     !JSON.stringify(formRequirementGroup, (key, value) => {
-      if (value === undefined) {
+      if (value === undefined || Number.isNaN(Number(value))) {
         return 'undefined';
       }
 

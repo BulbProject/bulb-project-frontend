@@ -32,9 +32,8 @@ export const Filter: FC<{
           watch={(state) => {
             setFormChanged(
               JSON.stringify(state[id]) !== JSON.stringify(formData) &&
-                !JSON.stringify(state[id], (_, value) => (value === undefined ? 'undefined' : value)).includes(
-                  'undefined'
-                )
+                !JSON.stringify(state[id], (_, value) =>
+                  (value === undefined || Number.isNaN(Number(value))) ? 'undefined' : value).includes('undefined')
             );
           }}
           onSubmit={(state) => {
