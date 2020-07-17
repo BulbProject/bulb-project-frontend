@@ -71,6 +71,9 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
         <Select
           autocomplete={requirementGroups.length >= 10}
           placeholder="Виберіть один із доступних варіантів"
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          emptyListMessage='Нічого не знайдено'
           items={requirementGroups.reduce((items, requirementGroup) => {
             return Object.assign(items, {
               [requirementGroup.id]: {
