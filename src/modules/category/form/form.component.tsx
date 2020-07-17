@@ -3,7 +3,8 @@ import { Form as FormComponent, FormFieldSet } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 
 import { useFormValidator } from 'shared/context/form-validator';
-import { prepareRequestedNeed } from 'shared/utils';
+import { prepareRequestedNeed, isFormFilledIn } from 'shared/utils';
+
 import { useCalculation } from 'shared/context/calculation';
 import { useMedia } from 'shared/hooks';
 
@@ -34,13 +35,7 @@ const isRequirementGroupFilled = ({
   return (
     Boolean(formRequirementGroup) &&
     areAllRequirementsConsidered &&
-    !JSON.stringify(formRequirementGroup, (key, value) => {
-      if (value === undefined || Number.isNaN(Number(value))) {
-        return 'undefined';
-      }
-
-      return value;
-    }).includes('undefined')
+    isFormFilledIn(formRequirementGroup)
   );
 };
 

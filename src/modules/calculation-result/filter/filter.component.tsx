@@ -4,7 +4,7 @@ import Flex from 'ustudio-ui/components/Flex';
 
 import { useFormValidator } from 'shared/context/form-validator';
 import { useCalculation } from 'shared/context/calculation';
-import { prepareRequestedNeed } from 'shared/utils';
+import { prepareRequestedNeed, isFormFilledIn } from 'shared/utils';
 import { useCategory } from 'core/context/category-provider';
 
 import { Criterion } from './criterion';
@@ -32,8 +32,7 @@ export const Filter: FC<{
           watch={(state) => {
             setFormChanged(
               JSON.stringify(state[id]) !== JSON.stringify(formData) &&
-                !JSON.stringify(state[id], (_, value) =>
-                  (value === undefined || Number.isNaN(Number(value))) ? 'undefined' : value).includes('undefined')
+                isFormFilledIn(state[id])
             );
           }}
           onSubmit={(state) => {
