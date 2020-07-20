@@ -1,6 +1,7 @@
 export * from './sort-by-value';
 export * from './modify-id';
 export * from './get-random-width';
+export * from './is-form-filled-in';
 export * from './prepare-requested-need';
 export * from './get-locale-data-type';
 export * from './format-number';
