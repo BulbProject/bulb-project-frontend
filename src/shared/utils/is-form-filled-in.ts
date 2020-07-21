@@ -1,6 +1,6 @@
 export const isFormFilledIn = (data: unknown): boolean => {
   const formData = JSON.stringify(data, (key, value) => {
-    if (value === undefined || Number.isNaN(Number(value))) {
+    if (key && (typeof value === 'undefined' || Number.isNaN(value))) {
       return 'undefined';
     }
 
