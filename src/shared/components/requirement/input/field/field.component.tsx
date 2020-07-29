@@ -45,7 +45,9 @@ export const Field: FC<{
 
   const setValue = useMemo(() => {
     if (optionDetails !== undefined) {
-      return (value: string) => value;
+      return (value?: string) => {
+        return value === undefined ? value : `${id}_${value}`;
+      };
     }
 
     if (isBoolean(dataType) && isDisabled) {
@@ -82,6 +84,16 @@ export const Field: FC<{
       }
 
       return undefined;
+    }
+
+    // eslint-disable-next-line prefer-named-capture-group
+    const pattern = /_(.+)/u;
+
+    if (optionDetails !== undefined) {
+      return (value?: string) => {
+
+        return value === undefined ? value : pattern.exec(value)?.[1]
+      };
     }
 
     return setValue;

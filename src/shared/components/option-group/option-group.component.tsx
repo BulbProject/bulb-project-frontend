@@ -4,8 +4,8 @@ import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } fro
 
 import Select from 'ustudio-ui/components/Select/Select';
 
-import { Field } from '../field';
-import { mapOptionsToItems } from '../utils';
+import { Field } from '../requirement/input/field';
+import { mapOptionsToItems } from '../requirement/input/utils';
 
 import Styled from './option-group.styles';
 

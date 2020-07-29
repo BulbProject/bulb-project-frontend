@@ -9,7 +9,7 @@ import TextInput from 'ustudio-ui/components/Input/TextInput';
 
 import { Field } from './field';
 import { OptionGroups } from './option-groups';
-import { OptionGroup } from './option-group';
+import { OptionGroup } from '../../option-group';
 
 export const Input: FC<{
   placeholder?: string;

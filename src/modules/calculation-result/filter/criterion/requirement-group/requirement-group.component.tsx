@@ -14,6 +14,7 @@ export const RequirementGroup: FC<RequirementGroupProps> = ({ id, requirements }
     () => hasSingleRequirement && requirements[0].dataType === 'boolean' && 'expectedValue' in requirements[0],
     []
   );
+
   const criterion = useMemo(
     () => category.criteria.filter(({ id: criterionId }) => criterionId === modifyId(id, 2, () => 0))[0],
     []

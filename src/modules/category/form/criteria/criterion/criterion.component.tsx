@@ -7,8 +7,18 @@ import { Mixin } from 'ustudio-ui/theme';
 import { Criterion as CriterionProps, RequirementGroup as RequirementGroupType } from 'shared/entity/data';
 import { useCalculation } from 'shared/context/calculation';
 
-import { BinaryGroup } from '../../binary-group';
+import { OptionGroup as OptionGroupType } from 'ts4ocds/extensions/options/option-group';
+
+import { CarouselGroups } from 'shared/components/carousel-groups';
+import { Title } from 'shared/components/title';
+import { Document } from 'ts4ocds';
+
+import { CarouselCard } from 'shared/components/entity';
 import { RequirementGroup } from '../../requirement-group';
+import { BinaryGroup } from '../../binary-group';
+import { useCategory } from '../../../../../core/context/category-provider';
+// eslint-disable-next-line boundaries/no-private
+import { OptionGroups } from '../../../../../shared/components/requirement/input/option-groups';
 
 const isGroupBoolean = (requirementGroup: RequirementGroupType): boolean => {
   return (
@@ -39,7 +49,7 @@ const hasBinarySelection = (requirementGroups: RequirementGroupType[]): boolean 
 };
 
 export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
-  const { selectedRequirementGroups, dispatch } = useCalculation();
+  const { selectedRequirementGroups, dispatch, formData } = useCalculation();
 
   const selectedRequirementGroup = useMemo(() => selectedRequirementGroups?.[id], [selectedRequirementGroups]);
 
@@ -65,16 +75,24 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
     return <BinaryGroup booleanGroup={booleanGroup} nonBooleanGroup={nonBooleanGroup} />;
   }
 
+  const {
+    category: { documents },
+  } = useCategory();
+
+  const filteredDocs = documents?.filter(({ relatedItem }) => {
+    return requirementGroups.map(({ id: requirementGroupId }) => requirementGroupId).includes(relatedItem);
+  });
+
   return (
     <Flex direction="column">
-      {requirementGroups.length > 1 && (
+      {requirementGroups.length > 1 && filteredDocs?.length === 0 ? (
         <Select
           autocomplete={requirementGroups.length >= 10}
           placeholder="Виберіть один із доступних варіантів"
           // Select props declaration miss this prop
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
-          emptyListMessage='Нічого не знайдено'
+          emptyListMessage="Нічого не знайдено"
           items={requirementGroups.reduce((items, requirementGroup) => {
             return Object.assign(items, {
               [requirementGroup.id]: {
@@ -101,6 +119,53 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
                 background: var(--c-primary-light);
               }
             `,
+          }}
+        />
+      ) : (
+        <CarouselGroups
+          requirement={selectedRequirementGroups?.[id]?.requirements[0]}
+          groups={requirementGroups}
+          defaultValue={(formData[id] as Record<string, string>)?.[selectedRequirementGroups?.[id]?.requirements[0].id as string]}
+          /* eslint-disable-next-line no-shadow */
+          docs={requirementGroups.map(({ id }) => {
+            const { url, title } = filteredDocs?.find(({ relatedItem }) => relatedItem === id) as Document;
+
+            return {
+              id,
+              url,
+              title,
+            } as CarouselCard;
+          })}
+          getPreselectedGroup={(_defaultValue) => {
+            return requirementGroups
+              .flatMap(({ requirements }) =>
+                requirements.flatMap(({ optionDetails }) => {
+                  return ('optionGroups' in optionDetails && optionDetails.optionGroups) as OptionGroupType[];
+                })
+              )
+              .find(({ options }) => {
+                return options.map(({ value }) => value).includes(_defaultValue);
+              }) as { id: string } | undefined;
+          }}
+          renderGroup={({ selectedGroup: _selectedGroup, defaultValue }) => {
+            const selectedGroup = _selectedGroup as RequirementGroupType;
+
+            return (
+              <>
+                <Title
+                  dataType={selectedRequirementGroups?.[id]?.requirements[0].dataType}
+                  title={selectedGroup.description as string}
+                  color="var(--c-primary)"
+                />
+
+                <OptionGroups
+                  showCarousel={false}
+                  optionGroups={'optionGroups' in selectedGroup.requirements[0].optionDetails ? selectedGroup.requirements[0].optionDetails.optionGroups : []}
+                  requirement={selectedGroup.requirements[0]}
+                  defaultValue={defaultValue}
+                />
+              </>
+            );
           }}
         />
       )}
