@@ -3,6 +3,7 @@ import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Select from 'ustudio-ui/components/Select/Select';
 import { Mixin } from 'ustudio-ui/theme';
+import FieldSet from 'formfish/components/FieldSet';
 
 import { Criterion as CriterionProps, RequirementGroup as RequirementGroupType } from 'shared/entity/data';
 import { useCalculation } from 'shared/context/calculation';
@@ -14,11 +15,11 @@ import { Title } from 'shared/components/title';
 import { Document } from 'ts4ocds';
 
 import { CarouselCard } from 'shared/components/entity';
+import { OptionGroups } from 'shared/components/option-groups';
 import { useCategory } from 'core/context/category-provider';
+
 import { RequirementGroup } from '../../requirement-group';
 import { BinaryGroup } from '../../binary-group';
-// eslint-disable-next-line boundaries/no-private
-import { OptionGroups } from '../../../../../shared/components/requirement/input/option-groups';
 
 const isGroupBoolean = (requirementGroup: RequirementGroupType): boolean => {
   return (
@@ -86,46 +87,52 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
   return (
     <Flex direction="column">
       {requirementGroups.length > 1 && filteredDocs?.length === 0 ? (
-        <Select
-          autocomplete={requirementGroups.length >= 10}
-          placeholder="Виберіть один із доступних варіантів"
-          // Select props declaration miss this prop
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
-          emptyListMessage="Нічого не знайдено"
-          items={requirementGroups.reduce((items, requirementGroup) => {
-            return Object.assign(items, {
-              [requirementGroup.id]: {
-                value: requirementGroup.id,
-                label: `${requirementGroup.description}`,
-              },
-            });
-          }, {})}
-          value={selectedRequirementGroup?.id}
-          onChange={(requirementGroupId) =>
-            dispatch.selectRequirementGroup({
-              criterionId: id,
-              requirementGroup: requirementGroups.find(
-                (requirementGroup) => requirementGroup.id === requirementGroupId
-              ),
-            })
-          }
-          styled={{
-            Select: css`
-              ${selectedRequirementGroup ? Mixin.Font.bodyBold() : ''};
-            `,
-            ValuesListItem: css`
-              &:before {
-                background: var(--c-primary-light);
-              }
-            `,
-          }}
-        />
+        <>
+          <Select
+            autocomplete={requirementGroups.length >= 10}
+            placeholder="Виберіть один із доступних варіантів"
+            // Select props declaration miss this prop
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
+            emptyListMessage="Нічого не знайдено"
+            items={requirementGroups.reduce((items, requirementGroup) => {
+              return Object.assign(items, {
+                [requirementGroup.id]: {
+                  value: requirementGroup.id,
+                  label: `${requirementGroup.description}`,
+                },
+              });
+            }, {})}
+            value={selectedRequirementGroup?.id}
+            onChange={(requirementGroupId) =>
+              dispatch.selectRequirementGroup({
+                criterionId: id,
+                requirementGroup: requirementGroups.find(
+                  (requirementGroup) => requirementGroup.id === requirementGroupId
+                ),
+              })
+            }
+            styled={{
+              Select: css`
+                ${selectedRequirementGroup ? Mixin.Font.bodyBold() : ''};
+              `,
+              ValuesListItem: css`
+                &:before {
+                  background: var(--c-primary-light);
+                }
+              `,
+            }}
+          />
+
+          {selectedRequirementGroup && <RequirementGroup {...selectedRequirementGroup} />}
+        </>
       ) : (
         <CarouselGroups
           requirement={selectedRequirementGroups?.[id]?.requirements[0]}
           groups={requirementGroups}
-          defaultValue={(formData[id] as Record<string, string>)?.[selectedRequirementGroups?.[id]?.requirements[0].id as string]}
+          defaultValue={
+            (formData[id] as Record<string, string>)?.[selectedRequirementGroups?.[id]?.requirements[0].id as string]
+          }
           /* eslint-disable-next-line no-shadow */
           docs={requirementGroups.map(({ id }) => {
             const { url, title } = filteredDocs?.find(({ relatedItem }) => relatedItem === id) as Document;
@@ -153,24 +160,34 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
             return (
               <>
                 <Title
-                  dataType={selectedRequirementGroups?.[id]?.requirements[0].dataType}
-                  title={selectedGroup.description as string}
+                  dataType={selectedGroup.requirements[0].dataType}
+                  title={`${selectedGroup.description}`}
                   color="var(--c-primary)"
                 />
 
-                <OptionGroups
-                  showCarousel={false}
-                  optionGroups={'optionGroups' in selectedGroup.requirements[0].optionDetails ? selectedGroup.requirements[0].optionDetails.optionGroups : []}
-                  requirement={selectedGroup.requirements[0]}
-                  defaultValue={defaultValue}
-                />
+                <FieldSet name={selectedGroup.id}>
+                  <OptionGroups
+                    showCarousel={false}
+                    optionGroups={
+                      'optionGroups' in selectedGroup.requirements[0].optionDetails
+                        ? selectedGroup.requirements[0].optionDetails.optionGroups
+                        : []
+                    }
+                    requirement={selectedGroup.requirements[0]}
+                    defaultValue={defaultValue}
+                  />
+                </FieldSet>
               </>
             );
           }}
+          onGroupSelect={(requirementGroupId) =>
+            dispatch.selectRequirementGroup({
+              criterionId: id,
+              requirementGroup: requirementGroups.find((group) => group.id === requirementGroupId),
+            })
+          }
         />
       )}
-
-      {selectedRequirementGroup && <RequirementGroup {...selectedRequirementGroup} />}
     </Flex>
   );
 };

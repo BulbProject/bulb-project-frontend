@@ -8,7 +8,7 @@ import NumberInput from 'ustudio-ui/components/Input/NumberInput';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 
 import { Field } from './field';
-import { OptionGroups } from './option-groups';
+import { OptionGroups } from '../../option-groups';
 import { OptionGroup } from '../../option-group';
 
 export const Input: FC<{

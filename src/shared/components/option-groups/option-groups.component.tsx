@@ -1,20 +1,21 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useState, useMemo } from 'react';
 import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 import Select from 'ustudio-ui/components/Select/Select';
 import type { Group } from 'ustudio-ui/components/Select/select.types';
-
-import { sortByValue } from 'shared/utils';
+import FormField from 'formfish/components/Field';
 
 import { Document } from 'ts4ocds';
-import { useCategory } from 'core/context/category-provider';
-import { Field } from '../field';
-import { mapOptionsToItems } from '../utils';
-import { CarouselGroups } from '../../../carousel-groups';
-import { GroupType } from '../../../carousel-groups/carousel-groups.types';
 
-import { OptionGroup } from '../../../option-group';
-import { Title } from '../../../title';
-import { CarouselCard } from '../../../entity';
+import { sortByValue } from 'shared/utils';
+import { useCategory } from 'core/context/category-provider';
+
+import { mapOptionsToItems } from '../requirement/input/utils';
+import { OptionGroup } from '../option-group';
+import { Title } from '../title';
+import { CarouselGroups } from '../carousel-groups';
+
+import { GroupType } from '../carousel-groups/carousel-groups.types';
+import { CarouselCard } from '../entity';
 
 import Styled from './option-groups.styles';
 
@@ -30,7 +31,7 @@ export const OptionGroups: FC<{
     return optionGroups.sort(sortByValue('id')).map((optionGroup) => {
       return {
         title: optionGroup.description as string,
-        items: mapOptionsToItems(optionGroup.options),
+        items: mapOptionsToItems(optionGroup.options, optionGroup.id, ({option, optionGroupId}) => `${optionGroupId}_${option.value}`),
       };
     }, {});
   }, [optionGroups]);
@@ -38,6 +39,8 @@ export const OptionGroups: FC<{
   const {
     category: { documents },
   } = useCategory();
+
+  const [selectedOptionGroupId, setSelectedOptionGroupId] = useState('');
 
   const cards: CarouselCard[] = useMemo(() => {
     return optionGroups.map(({ id }) => {
@@ -84,21 +87,38 @@ export const OptionGroups: FC<{
       }}
     />
   ) : (
-    <Field requirement={requirement} isDisabled={isDisabled}>
-      <Select
-        autocomplete={groupsMap.flatMap((group) => Object.values(group.items)).length >= 10}
-        isDisabled={isDisabled}
-        groups={groupsMap}
-        defaultValue={defaultValue}
-        styled={{
-          ValuesListItem: Styled.MultiValuesListItem,
-          ValuesListTitle: Styled.ValuesListTitle,
-          // Another problem with UI Kit type declarations
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-          // @ts-ignore
-          Dropdown: Styled.Dropdown,
-        }}
-      />
-    </Field>
+    <FormField
+      name={requirement.id}
+      renderInput={({ value = defaultValue, setValue }) => {
+        return (
+          <Select
+            value={`${selectedOptionGroupId}_${value}`}
+            onChange={(selectValue) => {
+              if (selectValue === undefined) {
+                setValue(selectValue);
+              }
+
+              // eslint-disable-next-line prefer-named-capture-group,@typescript-eslint/prefer-regexp-exec
+              const [, optionGroupId, optionValue] = selectValue.match(/(\d+)_(.+)/u) as [string, string, string];
+
+              setValue(optionValue);
+              setSelectedOptionGroupId(optionGroupId);
+            }}
+            autocomplete={groupsMap.flatMap((group) => Object.values(group.items)).length >= 10}
+            isDisabled={isDisabled}
+            groups={groupsMap}
+            defaultValue={defaultValue}
+            styled={{
+              ValuesListItem: Styled.MultiValuesListItem,
+              ValuesListTitle: Styled.ValuesListTitle,
+              // Another problem with UI Kit type declarations
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              Dropdown: Styled.Dropdown,
+            }}
+          />
+        );
+      }}
+    />
   );
 };

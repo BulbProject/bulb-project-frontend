@@ -30,10 +30,7 @@ export const Filter: FC<{
         <Form
           name={id}
           watch={(state) => {
-            setFormChanged(
-              JSON.stringify(state[id]) !== JSON.stringify(formData) &&
-                isFormFilledIn(state[id])
-            );
+            setFormChanged(JSON.stringify(state[id]) !== JSON.stringify(formData) && isFormFilledIn(state[id]));
           }}
           onSubmit={(state) => {
             if (!hasValidationFailed()) {

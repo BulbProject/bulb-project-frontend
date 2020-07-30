@@ -3,15 +3,16 @@ import { Item } from 'ustudio-ui/components/Select/select.types';
 
 import { sortByValue } from 'shared/utils';
 
-export const mapOptionsToItems = (options: Option[]): Record<string, Item> => {
-  return options.sort(sortByValue('id')).reduce(
-    (map, option) => {
-      const value = `${`${option.id}`.slice(0, -4)}${'0'.repeat(4)}_${option.value}`;
+export const mapOptionsToItems = (
+  options: Option[],
+  optionGroupId: string | number,
+  getValue?: ({ option, optionGroupId }: { option: Option; optionGroupId: string | number }) => string
+): Record<string, Item> => {
+  return options.sort(sortByValue('id')).reduce((map, option) => {
+    const value = getValue ? getValue({ option, optionGroupId }) : option.value;
 
-      return Object.assign(map, {
-        [value]: { value, label: option.description },
-      });
-    },
-    {},
-  );
+    return Object.assign(map, {
+      [value]: { value, label: option.description },
+    });
+  }, {});
 };
