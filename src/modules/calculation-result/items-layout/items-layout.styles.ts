@@ -99,8 +99,11 @@ const DoubleLayout = styled.section<ShouldShiftImage>(
   `
 );
 
-const TripleLayout = styled.section<ShouldShiftImage>(
-  ({ shouldShiftImage }) => css`
+const TripleLayout = styled.section<{
+  shouldShiftImage: boolean;
+  isRequestedNeedAbsent: boolean;
+}>(
+  ({ shouldShiftImage, isRequestedNeedAbsent }) => css`
     display: flex;
     justify-content: center;
 
@@ -127,7 +130,7 @@ const TripleLayout = styled.section<ShouldShiftImage>(
       }
 
       ${Item} {
-        width: 50%;
+        width: ${isRequestedNeedAbsent ? 'calc(100%/3)' : '50%'};
 
         ${shouldShiftImage ? getVariantImageStyles(1980) : ''};
       }
@@ -145,7 +148,7 @@ const TripleLayout = styled.section<ShouldShiftImage>(
       }
 
       @media screen and (min-width: 1140px) {
-        width: calc(8 / 13 * 100%);
+        width: ${isRequestedNeedAbsent ? '100%' : 'calc(8 / 13 * 100%)'};
         min-width: ${itemWidth * 2}px;
       }
     }

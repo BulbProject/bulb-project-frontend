@@ -7,7 +7,7 @@ import Styled from './items-layout.styles';
 
 export const ItemsLayout: FC<{ itemsQuantity: number; isRequestedNeedAbsent?: boolean }> = ({
   itemsQuantity,
-  isRequestedNeedAbsent,
+  isRequestedNeedAbsent = false,
   children,
 }) => {
   const isLg = useMedia('screen and (min-width: 832px)');
@@ -24,7 +24,11 @@ export const ItemsLayout: FC<{ itemsQuantity: number; isRequestedNeedAbsent?: bo
       return <Styled.DoubleLayout shouldShiftImage={shouldShiftImage}>{children}</Styled.DoubleLayout>;
     }
     case 3: {
-      return <Styled.TripleLayout shouldShiftImage={shouldShiftImage}>{children}</Styled.TripleLayout>;
+      return (
+        <Styled.TripleLayout shouldShiftImage={shouldShiftImage} isRequestedNeedAbsent={isRequestedNeedAbsent}>
+          {children}
+        </Styled.TripleLayout>
+      );
     }
     default: {
       return (
