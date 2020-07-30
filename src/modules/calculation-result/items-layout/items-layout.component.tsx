@@ -24,7 +24,11 @@ export const ItemsLayout: FC<{ itemsQuantity: number; isRequestedNeedAbsent?: bo
       return <Styled.DoubleLayout shouldShiftImage={shouldShiftImage}>{children}</Styled.DoubleLayout>;
     }
     case 3: {
-      return <Styled.TripleLayout shouldShiftImage={shouldShiftImage}>{children}</Styled.TripleLayout>;
+      return (
+        <Styled.TripleLayout shouldShiftImage={shouldShiftImage} isRequestedNeedAbsent={!!isRequestedNeedAbsent}>
+          {children}
+        </Styled.TripleLayout>
+      );
     }
     default: {
       return (
@@ -32,7 +36,7 @@ export const ItemsLayout: FC<{ itemsQuantity: number; isRequestedNeedAbsent?: bo
           quantity={itemsQuantity}
           isLg={isLg()}
           shouldShiftImage={shouldShiftImage}
-          isRequestedNeedAbsent={isRequestedNeedAbsent}
+          isRequestedNeedAbsent={!!isRequestedNeedAbsent}
         >
           {children}
         </Styled.ManyLayout>
