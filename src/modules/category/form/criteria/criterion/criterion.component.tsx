@@ -14,9 +14,9 @@ import { Title } from 'shared/components/title';
 import { Document } from 'ts4ocds';
 
 import { CarouselCard } from 'shared/components/entity';
+import { useCategory } from 'core/context/category-provider';
 import { RequirementGroup } from '../../requirement-group';
 import { BinaryGroup } from '../../binary-group';
-import { useCategory } from '../../../../../core/context/category-provider';
 // eslint-disable-next-line boundaries/no-private
 import { OptionGroups } from '../../../../../shared/components/requirement/input/option-groups';
 

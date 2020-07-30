@@ -6,16 +6,17 @@ import type { Group } from 'ustudio-ui/components/Select/select.types';
 import { sortByValue } from 'shared/utils';
 
 import { Document } from 'ts4ocds';
+import { useCategory } from 'core/context/category-provider';
 import { Field } from '../field';
 import { mapOptionsToItems } from '../utils';
 import { CarouselGroups } from '../../../carousel-groups';
 import { GroupType } from '../../../carousel-groups/carousel-groups.types';
 
-import Styled from './option-groups.styles';
 import { OptionGroup } from '../../../option-group';
 import { Title } from '../../../title';
-import { useCategory } from '../../../../../core/context/category-provider';
 import { CarouselCard } from '../../../entity';
+
+import Styled from './option-groups.styles';
 
 export const OptionGroups: FC<{
   optionGroups: OptionGroupType[];
