@@ -31,7 +31,11 @@ export const OptionGroups: FC<{
     return optionGroups.sort(sortByValue('id')).map((optionGroup) => {
       return {
         title: optionGroup.description as string,
-        items: mapOptionsToItems(optionGroup.options, optionGroup.id, ({option, optionGroupId}) => `${optionGroupId}_${option.value}`),
+        items: mapOptionsToItems(
+          optionGroup.options,
+          optionGroup.id,
+          ({ option, optionGroupId }) => `${optionGroupId}_${option.value}`
+        ),
       };
     }, {});
   }, [optionGroups]);
