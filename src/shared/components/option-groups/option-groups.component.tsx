@@ -1,8 +1,9 @@
 import React, { FC, useState, useMemo } from 'react';
-import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
-import Select from 'ustudio-ui/components/Select/Select';
-import type { Group } from 'ustudio-ui/components/Select/select.types';
 import FormField from 'formfish/components/Field';
+import Select from 'ustudio-ui/components/Select/Select';
+
+import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
+import type { Group } from 'ustudio-ui/components/Select/select.types';
 import type { Document } from 'ts4ocds';
 
 import { sortByValue } from 'shared/utils';
