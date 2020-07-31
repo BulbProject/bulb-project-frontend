@@ -80,13 +80,17 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
     category: { documents },
   } = useCategory();
 
-  const filteredDocs = documents?.filter(({ relatedItem }) => {
-    return requirementGroups.map(({ id: requirementGroupId }) => requirementGroupId).includes(relatedItem);
-  });
+  const filteredDocuments = useMemo(
+    () =>
+      documents?.filter(({ relatedItem }) => {
+        return requirementGroups.map(({ id: requirementGroupId }) => requirementGroupId).includes(relatedItem);
+      }),
+    [documents]
+  );
 
   return (
     <Flex direction="column">
-      {requirementGroups.length > 1 && filteredDocs?.length === 0 ? (
+      {requirementGroups.length > 1 && filteredDocuments?.length === 0 ? (
         <>
           <Select
             autocomplete={requirementGroups.length >= 10}
@@ -135,7 +139,7 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
           }
           /* eslint-disable-next-line no-shadow */
           docs={requirementGroups.map(({ id }) => {
-            const { url, title } = filteredDocs?.find(({ relatedItem }) => relatedItem === id) as Document;
+            const { url, title } = filteredDocuments?.find(({ relatedItem }) => relatedItem === id) as Document;
 
             return {
               id,
