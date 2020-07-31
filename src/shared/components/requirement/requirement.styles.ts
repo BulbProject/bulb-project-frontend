@@ -8,7 +8,7 @@ const Requirement = styled.label`
   width: 100%;
 
   &:not(:last-child) {
-    margin-bottom: var(--i-regular);
+    margin-bottom: 1.5rem;
   }
 `;
 

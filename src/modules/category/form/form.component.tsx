@@ -1,14 +1,18 @@
 import React, { FC, ReactElement } from 'react';
 import { Form as FormComponent, FormFieldSet } from 'formfish';
 import Cell from 'ustudio-ui/components/Grid/Cell';
-import { useMedia } from 'shared/hooks';
 
 import { useFormValidator } from 'shared/context/form-validator';
-import { prepareRequestedNeed } from 'shared/utils';
-import type { FormData } from 'shared/entity';
+import { prepareRequestedNeed, isFormFilledIn } from 'shared/utils';
+
 import { useCalculation } from 'shared/context/calculation';
+import { useMedia } from 'shared/hooks';
+
+import type { FormData } from 'shared/entity';
+import type { RequirementGroup } from 'shared/entity/data';
 
 import { useStepperState } from '../stepper-state';
+
 import { Criteria } from './criteria';
 import Styled from './form.styles';
 import { ForwardButton, BackButton } from './buttons';
@@ -16,32 +20,36 @@ import { ForwardButton, BackButton } from './buttons';
 const isRequirementGroupFilled = ({
   state,
   currentStepId,
-  requirementGroupId,
+  requirementGroup,
 }: {
   state: FormFieldSet;
   currentStepId: string;
-  requirementGroupId?: string;
+  requirementGroup?: RequirementGroup;
 }): boolean => {
   const criterion = state[currentStepId] as Record<string, unknown>;
-  const requirementGroup = criterion?.[requirementGroupId ?? ''];
+  const formRequirementGroup = criterion?.[requirementGroup?.id ?? ''] as Record<string, unknown> | undefined;
+
+  const areAllRequirementsConsidered =
+    Object.keys(formRequirementGroup ?? {}).length === requirementGroup?.requirements.length;
 
   return (
-    Boolean(requirementGroup) &&
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    !JSON.stringify(requirementGroup, (key, value) => {
-      if (value === undefined) {
-        return 'undefined';
-      }
-
-      return value;
-    }).includes('undefined')
+    Boolean(formRequirementGroup) &&
+    areAllRequirementsConsidered &&
+    isFormFilledIn(formRequirementGroup)
   );
 };
 
 export const Form: FC = ({ children }) => {
   const { hasValidationFailed } = useFormValidator();
   const { currentStep, setNextStepAvailable, isFirstStep } = useStepperState();
-  const { dispatch, formData, isSubmitting, setSubmitting, selectedRequirementGroups } = useCalculation();
+  const {
+    dispatch,
+    formData,
+    isSubmitting,
+    setSubmitting,
+    selectedRequirementGroups,
+    calculationPayload,
+  } = useCalculation();
 
   const isXs = useMedia('screen and (min-width: 576px)');
   const isMd = useMedia('screen and (min-width: 768px)');
@@ -54,15 +62,20 @@ export const Form: FC = ({ children }) => {
           isRequirementGroupFilled({
             state,
             currentStepId: currentStep.id,
-            requirementGroupId: selectedRequirementGroups[currentStep.id]?.id,
-          }) && !hasValidationFailed
+            requirementGroup: selectedRequirementGroups[currentStep.id],
+          }) && !hasValidationFailed(currentStep.id)
         );
       }}
       onSubmit={(state) => {
+        // `state` at some moment in time can not contain `currentStep.id` an so on
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         const recentRequirementGroup = state?.[currentStep.id]?.[selectedRequirementGroups?.[currentStep.id]?.id ?? ''];
 
-        if (isSubmitting && !hasValidationFailed) {
+        if (calculationPayload) {
+          dispatch.addCalculationPayload(undefined);
+        }
+
+        if (isSubmitting && !hasValidationFailed(currentStep.id)) {
           dispatch.addCalculationPayload(
             prepareRequestedNeed({
               ...formData,

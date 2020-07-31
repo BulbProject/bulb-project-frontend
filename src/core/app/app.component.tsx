@@ -48,6 +48,7 @@ export const App: FC = () => {
             Development build
           </div>
         )}
+
         <ApiProvider>
           <ResourcesApiProvider>
             <BrowserRouter>

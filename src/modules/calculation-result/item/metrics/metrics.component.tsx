@@ -5,8 +5,8 @@ import type { Metric, Observation } from 'ts4ocds/extensions/metrics';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
-import { useMedia } from 'shared/hooks';
 
+import { useMedia } from 'shared/hooks';
 import { formatNumber } from 'shared/utils';
 
 import Styled from './metrics.styles';

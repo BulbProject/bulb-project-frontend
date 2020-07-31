@@ -22,8 +22,21 @@ export const Requirement: FC<
     isDisabled?: boolean;
     unit?: Unit;
     criterion: Criterion;
+    showCarousel?: boolean;
   }
-> = ({ id, title, description, isDisabled, unit, dataType, optionDetails, criterion, minValue, maxValue }) => {
+> = ({
+  id,
+  title,
+  description,
+  isDisabled,
+  unit,
+  dataType,
+  optionDetails,
+  criterion,
+  minValue,
+  maxValue,
+  showCarousel = false,
+}) => {
   const { state: validationState } = useFormValidator();
   const { formData } = useCalculation();
 
@@ -45,9 +58,10 @@ export const Requirement: FC<
             isDisabled={isDisabled}
             optionDetails={optionDetails}
             unit={unit}
-            title={title}
+            title={title as string}
           />
         )}
+
         <Input
           hasError={Boolean(validationState[id])}
           // Once again unknown type
@@ -68,6 +82,8 @@ export const Requirement: FC<
             minValue,
             maxValue,
           }}
+          showOptionGroupsCarousel={showCarousel}
+          criterionId={criterion.id}
         />
 
         {validationState[id] && (

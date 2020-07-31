@@ -1,7 +1,13 @@
 import { Dispatch } from 'react';
-import { AvailableVariant, RequestedNeed, RequirementGroup } from 'shared/entity/data';
+import { RequestedNeed, RequirementGroup } from 'shared/entity/data';
+import { CalculationResponse } from './calculation-response';
 
-export type CalculationAction = SetActiveRequirementGroup | AddFormData | AddCalculationPayload | AddCalculationData;
+export type CalculationAction =
+  | SetActiveRequirementGroup
+  | AddFormData
+  | SetFormData
+  | AddCalculationPayload
+  | AddCalculationData;
 
 export class CalculationDispatcher {
   public constructor(private readonly dispatch: Dispatch<CalculationAction>) {}
@@ -20,14 +26,21 @@ export class CalculationDispatcher {
     });
   }
 
-  public addCalculationPayload(payload: RequestedNeed): void {
+  public setFormData(payload: SetFormData['payload']): void {
+    return this.dispatch({
+      type: 'set_form_data',
+      payload,
+    });
+  }
+
+  public addCalculationPayload(payload?: RequestedNeed): void {
     return this.dispatch({
       type: 'add_calculation_payload',
       payload,
     });
   }
 
-  public addCalculationData(payload: AvailableVariant[]): void {
+  public addCalculationData(payload: CalculationResponse): void {
     return this.dispatch({
       type: 'add_calculation_data',
       payload,
@@ -51,12 +64,17 @@ interface AddFormData {
   };
 }
 
+interface SetFormData {
+  type: 'set_form_data';
+  payload: Record<string, Record<string, unknown>>;
+}
+
 interface AddCalculationPayload {
   type: 'add_calculation_payload';
-  payload: RequestedNeed;
+  payload?: RequestedNeed;
 }
 
 interface AddCalculationData {
   type: 'add_calculation_data';
-  payload: AvailableVariant[];
+  payload: CalculationResponse;
 }

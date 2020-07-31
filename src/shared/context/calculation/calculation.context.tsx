@@ -1,13 +1,12 @@
 import React, { FC, createContext, useContext, useReducer, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import useAsync from 'honks/use-async';
 import axios, { AxiosError } from 'axios';
+import useAsync from 'honks/use-async';
 
 import { css } from 'styled-components';
 import Modal from 'ustudio-ui/components/Modal';
 import Text from 'ustudio-ui/components/Text';
 
-import type { AvailableVariant, RequestedNeed } from 'shared/entity/data';
+import type { RequestedNeed } from 'shared/entity/data';
 import { useApi } from 'core/context/api-provider';
 import { useCategory } from 'core/context/category-provider';
 import { Overlay } from 'modules/category/stepper/overlay';
@@ -15,6 +14,7 @@ import { Overlay } from 'modules/category/stepper/overlay';
 import type { CalculationState } from './entity';
 import { CalculationDispatcher } from './entity/calculation.actions';
 import { calculationReducer } from './entity/calculation.reducer';
+import { CalculationResponse } from './entity/calculation-response';
 
 interface CalculationValue extends CalculationState {
   isSubmitting: boolean;
@@ -38,10 +38,8 @@ const Calculation: FC = ({ children }) => {
   const { postCalculationConfig } = useApi();
   const { category, version } = useCategory();
 
-  const { call: postCalculation, isResolved, isRejected, result, onPending, onReject } = useAsync<
-    {
-      availableVariants: AvailableVariant[];
-    },
+  const { call: postCalculation, isResolved, isRejected, result, onPending, isPending, onReject } = useAsync<
+    CalculationResponse,
     AxiosError
   >(async () => {
     const { data } = await axios(
@@ -59,8 +57,6 @@ const Calculation: FC = ({ children }) => {
     }
   }, [state?.calculationPayload?.id, isSubmitting]);
 
-  const { push } = useHistory();
-
   useEffect(() => {
     if (isResolved(result) && isSubmitting) {
       sessionStorage.setItem(
@@ -71,11 +67,7 @@ const Calculation: FC = ({ children }) => {
         })
       );
 
-      dispatch.addCalculationData(result.data.availableVariants);
-
-      setSubmitting(false);
-
-      push(`/categories/${category.id}/${version}/calculation-result`);
+      dispatch.addCalculationData(result.data);
     }
   }, [isResolved(result), isSubmitting]);
 
@@ -85,6 +77,12 @@ const Calculation: FC = ({ children }) => {
       setSubmitting(false);
     }
   }, [isRejected(result)]);
+
+  useEffect(() => {
+    if (!isPending()) {
+      setSubmitting(false);
+    }
+  }, [isPending()]);
 
   return (
     <CalculationContext.Provider
@@ -126,7 +124,7 @@ export const useCalculation = (): CalculationValue => {
   const context = useContext(CalculationContext);
 
   if (context === undefined) {
-    throw new ReferenceError('Use CalculationState inside its provider.');
+    throw new ReferenceError('Use Calculation inside its provider.');
   }
 
   return context;

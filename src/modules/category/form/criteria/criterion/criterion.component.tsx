@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Select from 'ustudio-ui/components/Select/Select';
@@ -38,7 +38,7 @@ const hasBinarySelection = (requirementGroups: RequirementGroupType[]): boolean 
   return hasTwoGroups && hasBooleanGroup;
 };
 
-export const Criterion: React.FC<CriterionProps> = ({ requirementGroups, id }) => {
+export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
   const { selectedRequirementGroups, dispatch } = useCalculation();
 
   const selectedRequirementGroup = useMemo(() => selectedRequirementGroups?.[id], [selectedRequirementGroups]);
@@ -71,6 +71,10 @@ export const Criterion: React.FC<CriterionProps> = ({ requirementGroups, id }) =
         <Select
           autocomplete={requirementGroups.length >= 10}
           placeholder="Виберіть один із доступних варіантів"
+          // Select props declaration miss this prop
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore
+          emptyListMessage='Нічого не знайдено'
           items={requirementGroups.reduce((items, requirementGroup) => {
             return Object.assign(items, {
               [requirementGroup.id]: {

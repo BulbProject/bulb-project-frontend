@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
-
 import { css } from 'styled-components';
 
 import Text from 'ustudio-ui/components/Text';
@@ -8,8 +7,11 @@ import Button from 'ustudio-ui/components/Button';
 
 import { Classification } from 'shared/components';
 import { AvailableVariant, Item as ItemType } from 'shared/entity/data';
+import { useCalculation } from 'shared/context/calculation';
 import { useCategory } from 'core/context/category-provider';
+
 import Bulb from '../../../assets/images/bulb.svg';
+import recommendedBadge from '../../../assets/images/recommended-badge.svg';
 
 import { CategoryFeature } from '../category-feature';
 import { Specification } from '../specification';
@@ -29,8 +31,13 @@ export const Item: FC<{
   item: ItemType;
   document?: string;
   isRequested?: boolean;
-}> = ({ variant, item, document, isRequested = false }) => {
+  showMetricsTitles?: boolean;
+}> = ({ variant, item, document, isRequested = false, showMetricsTitles = false }) => {
   const { category } = useCategory();
+
+  const { calculationData } = useCalculation();
+
+  const { recommendedVariant } = calculationData ?? {};
 
   const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
 
@@ -57,6 +64,10 @@ export const Item: FC<{
 
   return (
     <Styled.Item direction="column">
+      {variant.id === recommendedVariant && (
+        <Styled.RecommendedVariant title="Рекомендований варіант" src={recommendedBadge} alt="Рекомендований варіант" />
+      )}
+
       <Styled.ImageContainer isReversed={!isRequested}>
         <CategoryFeature availableVariant={variant} item={item} isItemRequested={isRequested} />
 
@@ -78,7 +89,7 @@ export const Item: FC<{
           <Text variant="h6">{`Кількість: ${variant.quantity}`}</Text>
         </Styled.ItemDescription>
 
-        <Metrics isRequested={isRequested} showTitles={isRequested} metrics={metrics} />
+        <Metrics isRequested={isRequested} showTitles={showMetricsTitles} metrics={metrics} />
 
         <Metrics
           isRequested={isRequested}
@@ -115,7 +126,7 @@ export const Item: FC<{
               ],
             },
           ]}
-          showTitles={isRequested}
+          showTitles={showMetricsTitles}
         />
 
         <Flex direction="column" margin={{ top: 'regular' }}>

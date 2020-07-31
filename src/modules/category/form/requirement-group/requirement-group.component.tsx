@@ -19,7 +19,13 @@ export const RequirementGroup: FC<RequirementGroupProps & { isDisabled?: boolean
     <FieldSet name={id}>
       <Flex margin={currentStep.requirementGroups.length > 1 ? { top: 'regular' } : undefined} direction="column">
         {requirements.sort(sortByValue('id')).map((requirement) => (
-          <Requirement {...requirement} isDisabled={isDisabled} key={requirement.id} criterion={currentStep} />
+          <Requirement
+            {...requirement}
+            isDisabled={isDisabled}
+            key={requirement.id}
+            criterion={currentStep}
+            showCarousel
+          />
         ))}
       </Flex>
     </FieldSet>

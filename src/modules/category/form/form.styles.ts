@@ -14,6 +14,8 @@ const Container = styled(Grid)`
 `;
 
 const StepContainer = styled(Cell)`
+  width: 100%;
+
   margin: var(--i-regular) 0;
   padding: var(--i-regular);
 

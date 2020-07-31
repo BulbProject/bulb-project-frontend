@@ -1,12 +1,11 @@
 import React, { FC, useState } from 'react';
 import { Form } from 'formfish';
-
 import Flex from 'ustudio-ui/components/Flex';
 
 import { useFormValidator } from 'shared/context/form-validator';
-import { useCategory } from 'core/context/category-provider';
 import { useCalculation } from 'shared/context/calculation';
-import { prepareRequestedNeed } from 'shared/utils';
+import { prepareRequestedNeed, isFormFilledIn } from 'shared/utils';
+import { useCategory } from 'core/context/category-provider';
 
 import { Criterion } from './criterion';
 
@@ -33,13 +32,15 @@ export const Filter: FC<{
           watch={(state) => {
             setFormChanged(
               JSON.stringify(state[id]) !== JSON.stringify(formData) &&
-                !JSON.stringify(state[id], (_, val) => (val === undefined ? 'undefined' : val)).includes('undefined')
+                isFormFilledIn(state[id])
             );
           }}
           onSubmit={(state) => {
-            if (!hasValidationFailed) {
+            if (!hasValidationFailed()) {
               setSubmitting(true);
               recalculate();
+
+              dispatch.setFormData(state[id] as Record<string, Record<string, unknown>>);
 
               dispatch.addCalculationPayload(
                 prepareRequestedNeed(state[id] as Record<string, Record<string, unknown>>)
@@ -52,7 +53,7 @@ export const Filter: FC<{
               <Criterion {...criterion} key={criterion.id} />
             ))}
 
-            <Styled.Recalculate type="submit" isDisabled={!hasFormChanged || hasValidationFailed}>
+            <Styled.Recalculate type="submit" isDisabled={!hasFormChanged || hasValidationFailed()}>
               Перерахувати
             </Styled.Recalculate>
           </>

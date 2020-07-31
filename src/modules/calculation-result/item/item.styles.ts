@@ -13,8 +13,22 @@ const ImageContainer = styled(Flex)`
   width: 100%;
 
   padding: var(--i-regular) 0 var(--i-medium);
+`;
 
-  object-fit: cover;
+const RecommendedVariant = styled.img`
+  position: absolute;
+
+  height: 60px;
+  width: auto;
+
+  top: -5%;
+  left: 77%;
+
+  display: inline-block;
+
+  &::after {
+    display: none;
+  }
 `;
 
 const Image = styled.img`
@@ -27,6 +41,8 @@ const Image = styled.img`
 
   height: 100%;
   width: auto;
+
+  object-fit: scale-down;
 `;
 
 const Item = styled(Flex)`
@@ -73,6 +89,7 @@ const AdditionalClassification = styled(Flex)`
 const Styled = {
   Item,
   ImageContainer,
+  RecommendedVariant,
   Image,
   Content,
   ItemDescription,
