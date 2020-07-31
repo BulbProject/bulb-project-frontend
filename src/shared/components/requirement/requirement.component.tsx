@@ -11,8 +11,9 @@ import { getLocaleDataType } from 'shared/utils';
 import { useFormValidator } from 'shared/context/form-validator';
 import { Criterion } from 'shared/entity/data';
 
-import { Input } from './input';
 import { Title } from '../title';
+
+import { Input } from './input';
 import { isBoolean } from './utils';
 
 import Styled from './requirement.styles';

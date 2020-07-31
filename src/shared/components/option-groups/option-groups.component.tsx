@@ -3,7 +3,6 @@ import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } fro
 import Select from 'ustudio-ui/components/Select/Select';
 import type { Group } from 'ustudio-ui/components/Select/select.types';
 import FormField from 'formfish/components/Field';
-
 import { Document } from 'ts4ocds';
 
 import { sortByValue } from 'shared/utils';
@@ -14,7 +13,7 @@ import { OptionGroup } from '../option-group';
 import { Title } from '../title';
 import { CarouselGroups } from '../carousel-groups';
 
-import { GroupType } from '../carousel-groups/carousel-groups.types';
+import { GroupType } from '../carousel-groups/entity/group-type';
 import { CarouselCard } from '../entity';
 
 import Styled from './option-groups.styles';
@@ -56,7 +55,7 @@ export const OptionGroups: FC<{
         url,
       } as CarouselCard;
     });
-  }, [documents]);
+  }, [JSON.stringify(documents), JSON.stringify(optionGroups)]);
 
   return showCarousel ? (
     <CarouselGroups
@@ -64,7 +63,7 @@ export const OptionGroups: FC<{
       groups={optionGroups as GroupType[]}
       defaultValue={defaultValue}
       criterionId={criterionId}
-      docs={cards}
+      documents={cards}
       getPreselectedGroup={(_defaultValue) => {
         return optionGroups.find(({ options }) => {
           return options.map(({ value }) => value).includes(_defaultValue);

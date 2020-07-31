@@ -9,8 +9,8 @@ import { useCalculation } from 'shared/context/calculation';
 
 import { Carousel } from '../carousel';
 import { CarouselCard } from '../entity';
-import { GroupType } from './carousel-groups.types';
 
+import { GroupType } from './entity/group-type';
 import Styled from './carousel-groups.styles';
 
 export const CarouselGroups: FC<{

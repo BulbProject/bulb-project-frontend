@@ -3,9 +3,9 @@ import Flex from 'ustudio-ui/components/Flex';
 
 import ChevronIcon from '../../../assets/icons/chevron.inline.svg';
 
-import { Card } from './card';
-
 import type { CarouselCard } from '../entity';
+
+import { Card } from './card';
 import Styled from './carousel.styles';
 import { carouselConfig } from './carousel.config';
 
