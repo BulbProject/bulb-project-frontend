@@ -138,7 +138,7 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
             (formData[id] as Record<string, string>)?.[selectedRequirementGroups?.[id]?.requirements[0].id as string]
           }
           /* eslint-disable-next-line no-shadow */
-          docs={requirementGroups.map(({ id }) => {
+          documents={requirementGroups.map(({ id }) => {
             const { url, title } = filteredDocuments?.find(({ relatedItem }) => relatedItem === id) as Document;
 
             return {

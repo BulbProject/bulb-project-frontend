@@ -18,11 +18,11 @@ export const CarouselGroups: FC<{
   requirement?: RequirementWithOptionDetails;
   groups: GroupType[];
   defaultValue: string;
-  docs: CarouselCard[];
+  documents: CarouselCard[];
   getPreselectedGroup(defaultValue: string): GroupType | undefined;
   renderGroup({ selectedGroup, defaultValue }: { selectedGroup: GroupType; defaultValue: string }): JSX.Element;
   onGroupSelect?(groupId: string | number): void;
-}> = ({ criterionId, requirement, groups, defaultValue, onGroupSelect, docs, getPreselectedGroup, renderGroup }) => {
+}> = ({ criterionId, requirement, groups, defaultValue, onGroupSelect, documents, getPreselectedGroup, renderGroup }) => {
   const { formData } = useCalculation();
 
   const preselectedGroup = useMemo(() => {
@@ -62,7 +62,7 @@ export const CarouselGroups: FC<{
             setTimeout(() => setSelectedGroup(groups.find(({ id: optionGroupId }) => id === optionGroupId)), 150);
           }
         }}
-        cards={docs}
+        cards={documents}
       />
 
       <Styled.SelectedGroupContainer hasSelectedGroup={hasSelectedOnce} $height={selectedGroupHeight}>
