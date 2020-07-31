@@ -62,7 +62,7 @@ export const OptionGroups: FC<{
       groups={optionGroups as GroupType[]}
       defaultValue={defaultValue}
       criterionId={criterionId}
-      documents={cards}
+      cards={cards}
       getPreselectedGroup={(_defaultValue) => {
         return optionGroups.find(({ options }) => {
           return options.map(({ value }) => value).includes(_defaultValue);

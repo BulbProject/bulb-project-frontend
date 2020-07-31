@@ -14,11 +14,11 @@ import { CarouselGroups } from '../carousel-groups';
 
 export const RequirementGroups: FC<{
   selectedRequirementGroup: RequirementGroup | undefined;
-  filteredDocuments: Category['documents'] | undefined;
+  cards: Category['documents'] | undefined;
   requirementGroups: RequirementGroup[];
   formData: Record<string, unknown>;
   id: string;
-}> = ({ selectedRequirementGroup, filteredDocuments, requirementGroups, formData, id }) => {
+}> = ({ selectedRequirementGroup, cards, requirementGroups, formData, id }) => {
   const { dispatch } = useCalculation();
 
   return (
@@ -27,8 +27,8 @@ export const RequirementGroups: FC<{
       groups={requirementGroups}
       defaultValue={(formData as Record<string, string>)[selectedRequirementGroup?.requirements[0].id as string]}
       /* eslint-disable-next-line no-shadow */
-      documents={requirementGroups.map(({ id }) => {
-        const { url, title } = filteredDocuments?.find(({ relatedItem }) => relatedItem === id) as Document;
+      cards={requirementGroups.map(({ id }) => {
+        const { url, title } = cards?.find(({ relatedItem }) => relatedItem === id) as Document;
 
         return {
           id,

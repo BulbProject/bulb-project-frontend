@@ -71,7 +71,7 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
     category: { documents },
   } = useCategory();
 
-  const filteredDocuments = useMemo(
+  const cards = useMemo(
     () =>
       documents?.filter(({ relatedItem }) => {
         return requirementGroups.map(({ id: requirementGroupId }) => requirementGroupId).includes(relatedItem);
@@ -90,7 +90,7 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
 
   return (
     <Flex direction="column">
-      {requirementGroups.length > 1 && filteredDocuments?.length === 0 ? (
+      {requirementGroups.length > 1 && cards?.length === 0 ? (
         <>
           <Select
             autocomplete={requirementGroups.length >= 10}
@@ -126,7 +126,7 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
       ) : (
         <RequirementGroups
           selectedRequirementGroup={selectedRequirementGroups?.[id]}
-          filteredDocuments={filteredDocuments}
+          cards={cards}
           requirementGroups={requirementGroups}
           formData={formData}
           id={id}
