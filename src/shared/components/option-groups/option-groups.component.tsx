@@ -31,8 +31,7 @@ export const OptionGroups: FC<{
       return {
         title: optionGroup.description as string,
         items: mapOptionsToItems(
-          optionGroup.options,
-          optionGroup.id,
+          optionGroup,
           ({ option, optionGroupId }) => `${optionGroupId}_${option.value}`
         ),
       };
