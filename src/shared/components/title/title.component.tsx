@@ -3,7 +3,7 @@ import { Unit } from 'ts4ocds';
 import { OptionDetails } from 'ts4ocds/extensions/options';
 import { DataType } from 'ts4ocds/extensions/requirements';
 
-import { isBoolean } from '../utils';
+import { isBoolean } from '../requirement/utils';
 
 import Styled from './title.styles';
 

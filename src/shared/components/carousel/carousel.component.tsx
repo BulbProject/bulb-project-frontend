@@ -1,11 +1,11 @@
 import React, { FC, MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
 
-import ChevronIcon from '../../../../../../assets/icons/chevron.inline.svg';
+import ChevronIcon from '../../../assets/icons/chevron.inline.svg';
+
+import type { CarouselCard } from '../entity';
 
 import { Card } from './card';
-
-import type { CarouselCard } from './entity';
 import Styled from './carousel.styles';
 import { carouselConfig } from './carousel.config';
 

@@ -1,8 +1,8 @@
 import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
 import FormField from 'formfish/components/Field';
+import type { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 
 import { useFormValidator } from 'shared/context/form-validator';
-import type { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 
 import { isBoolean, isNumeric } from '../../utils';
 
@@ -45,7 +45,7 @@ export const Field: FC<{
 
   const setValue = useMemo(() => {
     if (optionDetails !== undefined) {
-      return (value: string) => value;
+      return (value?: string) => value;
     }
 
     if (isBoolean(dataType) && isDisabled) {
@@ -82,6 +82,10 @@ export const Field: FC<{
       }
 
       return undefined;
+    }
+
+    if (optionDetails !== undefined) {
+      return (value?: string) => value;
     }
 
     return setValue;

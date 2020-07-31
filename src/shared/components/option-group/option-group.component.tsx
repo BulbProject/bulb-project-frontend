@@ -1,11 +1,10 @@
 import React, { FC, useMemo } from 'react';
 import { css } from 'styled-components';
+import Select from 'ustudio-ui/components/Select/Select';
 import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 
-import Select from 'ustudio-ui/components/Select/Select';
-
-import { Field } from '../field';
-import { mapOptionsToItems } from '../utils';
+import { Field } from '../requirement/input/field';
+import { mapOptionsToItems } from '../requirement/input/utils';
 
 import Styled from './option-group.styles';
 
@@ -16,7 +15,9 @@ export const OptionGroup: FC<{
   defaultValue?: string;
   isDefaultOpen?: boolean;
 }> = ({ optionGroup, requirement, isDisabled, defaultValue, isDefaultOpen }) => {
-  const optionsMap = useMemo(() => (optionGroup ? mapOptionsToItems(optionGroup.options) : {}), [optionGroup?.options]);
+  const optionsMap = useMemo(() => (optionGroup ? mapOptionsToItems(optionGroup) : {}), [
+    optionGroup?.options,
+  ]);
 
   return (
     <Field requirement={requirement} isDisabled={isDisabled}>

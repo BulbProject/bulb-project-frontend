@@ -14,8 +14,9 @@ import type { RequirementGroup } from 'shared/entity/data';
 import { useStepperState } from '../stepper-state';
 
 import { Criteria } from './criteria';
-import Styled from './form.styles';
 import { ForwardButton, BackButton } from './buttons';
+
+import Styled from './form.styles';
 
 const isRequirementGroupFilled = ({
   state,
@@ -32,11 +33,7 @@ const isRequirementGroupFilled = ({
   const areAllRequirementsConsidered =
     Object.keys(formRequirementGroup ?? {}).length === requirementGroup?.requirements.length;
 
-  return (
-    Boolean(formRequirementGroup) &&
-    areAllRequirementsConsidered &&
-    isFormFilledIn(formRequirementGroup)
-  );
+  return Boolean(formRequirementGroup) && areAllRequirementsConsidered && isFormFilledIn(formRequirementGroup);
 };
 
 export const Form: FC = ({ children }) => {

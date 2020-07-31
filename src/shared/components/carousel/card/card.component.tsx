@@ -1,6 +1,6 @@
 import React, { FC, useRef } from 'react';
 
-import type { CarouselCard } from '../entity';
+import type { CarouselCard } from '../../entity';
 
 import Styled from './card.styles';
 
