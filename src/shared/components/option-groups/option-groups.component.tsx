@@ -3,7 +3,7 @@ import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } fro
 import Select from 'ustudio-ui/components/Select/Select';
 import type { Group } from 'ustudio-ui/components/Select/select.types';
 import FormField from 'formfish/components/Field';
-import { Document } from 'ts4ocds';
+import type { Document } from 'ts4ocds';
 
 import { sortByValue } from 'shared/utils';
 import { useCategory } from 'core/context/category-provider';
@@ -13,8 +13,8 @@ import { OptionGroup } from '../option-group';
 import { Title } from '../title';
 import { CarouselGroups } from '../carousel-groups';
 
-import { GroupType } from '../carousel-groups/entity/group-type';
-import { CarouselCard } from '../entity';
+import type { GroupType } from '../carousel-groups/entity/group-type';
+import type { CarouselCard } from '../entity';
 
 import Styled from './option-groups.styles';
 

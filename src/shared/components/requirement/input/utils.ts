@@ -1,4 +1,4 @@
-import { Option } from 'ts4ocds/extensions/options';
+import type { Option } from 'ts4ocds/extensions/options';
 import { Item } from 'ustudio-ui/components/Select/select.types';
 
 import { sortByValue } from 'shared/utils';

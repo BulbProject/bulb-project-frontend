@@ -9,7 +9,7 @@ import Text from 'ustudio-ui/components/Text';
 import { useCalculation } from 'shared/context/calculation';
 import { getLocaleDataType } from 'shared/utils';
 import { useFormValidator } from 'shared/context/form-validator';
-import { Criterion } from 'shared/entity/data';
+import type { Criterion } from 'shared/entity/data';
 
 import { Title } from '../title';
 

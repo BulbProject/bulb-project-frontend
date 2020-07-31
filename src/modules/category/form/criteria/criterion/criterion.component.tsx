@@ -3,20 +3,11 @@ import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Select from 'ustudio-ui/components/Select/Select';
 import { Mixin } from 'ustudio-ui/theme';
-import FieldSet from 'formfish/components/FieldSet';
 
 import { Criterion as CriterionProps, RequirementGroup as RequirementGroupType } from 'shared/entity/data';
 import { useCalculation } from 'shared/context/calculation';
-
-import { OptionGroup as OptionGroupType } from 'ts4ocds/extensions/options/option-group';
-
-import { CarouselGroups } from 'shared/components/carousel-groups';
-import { Title } from 'shared/components/title';
-import { Document } from 'ts4ocds';
-
-import { CarouselCard } from 'shared/components/entity';
-import { OptionGroups } from 'shared/components/option-groups';
 import { useCategory } from 'core/context/category-provider';
+import { RequirementGroups } from 'shared/components/requirement-groups';
 
 import { RequirementGroup } from '../../requirement-group';
 import { BinaryGroup } from '../../binary-group';
@@ -88,6 +79,15 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
     [documents]
   );
 
+  const mapRequirementGroupsToItems = requirementGroups.reduce((items, requirementGroup) => {
+    return Object.assign(items, {
+      [requirementGroup.id]: {
+        value: requirementGroup.id,
+        label: `${requirementGroup.description}`,
+      },
+    });
+  }, {});
+
   return (
     <Flex direction="column">
       {requirementGroups.length > 1 && filteredDocuments?.length === 0 ? (
@@ -99,14 +99,7 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             emptyListMessage="Нічого не знайдено"
-            items={requirementGroups.reduce((items, requirementGroup) => {
-              return Object.assign(items, {
-                [requirementGroup.id]: {
-                  value: requirementGroup.id,
-                  label: `${requirementGroup.description}`,
-                },
-              });
-            }, {})}
+            items={mapRequirementGroupsToItems}
             value={selectedRequirementGroup?.id}
             onChange={(requirementGroupId) =>
               dispatch.selectRequirementGroup({
@@ -131,65 +124,12 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
           {selectedRequirementGroup && <RequirementGroup {...selectedRequirementGroup} />}
         </>
       ) : (
-        <CarouselGroups
-          requirement={selectedRequirementGroups?.[id]?.requirements[0]}
-          groups={requirementGroups}
-          defaultValue={
-            (formData[id] as Record<string, string>)?.[selectedRequirementGroups?.[id]?.requirements[0].id as string]
-          }
-          /* eslint-disable-next-line no-shadow */
-          documents={requirementGroups.map(({ id }) => {
-            const { url, title } = filteredDocuments?.find(({ relatedItem }) => relatedItem === id) as Document;
-
-            return {
-              id,
-              url,
-              title,
-            } as CarouselCard;
-          })}
-          getPreselectedGroup={(_defaultValue) => {
-            return requirementGroups
-              .flatMap(({ requirements }) =>
-                requirements.flatMap(({ optionDetails }) => {
-                  return ('optionGroups' in optionDetails && optionDetails.optionGroups) as OptionGroupType[];
-                })
-              )
-              .find(({ options }) => {
-                return options.map(({ value }) => value).includes(_defaultValue);
-              }) as { id: string } | undefined;
-          }}
-          renderGroup={({ selectedGroup: _selectedGroup, defaultValue }) => {
-            const selectedGroup = _selectedGroup as RequirementGroupType;
-
-            return (
-              <>
-                <Title
-                  dataType={selectedGroup.requirements[0].dataType}
-                  title={`${selectedGroup.description}`}
-                  color="var(--c-primary)"
-                />
-
-                <FieldSet name={selectedGroup.id}>
-                  <OptionGroups
-                    showCarousel={false}
-                    optionGroups={
-                      'optionGroups' in selectedGroup.requirements[0].optionDetails
-                        ? selectedGroup.requirements[0].optionDetails.optionGroups
-                        : []
-                    }
-                    requirement={selectedGroup.requirements[0]}
-                    defaultValue={defaultValue}
-                  />
-                </FieldSet>
-              </>
-            );
-          }}
-          onGroupSelect={(requirementGroupId) =>
-            dispatch.selectRequirementGroup({
-              criterionId: id,
-              requirementGroup: requirementGroups.find((group) => group.id === requirementGroupId),
-            })
-          }
+        <RequirementGroups
+          selectedRequirementGroup={selectedRequirementGroups?.[id]}
+          filteredDocuments={filteredDocuments}
+          requirementGroups={requirementGroups}
+          formData={formData}
+          id={id}
         />
       )}
     </Flex>

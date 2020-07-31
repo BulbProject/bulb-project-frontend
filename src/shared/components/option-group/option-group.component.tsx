@@ -1,8 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { css } from 'styled-components';
-import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
-
 import Select from 'ustudio-ui/components/Select/Select';
+import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 
 import { Field } from '../requirement/input/field';
 import { mapOptionsToItems } from '../requirement/input/utils';
