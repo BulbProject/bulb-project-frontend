@@ -4,7 +4,7 @@ import { Item } from 'ustudio-ui/components/Select/select.types';
 import { sortByValue } from 'shared/utils';
 
 export const mapOptionsToItems = (
-  { options, id}: OptionGroup,
+  { options, id }: OptionGroup,
   getValue?: ({ option, optionGroupId }: { option: Option; optionGroupId: string | number }) => string
 ): Record<string, Item> => {
   return options.sort(sortByValue('id')).reduce((map, option) => {

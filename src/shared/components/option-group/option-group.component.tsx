@@ -15,9 +15,7 @@ export const OptionGroup: FC<{
   defaultValue?: string;
   isDefaultOpen?: boolean;
 }> = ({ optionGroup, requirement, isDisabled, defaultValue, isDefaultOpen }) => {
-  const optionsMap = useMemo(() => (optionGroup ? mapOptionsToItems(optionGroup) : {}), [
-    optionGroup?.options,
-  ]);
+  const optionsMap = useMemo(() => (optionGroup ? mapOptionsToItems(optionGroup) : {}), [optionGroup?.options]);
 
   return (
     <Field requirement={requirement} isDisabled={isDisabled}>

@@ -12,8 +12,8 @@ import { useCategory } from 'core/context/category-provider';
 import { mapOptionsToItems } from '../requirement/input/utils';
 import { OptionGroup } from '../option-group';
 import { Title } from '../title';
-import { CarouselGroups } from '../carousel-groups';
 
+import { CarouselGroups } from '../carousel-groups';
 import type { GroupType } from '../carousel-groups/entity/group-type';
 import type { CarouselCard } from '../entity';
 
@@ -31,10 +31,7 @@ export const OptionGroups: FC<{
     return optionGroups.sort(sortByValue('id')).map((optionGroup) => {
       return {
         title: optionGroup.description as string,
-        items: mapOptionsToItems(
-          optionGroup,
-          ({ option, optionGroupId }) => `${optionGroupId}_${option.value}`
-        ),
+        items: mapOptionsToItems(optionGroup, ({ option, optionGroupId }) => `${optionGroupId}_${option.value}`),
       };
     }, {});
   }, [optionGroups]);

@@ -90,36 +90,38 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
 
   return (
     <Flex direction="column">
-      {requirementGroups.length > 1 && cards?.length === 0 ? (
+      {cards?.length === 0 ? (
         <>
-          <Select
-            autocomplete={requirementGroups.length >= 10}
-            placeholder="Виберіть один із доступних варіантів"
-            // Select props declaration miss this prop
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            emptyListMessage="Нічого не знайдено"
-            items={mapRequirementGroupsToItems}
-            value={selectedRequirementGroup?.id}
-            onChange={(requirementGroupId) =>
-              dispatch.selectRequirementGroup({
-                criterionId: id,
-                requirementGroup: requirementGroups.find(
-                  (requirementGroup) => requirementGroup.id === requirementGroupId
-                ),
-              })
-            }
-            styled={{
-              Select: css`
-                ${selectedRequirementGroup ? Mixin.Font.bodyBold() : ''};
-              `,
-              ValuesListItem: css`
-                &:before {
-                  background: var(--c-primary-light);
-                }
-              `,
-            }}
-          />
+          {requirementGroups.length > 1 && (
+            <Select
+              autocomplete={requirementGroups.length >= 10}
+              placeholder="Виберіть один із доступних варіантів"
+              // Select props declaration miss this prop
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              emptyListMessage="Нічого не знайдено"
+              items={mapRequirementGroupsToItems}
+              value={selectedRequirementGroup?.id}
+              onChange={(requirementGroupId) =>
+                dispatch.selectRequirementGroup({
+                  criterionId: id,
+                  requirementGroup: requirementGroups.find(
+                    (requirementGroup) => requirementGroup.id === requirementGroupId
+                  ),
+                })
+              }
+              styled={{
+                Select: css`
+                  ${selectedRequirementGroup ? Mixin.Font.bodyBold() : ''};
+                `,
+                ValuesListItem: css`
+                  &:before {
+                    background: var(--c-primary-light);
+                  }
+                `,
+              }}
+            />
+          )}
 
           {selectedRequirementGroup && <RequirementGroup {...selectedRequirementGroup} />}
         </>
