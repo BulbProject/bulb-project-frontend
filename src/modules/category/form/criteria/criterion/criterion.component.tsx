@@ -74,7 +74,7 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
           // Select props declaration miss this prop
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
-          emptyListMessage='Нічого не знайдено'
+          emptyListMessage="Нічого не знайдено"
           items={requirementGroups.reduce((items, requirementGroup) => {
             return Object.assign(items, {
               [requirementGroup.id]: {

@@ -32,11 +32,7 @@ const isRequirementGroupFilled = ({
   const areAllRequirementsConsidered =
     Object.keys(formRequirementGroup ?? {}).length === requirementGroup?.requirements.length;
 
-  return (
-    Boolean(formRequirementGroup) &&
-    areAllRequirementsConsidered &&
-    isFormFilledIn(formRequirementGroup)
-  );
+  return Boolean(formRequirementGroup) && areAllRequirementsConsidered && isFormFilledIn(formRequirementGroup);
 };
 
 export const Form: FC = ({ children }) => {
