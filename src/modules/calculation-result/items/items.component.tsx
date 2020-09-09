@@ -22,7 +22,7 @@ export const Items: FC<{
 
   const itemsQuantity = useMemo(() => availableVariants.length - 1, [availableVariants.length]);
   const areCriteriaAbsent = useMemo(() => {
-    return availableVariants[0].criteria !== undefined || availableVariants[0]?.criteria.length === 0;
+    return 'criteria' in availableVariants[0] && availableVariants[0]?.criteria?.length === 0;
   }, [availableVariants]);
 
   return (
