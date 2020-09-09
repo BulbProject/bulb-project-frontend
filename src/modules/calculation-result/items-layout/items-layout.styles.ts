@@ -184,7 +184,7 @@ const ManyLayout = styled.section<{
     ${Items} {
       ${Item} {
         min-width: ${itemWidth}px;
-        width: ${100 / quantity}%;
+        width: ${100 / (isRequestedNeedAbsent ? quantity : quantity - 1)}%;
 
         ${shouldShiftImage ? getVariantImageStyles(1980) : ''};
       }

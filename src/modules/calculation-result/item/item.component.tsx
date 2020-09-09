@@ -64,7 +64,7 @@ export const Item: FC<{
 
   return (
     <Styled.Item direction="column">
-      {variant.id === recommendedVariant && (
+      {variant.relatedItem === recommendedVariant && (
         <Styled.RecommendedVariant title="Рекомендований варіант" src={recommendedBadge} alt="Рекомендований варіант" />
       )}
 
@@ -168,7 +168,7 @@ export const Item: FC<{
           <Specification
             isOpen={isSpecificationOpen}
             setOpen={setSpecificationOpen}
-            criterion={variant.criteria[0]}
+            criterion={variant.criteria?.[0]}
             availableVariant={variant}
             categoryTitle={category.title}
           />
