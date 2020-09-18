@@ -78,7 +78,19 @@ export const Item: FC<{
 
       <Styled.Content direction="column">
         <Styled.ItemDescription>
-          <Text variant="body" appearance="bold">
+          <Text
+            variant="body"
+            appearance="bold"
+            styled={{
+              Text: css`
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+              `,
+            }}
+            title={item.description}
+          >
             {item.description}
           </Text>
 

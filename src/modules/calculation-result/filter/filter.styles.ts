@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const Recalculate = styled(Button)`
   position: sticky;
   bottom: 0;
-  z-index: var(--l-bottom);
+  z-index: 1;
 
   width: 100%;
 
