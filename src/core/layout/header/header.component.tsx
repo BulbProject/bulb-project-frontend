@@ -4,6 +4,8 @@ import Flex from 'ustudio-ui/components/Flex';
 
 import logo from '../../../assets/images/logo.svg';
 
+import { LanguageSelect } from '../../../shared/components/language-select';
+
 import { Aside } from './aside';
 
 import Styled from './header.styles';
@@ -26,6 +28,8 @@ export const Header: FC = memo(() => {
             <Styled.LinksHeaderContainer>
               <SocialLinks />
             </Styled.LinksHeaderContainer>
+
+            <LanguageSelect />
 
             <Styled.DrawerButton drawerIsOpen={isDrawerOpen} onClick={() => setDrawerOpen(!isDrawerOpen)} />
           </Flex>
