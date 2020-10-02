@@ -19,6 +19,6 @@ i18n
       escapeValue: false,
     },
   })
-  .catch((error) => console.log(error));
+  .catch(console.error);
 
 export default i18n;
