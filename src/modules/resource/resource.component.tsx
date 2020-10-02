@@ -9,6 +9,7 @@ import Text from 'ustudio-ui/components/Text';
 import { Helmet } from 'react-helmet';
 import axios, { AxiosError } from 'axios';
 import useAsync from 'honks/use-async';
+import { useTranslation } from 'react-i18next';
 
 import { Container, Markdown, Fade } from 'shared/components';
 import { useResourcesApi } from 'core/context/resources-api-provider';
@@ -21,12 +22,12 @@ import Styled from './resource.styles';
 const Resource: FC = () => {
   const { goBack } = useHistory();
   const { resourceFileName } = useParams();
-
   const { getResourceFileConfig } = useResourcesApi();
+  const { i18n } = useTranslation();
 
   const { onPending, onResolve, onReject, call: getResourceFile } = useAsync<{ content: string }, AxiosError>(
     async () => {
-      const { data } = await axios(getResourceFileConfig(resourceFileName as string));
+      const { data } = await axios(getResourceFileConfig(`${i18n.language}/${resourceFileName}`));
 
       return data;
     }
