@@ -19,11 +19,13 @@ module.exports = merge(common, {
     usedExports: true,
     sideEffects: false,
     minimize: true,
-    minimizer: [new TerserPlugin({
-      terserOptions: {
-        toplevel: true
-      }
-    })],
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          toplevel: true,
+        },
+      }),
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -48,7 +50,7 @@ module.exports = merge(common, {
           favicons: true,
           firefox: false,
           windows: false,
-          yandex: false
+          yandex: false,
         },
       },
     }),
@@ -71,9 +73,12 @@ module.exports = merge(common, {
       minRatio: 0.4,
     }),
     new CopyWebpackPlugin({
-      patterns: [{
-        from: 'public/locales', to: 'locales'
-      }]
+      patterns: [
+        {
+          from: 'public/locales',
+          to: 'locales',
+        },
+      ],
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',

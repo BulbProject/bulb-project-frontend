@@ -2,9 +2,9 @@ import React, { FC, memo, useState } from 'react';
 import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 
-import logo from '../../../assets/images/logo.svg';
+import { LanguageSelect } from 'shared/components/language-select';
 
-import { LanguageSelect } from '../../../shared/components/language-select';
+import logo from '../../../assets/images/logo.svg';
 
 import { Aside } from './aside';
 

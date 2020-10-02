@@ -7,8 +7,7 @@ export const LanguageSelect: FC = () => {
   const { i18n } = useTranslation();
 
   const changeLanguage = (e: ChangeEvent<HTMLSelectElement>): void => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    i18n.changeLanguage(e.target.value);
+    i18n.changeLanguage(e.target.value).catch((error) => console.log(error));
   };
 
   return (
