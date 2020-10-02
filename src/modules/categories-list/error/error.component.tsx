@@ -4,18 +4,15 @@ import Button from 'ustudio-ui/components/Button';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 
-import { useTranslation } from 'react-i18next';
 import Styled from './error.styles';
 
 export const Error: FC<{
   reloadCategories(): void;
 }> = ({ reloadCategories }) => {
-  const { t } = useTranslation();
-
   return (
     <Styled.ErrorContainer>
       <Flex direction="column" alignment={{ horizontal: 'center' }}>
-        <Text color="var(--c-contrast-strong)">{t('error')}</Text>
+        <Text color="var(--c-contrast-strong)">На жаль, ми не замогли завантажити список категорій.</Text>
 
         <Flex alignment={{ horizontal: 'center' }} margin={{ top: 'large' }}>
           <Button intent="positive" onClick={reloadCategories}>
