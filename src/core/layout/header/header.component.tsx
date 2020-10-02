@@ -2,6 +2,8 @@ import React, { FC, memo, useState } from 'react';
 import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 
+import { LanguageSelect } from 'shared/components/language-select';
+
 import logo from '../../../assets/images/logo.svg';
 
 import { Aside } from './aside';
@@ -26,6 +28,8 @@ export const Header: FC = memo(() => {
             <Styled.LinksHeaderContainer>
               <SocialLinks />
             </Styled.LinksHeaderContainer>
+
+            <LanguageSelect />
 
             <Styled.DrawerButton drawerIsOpen={isDrawerOpen} onClick={() => setDrawerOpen(!isDrawerOpen)} />
           </Flex>
