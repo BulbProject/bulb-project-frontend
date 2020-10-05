@@ -2,7 +2,6 @@ import useAsync from 'honks/use-async';
 import React, { FC, useEffect, useMemo } from 'react';
 
 import axios, { AxiosError } from 'axios';
-import { useTranslation } from 'react-i18next';
 
 import { useMedia } from 'shared/hooks';
 import Text from 'ustudio-ui/components/Text';
@@ -19,13 +18,14 @@ import Styled from './documents.styles';
 
 export const Documents: FC = () => {
   const { getDocumentsConfig } = useDocumentsApi();
-  const { i18n } = useTranslation();
 
   const { onResolve, onReject, onPending, isResolved, result, call: getDocuments } = useAsync<
     DocumentType[],
     AxiosError
   >(async () => {
-    const { data } = await axios(getDocumentsConfig(i18n.language));
+    // eslint-disable-next-line no-warning-comments
+    // TODO: need clarification- why i18next add empty section before Documents components
+    const { data } = await axios(getDocumentsConfig(localStorage.getItem('i18nextLng') ?? 'en'));
 
     return data;
   });
