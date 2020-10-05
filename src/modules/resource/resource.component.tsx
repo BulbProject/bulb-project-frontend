@@ -27,7 +27,7 @@ const Resource: FC = () => {
 
   const { onPending, onResolve, onReject, call: getResourceFile } = useAsync<{ content: string }, AxiosError>(
     async () => {
-      const { data } = await axios(getResourceFileConfig(`${i18n.language}/${resourceFileName}`));
+      const { data } = await axios(getResourceFileConfig(resourceFileName as string, i18n.language));
 
       return data;
     }

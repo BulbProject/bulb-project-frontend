@@ -8,18 +8,18 @@ const resourcesApiConfig = {
   path: 'resources',
 };
 
-export const getResourcesConfig = (): AxiosRequestConfig => {
+export const getResourcesConfig = (lang: string): AxiosRequestConfig => {
   return createRequestConfig({
     baseUrl: resourcesApiConfig.baseUrl,
     method: 'get',
-    path: `${resourcesApiConfig.branch}/${resourcesApiConfig.path}`,
+    path: `${resourcesApiConfig.branch}/${resourcesApiConfig.path}%2F${lang}`,
   });
 };
 
-export const getResourceFileConfig = (fileName: string): AxiosRequestConfig => {
+export const getResourceFileConfig = (fileName: string, lang: string): AxiosRequestConfig => {
   return createRequestConfig({
     baseUrl: resourcesApiConfig.baseUrl,
     method: 'get',
-    path: `${resourcesApiConfig.branch}/${resourcesApiConfig.path}/${fileName}.md`,
+    path: `${resourcesApiConfig.branch}/${resourcesApiConfig.path}%2F${lang}/${fileName}.md`,
   });
 };

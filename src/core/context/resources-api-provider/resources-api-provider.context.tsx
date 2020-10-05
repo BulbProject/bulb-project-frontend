@@ -4,8 +4,8 @@ import { AxiosRequestConfig } from 'axios';
 import * as ResourcesApiConfig from './resources-api.config';
 
 interface ResourcesApi {
-  getResourcesConfig(): AxiosRequestConfig;
-  getResourceFileConfig(fileName: string): AxiosRequestConfig;
+  getResourcesConfig(lang: string): AxiosRequestConfig;
+  getResourceFileConfig(fileName: string, lang: string): AxiosRequestConfig;
 }
 
 const ResourcesApiContext = createContext<ResourcesApi | undefined>(undefined);
