@@ -24,7 +24,7 @@ export const Documents: FC = () => {
     AxiosError
   >(async () => {
     // eslint-disable-next-line no-warning-comments
-    // TODO: need clarification- why i18next add empty section before Documents components
+    // TODO: need clarification - why i18next add empty section before Documents components
     const { data } = await axios(getDocumentsConfig(localStorage.getItem('i18nextLng') ?? 'en'));
 
     return data;
