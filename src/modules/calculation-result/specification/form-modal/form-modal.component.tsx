@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from 'react';
 import { css } from 'styled-components';
 import { Criterion, Requirement } from 'ts4ocds/extensions/requirements';
-import i18next from 'i18next';
+import { useTranslation} from 'react-i18next';
 
 import Button from 'ustudio-ui/components/Button';
 import Flex from 'ustudio-ui/components/Flex';
@@ -40,11 +40,13 @@ export const FormModal: FC<{
   setRequirement,
   setCopying,
 }) => {
+  const { t } = useTranslation('form-modal');
+
   return (
     <Modal
       isOpen={isOpen}
       onChange={setOpen}
-      title={<Text variant="h5">{criterion?.title ?? i18next.t('form-modal:documents')}</Text>}
+      title={<Text variant="h5">{criterion?.title ?? t('documents')}</Text>}
       styled={{
         Modal: css`
             width: 100%;

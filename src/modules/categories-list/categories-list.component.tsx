@@ -35,8 +35,6 @@ const CategoriesList: FC = () => {
     return data;
   });
 
-
-
   useEffect(() => {
     getCategories();
   }, []);
