@@ -12,7 +12,10 @@ i18n
     fallbackLng: 'en',
     defaultNS: 'common',
     ns: ['common'],
-    debug: true,
+    debug: false,
+    detection: {
+      order: ['localStorage'],
+    },
 
     interpolation: {
       escapeValue: false,
