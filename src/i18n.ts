@@ -12,12 +12,15 @@ i18n
     fallbackLng: 'en',
     defaultNS: 'common',
     ns: ['common'],
-    debug: true,
-
+    debug: process.env.NODE_ENV === 'development',
+    detection: {
+      order: ['localStorage'],
+    },
     interpolation: {
       escapeValue: false,
     },
   })
+  // eslint-disable-next-line no-console
   .catch(console.error);
 
 export default i18n;
