@@ -1,5 +1,6 @@
 import React, { FC, MutableRefObject, useEffect, useRef, useState } from 'react';
 import { css } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import Modal from 'ustudio-ui/components/Modal';
 import Text from 'ustudio-ui/components/Text';
@@ -27,6 +28,7 @@ export const IdModal: FC<{
   const idRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [isTooltipShown, setTooltipShown] = useState(false);
+  const { t } = useTranslation('id-modal');
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -45,7 +47,7 @@ export const IdModal: FC<{
         setAlertOpen(false);
         setIdentificator('');
       }}
-      title={<Text variant="h5">Ідентифікатор</Text>}
+      title={<Text variant="h5">{t('id')}</Text>}
       styled={{
         Modal: css`
           z-index: calc(var(--l-topmost) + 2);
@@ -60,14 +62,14 @@ export const IdModal: FC<{
       <SpecificationStyles.Group>
         <textarea spellCheck="false" rows={1} ref={idRef} value={identificator} onChange={() => undefined} />
 
-        <Styled.Tooltip isShown={isTooltipShown}>Скопійовано!</Styled.Tooltip>
+        <Styled.Tooltip isShown={isTooltipShown}>{t('copied')}</Styled.Tooltip>
 
         <Text variant="small" align="center">
-          Скопіюйте цей ідентифікатор та вставте його на майданчику, де збираєтеся проводити закупівлю.
+          {t('copy-id')}
         </Text>
 
         <Styled.SmallBold variant="small" align="center">
-          Майте на увазі - дані за цим ідентифікатором зберігаються 7 днів.
+          {t('attention-id-expiration')}
         </Styled.SmallBold>
 
         <Styled.CopyButton
@@ -78,7 +80,7 @@ export const IdModal: FC<{
           }}
           iconAfter={<CopyIcon />}
         >
-          Скопіювати
+          {t('copy')}
         </Styled.CopyButton>
       </SpecificationStyles.Group>
     </Modal>

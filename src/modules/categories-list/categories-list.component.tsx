@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
@@ -25,6 +26,7 @@ const sortCategories = (categories: CategoriesListItem[]): CategoriesListItem[] 
 };
 
 const CategoriesList: FC = () => {
+  const { t } = useTranslation(['common', 'categories-list-component']);
   const { getCategoriesConfig } = useApi();
 
   const { call: getCategories, onPending, onResolve, onReject } = useAsync<CategoriesListItem[]>(async () => {
@@ -32,6 +34,8 @@ const CategoriesList: FC = () => {
 
     return data;
   });
+
+
 
   useEffect(() => {
     getCategories();
@@ -52,7 +56,7 @@ const CategoriesList: FC = () => {
                   <Styled.Grid elementAmount={categories.length + 1}>
                     <Styled.BigCell>
                       <Styled.CategoriesHeader>
-                        <Styled.Title variant="h1">Виберіть категорію для&nbsp;проведення розрахунків</Styled.Title>
+                        <Styled.Title variant="h1">{t('categories-list-component:choose-category')}</Styled.Title>
                       </Styled.CategoriesHeader>
                     </Styled.BigCell>
 
@@ -65,7 +69,7 @@ const CategoriesList: FC = () => {
                     })}
                   </Styled.Grid>
                 ) : (
-                  <Text variant="h3">Нажаль в систему ще не додано ні одної категорії</Text>
+                  <Text variant="h3">{t('categories-list-component:no-categories')}</Text>
                 )}
               </Flex>
             </Fade>

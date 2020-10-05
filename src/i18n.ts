@@ -14,6 +14,7 @@ i18n
     defaultNS: 'common',
     ns: ['common'],
     debug: true,
+    returnEmptyString: false,
 
     interpolation: {
       escapeValue: false,

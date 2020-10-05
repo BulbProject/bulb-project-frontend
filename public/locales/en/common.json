@@ -1,3 +1,12 @@
 {
-  "error": "Sorry, we were unable to load the category list."
+  "error": "Sorry, we were unable to load the category list.",
+  "error": "",
+  "try-again": "",
+  "oops": "",
+  "refresh": "",
+  "back": "",
+  "to-main": "",
+  "choose-variant": "",
+  "designed-by": "",
+  "cannot-download-category": ""
 }

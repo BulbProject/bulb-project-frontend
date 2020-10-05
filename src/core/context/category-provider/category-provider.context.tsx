@@ -1,4 +1,5 @@
 import React, { FC, createContext, useContext, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Flex from 'ustudio-ui/components/Flex';
 import Cell from 'ustudio-ui/components/Grid/Cell';
@@ -27,6 +28,8 @@ const CategoryProvider: FC = ({ children }) => {
 
   const { getCategoryVersionConfig } = useApi();
 
+  const { t } = useTranslation('common');
+
   const { call: requestCategory, onResolve, onPending, onReject } = useAsync<Category, AxiosError>(async () => {
     const { data } = await axios(getCategoryVersionConfig(categoryId, version));
 
@@ -51,19 +54,19 @@ const CategoryProvider: FC = ({ children }) => {
         return (
           <Container>
             <Flex direction="column" alignment={{ horizontal: 'center' }}>
-              <Text>На жаль, ми не змогли завантажити цю категорію.</Text>
+              <Text>{t('cannot-download-category')}</Text>
 
               <Grid xs={{ gap: 32 }}>
                 <Cell>
                   <Flex alignment={{ horizontal: 'end' }}>
-                    <FallbackButton onClick={goBack}>Назад</FallbackButton>
+                    <FallbackButton onClick={goBack}>{t('back')}</FallbackButton>
                   </Flex>
                 </Cell>
 
                 <Cell>
                   <Flex alignment={{ horizontal: 'start' }}>
                     <FallbackButton intent="positive" onClick={window.location.reload}>
-                      Оновити сторінку
+                      {t('refresh')}
                     </FallbackButton>
                   </Flex>
                 </Cell>

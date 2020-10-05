@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
@@ -17,6 +18,8 @@ import Styled from './calculation-result.styles';
 const CalculationResult: FC = () => {
   const isLg = useMedia('screen and (min-width: 832px)');
   const [isLoading, setLoading] = useState(true);
+
+  const { t } = useTranslation('calculation-result');
 
   const { calculationData, calculationPayload, dispatch } = useCalculation();
 
@@ -73,8 +76,7 @@ const CalculationResult: FC = () => {
               <Container>
                 <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
                   <Text color="negative">
-                    На жаль, Ви ще не проводили <Link to={`/categories/${categoryId}/${version}`}>розрахунків</Link> для
-                    цієї категорії ☹️
+                    {t('no-calculation-start')}<Link to={`/categories/${categoryId}/${version}`}>{t('no-calculation-middle')}</Link>{t('no-calculation-end')}☹️
                   </Text>
                 </Flex>
               </Container>

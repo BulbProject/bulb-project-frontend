@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { css } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
@@ -43,6 +44,8 @@ export const Item: FC<{
 
   const [isMarketModalOpen, setMarketModalOpen] = useState(false);
 
+  const { t } = useTranslation('item');
+
   const economyObservations = useMemo(() => {
     return variant.metrics
       .flatMap(({ observations }) => observations)
@@ -65,7 +68,7 @@ export const Item: FC<{
   return (
     <Styled.Item direction="column">
       {variant.relatedItem === recommendedVariant && (
-        <Styled.RecommendedVariant title="Рекомендований варіант" src={recommendedBadge} alt="Рекомендований варіант" />
+        <Styled.RecommendedVariant title={t('recommended-variant')} src={recommendedBadge} alt={t('recommended-variant')} />
       )}
 
       <Styled.ImageContainer isReversed={!isRequested}>

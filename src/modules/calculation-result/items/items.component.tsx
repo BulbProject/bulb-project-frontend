@@ -1,5 +1,6 @@
 import React, { FC, useMemo } from 'react';
 import Text from 'ustudio-ui/components/Text';
+import i18next from 'i18next';
 
 import type { AvailableVariant, Item as ItemType } from 'shared/entity/data';
 import { useCategory } from 'core/context/category-provider';
@@ -8,6 +9,7 @@ import { FilterDrawer } from '../filter-drawer';
 import { Item } from '../item';
 
 import Styled from './items.styles';
+
 
 export const Items: FC<{
   availableVariants: AvailableVariant[];
@@ -39,7 +41,7 @@ export const Items: FC<{
 
           {!isRequestedNeedAbsent && areCriteriaAbsent && (
             <Text variant="body" appearance="bold" color="var(--c-dark)">
-              {itemsQuantity > 1 ? 'Більш енергоефективні варіанти' : 'Більш енергоефективний варіант'}
+              {itemsQuantity > 1 ? i18next.t('variants') : i18next.t('variant')}
             </Text>
           )}
         </Styled.ItemsTitle>

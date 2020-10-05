@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'ustudio-ui/components/Button';
 import Flex from 'ustudio-ui/components/Flex';
@@ -13,6 +14,8 @@ import Styled from './error-page.styles';
 export const ErrorPage: FC = () => {
   const { push } = useHistory();
 
+  const { t } = useTranslation('common');
+
   return (
     <Container>
       <Styled.Content direction="column">
@@ -22,17 +25,17 @@ export const ErrorPage: FC = () => {
 
         <Flex alignment={{ horizontal: 'center', vertical: 'center' }}>
           <Text color="var(--c-dark)" align="center" variant="h1">
-            Упс, щось пішло не так :(
+            {t('oops')}
           </Text>
         </Flex>
 
         <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'space-around', vertical: 'center' }}>
           <Button appearance="text" onClick={window.location.reload}>
-            Оновити сторінку
+            {t('refresh')}
           </Button>
 
           <Button appearance="text" onClick={() => push('/')}>
-            На головну
+            {t('to-main')}
           </Button>
         </Flex>
       </Styled.Content>
