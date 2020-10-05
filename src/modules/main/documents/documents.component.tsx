@@ -2,12 +2,12 @@ import useAsync from 'honks/use-async';
 import React, { FC, useEffect, useMemo } from 'react';
 
 import axios, { AxiosError } from 'axios';
+import { useTranslation } from 'react-i18next';
 
 import { useMedia } from 'shared/hooks';
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
-import { useTranslation } from 'react-i18next';
 
 import { Container, Loader } from 'shared/components';
 
