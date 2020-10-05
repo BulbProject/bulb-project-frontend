@@ -4,8 +4,8 @@ import React, { FC, createContext, useContext } from 'react';
 import * as DocumentsApiConfig from './documents-api.config';
 
 interface DocumentsApi {
-  getDocumentsConfig(): AxiosRequestConfig;
-  getDocumentConfig(fileName: string): AxiosRequestConfig;
+  getDocumentsConfig(language: string): AxiosRequestConfig;
+  getDocumentConfig(fileName: string, language: string): AxiosRequestConfig;
 }
 
 const DocumentsApiContext = createContext<DocumentsApi | undefined>(undefined);

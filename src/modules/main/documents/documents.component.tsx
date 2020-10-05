@@ -7,6 +7,7 @@ import { useMedia } from 'shared/hooks';
 import Text from 'ustudio-ui/components/Text';
 import Flex from 'ustudio-ui/components/Flex';
 import Button from 'ustudio-ui/components/Button';
+import { useTranslation } from 'react-i18next';
 
 import { Container, Loader } from 'shared/components';
 
@@ -18,12 +19,13 @@ import Styled from './documents.styles';
 
 export const Documents: FC = () => {
   const { getDocumentsConfig } = useDocumentsApi();
+  const { i18n } = useTranslation();
 
   const { onResolve, onReject, onPending, isResolved, result, call: getDocuments } = useAsync<
     DocumentType[],
     AxiosError
   >(async () => {
-    const { data } = await axios(getDocumentsConfig());
+    const { data } = await axios(getDocumentsConfig(i18n.language));
 
     return data;
   });
