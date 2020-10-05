@@ -1,9 +1,9 @@
-> “If you want to find the secrets of the universe, think in terms of energy, frequency and vibration.”
+> “Якщо ви хочете знайти секрети Всесвіту, думайте з точки зору енергії, частоти та вібрації.”
 
-― _Nikola Tesla_
+― _Нікола Тесла_
 
 
 
-> “I have not failed. I've just found 10,000 ways that won't work.”
+> “Я не зазнав невдачі. Я щойно знайшов 10 000 способів, які не спрацюють.”
 
-― _Thomas A. Edison_
+― _Томас Алва Едісон_
