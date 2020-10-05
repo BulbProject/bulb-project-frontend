@@ -69,7 +69,7 @@ export const IdModal: FC<{
         </Text>
 
         <Styled.SmallBold variant="small" align="center">
-          {t('attention-id-expiration')}
+          {t('id-expires-in-7-days')}
         </Styled.SmallBold>
 
         <Styled.CopyButton

@@ -112,10 +112,7 @@ export const Specification: FC<{
 
   useEffect(() => {
     if (isDownloading && isResolved(result)) {
-      download(
-        result.data as string,
-        `t('specification-for')${categoryTitle}t('from-date')${formatDateTime()}.docx`
-      );
+      download(result.data as string, `t('specification-for')${categoryTitle}t('from-date')${formatDateTime()}.docx`);
 
       setDownloading(false);
       setOpen(false);
@@ -162,7 +159,7 @@ export const Specification: FC<{
             `,
           }}
         >
-          {isRejected(result) ? t('oops') : t('success')}
+          {isRejected(result) ? t('something-went-wrong') : t('success')}
         </Alert>
       )}
 

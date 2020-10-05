@@ -11,7 +11,7 @@ export const BackButton: FC<{
 
   return (
     <FormButton appearance={appearance} isActive={!isFirstStep} onClick={goToStep((id) => id - 1)}>
-      {t('forward')}
+      {t('previous')}
     </FormButton>
   );
 };

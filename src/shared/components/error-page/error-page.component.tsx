@@ -25,7 +25,7 @@ export const ErrorPage: FC = () => {
 
         <Flex alignment={{ horizontal: 'center', vertical: 'center' }}>
           <Text color="var(--c-dark)" align="center" variant="h1">
-            {t('oops')}
+            {t('something-went-wrong')}
           </Text>
         </Flex>
 

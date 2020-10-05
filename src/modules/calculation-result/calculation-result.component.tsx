@@ -76,7 +76,9 @@ const CalculationResult: FC = () => {
               <Container>
                 <Flex margin={{ top: 'large' }} alignment={{ horizontal: 'center' }}>
                   <Text color="negative">
-                    {t('no-calculation-start')}<Link to={`/categories/${categoryId}/${version}`}>{t('no-calculation-middle')}</Link>{t('no-calculation-end')}☹️
+                    {t('no-calculation-start')}
+                    <Link to={`/categories/${categoryId}/${version}`}>{t('no-calculation-middle')}</Link>
+                    {t('no-calculation-end')}☹️
                   </Text>
                 </Flex>
               </Container>

@@ -44,7 +44,7 @@ export const Item: FC<{
 
   const [isMarketModalOpen, setMarketModalOpen] = useState(false);
 
-  const { t } = useTranslation('item');
+  const { t } = useTranslation(['item', 'common']);
 
   const economyObservations = useMemo(() => {
     return variant.metrics
@@ -68,7 +68,11 @@ export const Item: FC<{
   return (
     <Styled.Item direction="column">
       {variant.relatedItem === recommendedVariant && (
-        <Styled.RecommendedVariant title={t('recommended-variant')} src={recommendedBadge} alt={t('recommended-variant')} />
+        <Styled.RecommendedVariant
+          title={t('recommended-option')}
+          src={recommendedBadge}
+          alt={t('recommended-option')}
+        />
       )}
 
       <Styled.ImageContainer isReversed={!isRequested}>
@@ -111,11 +115,11 @@ export const Item: FC<{
           metrics={[
             {
               id: '0300',
-              title: 'Пропозиції на Prozorro-Market',
+              title: t('item:offers-on-Prozorro-market'),
               observations: [
                 {
                   id: 'prozorroQuantity',
-                  notes: 'Кількість пропозицій',
+                  notes: t('item:proposals-number'),
                   measure: isLed ? 109 : '-',
                   unit: isLed
                     ? {
@@ -125,7 +129,7 @@ export const Item: FC<{
                 },
                 {
                   id: 'prozorroPrice',
-                  notes: 'Середня вартість',
+                  notes: t('item:average-cost'),
                   value: {
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
@@ -134,7 +138,7 @@ export const Item: FC<{
                   },
                   unit: isLed
                     ? {
-                        name: 'грн',
+                        name: t('item:uah'),
                       }
                     : undefined,
                 },
@@ -157,7 +161,7 @@ export const Item: FC<{
             intent="positive"
             onClick={() => setSpecificationOpen(true)}
           >
-            Тендерна документація
+            {t('common:documentation')}
           </Button>
 
           {isLed && (

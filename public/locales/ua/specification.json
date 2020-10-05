@@ -1,6 +1,6 @@
 {
-  "oops": "Упс, щось пішло не так...",
+  "something-went-wrong": "Упс, щось пішло не так...",
   "success": "Успіх!",
-  "specification-for": "Специфікация на ",
+  "specification-for": "Специфікація на ",
   "from-date": " від "
 }

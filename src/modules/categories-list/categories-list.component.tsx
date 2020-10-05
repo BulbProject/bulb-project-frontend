@@ -67,7 +67,7 @@ const CategoriesList: FC = () => {
                     })}
                   </Styled.Grid>
                 ) : (
-                  <Text variant="h3">{t('categories-list-component:no-categories')}</Text>
+                  <Text variant="h3">{t('categories-list-component:no-categories-added')}</Text>
                 )}
               </Flex>
             </Fade>

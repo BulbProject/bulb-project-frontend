@@ -54,7 +54,7 @@ const CategoryProvider: FC = ({ children }) => {
         return (
           <Container>
             <Flex direction="column" alignment={{ horizontal: 'center' }}>
-              <Text>{t('cannot-download-category')}</Text>
+              <Text>{t('cannot-fetch-category')}</Text>
 
               <Grid xs={{ gap: 32 }}>
                 <Cell>

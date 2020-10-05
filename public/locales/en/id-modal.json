@@ -1,7 +1,7 @@
 {
-  "id": "",
-  "copied": "",
-  "copy-id": "",
-  "attention-id-expiration": "",
-  "copy": ""
+  "id": "Identifier",
+  "copied": "Copied!",
+  "copy-id": "Copy this ID and paste it on the site you intend to make a purchase.",
+  "id-expires-in-7-days": "Please note - data on this ID is stored for 7 days",
+  "copy": "Copy"
 }
