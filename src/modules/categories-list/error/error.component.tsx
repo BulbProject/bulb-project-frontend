@@ -10,12 +10,12 @@ import Styled from './error.styles';
 export const Error: FC<{
   reloadCategories(): void;
 }> = ({ reloadCategories }) => {
-  const { t } = useTranslation('calculation');
+  const { t } = useTranslation('common');
 
   return (
     <Styled.ErrorContainer>
       <Flex direction="column" alignment={{ horizontal: 'center' }}>
-        <Text color="var(--c-contrast-strong)">{t('error')}</Text>
+        <Text color="var(--c-contrast-strong)">{t('categories-list-fetch-error')}</Text>
 
         <Flex alignment={{ horizontal: 'center' }} margin={{ top: 'large' }}>
           <Button intent="positive" onClick={reloadCategories}>
