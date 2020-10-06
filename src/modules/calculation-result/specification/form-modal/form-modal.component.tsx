@@ -40,13 +40,13 @@ export const FormModal: FC<{
   setRequirement,
   setCopying,
 }) => {
-  const { t } = useTranslation('form-modal');
+  const { t } = useTranslation('common');
 
   return (
     <Modal
       isOpen={isOpen}
       onChange={setOpen}
-      title={<Text variant="h5">{criterion?.title ?? t('documents')}</Text>}
+      title={<Text variant="h5">{criterion?.title ?? t('documentation')}</Text>}
       styled={{
         Modal: css`
             width: 100%;
