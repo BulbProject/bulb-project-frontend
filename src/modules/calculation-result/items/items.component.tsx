@@ -42,7 +42,7 @@ export const Items: FC<{
 
           {!isRequestedNeedAbsent && areCriteriaAbsent && (
             <Text variant="body" appearance="bold" color="var(--c-dark)">
-              {itemsQuantity > 1 ? t('energy-efficient-options') : t('energy-efficient-option')}
+              {t('energy-efficient-option', { count: itemsQuantity })}
             </Text>
           )}
         </Styled.ItemsTitle>
