@@ -23,11 +23,11 @@ export const Hero: FC = () => {
         <Styled.HeroText variant="h1">Bulb Project</Styled.HeroText>
 
         <Styled.HeroCaption variant="h2">
-          <Translation>{(t) => t('title')}</Translation>
+          <Translation ns="main">{(t) => t('title')}</Translation>
         </Styled.HeroCaption>
 
         <Styled.HeroDescription>
-          <Translation>{(t) => t('description')}</Translation>
+          <Translation ns="main">{(t) => t('description')}</Translation>
         </Styled.HeroDescription>
       </Flex>
 
@@ -38,7 +38,7 @@ export const Hero: FC = () => {
           </Styled.CallToAction>
 
           <Styled.ActionButton variant="h6">
-            <Translation>{(t) => t('start')}</Translation>
+            <Translation ns="main">{(t) => t('start')}</Translation>
           </Styled.ActionButton>
         </Styled.Link>
       </Flex>
