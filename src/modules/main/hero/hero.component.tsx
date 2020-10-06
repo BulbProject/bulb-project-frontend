@@ -35,7 +35,7 @@ export const Hero: FC = () => {
             <Styled.ActionImage src={BulbImage} />
           </Styled.CallToAction>
 
-          <Styled.ActionButton variant="h6">Почати розрахунок</Styled.ActionButton>
+          <Styled.ActionButton variant="h6">Start calculation</Styled.ActionButton>
         </Styled.Link>
       </Flex>
 
