@@ -9,17 +9,21 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    lng: 'en',
     fallbackLng: 'en',
     defaultNS: 'common',
     ns: ['common'],
     debug: true,
     returnEmptyString: false,
 
+    debug: process.env.NODE_ENV === 'development',
+    detection: {
+      order: ['localStorage'],
+    },
     interpolation: {
       escapeValue: false,
     },
   })
+  // eslint-disable-next-line no-console
   .catch(console.error);
 
 export default i18n;

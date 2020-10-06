@@ -112,7 +112,7 @@ const Calculation: FC = ({ children }) => {
               `,
             }}
           >
-            <Text>{error.response?.data.message || error.message}</Text>
+            <Text>{error.response?.data.messages || error.message}</Text>
           </Modal>
         );
       })}

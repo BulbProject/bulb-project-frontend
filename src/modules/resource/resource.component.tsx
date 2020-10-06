@@ -22,13 +22,12 @@ import Styled from './resource.styles';
 const Resource: FC = () => {
   const { goBack } = useHistory();
   const { resourceFileName } = useParams();
-
   const { getResourceFileConfig } = useResourcesApi();
   const { i18n } = useTranslation();
 
   const { onPending, onResolve, onReject, call: getResourceFile } = useAsync<{ content: string }, AxiosError>(
     async () => {
-      const { data } = await axios(getResourceFileConfig(resourceFileName as string));
+      const { data } = await axios(getResourceFileConfig(resourceFileName as string, i18n.language));
 
       return data;
     }

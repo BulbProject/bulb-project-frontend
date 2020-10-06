@@ -10,6 +10,7 @@ import Text from 'ustudio-ui/components/Text';
 
 import axios from 'axios';
 import useAsync from 'honks/use-async';
+import { useTranslation } from 'react-i18next';
 
 import { useResourcesApi } from 'core/context/resources-api-provider';
 import Styled from './aside.styles';
@@ -17,10 +18,11 @@ import Styled from './aside.styles';
 export const Aside: FC<{
   closeDrawer(): void;
 }> = ({ closeDrawer }) => {
+  const { i18n } = useTranslation();
   const { getResourcesConfig } = useResourcesApi();
 
   const { onPending, onResolve, onReject, call: getResources } = useAsync<{ name: string }[]>(async () => {
-    const { data } = await axios(getResourcesConfig());
+    const { data } = await axios(getResourcesConfig(i18n.language));
 
     return data;
   });
