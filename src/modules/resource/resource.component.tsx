@@ -9,6 +9,7 @@ import Text from 'ustudio-ui/components/Text';
 import { Helmet } from 'react-helmet';
 import axios, { AxiosError } from 'axios';
 import useAsync from 'honks/use-async';
+import { useTranslation } from 'react-i18next';
 
 import { Container, Markdown, Fade } from 'shared/components';
 import { useResourcesApi } from 'core/context/resources-api-provider';
@@ -23,6 +24,7 @@ const Resource: FC = () => {
   const { resourceFileName } = useParams();
 
   const { getResourceFileConfig } = useResourcesApi();
+  const { i18n } = useTranslation();
 
   const { onPending, onResolve, onReject, call: getResourceFile } = useAsync<{ content: string }, AxiosError>(
     async () => {
@@ -34,7 +36,7 @@ const Resource: FC = () => {
 
   useEffect(() => {
     getResourceFile();
-  }, [resourceFileName]);
+  }, [resourceFileName, i18n.language]);
 
   return (
     <Fade>
