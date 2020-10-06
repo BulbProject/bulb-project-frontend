@@ -72,7 +72,7 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
       {requirementGroups.length > 1 && (
         <Select
           autocomplete={requirementGroups.length >= 10}
-          placeholder={t('common:choose-variant')}
+          placeholder={t('common:choose-option')}
           // Select props declaration miss this prop
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
