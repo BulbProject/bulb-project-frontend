@@ -17,15 +17,16 @@ export const LanguageSelect: FC = () => {
 
   return (
     <Styled.SelectContainer>
-      <select value={language} onChange={changeLanguage}>
+      <Styled.Select value={language} onChange={changeLanguage} id="language-select">
         {languages.map((lang) => {
+          // eslint-disable-next-line jsx-a11y/control-has-associated-label
           return (
             <option key={lang} value={lang}>
               {lang}
             </option>
           );
         })}
-      </select>
+      </Styled.Select>
     </Styled.SelectContainer>
   );
 };

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { css } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import axios from 'axios';
 import useAsync from 'honks/use-async';
@@ -101,6 +102,8 @@ export const Specification: FC<{
   const [isCopying, setCopying] = useState(false);
   const [isAlertOpen, setAlertOpen] = useState(false);
 
+  const { t } = useTranslation('specification');
+
   useEffect(() => {
     if (isDownloading || isCopying) {
       postSpecification();
@@ -109,7 +112,7 @@ export const Specification: FC<{
 
   useEffect(() => {
     if (isDownloading && isResolved(result)) {
-      download(result.data as string, `Специфікация на '${categoryTitle}' від ${formatDateTime()}.docx`);
+      download(result.data as string, `t('specification-for')${categoryTitle}t('from-date')${formatDateTime()}.docx`);
 
       setDownloading(false);
       setOpen(false);
@@ -156,7 +159,7 @@ export const Specification: FC<{
             `,
           }}
         >
-          {isRejected(result) ? 'Упс, щось пішло не так...' : 'Успіх!'}
+          {isRejected(result) ? t('something-went-wrong') : t('success')}
         </Alert>
       )}
 

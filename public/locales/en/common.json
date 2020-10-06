@@ -1,3 +1,14 @@
 {
-  "error": "Sorry, we were unable to load the category list."
+  "categories-list-fetch-error": "Sorry, we were unable to load the category list.",
+  "error": "Error",
+  "try-again": "Try again",
+  "something-went-wrong": "Oops, something went wrong :(",
+  "refresh": "Refresh the page",
+  "back": "Go back",
+  "to-main": "To the main",
+  "choose-option": "Choose one of the available options",
+  "designed-by": "Design and development",
+  "cannot-fetch-category": "Sorry, we were unable to load this category.",
+  "resources": "Resources",
+  "documentation": "Tender documentation"
 }

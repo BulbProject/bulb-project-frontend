@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
+import { useTranslation } from 'react-i18next';
 
 import { useCategory } from 'core/context/category-provider';
 import type { AvailableVariant, Item as ItemType } from 'shared/entity/data';
@@ -16,6 +17,7 @@ export const RequestedNeed: FC<{
   requestedNeed: AvailableVariant;
 }> = ({ hasMany, isDrawerOpen, setDrawerOpen, requestedNeed }) => {
   const { category } = useCategory();
+  const { t } = useTranslation('requested-need');
 
   return (
     <Styled.RequestedNeed direction="column">
@@ -31,7 +33,7 @@ export const RequestedNeed: FC<{
           // @ts-ignore
           appearance="bold"
         >
-          Те, що Ви шукали
+          {t('requested-need')}
         </Styled.Title>
         <FilterDrawer isDrawerOpen={isDrawerOpen} setDrawerOpen={setDrawerOpen} />
       </Flex>

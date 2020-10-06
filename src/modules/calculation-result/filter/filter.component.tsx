@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Form } from 'formfish';
 import Flex from 'ustudio-ui/components/Flex';
+import { useTranslation } from 'react-i18next';
 
 import { useFormValidator } from 'shared/context/form-validator';
 import { useCalculation } from 'shared/context/calculation';
@@ -23,6 +24,8 @@ export const Filter: FC<{
   const { hasValidationFailed } = useFormValidator();
 
   const [hasFormChanged, setFormChanged] = useState(false);
+
+  const { t } = useTranslation('criterion');
 
   return (
     <Styled.Wrapper>
@@ -51,7 +54,7 @@ export const Filter: FC<{
             ))}
 
             <Styled.Recalculate type="submit" isDisabled={!hasFormChanged || hasValidationFailed()}>
-              Перерахувати
+              {t('recalculate')}
             </Styled.Recalculate>
           </>
         </Form>

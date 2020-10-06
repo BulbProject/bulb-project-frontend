@@ -35,7 +35,7 @@ const Resource: FC = () => {
 
   useEffect(() => {
     getResourceFile();
-  }, [resourceFileName]);
+  }, [resourceFileName, i18n.language]);
 
   return (
     <Fade>

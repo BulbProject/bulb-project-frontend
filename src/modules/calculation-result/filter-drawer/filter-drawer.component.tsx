@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { css } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import Drawer from 'ustudio-ui/components/Drawer';
 
 import { FormValidator } from 'shared/context/form-validator';
@@ -15,6 +16,7 @@ export const FilterDrawer: FC<{
   isRequestedNeedAbsent: boolean;
 }> = ({ isDrawerOpen, setDrawerOpen, isRequestedNeedAbsent }) => {
   const isLg = useMedia('screen and (min-width: 832px)');
+  const { t } = useTranslation('filter-drawer');
 
   return (
     <>
@@ -24,7 +26,7 @@ export const FilterDrawer: FC<{
         iconAfter={<FilterIcon />}
         isRequestedNeedAbsent={isRequestedNeedAbsent}
       >
-        Змінити умови
+        {t('change-conditions')}
       </Styled.FilterButton>
 
       <Drawer

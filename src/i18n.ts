@@ -12,6 +12,8 @@ i18n
     fallbackLng: 'en',
     defaultNS: 'common',
     ns: ['common'],
+    returnEmptyString: false,
+
     debug: process.env.NODE_ENV === 'development',
     detection: {
       order: ['localStorage'],

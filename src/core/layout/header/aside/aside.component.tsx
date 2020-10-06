@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'ustudio-ui/components/Button';
 import Flex from 'ustudio-ui/components/Flex';
@@ -26,13 +27,15 @@ export const Aside: FC<{
     return data;
   });
 
+  const { t, i18n } = useTranslation('common');
+
   useEffect(() => {
     getResources();
-  }, []);
+  }, [i18n.language]);
 
   return (
     <>
-      <Text variant="h3">Ресурси</Text>
+      <Text variant="h3">{t('resources')}</Text>
 
       <Flex margin={{ top: 'large' }}>
         <Flex as="nav" direction="column" alignment={{ horizontal: 'start', vertical: 'start' }}>
@@ -68,7 +71,7 @@ export const Aside: FC<{
               <Flex alignment={{ horizontal: 'center' }} direction="column">
                 <Flex margin={{ bottom: 'large' }}>
                   <Text align="center" color="var(--c-negative)">
-                    Упс, щось пішло не так :(
+                    {t('something-went-wrong')}
                   </Text>
                 </Flex>
 
