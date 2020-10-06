@@ -1,5 +1,6 @@
 import React, { FC, useMemo } from 'react';
 import { css } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 
 import Select from 'ustudio-ui/components/Select/Select';
@@ -18,10 +19,12 @@ export const OptionGroup: FC<{
 }> = ({ optionGroup, requirement, isDisabled, defaultValue, isDefaultOpen }) => {
   const optionsMap = useMemo(() => (optionGroup ? mapOptionsToItems(optionGroup.options) : {}), [optionGroup?.options]);
 
+  const { t } = useTranslation('common');
+
   return (
     <Field requirement={requirement} isDisabled={isDisabled}>
       <Select
-        placeholder="Виберіть один із доступних варіантів"
+        placeholder={t('choose-option')}
         autocomplete={Object.values(optionsMap).length >= 10}
         isDisabled={isDisabled}
         items={optionsMap}

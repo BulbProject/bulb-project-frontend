@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useCalculation } from 'shared/context/calculation';
 
@@ -11,6 +12,7 @@ export const ForwardButton: FC<{
 }> = ({ onFinish, appearance }) => {
   const { isLastStep, goToStep, isNextStepAvailable, currentStep } = useStepperState();
   const { selectedRequirementGroups } = useCalculation();
+  const { t } = useTranslation('button');
 
   return isLastStep ? (
     <FormButton
@@ -20,7 +22,7 @@ export const ForwardButton: FC<{
       onClick={onFinish}
       isDisabled={!selectedRequirementGroups[currentStep.id] || !isNextStepAvailable}
     >
-      Завершити
+      {t('finish')}
     </FormButton>
   ) : (
     <FormButton
@@ -29,7 +31,7 @@ export const ForwardButton: FC<{
       onClick={goToStep((id) => id + 1)}
       isDisabled={!selectedRequirementGroups[currentStep.id] || !isNextStepAvailable}
     >
-      Далі
+      {t('next')}
     </FormButton>
   );
 };

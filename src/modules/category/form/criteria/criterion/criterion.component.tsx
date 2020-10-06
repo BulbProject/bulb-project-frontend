@@ -3,6 +3,7 @@ import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
 import Select from 'ustudio-ui/components/Select/Select';
 import { Mixin } from 'ustudio-ui/theme';
+import { useTranslation } from 'react-i18next';
 
 import { Criterion as CriterionProps, RequirementGroup as RequirementGroupType } from 'shared/entity/data';
 import { useCalculation } from 'shared/context/calculation';
@@ -39,6 +40,7 @@ const hasBinarySelection = (requirementGroups: RequirementGroupType[]): boolean 
 };
 
 export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
+  const { t } = useTranslation(['common', 'criterion']);
   const { selectedRequirementGroups, dispatch } = useCalculation();
 
   const selectedRequirementGroup = useMemo(() => selectedRequirementGroups?.[id], [selectedRequirementGroups]);
@@ -70,11 +72,11 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
       {requirementGroups.length > 1 && (
         <Select
           autocomplete={requirementGroups.length >= 10}
-          placeholder="Виберіть один із доступних варіантів"
+          placeholder={t('common:choose-option')}
           // Select props declaration miss this prop
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
-          emptyListMessage="Нічого не знайдено"
+          emptyListMessage={t('criterion:nothing-found')}
           items={requirementGroups.reduce((items, requirementGroup) => {
             return Object.assign(items, {
               [requirementGroup.id]: {

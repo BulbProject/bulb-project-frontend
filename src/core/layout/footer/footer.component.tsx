@@ -1,4 +1,5 @@
 import React, { memo, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Grid from 'ustudio-ui/components/Grid/Grid';
@@ -58,6 +59,8 @@ export const Footer = memo(() => {
     []
   );
 
+  const { t } = useTranslation('common');
+
   return (
     <Styled.Footer as="footer">
       <Grid>
@@ -72,7 +75,7 @@ export const Footer = memo(() => {
         <Cell xl={{ offset: { before: 1, after: 1 }, size: 1 }}>
           <Flex alignment={{ vertical: 'end', horizontal: 'center' }} margin={{ bottom: 'regular', top: 'regular' }}>
             <Styled.TextWrapper direction="column" alignment={{ vertical: 'center' }}>
-              <Styled.CopyrightText>Дизайн&nbsp;і&nbsp;розробка</Styled.CopyrightText>
+              <Styled.CopyrightText>{t('designed-by')}</Styled.CopyrightText>
               <Styled.CopyrightText>Ustudio&nbsp;Company</Styled.CopyrightText>{' '}
             </Styled.TextWrapper>
 

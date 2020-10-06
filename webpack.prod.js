@@ -8,6 +8,7 @@ const WorkboxPlugin = require('workbox-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const RobotstxtPlugin = require('robotstxt-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const common = require('./webpack.common.js');
@@ -18,11 +19,13 @@ module.exports = merge(common, {
     usedExports: true,
     sideEffects: false,
     minimize: true,
-    minimizer: [new TerserPlugin({
-      terserOptions: {
-        toplevel: true
-      }
-    })],
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          toplevel: true,
+        },
+      }),
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -47,7 +50,7 @@ module.exports = merge(common, {
           favicons: true,
           firefox: false,
           windows: false,
-          yandex: false
+          yandex: false,
         },
       },
     }),
@@ -68,6 +71,14 @@ module.exports = merge(common, {
       algorithm: 'gzip',
       test: /\.(css|js|html)$/,
       minRatio: 0.4,
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'public/locales',
+          to: 'locales',
+        },
+      ],
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',

@@ -4,7 +4,7 @@ import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
 
 const Root = styled.article`
-  margin: var(--i-large) 0;
+  margin: var(--i-large);
   scroll-snap-type: y mandatory;
 `;
 
@@ -24,9 +24,10 @@ const Paragraph = styled(Text).attrs(() => ({ variant: 'article' }))`
 `;
 
 const Quote = styled.blockquote`
-  border-left: 2px solid var(--c-primary);
+  margin: var(--i-large) 0 var(--i-regular);
   padding-left: var(--i-regular);
-  margin: var(--i-regular) 0;
+
+  border-left: 2px solid var(--c-primary);
   color: var(--c-contrast-weak);
 
   ${Paragraph} {

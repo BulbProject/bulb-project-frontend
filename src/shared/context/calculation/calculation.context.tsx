@@ -1,6 +1,7 @@
 import React, { FC, createContext, useContext, useReducer, useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import useAsync from 'honks/use-async';
+import { useTranslation } from 'react-i18next';
 
 import { css } from 'styled-components';
 import Modal from 'ustudio-ui/components/Modal';
@@ -27,6 +28,7 @@ const CalculationContext = createContext<CalculationValue | undefined>(undefined
 const Calculation: FC = ({ children }) => {
   const [isSubmitting, setSubmitting] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const { t } = useTranslation('common');
 
   const [state, _dispatch] = useReducer(calculationReducer, {
     formData: {},
@@ -100,7 +102,7 @@ const Calculation: FC = ({ children }) => {
           <Modal
             isOpen={isModalOpen}
             onChange={() => setModalOpen(false)}
-            title="Помилка"
+            title={t('error')}
             styled={{
               Overlay: css`
                 background-color: var(--c-darkest);
@@ -110,7 +112,7 @@ const Calculation: FC = ({ children }) => {
               `,
             }}
           >
-            <Text>{error.response?.data.message || error.message}</Text>
+            <Text>{error.response?.data.messages || error.message}</Text>
           </Modal>
         );
       })}
