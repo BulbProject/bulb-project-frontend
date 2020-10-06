@@ -134,7 +134,7 @@ export const FormModal: FC<{
             active={mode}
             tabs={modes.map(({ value, title }) => ({
               value,
-              children: <Styled.Tab>{t(`${title}`)}</Styled.Tab>,
+              children: <Styled.Tab>{t(title)}</Styled.Tab>,
             }))}
             onChange={setMode}
             styled={{
