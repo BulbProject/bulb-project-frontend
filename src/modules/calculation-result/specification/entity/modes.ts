@@ -1,4 +1,4 @@
 export const modes = [
-  { value: 'json', title: 'Ідентифікатор' },
-  { value: 'docx', title: 'Текстовий документ' },
+  { value: 'json', title: 'Identifier' },
+  { value: 'docx', title: 'Text document' },
 ];

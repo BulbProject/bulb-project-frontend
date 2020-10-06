@@ -87,7 +87,7 @@ export const FormModal: FC<{
               setDownloading(true);
             }}
           >
-            Згенерувати
+            Generate
           </Button>
         </Flex>
       }
@@ -124,7 +124,7 @@ export const FormModal: FC<{
         )}
 
         <SpecificationStyles.Group>
-          <Styled.GroupTitle>Оберіть бажаний формат</Styled.GroupTitle>
+          <Styled.GroupTitle>Select the desired format</Styled.GroupTitle>
 
           <Tabs
             // Tabs props declaration miss this prop

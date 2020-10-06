@@ -24,7 +24,7 @@ export const OptionGroup: FC<{
   return (
     <Field requirement={requirement} isDisabled={isDisabled}>
       <Select
-        placeholder={t('choose-variant')}
+        placeholder={t('choose-option')}
         autocomplete={Object.values(optionsMap).length >= 10}
         isDisabled={isDisabled}
         items={optionsMap}
