@@ -87,7 +87,7 @@ export const FormModal: FC<{
               setDownloading(true);
             }}
           >
-            Generate
+            {t('generate-document')}
           </Button>
         </Flex>
       }
@@ -124,7 +124,7 @@ export const FormModal: FC<{
         )}
 
         <SpecificationStyles.Group>
-          <Styled.GroupTitle>Select the desired format</Styled.GroupTitle>
+          <Styled.GroupTitle>{t('select-format')}</Styled.GroupTitle>
 
           <Tabs
             // Tabs props declaration miss this prop
@@ -134,7 +134,7 @@ export const FormModal: FC<{
             active={mode}
             tabs={modes.map(({ value, title }) => ({
               value,
-              children: <Styled.Tab>{title}</Styled.Tab>,
+              children: <Styled.Tab>{t(title)}</Styled.Tab>,
             }))}
             onChange={setMode}
             styled={{
