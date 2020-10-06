@@ -12,7 +12,6 @@ i18n
     fallbackLng: 'en',
     defaultNS: 'common',
     ns: ['common'],
-    debug: true,
     returnEmptyString: false,
 
     debug: process.env.NODE_ENV === 'development',
