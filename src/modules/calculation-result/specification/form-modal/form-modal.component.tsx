@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from 'react';
 import { css } from 'styled-components';
 import { Criterion, Requirement } from 'ts4ocds/extensions/requirements';
-import { useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'ustudio-ui/components/Button';
 import Flex from 'ustudio-ui/components/Flex';

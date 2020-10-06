@@ -25,11 +25,11 @@ export const Aside: FC<{
     return data;
   });
 
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
 
   useEffect(() => {
     getResources();
-  }, []);
+  }, [i18n.language]);
 
   return (
     <>
