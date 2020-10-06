@@ -12,5 +12,6 @@
   "resources": "Resources",
   "documentation": "Tender documentation",
   "start": "Start calculation",
-  "title": "Integrating Energy Efficiency Output Specifications and Dedicated Evaluation Methods into Electronic Public Procurement"
+  "description": "Integrating Energy Efficiency Output Specifications and Dedicated Evaluation Methods into Electronic Public Procurement",
+  "title": "Brings light to eProcurement"
 }

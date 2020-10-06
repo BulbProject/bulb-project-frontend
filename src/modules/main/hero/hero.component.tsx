@@ -22,10 +22,12 @@ export const Hero: FC = () => {
       >
         <Styled.HeroText variant="h1">Bulb Project</Styled.HeroText>
 
-        <Styled.HeroCaption variant="h2">Brings light to eProcurement</Styled.HeroCaption>
+        <Styled.HeroCaption variant="h2">
+          <Translation>{(t) => t('title')}</Translation>
+        </Styled.HeroCaption>
 
         <Styled.HeroDescription>
-          <Translation>{(t) => t('title')}</Translation>
+          <Translation>{(t) => t('description')}</Translation>
         </Styled.HeroDescription>
       </Flex>
 
