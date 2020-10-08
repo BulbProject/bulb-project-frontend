@@ -68,6 +68,7 @@ export const Specification: FC<{
   criterion?: Criterion;
   availableVariant: AvailableVariant;
   categoryTitle: string;
+// eslint-disable-next-line sonarjs/cognitive-complexity
 }> = ({ isOpen, setOpen, criterion, availableVariant, categoryTitle }) => {
   const {
     category: { id: categoryId },
@@ -111,7 +112,7 @@ export const Specification: FC<{
   }, [isDownloading, isCopying]);
 
   useEffect(() => {
-    if (isDownloading && isResolved(result)) {
+    if (isDownloading && isResolved(result) && mode === 'docx') {
       download(result.data as string, `t('specification-for')${categoryTitle}t('from-date')${formatDateTime()}.docx`);
 
       setDownloading(false);
@@ -119,7 +120,7 @@ export const Specification: FC<{
 
       setAlertOpen(true);
     }
-  }, [isDownloading, isResolved(result)]);
+  }, [isDownloading, isResolved(result), mode]);
 
   useEffect(() => {
     if (isCopying && isResolved(result)) {
@@ -136,13 +137,20 @@ export const Specification: FC<{
 
       return () => clearTimeout(alertTimeout);
     }
-  }, [isAlertOpen, mode]);
+  }, [isAlertOpen, isResolved(result), mode]);
 
   useEffect(() => {
     if (isCopying) {
       setAlertOpen(true);
     }
   }, [isCopying]);
+
+  useEffect(() => {
+    if (mode === 'docx' && isRejected(result)) {
+      setAlertOpen(true);
+      setDownloading(false);
+    }
+  }, [isRejected(result), mode]);
 
   return (
     <>
@@ -174,6 +182,7 @@ export const Specification: FC<{
         setRequirement={setRequirement}
         setMode={setMode}
         setCopying={setCopying}
+        isRejected={isRejected(result)}
       />
 
       <IdModal

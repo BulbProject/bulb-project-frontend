@@ -20,6 +20,7 @@ import Styled from './form-modal.styles';
 export const FormModal: FC<{
   isOpen: boolean;
   isDownloading: boolean;
+  isRejected: boolean;
   requirement?: Requirement;
   criterion?: Criterion;
   mode: string;
@@ -32,6 +33,7 @@ export const FormModal: FC<{
   isOpen,
   setOpen,
   isDownloading,
+  isRejected,
   setDownloading,
   criterion,
   mode,
@@ -40,13 +42,13 @@ export const FormModal: FC<{
   setRequirement,
   setCopying,
 }) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['specification', 'common']);
 
   return (
     <Modal
       isOpen={isOpen}
       onChange={setOpen}
-      title={<Text variant="h5">{criterion?.title ?? t('documentation')}</Text>}
+      title={<Text variant="h5">{criterion?.title ?? t('common:documentation')}</Text>}
       styled={{
         Modal: css`
             width: 100%;
@@ -77,17 +79,22 @@ export const FormModal: FC<{
         <Flex alignment={{ horizontal: 'center' }}>
           <Button
             onClick={() => {
-              if (mode === 'json') {
-                setOpen(false);
-                setCopying(true);
-
-                return;
+              if (isRejected) {
+                setDownloading(false);
               }
 
-              setDownloading(true);
+              if (mode === 'json') {
+                setCopying(true);
+              }
+
+              if (mode === 'docx') {
+                setDownloading(true);
+              }
+
+              setOpen(false);
             }}
           >
-            {t('generate-document')}
+            {t('common:generate-document')}
           </Button>
         </Flex>
       }
@@ -124,7 +131,7 @@ export const FormModal: FC<{
         )}
 
         <SpecificationStyles.Group>
-          <Styled.GroupTitle>{t('select-format')}</Styled.GroupTitle>
+          <Styled.GroupTitle>{t('common:select-format')}</Styled.GroupTitle>
 
           <Tabs
             // Tabs props declaration miss this prop
@@ -134,7 +141,7 @@ export const FormModal: FC<{
             active={mode}
             tabs={modes.map(({ value, title }) => ({
               value,
-              children: <Styled.Tab>{t(title)}</Styled.Tab>,
+              children: <Styled.Tab>{t(`common:${title}`)}</Styled.Tab>,
             }))}
             onChange={setMode}
             styled={{
