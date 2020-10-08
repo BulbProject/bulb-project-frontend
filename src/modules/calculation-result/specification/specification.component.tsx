@@ -113,7 +113,7 @@ export const Specification: FC<{
 
   useEffect(() => {
     if (isDownloading && isResolved(result) && mode === 'docx') {
-      download(result.data as string, `${t('specification-for')}${categoryTitle}${t('from-date')}${formatDateTime()}.docx`);
+      download(result.data as string, `${t('specification-for')} ${categoryTitle} ${t('from-date')} ${formatDateTime()}.docx`);
 
       setDownloading(false);
       setOpen(false);
