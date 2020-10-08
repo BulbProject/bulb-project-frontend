@@ -141,7 +141,7 @@ module.exports = {
       },
     ],
 
-    'id-length': ['warn', { 'exceptions': ['t'] }],
+    'id-length': ['warn', { 'exceptions': ['t', '_'] }],
     'no-console': 'warn',
     'no-process-env': 'off',
     'no-underscore-dangle': 'off',
