@@ -42,13 +42,13 @@ export const FormModal: FC<{
   setRequirement,
   setCopying,
 }) => {
-  const { t } = useTranslation(['specification', 'common']);
+  const { t } = useTranslation('common');
 
   return (
     <Modal
       isOpen={isOpen}
       onChange={setOpen}
-      title={<Text variant="h5">{criterion?.title ?? t('common:documentation')}</Text>}
+      title={<Text variant="h5">{criterion?.title ?? t('documentation')}</Text>}
       styled={{
         Modal: css`
             width: 100%;
@@ -94,7 +94,7 @@ export const FormModal: FC<{
               setOpen(false);
             }}
           >
-            {t('common:generate-document')}
+            {t('generate-document')}
           </Button>
         </Flex>
       }
@@ -131,7 +131,7 @@ export const FormModal: FC<{
         )}
 
         <SpecificationStyles.Group>
-          <Styled.GroupTitle>{t('common:select-format')}</Styled.GroupTitle>
+          <Styled.GroupTitle>{t('select-format')}</Styled.GroupTitle>
 
           <Tabs
             // Tabs props declaration miss this prop
@@ -141,7 +141,7 @@ export const FormModal: FC<{
             active={mode}
             tabs={modes.map(({ value, title }) => ({
               value,
-              children: <Styled.Tab>{t(`common:${title}`)}</Styled.Tab>,
+              children: <Styled.Tab>{t(title)}</Styled.Tab>,
             }))}
             onChange={setMode}
             styled={{
