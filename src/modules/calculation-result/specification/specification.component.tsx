@@ -98,12 +98,18 @@ export const Specification: FC<{
     return data;
   });
 
-  const [identificator, setIdentificator] = useState<string>('');
+  const [identifier, setIdentifier] = useState<string>('');
   const [isDownloading, setDownloading] = useState(false);
   const [isCopying, setCopying] = useState(false);
   const [isAlertOpen, setAlertOpen] = useState(false);
 
   const { t } = useTranslation('specification');
+
+  useEffect(() => {
+    if (isRejected(result)) {
+      setAlertOpen(true);
+    }
+  }, [isRejected(result)]);
 
   useEffect(() => {
     if (isDownloading || isCopying) {
@@ -112,45 +118,24 @@ export const Specification: FC<{
   }, [isDownloading, isCopying]);
 
   useEffect(() => {
-    if (isDownloading && isResolved(result) && mode === 'docx') {
-      download(result.data as string, `${t('specification-for')} ${categoryTitle} ${t('from-date')} ${formatDateTime()}.docx`);
+    if (isResolved(result) && isDownloading && mode === 'docx') {
+      download(
+        result.data as string,
+        `${t('specification-for')} ${categoryTitle} ${t('from-date')} ${formatDateTime()}.docx`
+      );
 
       setDownloading(false);
-      setOpen(false);
 
       setAlertOpen(true);
+      setTimeout(() => setAlertOpen(false), 5 * 1000);
     }
-  }, [isDownloading, isResolved(result), mode]);
+  }, [isDownloading, isResolved(result), mode, requirement]);
 
   useEffect(() => {
-    if (isCopying && isResolved(result)) {
-      setIdentificator((result.data as { id: string }).id);
-
-      setAlertOpen(true);
+    if (isResolved(result) && isCopying) {
+      setIdentifier((result.data as { id: string }).id);
     }
   }, [isCopying, isResolved(result)]);
-
-  // eslint-disable-next-line consistent-return
-  useEffect(() => {
-    if (isAlertOpen && mode === 'docx') {
-      const alertTimeout = setTimeout(() => setAlertOpen(false), 5 * 1000);
-
-      return () => clearTimeout(alertTimeout);
-    }
-  }, [isAlertOpen, isResolved(result), mode]);
-
-  useEffect(() => {
-    if (isCopying) {
-      setAlertOpen(true);
-    }
-  }, [isCopying]);
-
-  useEffect(() => {
-    if (mode === 'docx' && isRejected(result)) {
-      setAlertOpen(true);
-      setDownloading(false);
-    }
-  }, [isRejected(result), mode]);
 
   return (
     <>
@@ -174,6 +159,7 @@ export const Specification: FC<{
       <FormModal
         isOpen={isOpen}
         isDownloading={isDownloading}
+        isRejected={isRejected(result)}
         requirement={requirement}
         criterion={criterion}
         mode={mode}
@@ -182,15 +168,14 @@ export const Specification: FC<{
         setRequirement={setRequirement}
         setMode={setMode}
         setCopying={setCopying}
-        isRejected={isRejected(result)}
       />
 
       <IdModal
-        identificator={identificator}
+        identifier={identifier}
         isCopying={isCopying}
         setCopying={setCopying}
         setAlertOpen={setAlertOpen}
-        setIdentificator={setIdentificator}
+        setIdentifier={setIdentifier}
       />
     </>
   );

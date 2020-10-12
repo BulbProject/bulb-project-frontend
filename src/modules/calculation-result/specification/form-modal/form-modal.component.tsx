@@ -47,24 +47,23 @@ export const FormModal: FC<{
   return (
     <Modal
       isOpen={isOpen}
-      onChange={setOpen}
+      onChange={() => {
+        setOpen(false);
+        setDownloading(false);
+      }}
       title={<Text variant="h5">{criterion?.title ?? t('documentation')}</Text>}
       styled={{
         Modal: css`
             width: 100%;
-
             ${Mixin.Screen.xs(css`
               width: 75%;
             `)}
-
             ${Mixin.Screen.md(css`
               width: 66%;
             `)}
-
             ${Mixin.Screen.lg(css`
               width: 50%;
             `)}
-
             ${Mixin.Screen.xl(css`
               width: 33%;
             `)}
