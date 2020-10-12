@@ -5,7 +5,7 @@ const SelectContainer = styled.div`
 
   width: 40px;
   height: 100%;
-  margin-left: 5px;
+  margin-left: 10px;
 
   cursor: pointer;
 
@@ -18,11 +18,11 @@ const SelectContainer = styled.div`
     right: 0;
 
     display: block;
-    width: 10px;
-    height: 2px;
+    width: 8px;
+    height: 1.5px;
 
     background-color: black;
-    transform-origin: left;
+    transform-origin: left center;
   }
 
   &:before {
