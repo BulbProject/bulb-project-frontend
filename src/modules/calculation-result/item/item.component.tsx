@@ -18,6 +18,7 @@ import { CategoryFeature } from '../category-feature';
 import { Specification } from '../specification';
 import { Economy } from './economy';
 
+import { CalculationModal } from './calculation-modal';
 import { MarketModal } from './market-modal';
 import { Metrics } from './metrics';
 
@@ -40,9 +41,15 @@ export const Item: FC<{
 
   const { recommendedVariant } = calculationData ?? {};
 
+  const { requestedVariant } = calculationData ?? {};
+
+  const requestedVariantName = category.items.find((reqItem) => reqItem.id === requestedVariant)?.description;
+
   const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
 
   const [isMarketModalOpen, setMarketModalOpen] = useState(false);
+
+  const [isCalculationModalOpen, setCalculationModalOpen] = useState(false);
 
   const { t } = useTranslation(['item', 'common']);
 
@@ -181,6 +188,30 @@ export const Item: FC<{
               </Button>
 
               <MarketModal isOpen={isMarketModalOpen} setOpen={setMarketModalOpen} />
+            </>
+          )}
+
+          {isLed && (
+            <>
+              <Button
+                styled={{
+                  Button: css`
+                     {
+                      padding: var(--i-regular);
+                    }
+                  `,
+                }}
+                appearance="text"
+                onClick={() => setCalculationModalOpen(true)}
+              >
+                {t('payback-calculator')}
+              </Button>
+
+              <CalculationModal
+                isOpen={isCalculationModalOpen}
+                setOpen={setCalculationModalOpen}
+                requestedVariant={requestedVariantName}
+              />
             </>
           )}
 

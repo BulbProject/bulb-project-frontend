@@ -3,5 +3,8 @@
   "offers-on-Prozorro-market": "Offers on Prozorro-Market",
   "proposals-number": "Number of proposals",
   "average-cost": "Average cost",
-  "uah": "UAH"
+  "uah": "UAH",
+  "payback-calculator": "Payback calculator",
+  "insert-requesting-price": "Enter the price of one lamp of type - ",
+  "insert-led-price": "Enter the price of one LED lamp"
 }
