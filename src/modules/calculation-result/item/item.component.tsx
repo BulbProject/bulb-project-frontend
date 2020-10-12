@@ -37,7 +37,7 @@ export const Item: FC<{
 }> = ({ variant, item, document, isRequested = false, showMetricsTitles = false }) => {
   const { category } = useCategory();
 
-  const { calculationData } = useCalculation();
+  const { calculationData, formData } = useCalculation();
 
   const { recommendedVariant } = calculationData ?? {};
 
@@ -52,6 +52,10 @@ export const Item: FC<{
   const [isCalculationModalOpen, setCalculationModalOpen] = useState(false);
 
   const { t } = useTranslation(['item', 'common']);
+
+  const isModeOfUseProvided =
+    (formData as Record<string, undefined>)?.['0300000000']?.['0302010000'] ??
+    (formData as Record<string, undefined>)?.['0400000000']?.['0402010000'];
 
   const economyObservations = useMemo(() => {
     return variant.metrics
@@ -191,7 +195,7 @@ export const Item: FC<{
             </>
           )}
 
-          {isLed && (
+          {isLed && recommendedVariant !== requestedVariant && !isModeOfUseProvided && (
             <>
               <Button
                 styled={{

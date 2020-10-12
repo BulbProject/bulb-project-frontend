@@ -6,5 +6,8 @@
   "uah": "UAH",
   "payback-calculator": "Payback calculator",
   "insert-requesting-price": "Enter the price of one lamp of type - ",
-  "insert-led-price": "Enter the price of one LED lamp"
+  "insert-led-price": "Enter the price of one LED lamp",
+  "calculate": "Calculate",
+  "price-warning": "The entered value must be at least 0.01"
+
 }
