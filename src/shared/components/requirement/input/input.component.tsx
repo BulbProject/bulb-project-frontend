@@ -79,7 +79,7 @@ export const Input: FC<{
     case 'boolean':
       return (
         <Field requirement={requirement} isDisabled={isDisabled}>
-          <Checkbox isDisabled={isDisabled} defaultValue={defaultValue as boolean} />
+          <Checkbox isDisabled={isDisabled} defaultValue={(defaultValue ?? false) as boolean} />
         </Field>
       );
     case 'integer':
