@@ -24,7 +24,7 @@ import { Metrics } from './metrics';
 import Styled from './item.styles';
 
 const isEconomyObservation = ({ id }: { id: string }): boolean => {
-  return id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy' || id === 'fullFinanceEconomy';
+  return id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy' || id === 'lifetimeFinanceEconomy';
 };
 
 export const Item: FC<{
