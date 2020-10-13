@@ -64,6 +64,7 @@ export const CalculationModal: FC<{
             id="requesting"
             onChange={setRequestedPrice}
             suffix="грн"
+            type="number"
           />
           <Styled.WarningContainer margin={{ bottom: 'medium' }}>
             {firstFiledWarning && (
@@ -74,7 +75,14 @@ export const CalculationModal: FC<{
           </Styled.WarningContainer>
 
           <label htmlFor="led">{t('insert-led-price')}</label>
-          <TextInput isRequired placeholder="Insert price for 1 pcs." id="led" onChange={setLedPrice} suffix="грн" />
+          <TextInput
+            isRequired
+            placeholder="Insert price for 1 pcs."
+            id="led"
+            onChange={setLedPrice}
+            suffix="грн"
+            type="number"
+          />
           <Styled.WarningContainer margin={{ bottom: 'medium' }}>
             {secondFiledWarning && (
               <Text variant="small" style={{ color: '#e3871a' }}>
@@ -82,7 +90,7 @@ export const CalculationModal: FC<{
               </Text>
             )}
           </Styled.WarningContainer>
-          <Button isDisabled={firstFiledWarning && secondFiledWarning}>{t('calculate')}</Button>
+          <Button isDisabled={firstFiledWarning || secondFiledWarning}>{t('calculate')}</Button>
         </form>
       </Flex>
     </Modal>

@@ -159,6 +159,30 @@ export const Item: FC<{
           showTitles={showMetricsTitles}
         />
 
+        {isLed && recommendedVariant !== requestedVariant && !isModeOfUseProvided && (
+          <>
+            <Button
+              styled={{
+                Button: css`
+                   {
+                    padding: var(--i-regular);
+                  }
+                `,
+              }}
+              appearance="text"
+              onClick={() => setCalculationModalOpen(true)}
+            >
+              {t('payback-calculator')}
+            </Button>
+
+            <CalculationModal
+              isOpen={isCalculationModalOpen}
+              setOpen={setCalculationModalOpen}
+              requestedVariant={requestedVariantName}
+            />
+          </>
+        )}
+
         <Flex direction="column" margin={{ top: 'regular' }}>
           <Button
             styled={{
@@ -192,30 +216,6 @@ export const Item: FC<{
               </Button>
 
               <MarketModal isOpen={isMarketModalOpen} setOpen={setMarketModalOpen} />
-            </>
-          )}
-
-          {isLed && recommendedVariant !== requestedVariant && !isModeOfUseProvided && (
-            <>
-              <Button
-                styled={{
-                  Button: css`
-                     {
-                      padding: var(--i-regular);
-                    }
-                  `,
-                }}
-                appearance="text"
-                onClick={() => setCalculationModalOpen(true)}
-              >
-                {t('payback-calculator')}
-              </Button>
-
-              <CalculationModal
-                isOpen={isCalculationModalOpen}
-                setOpen={setCalculationModalOpen}
-                requestedVariant={requestedVariantName}
-              />
             </>
           )}
 
