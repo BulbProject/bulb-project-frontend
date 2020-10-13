@@ -10,9 +10,5 @@
   "designed-by": "Design and development",
   "cannot-fetch-category": "Sorry, we were unable to load this category.",
   "resources": "Resources",
-  "documentation": "Tender documentation",
-  "identifier": "Identifier",
-  "text-document": "Text document",
-  "select-format": "Select the desired format",
-  "generate-document": "Generate"
+  "documentation": "Tender documentation"
 }

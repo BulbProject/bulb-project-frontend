@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { css } from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
-import { Translation } from 'react-i18next';
 
 import BulbImage from '../../../assets/images/bulb.svg';
 import ArrowIcon from '../../../assets/icons/arrow.inline.svg';
@@ -22,12 +21,11 @@ export const Hero: FC = () => {
       >
         <Styled.HeroText variant="h1">Bulb Project</Styled.HeroText>
 
-        <Styled.HeroCaption variant="h2">
-          <Translation ns="main">{(t) => t('title')}</Translation>
-        </Styled.HeroCaption>
+        <Styled.HeroCaption variant="h2">Brings light to eProcurement</Styled.HeroCaption>
 
         <Styled.HeroDescription>
-          <Translation ns="main">{(t) => t('description')}</Translation>
+          Integrating Energy Efficiency Output Specifications and Dedicated Evaluation Methods into Electronic Public
+          Procurement
         </Styled.HeroDescription>
       </Flex>
 
@@ -37,9 +35,7 @@ export const Hero: FC = () => {
             <Styled.ActionImage src={BulbImage} />
           </Styled.CallToAction>
 
-          <Styled.ActionButton variant="h6">
-            <Translation ns="main">{(t) => t('start')}</Translation>
-          </Styled.ActionButton>
+          <Styled.ActionButton variant="h6">Start calculation</Styled.ActionButton>
         </Styled.Link>
       </Flex>
 
