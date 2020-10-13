@@ -18,13 +18,14 @@ import { CategoryFeature } from '../category-feature';
 import { Specification } from '../specification';
 import { Economy } from './economy';
 
+import { CalculationModal } from './calculation-modal';
 import { MarketModal } from './market-modal';
 import { Metrics } from './metrics';
 
 import Styled from './item.styles';
 
 const isEconomyObservation = ({ id }: { id: string }): boolean => {
-  return id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy';
+  return id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy' || id === 'lifetimeFinanceEconomy';
 };
 
 export const Item: FC<{
@@ -36,15 +37,56 @@ export const Item: FC<{
 }> = ({ variant, item, document, isRequested = false, showMetricsTitles = false }) => {
   const { category } = useCategory();
 
-  const { calculationData } = useCalculation();
+  const { calculationData, formData } = useCalculation();
 
-  const { recommendedVariant } = calculationData ?? {};
+  const { recommendedVariant, requestedVariant } = calculationData ?? {};
+
+  const requestedVariantName = useMemo(
+    () => category.items.find((reqItem) => reqItem.id === requestedVariant)?.description,
+    []
+  );
 
   const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
 
   const [isMarketModalOpen, setMarketModalOpen] = useState(false);
 
+  const [isCalculationModalOpen, setCalculationModalOpen] = useState(false);
+
   const { t } = useTranslation(['item', 'common']);
+
+  const isModeOfUseProvided = useMemo(
+    () =>
+      (formData as Record<string, undefined>)?.['0300000000']?.['0302010000'] ??
+      (formData as Record<string, undefined>)?.['0400000000']?.['0402010000'],
+    [formData]
+  );
+
+  const requestedVariantObject = useMemo(
+    () =>
+      calculationData?.availableVariants?.find((availableVariant) => availableVariant.relatedItem === requestedVariant),
+    [calculationData]
+  );
+
+  const calculationPayback = useMemo(
+    () => ({
+      // eslint-disable-next-line no-warning-comments
+      /* TODO: Need refactor */
+      quantity: Number((formData as Record<string, undefined>)?.['0100000000']?.['0101020000']),
+      hoursPerDay: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301010000']),
+      daysPerWeek: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301020000']),
+      pricePerKwtOnHour: Number((formData as Record<string, undefined>)?.['0400000000']?.['0401010000']) * 0.001,
+      ledLifeTime: 42000,
+      ledPower: Number(
+        calculationData?.availableVariants.find((availableVariant) => availableVariant.relatedItem === '31712341-2')
+          ?.metrics[0].observations[0].measure
+      ),
+      requestedVariantObservations: {
+        lifeTime: requestedVariantObject?.metrics[0].observations?.[1].measure as number,
+        power: requestedVariantObject?.metrics[0].observations?.[0].measure as number,
+      },
+    }),
+    [formData, calculationData]
+  );
 
   const economyObservations = useMemo(() => {
     return variant.metrics
@@ -149,6 +191,31 @@ export const Item: FC<{
         />
 
         <Flex direction="column" margin={{ top: 'regular' }}>
+          {isLed && recommendedVariant !== requestedVariant && !isModeOfUseProvided && (
+            <>
+              <Button
+                styled={{
+                  Button: css`
+                     {
+                      padding: var(--i-regular);
+                    }
+                  `,
+                }}
+                appearance="text"
+                onClick={() => setCalculationModalOpen(true)}
+              >
+                {t('payback-calculator')}
+              </Button>
+
+              <CalculationModal
+                isOpen={isCalculationModalOpen}
+                setOpen={setCalculationModalOpen}
+                requestedVariant={requestedVariantName}
+                calculationPayback={calculationPayback}
+              />
+            </>
+          )}
+
           <Button
             styled={{
               Button: css`
