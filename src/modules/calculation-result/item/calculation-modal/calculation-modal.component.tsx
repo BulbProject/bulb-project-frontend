@@ -1,4 +1,6 @@
 import React, { FC, FormEvent, useCallback, useEffect, useState } from 'react';
+import { css } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import Modal from 'ustudio-ui/components/Modal';
 import Text from 'ustudio-ui/components/Text';
@@ -7,11 +9,9 @@ import Button from 'ustudio-ui/components/Button';
 import Grid from 'ustudio-ui/components/Grid/Grid';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 
-import { useTranslation } from 'react-i18next';
-import { css } from 'styled-components';
 import Styled from './calculation-modal.styles';
 
-interface CalculationPaybackInterface {
+interface CalculationPayback {
   quantity: number;
   hoursPerDay: number;
   daysPerWeek: number;
@@ -30,7 +30,7 @@ export const CalculationModal: FC<{
   isOpen: boolean;
   setOpen: (isOpen: boolean) => void;
   requestedVariant: string | undefined;
-  calculationPayback: CalculationPaybackInterface;
+  calculationPayback: CalculationPayback;
 }> = ({ isOpen, setOpen, requestedVariant, calculationPayback }) => {
   const { t } = useTranslation('item');
 
@@ -44,51 +44,57 @@ export const CalculationModal: FC<{
 
   useEffect(() => {
     setRequestedWarning(typeof requestedPrice === 'number' && requestedPrice < 0.01);
-    setLedPriceWarning(typeof ledPrice === 'number' && Number(ledPrice) < 0.01);
-  }, [requestedPrice, ledPrice]);
+  }, [requestedPrice]);
 
-  const onChangeModal = useCallback(() => {
+  useEffect(() => {
+    setLedPriceWarning(typeof ledPrice === 'number' && Number(ledPrice) < 0.01);
+  }, [ledPrice]);
+
+  const onModalChange = useCallback(() => {
     setRequestedPrice(null);
     setLedPrice(null);
     setPaybackPeriod(0);
     setOpen(false);
   }, []);
 
-  const calculatePayback = (event: FormEvent): void => {
-    if (!ledPrice || !requestedPrice) return;
+  const calculatePayback = useCallback(
+    (event: FormEvent) => {
+      if (!ledPrice || !requestedPrice) return;
 
-    event.preventDefault();
+      event.preventDefault();
 
-    const {
-      quantity,
-      daysPerWeek,
-      hoursPerDay,
-      ledLifeTime,
-      ledPower,
-      pricePerKwtOnHour,
-      requestedVariantObservations: { lifeTime, power },
-    } = calculationPayback;
+      const {
+        quantity,
+        daysPerWeek,
+        hoursPerDay,
+        ledLifeTime,
+        ledPower,
+        pricePerKwtOnHour,
+        requestedVariantObservations: { lifeTime, power },
+      } = calculationPayback;
 
-    const totalPriceForLedSet = quantity * (ledPrice + ledLifeTime * ledPower * pricePerKwtOnHour);
-    // eslint-disable-next-line immutable/no-let
-    let priceForRequestedBulbSets = 0;
-    // eslint-disable-next-line immutable/no-let
-    let sets = 1;
+      const totalPriceForLedSet = quantity * (ledPrice + ledLifeTime * ledPower * pricePerKwtOnHour);
+      // eslint-disable-next-line immutable/no-let
+      let priceForRequestedBulbSets = 0;
+      // eslint-disable-next-line immutable/no-let
+      let sets = 1;
 
-    while (priceForRequestedBulbSets <= totalPriceForLedSet) {
-      priceForRequestedBulbSets += quantity * (requestedPrice + lifeTime * power * pricePerKwtOnHour);
-      sets += 1;
-    }
+      while (priceForRequestedBulbSets <= totalPriceForLedSet) {
+        priceForRequestedBulbSets += quantity * (requestedPrice + lifeTime * power * pricePerKwtOnHour);
+        sets += 1;
+      }
 
-    const paybackPeriodInHours = sets * lifeTime;
+      const paybackPeriodInHours = sets * lifeTime;
 
-    setPaybackPeriod(paybackPeriodInHours / (hoursPerDay * daysPerWeek * weeksPerYear));
-  };
+      setPaybackPeriod(paybackPeriodInHours / (hoursPerDay * daysPerWeek * weeksPerYear));
+    },
+    [ledPrice, requestedPrice]
+  );
 
   return (
     <Modal
       isOpen={isOpen}
-      onChange={onChangeModal}
+      onChange={onModalChange}
       title={<Text variant="h5">{t('payback-calculator')}</Text>}
       styled={{
         Overlay: css`

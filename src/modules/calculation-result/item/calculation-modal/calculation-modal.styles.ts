@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Flex from 'ustudio-ui/components/Flex';
-import { NumberInput } from 'ustudio-ui';
+import NumberInput from 'ustudio-ui/components/Input/NumberInput';
 
 const WarningContainer = styled(Flex)`
   margin-bottom: 20px;
