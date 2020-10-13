@@ -19,10 +19,10 @@ const SelectContainer = styled.div`
 
     display: block;
     width: 8px;
-    height: 1.5px;
+    height: 2px;
 
-    background-color: black;
-    transform-origin: left center;
+    background-color: var(--c-dark);
+    transform-origin: left;
   }
 
   &:before {
@@ -31,6 +31,7 @@ const SelectContainer = styled.div`
 
   &:after {
     transform: rotate(-45deg);
+    right: 1px;
   }
 `;
 
@@ -38,6 +39,10 @@ const Select = styled.select`
   position: relative;
   width: 100%;
   text-transform: uppercase;
+
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--c-dark);
 
   cursor: pointer;
 `;
