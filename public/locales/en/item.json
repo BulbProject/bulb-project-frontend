@@ -3,5 +3,16 @@
   "offers-on-Prozorro-market": "Offers on Prozorro-Market",
   "proposals-number": "Number of proposals",
   "average-cost": "Average cost",
-  "uah": "UAH"
+  "uah": "UAH",
+  "payback-calculator": "Payback calculator",
+  "insert-requesting-price": "Insert the price of one lamp of type - ",
+  "insert-led-price": "Enter the price of one LED lamp",
+  "calculate": "Calculate",
+  "price-warning": "The entered value must be at least 0.01",
+  "conditionOfUse": "In terms of use:",
+  "hr/day": "Hours per day:",
+  "day/week": "Day per week:",
+  "paybackPeriod": "Payback period <strong>{{count}} year</strong>",
+  "paybackPeriod_plural": "Payback period <strong>{{count}} years</strong>",
+  "input-placeholder": "Enter price for 1 pcs."
 }
