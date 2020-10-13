@@ -39,9 +39,7 @@ export const Item: FC<{
 
   const { calculationData, formData } = useCalculation();
 
-  const { recommendedVariant } = calculationData ?? {};
-
-  const { requestedVariant } = calculationData ?? {};
+  const { recommendedVariant, requestedVariant } = calculationData ?? {};
 
   const requestedVariantName = category.items.find((reqItem) => reqItem.id === requestedVariant)?.description;
 
@@ -56,6 +54,27 @@ export const Item: FC<{
   const isModeOfUseProvided =
     (formData as Record<string, undefined>)?.['0300000000']?.['0302010000'] ??
     (formData as Record<string, undefined>)?.['0400000000']?.['0402010000'];
+
+  const requestedVariantObject = calculationData?.availableVariants?.find(
+    (availableVariant) => availableVariant.relatedItem === requestedVariant
+  );
+
+  const requestedVariantObservations = {
+    lifeTime: requestedVariantObject?.metrics[0].observations?.[1].measure,
+    power: requestedVariantObject?.metrics[0].observations?.[0].measure,
+  };
+
+  const calculationPaybackData = {
+    quantity: Number((formData as Record<string, undefined>)?.['0100000000']?.['0101020000']),
+    hoursPerDay: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301010000']),
+    daysPerWeek: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301020000']),
+    pricePerKwtOnHour: Number((formData as Record<string, undefined>)?.['0400000000']?.['0401010000']) * 0.001,
+    ledLifeTime: 42000,
+    ledPower: Number(calculationData?.availableVariants.find(
+      (availableVariant) => availableVariant.relatedItem === '31712341-2'
+    )?.metrics[0].observations[0].measure),
+    requestedVariantObservations,
+  };
 
   const economyObservations = useMemo(() => {
     return variant.metrics
@@ -159,31 +178,32 @@ export const Item: FC<{
           showTitles={showMetricsTitles}
         />
 
-        {isLed && recommendedVariant !== requestedVariant && !isModeOfUseProvided && (
-          <>
-            <Button
-              styled={{
-                Button: css`
-                   {
-                    padding: var(--i-regular);
-                  }
-                `,
-              }}
-              appearance="text"
-              onClick={() => setCalculationModalOpen(true)}
-            >
-              {t('payback-calculator')}
-            </Button>
-
-            <CalculationModal
-              isOpen={isCalculationModalOpen}
-              setOpen={setCalculationModalOpen}
-              requestedVariant={requestedVariantName}
-            />
-          </>
-        )}
-
         <Flex direction="column" margin={{ top: 'regular' }}>
+          {isLed && recommendedVariant !== requestedVariant && !isModeOfUseProvided && (
+            <>
+              <Button
+                styled={{
+                  Button: css`
+                     {
+                      padding: var(--i-regular);
+                    }
+                  `,
+                }}
+                appearance="text"
+                onClick={() => setCalculationModalOpen(true)}
+              >
+                {t('payback-calculator')}
+              </Button>
+
+              <CalculationModal
+                isOpen={isCalculationModalOpen}
+                setOpen={setCalculationModalOpen}
+                requestedVariant={requestedVariantName}
+                calculationPaybackData={calculationPaybackData}
+              />
+            </>
+          )}
+
           <Button
             styled={{
               Button: css`

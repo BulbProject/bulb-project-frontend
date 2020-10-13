@@ -8,5 +8,12 @@
   "insert-requesting-price": "Введіть вартість однієї одиниці лампи типу - ",
   "insert-led-price": "Введіть вартість однієї одиниці LED лампи",
   "calculate": "Розрахувати",
-  "price-warning": "Введене значення має бути не менше ніж 0.01"
+  "price-warning": "Введене значення має бути не менше ніж 0.01",
+  "conditionOfUse": "В умовах використання:",
+  "hr/day": "Годин у день:",
+  "day/week": "Днів на тиждень:",
+  "paybackPeriod": "Термін окупності <strong>{{count}} рік</strong>",
+  "paybackPeriod_1": "Термін окупності <strong>{{count}} роки</strong>",
+  "paybackPeriod_2": "Термін окупності <strong>{{count}} років</strong>",
+  "input-placeholder": "Введіть ціну за 1 шт."
 }
