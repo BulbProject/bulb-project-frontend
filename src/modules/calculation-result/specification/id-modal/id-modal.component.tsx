@@ -44,8 +44,8 @@ export const IdModal: FC<{
       isOpen={isCopying && Boolean(identifier)}
       onChange={() => {
         setCopying(false);
-        setAlertOpen(false);
         setIdentifier('');
+        setAlertOpen(false);
       }}
       title={<Text variant="h5">{t('id')}</Text>}
       styled={{
@@ -75,8 +75,8 @@ export const IdModal: FC<{
           onClick={() => {
             copyIdToClipboard(idRef);
 
-            setTooltipShown(true);
             setAlertOpen(true);
+            setTooltipShown(true);
           }}
           iconAfter={<CopyIcon />}
         >

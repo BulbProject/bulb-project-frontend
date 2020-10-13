@@ -20,9 +20,9 @@ import { FormModal } from './form-modal';
 import { IdModal } from './id-modal';
 
 const generateSelectedVariant = ({
-  availableVariant,
-  requirement,
-}: {
+                                   availableVariant,
+                                   requirement,
+                                 }: {
   availableVariant: AvailableVariant;
   requirement?: Requirement;
 }): SelectedVariant => {
@@ -106,12 +106,6 @@ export const Specification: FC<{
   const { t } = useTranslation('specification');
 
   useEffect(() => {
-    if (isRejected(result)) {
-      setAlertOpen(true);
-    }
-  }, [isRejected(result)]);
-
-  useEffect(() => {
     if (isDownloading || isCopying) {
       postSpecification();
     }
@@ -119,17 +113,18 @@ export const Specification: FC<{
 
   useEffect(() => {
     if (isResolved(result) && isDownloading && mode === 'docx') {
+      postSpecification();
+
       download(
         result.data as string,
         `${t('specification-for')} ${categoryTitle} ${t('from-date')} ${formatDateTime()}.docx`
       );
 
       setDownloading(false);
-
       setAlertOpen(true);
       setTimeout(() => setAlertOpen(false), 5 * 1000);
     }
-  }, [isDownloading, isResolved(result), mode, requirement]);
+  }, [isDownloading, mode, isResolved(result), categoryTitle, formatDateTime()]);
 
   useEffect(() => {
     if (isResolved(result) && isCopying) {
@@ -137,9 +132,17 @@ export const Specification: FC<{
     }
   }, [isCopying, isResolved(result)]);
 
+  useEffect(() => {
+    if (isRejected(result)) {
+      setDownloading(false);
+      setAlertOpen(true);
+      setTimeout(() => setAlertOpen(false), 3 * 1000);
+    }
+  }, [isRejected(result)]);
+
   return (
     <>
-      {!isOpen && (
+      {isAlertOpen && (
         <Alert
           isOpen={isAlertOpen}
           onChange={() => setAlertOpen(false)}

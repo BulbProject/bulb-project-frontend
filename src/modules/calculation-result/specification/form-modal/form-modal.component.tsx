@@ -78,7 +78,7 @@ export const FormModal: FC<{
         <Flex alignment={{ horizontal: 'center' }}>
           <Button
             onClick={() => {
-              if (isRejected) {
+              if (isRejected && mode === 'docx') {
                 setDownloading(false);
               }
 
@@ -89,8 +89,6 @@ export const FormModal: FC<{
               if (mode === 'docx') {
                 setDownloading(true);
               }
-
-              setOpen(false);
             }}
           >
             {t('generate-document')}
