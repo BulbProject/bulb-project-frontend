@@ -10,5 +10,9 @@
   "designed-by": "Дизайн і розробка",
   "cannot-fetch-category": "На жаль, ми не змогли завантажити цю категорію.",
   "resources": "Ресурси",
-  "documentation": "Тендерна документація"
+  "documentation": "Тендерна документація",
+  "identifier": "Ідентифікатор",
+  "text-document": "Текстовий документ",
+  "select-format": "Оберіть бажаний формат",
+  "generate-document": "Згенерувати"
 }
