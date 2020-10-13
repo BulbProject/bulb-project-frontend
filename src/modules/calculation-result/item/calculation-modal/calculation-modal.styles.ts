@@ -3,7 +3,6 @@ import Flex from 'ustudio-ui/components/Flex';
 import { NumberInput } from 'ustudio-ui';
 
 const WarningContainer = styled(Flex)`
-  height: 5px;
   margin-bottom: 20px;
 `;
 

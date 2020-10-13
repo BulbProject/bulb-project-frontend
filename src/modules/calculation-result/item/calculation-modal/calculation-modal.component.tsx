@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useCallback, useEffect, useState } from 'react';
 
 import Modal from 'ustudio-ui/components/Modal';
 import Text from 'ustudio-ui/components/Text';
@@ -19,72 +19,70 @@ interface CalculationPaybackInterface {
   ledLifeTime: number;
   ledPower: number;
   requestedVariantObservations: {
-    lifeTime: string | number | undefined;
-    power: string | number | undefined;
+    lifeTime: number;
+    power: number;
   };
 }
+
+const weeksPerYear = 52;
 
 export const CalculationModal: FC<{
   isOpen: boolean;
   setOpen: (isOpen: boolean) => void;
   requestedVariant: string | undefined;
-  calculationPaybackData: CalculationPaybackInterface;
-}> = ({ isOpen, setOpen, requestedVariant, calculationPaybackData: data }) => {
+  calculationPayback: CalculationPaybackInterface;
+}> = ({ isOpen, setOpen, requestedVariant, calculationPayback }) => {
   const { t } = useTranslation('item');
 
-  const [requestedPrice, setRequestedPrice] = useState<number | undefined | null>(null);
-  const [ledPrice, setLedPrice] = useState<number | undefined | null>(null);
+  const [requestedPrice, setRequestedPrice] = useState<null | number | undefined>(null);
+  const [ledPrice, setLedPrice] = useState<null | number | undefined>(null);
 
-  const [firstFiledWarning, setFirstFieldWarning] = useState(false);
-  const [secondFiledWarning, setSecondFieldWarning] = useState(false);
+  const [requestedWarning, setRequestedWarning] = useState(false);
+  const [ledPriceWarning, setLedPriceWarning] = useState(false);
 
-  const [paybackPeriod, setPaybackPeriod] = useState(0);
-
-  const weeksPerYear = 52;
+  const [paybackPeriod, setPaybackPeriod] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    if (requestedPrice !== null && Number(requestedPrice) < 0.01) {
-      setFirstFieldWarning(true);
-    } else {
-      setFirstFieldWarning(false);
-    }
-
-    if (ledPrice !== null && Number(ledPrice) < 0.01) {
-      setSecondFieldWarning(true);
-    } else {
-      setSecondFieldWarning(false);
-    }
+    setRequestedWarning(typeof requestedPrice === 'number' && requestedPrice < 0.01);
+    setLedPriceWarning(typeof ledPrice === 'number' && Number(ledPrice) < 0.01);
   }, [requestedPrice, ledPrice]);
 
-  const onChangeModal = (): void => {
+  const onChangeModal = useCallback(() => {
     setRequestedPrice(null);
     setLedPrice(null);
     setPaybackPeriod(0);
     setOpen(false);
-  };
+  }, []);
 
   const calculatePayback = (event: FormEvent): void => {
+    if (!ledPrice || !requestedPrice) return;
+
     event.preventDefault();
 
-    const totalPriceForLedSet =
-      data.quantity * (Number(ledPrice) + data.ledLifeTime * data.ledPower * data.pricePerKwtOnHour);
-    // eslint-disable-next-line immutable/no-let
-    let priceForRequestedBulbs = 0;
-    // eslint-disable-next-line immutable/no-let
-    let parties = 1;
+    const {
+      quantity,
+      daysPerWeek,
+      hoursPerDay,
+      ledLifeTime,
+      ledPower,
+      pricePerKwtOnHour,
+      requestedVariantObservations: { lifeTime, power },
+    } = calculationPayback;
 
-    while (priceForRequestedBulbs <= totalPriceForLedSet) {
-      priceForRequestedBulbs +=
-        data.quantity *
-        (Number(requestedPrice) +
-          Number(data.requestedVariantObservations.lifeTime) *
-            Number(data.requestedVariantObservations.power) *
-            data.pricePerKwtOnHour);
-      parties += 1;
+    const totalPriceForLedSet = quantity * (ledPrice + ledLifeTime * ledPower * pricePerKwtOnHour);
+    // eslint-disable-next-line immutable/no-let
+    let priceForRequestedBulbSets = 0;
+    // eslint-disable-next-line immutable/no-let
+    let sets = 1;
+
+    while (priceForRequestedBulbSets <= totalPriceForLedSet) {
+      priceForRequestedBulbSets += quantity * (requestedPrice + lifeTime * power * pricePerKwtOnHour);
+      sets += 1;
     }
-    const SaveTime = parties * Number(data.requestedVariantObservations.lifeTime);
 
-    setPaybackPeriod(SaveTime / (data.hoursPerDay * data.daysPerWeek * weeksPerYear));
+    const paybackPeriodInHours = sets * lifeTime;
+
+    setPaybackPeriod(paybackPeriodInHours / (hoursPerDay * daysPerWeek * weeksPerYear));
   };
 
   return (
@@ -98,7 +96,7 @@ export const CalculationModal: FC<{
         `,
       }}
     >
-      {paybackPeriod !== 0 ? (
+      {paybackPeriod ? (
         <Flex isWrap padding={{ left: 'large', right: 'large' }} direction="column">
           <Grid xs={{ direction: 'column', gap: 16 }}>
             <Cell>
@@ -115,7 +113,7 @@ export const CalculationModal: FC<{
                 </Cell>
                 <Cell>
                   <Flex>
-                    <Text>{data.hoursPerDay}</Text>
+                    <Text>{calculationPayback.hoursPerDay}</Text>
                   </Flex>
                 </Cell>
               </Grid>
@@ -129,7 +127,7 @@ export const CalculationModal: FC<{
                 </Cell>
                 <Cell>
                   <Flex>
-                    <Text>{data.daysPerWeek}</Text>
+                    <Text>{calculationPayback.daysPerWeek}</Text>
                   </Flex>
                 </Cell>
               </Grid>
@@ -139,7 +137,8 @@ export const CalculationModal: FC<{
                 <Cell>
                   <Flex>
                     <Text variant="h6">
-                      {/* Temporary solution */}
+                      {/* eslint-disable-next-line no-warning-comments */}
+                      {/* TODO: Need refactor */}
                       <span
                         dangerouslySetInnerHTML={{
                           __html: t('paybackPeriod', {
@@ -171,7 +170,7 @@ export const CalculationModal: FC<{
               inputMode="decimal"
             />
             <Styled.WarningContainer margin={{ bottom: 'medium' }}>
-              {firstFiledWarning && (
+              {requestedWarning && (
                 <Text variant="small" style={{ color: '#e3871a' }}>
                   {t('price-warning')}
                 </Text>
@@ -188,16 +187,14 @@ export const CalculationModal: FC<{
               inputMode="decimal"
             />
             <Styled.WarningContainer margin={{ bottom: 'medium' }}>
-              {secondFiledWarning && (
+              {ledPriceWarning && (
                 <Text variant="small" style={{ color: '#e3871a' }}>
                   {t('price-warning')}
                 </Text>
               )}
             </Styled.WarningContainer>
             <Flex alignment={{ horizontal: 'center' }}>
-              <Button style={{ margin: 'auto' }} isDisabled={firstFiledWarning || secondFiledWarning}>
-                {t('calculate')}
-              </Button>
+              <Button isDisabled={requestedWarning || ledPriceWarning}>{t('calculate')}</Button>
             </Flex>
           </form>
         </Flex>

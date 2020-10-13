@@ -41,7 +41,10 @@ export const Item: FC<{
 
   const { recommendedVariant, requestedVariant } = calculationData ?? {};
 
-  const requestedVariantName = category.items.find((reqItem) => reqItem.id === requestedVariant)?.description;
+  const requestedVariantName = useMemo(
+    () => category.items.find((reqItem) => reqItem.id === requestedVariant)?.description,
+    []
+  );
 
   const isLed = useMemo(() => item.classification?.id === '31712341-2', [item.classification?.id]);
 
@@ -51,30 +54,39 @@ export const Item: FC<{
 
   const { t } = useTranslation(['item', 'common']);
 
-  const isModeOfUseProvided =
-    (formData as Record<string, undefined>)?.['0300000000']?.['0302010000'] ??
-    (formData as Record<string, undefined>)?.['0400000000']?.['0402010000'];
-
-  const requestedVariantObject = calculationData?.availableVariants?.find(
-    (availableVariant) => availableVariant.relatedItem === requestedVariant
+  const isModeOfUseProvided = useMemo(
+    () =>
+      (formData as Record<string, undefined>)?.['0300000000']?.['0302010000'] ??
+      (formData as Record<string, undefined>)?.['0400000000']?.['0402010000'],
+    [formData]
   );
 
-  const requestedVariantObservations = {
-    lifeTime: requestedVariantObject?.metrics[0].observations?.[1].measure,
-    power: requestedVariantObject?.metrics[0].observations?.[0].measure,
-  };
+  const requestedVariantObject = useMemo(
+    () =>
+      calculationData?.availableVariants?.find((availableVariant) => availableVariant.relatedItem === requestedVariant),
+    [calculationData]
+  );
 
-  const calculationPaybackData = {
-    quantity: Number((formData as Record<string, undefined>)?.['0100000000']?.['0101020000']),
-    hoursPerDay: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301010000']),
-    daysPerWeek: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301020000']),
-    pricePerKwtOnHour: Number((formData as Record<string, undefined>)?.['0400000000']?.['0401010000']) * 0.001,
-    ledLifeTime: 42000,
-    ledPower: Number(calculationData?.availableVariants.find(
-      (availableVariant) => availableVariant.relatedItem === '31712341-2'
-    )?.metrics[0].observations[0].measure),
-    requestedVariantObservations,
-  };
+  const calculationPayback = useMemo(
+    () => ({
+      // eslint-disable-next-line no-warning-comments
+      /* TODO: Need refactor */
+      quantity: Number((formData as Record<string, undefined>)?.['0100000000']?.['0101020000']),
+      hoursPerDay: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301010000']),
+      daysPerWeek: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301020000']),
+      pricePerKwtOnHour: Number((formData as Record<string, undefined>)?.['0400000000']?.['0401010000']) * 0.001,
+      ledLifeTime: 42000,
+      ledPower: Number(
+        calculationData?.availableVariants.find((availableVariant) => availableVariant.relatedItem === '31712341-2')
+          ?.metrics[0].observations[0].measure
+      ),
+      requestedVariantObservations: {
+        lifeTime: requestedVariantObject?.metrics[0].observations?.[1].measure as number,
+        power: requestedVariantObject?.metrics[0].observations?.[0].measure as number,
+      },
+    }),
+    [formData, calculationData]
+  );
 
   const economyObservations = useMemo(() => {
     return variant.metrics
@@ -199,7 +211,7 @@ export const Item: FC<{
                 isOpen={isCalculationModalOpen}
                 setOpen={setCalculationModalOpen}
                 requestedVariant={requestedVariantName}
-                calculationPaybackData={calculationPaybackData}
+                calculationPayback={calculationPayback}
               />
             </>
           )}
