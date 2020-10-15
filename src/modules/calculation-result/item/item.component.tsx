@@ -42,7 +42,7 @@ export const Item: FC<{
   const { recommendedVariant, requestedVariant } = calculationData ?? {};
 
   const requestedVariantName = useMemo(
-    () => category.items.find((reqItem) => reqItem.id === requestedVariant)?.description,
+    () => category.items.find((availableItem) => availableItem.id === requestedVariant)?.description,
     []
   );
 
@@ -55,9 +55,7 @@ export const Item: FC<{
   const { t } = useTranslation(['item', 'common']);
 
   const isModeOfUseProvided = useMemo(
-    () =>
-      (formData as Record<string, undefined>)?.['0300000000']?.['0302010000'] ??
-      (formData as Record<string, undefined>)?.['0400000000']?.['0402010000'],
+    () => formData?.['0300000000']?.['0302010000'] ?? formData?.['0400000000']?.['0402010000'],
     [formData]
   );
 
@@ -69,17 +67,14 @@ export const Item: FC<{
 
   const calculationPayback = useMemo(
     () => ({
-      // eslint-disable-next-line no-warning-comments
-      /* TODO: Need refactor */
-      quantity: Number((formData as Record<string, undefined>)?.['0100000000']?.['0101020000']),
-      hoursPerDay: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301010000']),
-      daysPerWeek: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301020000']),
-      pricePerKwtOnHour: Number((formData as Record<string, undefined>)?.['0400000000']?.['0401010000']) * 0.001,
+      quantity: formData?.['0100000000']?.['0101020000'] as number,
+      hoursPerDay: formData?.['0300000000']?.['0301010000'] as number,
+      daysPerWeek: formData?.['0300000000']?.['0301020000'] as number,
+      pricePerKwtOnHour: formData?.['0400000000']?.['0401010000'] * 0.001,
       ledLifeTime: 42000,
-      ledPower: Number(
-        calculationData?.availableVariants.find((availableVariant) => availableVariant.relatedItem === '31712341-2')
-          ?.metrics[0].observations[0].measure
-      ),
+      ledPower: calculationData?.availableVariants.find(
+        (availableVariant) => availableVariant.relatedItem === '31712341-2'
+      )?.metrics[0].observations[0].measure as number,
       requestedVariantObservations: {
         lifeTime: requestedVariantObject?.metrics[0].observations?.[1].measure as number,
         power: requestedVariantObject?.metrics[0].observations?.[0].measure as number,
