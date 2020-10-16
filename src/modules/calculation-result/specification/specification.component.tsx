@@ -113,7 +113,10 @@ export const Specification: FC<{
         setDownloading(false);
         setAlertOpen(true);
         setOpen(false);
-        setTimeout(() => setAlertOpen(false), 3 * 1000);
+
+        const timer = setTimeout(() => setAlertOpen(false), 3 * 1000);
+
+        return () => clearTimeout(timer);
       }
     },
     [result]
@@ -138,8 +141,10 @@ export const Specification: FC<{
 
         setDownloading(false);
         setAlertOpen(true);
-        setTimeout(() => setAlertOpen(false), 3 * 1000);
         setOpen(false);
+        const timer = setTimeout(() => setAlertOpen(false), 3 * 1000);
+
+        return () => clearTimeout(timer);
       }
     },
     [result, mode]
