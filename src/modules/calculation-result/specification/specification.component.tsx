@@ -103,43 +103,57 @@ export const Specification: FC<{
   const [isCopying, setCopying] = useState(false);
   const [isAlertOpen, setAlertOpen] = useState(false);
 
+  const isLoading = isDownloading || isCopying;
+
   const { t } = useTranslation('specification');
 
-  useEffect(() => {
-    if (isRejected(result)) {
-      setDownloading(false);
-      setAlertOpen(true);
-      setOpen(false);
-      setTimeout(() => setAlertOpen(false), 3 * 1000);
-    }
-  }, [result]);
+  useEffect(
+    function onRejection() {
+      if (isRejected(result)) {
+        setDownloading(false);
+        setAlertOpen(true);
+        setOpen(false);
+        setTimeout(() => setAlertOpen(false), 3 * 1000);
+      }
+    },
+    [result]
+  );
 
-  useEffect(() => {
-    if (isCopying || isDownloading) {
-      postSpecification();
-    }
-  }, [isCopying, isDownloading]);
+  useEffect(
+    function PrepareSpecification() {
+      if (isLoading) {
+        postSpecification();
+      }
+    },
+    [isCopying, isDownloading]
+  );
 
-  useEffect(() => {
-    if (isResolved(result) && isDownloading && mode === 'docx') {
-      download(
-        result.data as string,
-        `${t('specification-for')} ${categoryTitle} ${t('from-date')} ${formatDateTime()}.docx`
-      );
+  useEffect(
+    function DocumentDownloading() {
+      if (isResolved(result) && isDownloading && mode === 'docx') {
+        download(
+          result.data as string,
+          `${t('specification-for')} ${categoryTitle} ${t('from-date')} ${formatDateTime()}.docx`
+        );
 
-      setDownloading(false);
-      setAlertOpen(true);
-      setTimeout(() => setAlertOpen(false), 5 * 1000);
-      setOpen(false);
-    }
-  }, [result, mode]);
+        setDownloading(false);
+        setAlertOpen(true);
+        setTimeout(() => setAlertOpen(false), 3 * 1000);
+        setOpen(false);
+      }
+    },
+    [result, mode]
+  );
 
-  useEffect(() => {
-    if (isResolved(result) && isCopying) {
-      setIdentifier((result.data as { id: string }).id);
-      setOpen(false);
-    }
-  }, [isCopying, result]);
+  useEffect(
+    function IdCopying() {
+      if (isResolved(result) && isCopying) {
+        setIdentifier((result.data as { id: string }).id);
+        setOpen(false);
+      }
+    },
+    [isCopying, result]
+  );
 
   return (
     <>
