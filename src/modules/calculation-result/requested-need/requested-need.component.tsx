@@ -35,7 +35,7 @@ export const RequestedNeed: FC<{
         >
           {t('requested-need')}
         </Styled.Title>
-        <FilterDrawer isDrawerOpen={isDrawerOpen} setDrawerOpen={setDrawerOpen} />
+        <FilterDrawer isDrawerOpen={isDrawerOpen} setDrawerOpen={setDrawerOpen} isRequestedNeedAbsent={false} />
       </Flex>
 
       <Item
