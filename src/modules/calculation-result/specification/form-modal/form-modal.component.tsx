@@ -19,8 +19,7 @@ import Styled from './form-modal.styles';
 
 export const FormModal: FC<{
   isOpen: boolean;
-  isDownloading: boolean;
-  isCopying: boolean;
+  isLoading: boolean;
   isRejected: boolean;
   requirement?: Requirement;
   criterion?: Criterion;
@@ -34,11 +33,10 @@ export const FormModal: FC<{
 }> = ({
   isOpen,
   setOpen,
-  setAlertOpen,
-  isDownloading,
-  isCopying,
+  isLoading,
   isRejected,
   setDownloading,
+  setAlertOpen,
   criterion,
   mode,
   requirement,
@@ -86,12 +84,16 @@ export const FormModal: FC<{
         <Flex alignment={{ horizontal: 'center' }}>
           <Button
             onClick={() => {
-              if (mode === 'docx') {
-                setDownloading(!isRejected);
+              if (!isRejected && mode === 'docx') {
+                setDownloading(false);
               }
 
               if (mode === 'json') {
                 setCopying(true);
+              }
+
+              if (mode === 'docx') {
+                setDownloading(true);
               }
             }}
           >
@@ -100,7 +102,7 @@ export const FormModal: FC<{
         </Flex>
       }
     >
-      {((isDownloading || isCopying) && <Loader size={32} />) as ReactElement}
+      {(isLoading && <Loader size={32} />) as ReactElement}
 
       <Flex direction="column" alignment={{ horizontal: 'center' }}>
         {criterion && (
