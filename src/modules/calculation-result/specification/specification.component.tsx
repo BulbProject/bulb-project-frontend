@@ -123,7 +123,7 @@ export const Specification: FC<{
   );
 
   useEffect(
-    function PrepareSpecification() {
+    function prepareSpecification() {
       if (isLoading) {
         postSpecification();
       }
@@ -132,7 +132,7 @@ export const Specification: FC<{
   );
 
   useEffect(
-    function DocumentDownloading() {
+    function ddcumentDownloading() {
       if (isResolved(result) && isDownloading && mode === 'docx') {
         download(
           result.data as string,
@@ -151,7 +151,7 @@ export const Specification: FC<{
   );
 
   useEffect(
-    function IdCopying() {
+    function idCopying() {
       if (isResolved(result) && isCopying) {
         setIdentifier((result.data as { id: string }).id);
         setOpen(false);
