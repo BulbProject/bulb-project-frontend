@@ -139,7 +139,7 @@ export const Specification: FC<{
       setIdentifier((result.data as { id: string }).id);
       setOpen(false);
     }
-  }, [isCopying, isResolved(result)]);
+  }, [isCopying, result]);
 
   return (
     <>
