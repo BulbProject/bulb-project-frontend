@@ -20,11 +20,13 @@ import Styled from './form-modal.styles';
 export const FormModal: FC<{
   isOpen: boolean;
   isDownloading: boolean;
+  isCopying: boolean;
   isRejected: boolean;
   requirement?: Requirement;
   criterion?: Criterion;
   mode: string;
   setOpen(value: boolean): void;
+  setAlertOpen(value: boolean): void;
   setDownloading(value: boolean): void;
   setRequirement(requirement: Requirement): void;
   setMode(mode: string): void;
@@ -32,7 +34,9 @@ export const FormModal: FC<{
 }> = ({
   isOpen,
   setOpen,
+  setAlertOpen,
   isDownloading,
+  isCopying,
   isRejected,
   setDownloading,
   criterion,
@@ -96,7 +100,7 @@ export const FormModal: FC<{
         </Flex>
       }
     >
-      {(isDownloading && <Loader size={32} />) as ReactElement}
+      {((isDownloading || isCopying) && <Loader size={32} />) as ReactElement}
 
       <Flex direction="column" alignment={{ horizontal: 'center' }}>
         {criterion && (
@@ -140,7 +144,10 @@ export const FormModal: FC<{
               value,
               children: <Styled.Tab>{t(title)}</Styled.Tab>,
             }))}
-            onChange={setMode}
+            onChange={() => {
+              setMode(mode === 'json' ? 'docx' : 'json');
+              setAlertOpen(false);
+            }}
             styled={{
               Tabs: css`
                 &:before {

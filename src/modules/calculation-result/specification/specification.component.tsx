@@ -20,9 +20,9 @@ import { FormModal } from './form-modal';
 import { IdModal } from './id-modal';
 
 const generateSelectedVariant = ({
-                                   availableVariant,
-                                   requirement,
-                                 }: {
+  availableVariant,
+  requirement,
+}: {
   availableVariant: AvailableVariant;
   requirement?: Requirement;
 }): SelectedVariant => {
@@ -68,7 +68,7 @@ export const Specification: FC<{
   criterion?: Criterion;
   availableVariant: AvailableVariant;
   categoryTitle: string;
-// eslint-disable-next-line sonarjs/cognitive-complexity
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 }> = ({ isOpen, setOpen, criterion, availableVariant, categoryTitle }) => {
   const {
     category: { id: categoryId },
@@ -106,15 +106,22 @@ export const Specification: FC<{
   const { t } = useTranslation('specification');
 
   useEffect(() => {
-    if (isDownloading || isCopying) {
+    if (isRejected(result)) {
+      setDownloading(false);
+      setAlertOpen(true);
+      setOpen(false);
+      setTimeout(() => setAlertOpen(false), 3 * 1000);
+    }
+  }, [result]);
+
+  useEffect(() => {
+    if (isCopying || isDownloading) {
       postSpecification();
     }
-  }, [isDownloading, isCopying]);
+  }, [isCopying, isDownloading]);
 
   useEffect(() => {
     if (isResolved(result) && isDownloading && mode === 'docx') {
-      postSpecification();
-
       download(
         result.data as string,
         `${t('specification-for')} ${categoryTitle} ${t('from-date')} ${formatDateTime()}.docx`
@@ -123,22 +130,16 @@ export const Specification: FC<{
       setDownloading(false);
       setAlertOpen(true);
       setTimeout(() => setAlertOpen(false), 5 * 1000);
+      setOpen(false);
     }
-  }, [isDownloading, mode, isResolved(result), categoryTitle, formatDateTime()]);
+  }, [result, mode]);
 
   useEffect(() => {
     if (isResolved(result) && isCopying) {
       setIdentifier((result.data as { id: string }).id);
+      setOpen(false);
     }
   }, [isCopying, isResolved(result)]);
-
-  useEffect(() => {
-    if (isRejected(result)) {
-      setDownloading(false);
-      setAlertOpen(true);
-      setTimeout(() => setAlertOpen(false), 3 * 1000);
-    }
-  }, [isRejected(result)]);
 
   return (
     <>
@@ -162,6 +163,7 @@ export const Specification: FC<{
       <FormModal
         isOpen={isOpen}
         isDownloading={isDownloading}
+        isCopying={isCopying}
         isRejected={isRejected(result)}
         requirement={requirement}
         criterion={criterion}
@@ -171,6 +173,7 @@ export const Specification: FC<{
         setRequirement={setRequirement}
         setMode={setMode}
         setCopying={setCopying}
+        setAlertOpen={setAlertOpen}
       />
 
       <IdModal
