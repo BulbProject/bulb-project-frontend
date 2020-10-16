@@ -86,16 +86,12 @@ export const FormModal: FC<{
         <Flex alignment={{ horizontal: 'center' }}>
           <Button
             onClick={() => {
-              if (isRejected && mode === 'docx') {
-                setDownloading(false);
+              if (mode === 'docx') {
+                setDownloading(!isRejected);
               }
 
               if (mode === 'json') {
                 setCopying(true);
-              }
-
-              if (mode === 'docx') {
-                setDownloading(true);
               }
             }}
           >
