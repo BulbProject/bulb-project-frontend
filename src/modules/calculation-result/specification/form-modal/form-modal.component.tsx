@@ -25,22 +25,20 @@ export const FormModal: FC<{
   criterion?: Criterion;
   mode: string;
   setOpen(value: boolean): void;
-  setAlertOpen(value: boolean): void;
   setDownloading(value: boolean): void;
   setRequirement(requirement: Requirement): void;
   setMode(mode: string): void;
   setCopying(value: boolean): void;
 }> = ({
   isOpen,
-  setOpen,
   isLoading,
   isRejected,
   setDownloading,
-  setAlertOpen,
   criterion,
   mode,
   requirement,
   setMode,
+  setOpen,
   setRequirement,
   setCopying,
 }) => {
@@ -49,10 +47,7 @@ export const FormModal: FC<{
   return (
     <Modal
       isOpen={isOpen}
-      onChange={() => {
-        setOpen(false);
-        setDownloading(false);
-      }}
+      onChange={setOpen}
       title={<Text variant="h5">{criterion?.title ?? t('documentation')}</Text>}
       styled={{
         Modal: css`
@@ -84,7 +79,7 @@ export const FormModal: FC<{
         <Flex alignment={{ horizontal: 'center' }}>
           <Button
             onClick={() => {
-              if (!isRejected && mode === 'docx') {
+              if (isRejected && mode === 'docx') {
                 setDownloading(false);
               }
 
@@ -146,9 +141,8 @@ export const FormModal: FC<{
               value,
               children: <Styled.Tab>{t(title)}</Styled.Tab>,
             }))}
-            onChange={() => {
-              setMode(mode === 'json' ? 'docx' : 'json');
-              setAlertOpen(false);
+            onChange={(value) => {
+              setMode(value);
             }}
             styled={{
               Tabs: css`
