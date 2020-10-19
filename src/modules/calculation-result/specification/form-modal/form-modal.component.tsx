@@ -33,13 +33,13 @@ export const FormModal: FC<{
   isOpen,
   isLoading,
   isRejected,
-  setDownloading,
+  requirement,
   criterion,
   mode,
-  requirement,
-  setMode,
   setOpen,
+  setDownloading,
   setRequirement,
+  setMode,
   setCopying,
 }) => {
   const { t } = useTranslation('common');
@@ -79,16 +79,16 @@ export const FormModal: FC<{
         <Flex alignment={{ horizontal: 'center' }}>
           <Button
             onClick={() => {
-              if (isRejected && mode === 'docx') {
-                setDownloading(false);
+              if (mode === 'docx') {
+                if (isRejected) {
+                  setDownloading(false);
+                }
+
+                setDownloading(true);
               }
 
               if (mode === 'json') {
                 setCopying(true);
-              }
-
-              if (mode === 'docx') {
-                setDownloading(true);
               }
             }}
           >
