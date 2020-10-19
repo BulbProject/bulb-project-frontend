@@ -133,7 +133,7 @@ export const Specification: FC<{
 
   useEffect(
     function documentDownloading() {
-      if (isResolved(result) && isDownloading && mode === 'docx') {
+      if (isResolved(result) && mode === 'docx' && result.data instanceof Blob) {
         download(
           result.data as string,
           `${t('specification-for')} ${categoryTitle} ${t('from-date')} ${formatDateTime()}.docx`
