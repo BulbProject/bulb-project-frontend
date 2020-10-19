@@ -24,7 +24,8 @@ export const IdModal: FC<{
   setCopying(value: boolean): void;
   setAlertOpen(value: boolean): void;
   setIdentifier(identifier: string): void;
-}> = ({ identifier, isCopying, setAlertOpen, setCopying, setIdentifier }) => {
+  setOpen(value: boolean): void;
+}> = ({ identifier, isCopying, setAlertOpen, setCopying, setOpen, setIdentifier }) => {
   const idRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [isTooltipShown, setTooltipShown] = useState(false);
@@ -77,6 +78,7 @@ export const IdModal: FC<{
 
             setAlertOpen(true);
             setTooltipShown(true);
+            setOpen(false);
           }}
           iconAfter={<CopyIcon />}
         >

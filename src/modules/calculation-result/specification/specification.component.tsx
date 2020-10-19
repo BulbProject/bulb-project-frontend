@@ -152,12 +152,11 @@ export const Specification: FC<{
 
   useEffect(
     function idCopying() {
-      if (isResolved(result) && isCopying) {
+      if (isResolved(result) && mode === 'json') {
         setIdentifier((result.data as { id: string }).id);
-        setOpen(false);
       }
     },
-    [result, isCopying]
+    [result, mode]
   );
 
   return (
@@ -199,6 +198,7 @@ export const Specification: FC<{
         setCopying={setCopying}
         setAlertOpen={setAlertOpen}
         setIdentifier={setIdentifier}
+        setOpen={setOpen}
       />
     </>
   );
