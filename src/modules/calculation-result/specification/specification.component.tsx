@@ -98,7 +98,7 @@ export const Specification: FC<{
     return data;
   });
 
-  const [identifier, setIdentifier] = useState<string>('');
+  const [identifier, setIdentifier] = useState('');
   const [isDownloading, setDownloading] = useState(false);
   const [isCopying, setCopying] = useState(false);
   const [isAlertOpen, setAlertOpen] = useState(false);
@@ -128,11 +128,11 @@ export const Specification: FC<{
         postSpecification();
       }
     },
-    [isCopying, isDownloading]
+    [isLoading]
   );
 
   useEffect(
-    function ddcumentDownloading() {
+    function documentDownloading() {
       if (isResolved(result) && isDownloading && mode === 'docx') {
         download(
           result.data as string,
@@ -147,7 +147,7 @@ export const Specification: FC<{
         return () => clearTimeout(timer);
       }
     },
-    [result, mode]
+    [result, mode, isDownloading]
   );
 
   useEffect(
@@ -157,7 +157,7 @@ export const Specification: FC<{
         setOpen(false);
       }
     },
-    [isCopying, result]
+    [result, isCopying]
   );
 
   return (

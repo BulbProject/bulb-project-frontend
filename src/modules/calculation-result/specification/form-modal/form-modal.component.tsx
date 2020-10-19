@@ -141,9 +141,7 @@ export const FormModal: FC<{
               value,
               children: <Styled.Tab>{t(title)}</Styled.Tab>,
             }))}
-            onChange={(value) => {
-              setMode(value);
-            }}
+            onChange={setMode}
             styled={{
               Tabs: css`
                 &:before {
