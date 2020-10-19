@@ -142,6 +142,7 @@ export const Specification: FC<{
         setDownloading(false);
         setAlertOpen(true);
         setOpen(false);
+
         const timer = setTimeout(() => setAlertOpen(false), 2 * 1000);
 
         return () => clearTimeout(timer);

@@ -25,13 +25,12 @@ export const IdModal: FC<{
   setAlertOpen(value: boolean): void;
   setIdentifier(identifier: string): void;
   setOpen(value: boolean): void;
-}> = ({ identifier, isCopying, setAlertOpen, setCopying, setOpen, setIdentifier }) => {
+}> = ({ identifier, isCopying, setAlertOpen, setCopying, setIdentifier, setOpen }) => {
   const idRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [isTooltipShown, setTooltipShown] = useState(false);
   const { t } = useTranslation('id-modal');
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (isTooltipShown) {
       const tooltipTimeout = setTimeout(() => setTooltipShown(false), 2 * 1000);
