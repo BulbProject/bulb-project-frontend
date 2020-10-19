@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
@@ -103,7 +103,7 @@ export const Specification: FC<{
   const [isCopying, setCopying] = useState(false);
   const [isAlertOpen, setAlertOpen] = useState(false);
 
-  const isLoading = isDownloading || isCopying;
+  const isLoading = useMemo(() => isDownloading || isCopying, [isDownloading, isCopying]);
 
   const { t } = useTranslation('specification');
 
@@ -147,7 +147,7 @@ export const Specification: FC<{
         return () => clearTimeout(timer);
       }
     },
-    [result, mode, isDownloading]
+    [result, mode]
   );
 
   useEffect(
