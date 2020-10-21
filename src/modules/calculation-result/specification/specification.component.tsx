@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
@@ -68,6 +68,7 @@ export const Specification: FC<{
   criterion?: Criterion;
   availableVariant: AvailableVariant;
   categoryTitle: string;
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 }> = ({ isOpen, setOpen, criterion, availableVariant, categoryTitle }) => {
   const {
     category: { id: categoryId },
@@ -97,56 +98,75 @@ export const Specification: FC<{
     return data;
   });
 
-  const [identificator, setIdentificator] = useState<string>('');
+  const [identifier, setIdentifier] = useState('');
   const [isDownloading, setDownloading] = useState(false);
   const [isCopying, setCopying] = useState(false);
   const [isAlertOpen, setAlertOpen] = useState(false);
 
+  const isLoading = useMemo(() => isDownloading || isCopying, [isDownloading, isCopying]);
+
   const { t } = useTranslation('specification');
 
-  useEffect(() => {
-    if (isDownloading || isCopying) {
-      postSpecification();
-    }
-  }, [isDownloading, isCopying]);
+  useEffect(
+    function onRejection() {
+      if (isRejected(result)) {
+        setDownloading(false);
+        setAlertOpen(true);
+        setOpen(false);
 
-  useEffect(() => {
-    if (isDownloading && isResolved(result)) {
-      download(result.data as string, `t('specification-for')${categoryTitle}t('from-date')${formatDateTime()}.docx`);
+        const timer = setTimeout(() => setAlertOpen(false), 2 * 1000);
 
-      setDownloading(false);
-      setOpen(false);
+        return () => clearTimeout(timer);
+      }
+    },
+    [result]
+  );
 
-      setAlertOpen(true);
-    }
-  }, [isDownloading, isResolved(result)]);
+  useEffect(
+    function prepareSpecification() {
+      if (isLoading) {
+        postSpecification();
+      }
+    },
+    [isLoading]
+  );
 
-  useEffect(() => {
-    if (isCopying && isResolved(result)) {
-      setIdentificator((result.data as { id: string }).id);
+  useEffect(
+    function documentDownloading() {
+      if (isResolved(result) && mode === 'docx' && result.data instanceof Blob) {
+        download(
+          result.data as string,
+          `${t('specification-for')} ${categoryTitle} ${t('from-date')} ${formatDateTime()}.docx`
+        );
 
-      setAlertOpen(true);
-    }
-  }, [isCopying, isResolved(result)]);
+        setDownloading(false);
+        setAlertOpen(true);
+        setOpen(false);
 
-  // eslint-disable-next-line consistent-return
-  useEffect(() => {
-    if (isAlertOpen && mode === 'docx') {
-      const alertTimeout = setTimeout(() => setAlertOpen(false), 5 * 1000);
+        const timer = setTimeout(() => setAlertOpen(false), 2 * 1000);
 
-      return () => clearTimeout(alertTimeout);
-    }
-  }, [isAlertOpen, mode]);
+        return () => clearTimeout(timer);
+      }
+    },
+    [result, mode]
+  );
 
-  useEffect(() => {
-    if (isCopying) {
-      setAlertOpen(true);
-    }
-  }, [isCopying]);
+  useEffect(
+    function idCopying() {
+      if (isResolved(result) && mode === 'json') {
+        setIdentifier((result.data as { id: string }).id);
+
+        if (isCopying) {
+          setOpen(false);
+        }
+      }
+    },
+    [result, mode]
+  );
 
   return (
     <>
-      {!isOpen && (
+      {isAlertOpen && (
         <Alert
           isOpen={isAlertOpen}
           onChange={() => setAlertOpen(false)}
@@ -165,7 +185,7 @@ export const Specification: FC<{
 
       <FormModal
         isOpen={isOpen}
-        isDownloading={isDownloading}
+        isLoading={isLoading}
         requirement={requirement}
         criterion={criterion}
         mode={mode}
@@ -177,11 +197,11 @@ export const Specification: FC<{
       />
 
       <IdModal
-        identificator={identificator}
+        identifier={identifier}
         isCopying={isCopying}
         setCopying={setCopying}
         setAlertOpen={setAlertOpen}
-        setIdentificator={setIdentificator}
+        setIdentifier={setIdentifier}
       />
     </>
   );
