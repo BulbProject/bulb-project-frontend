@@ -74,9 +74,8 @@ export const CalculationModal: FC<{
       } = calculationPayback;
 
       const totalPriceForLedSet = quantity * (ledPrice + ledLifeTime * ledPower * pricePerKwtOnHour);
-      // eslint-disable-next-line immutable/no-let
+      /* eslint immutable/no-let: 0 */
       let priceForRequestedBulbSets = 0;
-      // eslint-disable-next-line immutable/no-let
       let sets = 1;
 
       while (priceForRequestedBulbSets <= totalPriceForLedSet) {
@@ -174,6 +173,11 @@ export const CalculationModal: FC<{
               onChange={setRequestedPrice}
               suffix="грн"
               inputMode="decimal"
+              styled={{
+                Suffix: css`
+                  font-weight: 600;
+                `,
+              }}
             />
             <Styled.WarningContainer margin={{ bottom: 'medium' }}>
               {requestedWarning && (
@@ -191,6 +195,11 @@ export const CalculationModal: FC<{
               onChange={setLedPrice}
               suffix="грн"
               inputMode="decimal"
+              styled={{
+                Suffix: css`
+                  font-weight: 600;
+                `,
+              }}
             />
             <Styled.WarningContainer margin={{ bottom: 'medium' }}>
               {ledPriceWarning && (

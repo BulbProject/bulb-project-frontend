@@ -19,7 +19,7 @@ import Styled from './form-modal.styles';
 
 export const FormModal: FC<{
   isOpen: boolean;
-  isDownloading: boolean;
+  isLoading: boolean;
   requirement?: Requirement;
   criterion?: Criterion;
   mode: string;
@@ -30,14 +30,14 @@ export const FormModal: FC<{
   setCopying(value: boolean): void;
 }> = ({
   isOpen,
-  setOpen,
-  isDownloading,
-  setDownloading,
+  isLoading,
+  requirement,
   criterion,
   mode,
-  requirement,
-  setMode,
+  setOpen,
+  setDownloading,
   setRequirement,
+  setMode,
   setCopying,
 }) => {
   const { t } = useTranslation('common');
@@ -45,7 +45,10 @@ export const FormModal: FC<{
   return (
     <Modal
       isOpen={isOpen}
-      onChange={setOpen}
+      onChange={() => {
+        setOpen(false);
+        setDownloading(false);
+      }}
       title={<Text variant="h5">{criterion?.title ?? t('documentation')}</Text>}
       styled={{
         Modal: css`
@@ -77,14 +80,13 @@ export const FormModal: FC<{
         <Flex alignment={{ horizontal: 'center' }}>
           <Button
             onClick={() => {
-              if (mode === 'json') {
-                setOpen(false);
-                setCopying(true);
-
-                return;
+              if (mode === 'docx') {
+                setDownloading(true);
               }
 
-              setDownloading(true);
+              if (mode === 'json') {
+                setCopying(true);
+              }
             }}
           >
             Generate
@@ -92,7 +94,7 @@ export const FormModal: FC<{
         </Flex>
       }
     >
-      {(isDownloading && <Loader size={32} />) as ReactElement}
+      {(isLoading && <Loader size={32} />) as ReactElement}
 
       <Flex direction="column" alignment={{ horizontal: 'center' }}>
         {criterion && (

@@ -24,6 +24,21 @@ import { Metrics } from './metrics';
 
 import Styled from './item.styles';
 
+interface BulbFormData {
+  '0100000000'?: {
+    '0101020000'?: number;
+  };
+  '0300000000'?: {
+    '0301010000'?: number;
+    '0301020000'?: number;
+    '0302010000'?: number;
+  };
+  '0400000000'?: {
+    '0401010000'?: number;
+    '0402010000'?: number;
+  };
+}
+
 const isEconomyObservation = ({ id }: { id: string }): boolean => {
   return id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy' || id === 'lifetimeFinanceEconomy';
 };
@@ -34,6 +49,7 @@ export const Item: FC<{
   document?: string;
   isRequested?: boolean;
   showMetricsTitles?: boolean;
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 }> = ({ variant, item, document, isRequested = false, showMetricsTitles = false }) => {
   const { category } = useCategory();
 
@@ -42,7 +58,7 @@ export const Item: FC<{
   const { recommendedVariant, requestedVariant } = calculationData ?? {};
 
   const requestedVariantName = useMemo(
-    () => category.items.find((reqItem) => reqItem.id === requestedVariant)?.description,
+    () => category.items.find((availableItem) => availableItem.id === requestedVariant)?.description,
     []
   );
 
@@ -54,12 +70,12 @@ export const Item: FC<{
 
   const { t } = useTranslation(['item', 'common']);
 
-  const isModeOfUseProvided = useMemo(
-    () =>
-      (formData as Record<string, undefined>)?.['0300000000']?.['0302010000'] ??
-      (formData as Record<string, undefined>)?.['0400000000']?.['0402010000'],
-    [formData]
-  );
+  const isModeOfUseProvided = useMemo(() => {
+    return (
+      (formData as BulbFormData)?.['0300000000']?.['0302010000'] ??
+      (formData as BulbFormData)?.['0400000000']?.['0402010000']
+    );
+  }, [formData]);
 
   const requestedVariantObject = useMemo(
     () =>
@@ -67,26 +83,24 @@ export const Item: FC<{
     [calculationData]
   );
 
-  const calculationPayback = useMemo(
-    () => ({
-      // eslint-disable-next-line no-warning-comments
-      /* TODO: Need refactor */
-      quantity: Number((formData as Record<string, undefined>)?.['0100000000']?.['0101020000']),
-      hoursPerDay: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301010000']),
-      daysPerWeek: Number((formData as Record<string, undefined>)?.['0300000000']?.['0301020000']),
-      pricePerKwtOnHour: Number((formData as Record<string, undefined>)?.['0400000000']?.['0401010000']) * 0.001,
+  const calculationPayback = useMemo(() => {
+    const _formData: BulbFormData = formData;
+
+    return {
+      quantity: _formData?.['0100000000']?.['0101020000'] ?? 0,
+      hoursPerDay: _formData?.['0300000000']?.['0301010000'] ?? 0,
+      daysPerWeek: _formData?.['0300000000']?.['0301020000'] ?? 0,
+      pricePerKwtOnHour: (_formData?.['0400000000']?.['0401010000'] ?? 0) * 0.001,
       ledLifeTime: 42000,
-      ledPower: Number(
-        calculationData?.availableVariants.find((availableVariant) => availableVariant.relatedItem === '31712341-2')
-          ?.metrics[0].observations[0].measure
-      ),
+      ledPower: (calculationData?.availableVariants.find(
+        (availableVariant) => availableVariant.relatedItem === '31712341-2'
+      )?.metrics[0].observations[0].measure ?? 0) as number,
       requestedVariantObservations: {
-        lifeTime: requestedVariantObject?.metrics[0].observations?.[1].measure as number,
-        power: requestedVariantObject?.metrics[0].observations?.[0].measure as number,
+        lifeTime: (requestedVariantObject?.metrics[0].observations?.[1].measure ?? 0) as number,
+        power: (requestedVariantObject?.metrics[0].observations?.[0].measure ?? 0) as number,
       },
-    }),
-    [formData, calculationData]
-  );
+    };
+  }, [formData, calculationData]);
 
   const economyObservations = useMemo(() => {
     return variant.metrics

@@ -19,18 +19,17 @@ const copyIdToClipboard = <R extends MutableRefObject<HTMLTextAreaElement | null
 };
 
 export const IdModal: FC<{
-  identificator: string;
+  identifier: string;
   isCopying: boolean;
   setCopying(value: boolean): void;
   setAlertOpen(value: boolean): void;
-  setIdentificator(identificator: string): void;
-}> = ({ identificator, isCopying, setAlertOpen, setCopying, setIdentificator }) => {
+  setIdentifier(identifier: string): void;
+}> = ({ identifier, isCopying, setAlertOpen, setCopying, setIdentifier }) => {
   const idRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [isTooltipShown, setTooltipShown] = useState(false);
   const { t } = useTranslation('id-modal');
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (isTooltipShown) {
       const tooltipTimeout = setTimeout(() => setTooltipShown(false), 2 * 1000);
@@ -41,11 +40,11 @@ export const IdModal: FC<{
 
   return (
     <Modal
-      isOpen={isCopying && Boolean(identificator)}
+      isOpen={isCopying && Boolean(identifier)}
       onChange={() => {
         setCopying(false);
+        setIdentifier('');
         setAlertOpen(false);
-        setIdentificator('');
       }}
       title={<Text variant="h5">{t('id')}</Text>}
       styled={{
@@ -54,13 +53,12 @@ export const IdModal: FC<{
         `,
         Overlay: css`
           background-color: var(--c-darkest);
-
           ${isCopying ? 'z-index: calc(var(--l-topmost) + 1) !important;' : ''};
         `,
       }}
     >
       <SpecificationStyles.Group>
-        <textarea spellCheck="false" rows={1} ref={idRef} value={identificator} onChange={() => undefined} />
+        <textarea spellCheck="false" rows={1} ref={idRef} value={identifier} onChange={() => undefined} />
 
         <Styled.Tooltip isShown={isTooltipShown}>{t('copied')}</Styled.Tooltip>
 
@@ -76,6 +74,7 @@ export const IdModal: FC<{
           onClick={() => {
             copyIdToClipboard(idRef);
 
+            setAlertOpen(true);
             setTooltipShown(true);
           }}
           iconAfter={<CopyIcon />}
