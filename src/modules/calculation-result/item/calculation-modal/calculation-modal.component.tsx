@@ -173,6 +173,11 @@ export const CalculationModal: FC<{
               onChange={setRequestedPrice}
               suffix="грн"
               inputMode="decimal"
+              styled={{
+                Suffix: css`
+                  font-weight: 600;
+                `,
+              }}
             />
             <Styled.WarningContainer margin={{ bottom: 'medium' }}>
               {requestedWarning && (
@@ -190,6 +195,11 @@ export const CalculationModal: FC<{
               onChange={setLedPrice}
               suffix="грн"
               inputMode="decimal"
+              styled={{
+                Suffix: css`
+                  font-weight: 600;
+                `,
+              }}
             />
             <Styled.WarningContainer margin={{ bottom: 'medium' }}>
               {ledPriceWarning && (

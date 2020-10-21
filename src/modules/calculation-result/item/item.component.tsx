@@ -67,9 +67,9 @@ export const Item: FC<{
 
   const calculationPayback = useMemo(
     () => ({
-      quantity: formData?.['0100000000']?.['0101020000'] as number,
-      hoursPerDay: formData?.['0300000000']?.['0301010000'] as number,
-      daysPerWeek: formData?.['0300000000']?.['0301020000'] as number,
+      quantity: formData?.['0100000000']?.['0101020000'],
+      hoursPerDay: formData?.['0300000000']?.['0301010000'] || 0,
+      daysPerWeek: formData?.['0300000000']?.['0301020000'] || 0,
       pricePerKwtOnHour: formData?.['0400000000']?.['0401010000'] * 0.001,
       ledLifeTime: 42000,
       ledPower: calculationData?.availableVariants.find(
