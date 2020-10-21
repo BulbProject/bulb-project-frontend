@@ -182,7 +182,6 @@ export const Specification: FC<{
       <FormModal
         isOpen={isOpen}
         isLoading={isLoading}
-        isRejected={isRejected(result)}
         requirement={requirement}
         criterion={criterion}
         mode={mode}

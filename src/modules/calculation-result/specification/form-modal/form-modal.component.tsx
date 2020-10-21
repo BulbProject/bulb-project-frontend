@@ -20,7 +20,6 @@ import Styled from './form-modal.styles';
 export const FormModal: FC<{
   isOpen: boolean;
   isLoading: boolean;
-  isRejected: boolean;
   requirement?: Requirement;
   criterion?: Criterion;
   mode: string;
@@ -32,7 +31,6 @@ export const FormModal: FC<{
 }> = ({
   isOpen,
   isLoading,
-  isRejected,
   requirement,
   criterion,
   mode,
@@ -47,7 +45,10 @@ export const FormModal: FC<{
   return (
     <Modal
       isOpen={isOpen}
-      onChange={setOpen}
+      onChange={() => {
+        setOpen(false);
+        setDownloading(false);
+      }}
       title={<Text variant="h5">{criterion?.title ?? t('documentation')}</Text>}
       styled={{
         Modal: css`
@@ -80,10 +81,6 @@ export const FormModal: FC<{
           <Button
             onClick={() => {
               if (mode === 'docx') {
-                if (isRejected) {
-                  setDownloading(false);
-                }
-
                 setDownloading(true);
               }
 
