@@ -155,6 +155,10 @@ export const Specification: FC<{
     function idCopying() {
       if (isResolved(result) && mode === 'json') {
         setIdentifier((result.data as { id: string }).id);
+
+        if (isCopying) {
+          setOpen(false);
+        }
       }
     },
     [result, mode]
@@ -198,7 +202,6 @@ export const Specification: FC<{
         setCopying={setCopying}
         setAlertOpen={setAlertOpen}
         setIdentifier={setIdentifier}
-        setOpen={setOpen}
       />
     </>
   );
