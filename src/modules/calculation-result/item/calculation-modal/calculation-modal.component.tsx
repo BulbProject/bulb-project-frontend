@@ -32,7 +32,7 @@ export const CalculationModal: FC<{
   requestedVariant: string | undefined;
   calculationPayback: CalculationPayback;
 }> = ({ isOpen, setOpen, requestedVariant, calculationPayback }) => {
-  const { t } = useTranslation('item');
+  const { t } = useTranslation('calculation-result');
 
   const [requestedPrice, setRequestedPrice] = useState<null | number | undefined>(null);
   const [ledPrice, setLedPrice] = useState<null | number | undefined>(null);
@@ -171,7 +171,7 @@ export const CalculationModal: FC<{
               placeholder={t('input-placeholder')}
               id="requesting"
               onChange={setRequestedPrice}
-              suffix="грн"
+              suffix={t('uah')}
               inputMode="decimal"
               styled={{
                 Suffix: css`
@@ -193,7 +193,7 @@ export const CalculationModal: FC<{
               placeholder={t('input-placeholder')}
               id="led"
               onChange={setLedPrice}
-              suffix="грн"
+              suffix={t('uah')}
               inputMode="decimal"
               styled={{
                 Suffix: css`

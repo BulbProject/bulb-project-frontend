@@ -7,7 +7,7 @@ export const BackButton: FC<{
   appearance: 'outlined' | 'text';
 }> = ({ appearance }) => {
   const { goToStep, isFirstStep } = useStepperState();
-  const { t } = useTranslation('button');
+  const { t } = useTranslation('form');
 
   return (
     <FormButton appearance={appearance} isActive={!isFirstStep} onClick={goToStep((id) => id - 1)}>

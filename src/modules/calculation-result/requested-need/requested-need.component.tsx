@@ -17,7 +17,7 @@ export const RequestedNeed: FC<{
   requestedNeed: AvailableVariant;
 }> = ({ hasMany, isDrawerOpen, setDrawerOpen, requestedNeed }) => {
   const { category } = useCategory();
-  const { t } = useTranslation('requested-need');
+  const { t } = useTranslation('calculation-result');
 
   return (
     <Styled.RequestedNeed direction="column">

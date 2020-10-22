@@ -40,7 +40,7 @@ const hasBinarySelection = (requirementGroups: RequirementGroupType[]): boolean 
 };
 
 export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
-  const { t } = useTranslation(['common', 'criterion']);
+  const { t } = useTranslation('form');
   const { selectedRequirementGroups, dispatch } = useCalculation();
 
   const selectedRequirementGroup = useMemo(() => selectedRequirementGroups?.[id], [selectedRequirementGroups]);
@@ -72,11 +72,11 @@ export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
       {requirementGroups.length > 1 && (
         <Select
           autocomplete={requirementGroups.length >= 10}
-          placeholder={t('common:choose-option')}
+          placeholder={t('form:choose-option')}
           // Select props declaration miss this prop
           // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
-          emptyListMessage={t('criterion:nothing-found')}
+          emptyListMessage={t('form:nothing-found')}
           items={requirementGroups.reduce((items, requirementGroup) => {
             return Object.assign(items, {
               [requirementGroup.id]: {

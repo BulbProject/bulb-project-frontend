@@ -12,7 +12,7 @@ export const ForwardButton: FC<{
 }> = ({ onFinish, appearance }) => {
   const { isLastStep, goToStep, isNextStepAvailable, currentStep } = useStepperState();
   const { selectedRequirementGroups } = useCalculation();
-  const { t } = useTranslation('button');
+  const { t } = useTranslation('form');
 
   return isLastStep ? (
     <FormButton
