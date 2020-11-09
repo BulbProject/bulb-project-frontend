@@ -9,6 +9,7 @@ export const LanguageSelect: FC = () => {
   const [language, setLanguage] = useState(i18n.language);
 
   const changeLanguage = ({ target: { value } }: ChangeEvent<HTMLSelectElement>): void => {
+    // eslint-disable-next-line no-console
     i18n.changeLanguage(value).catch(console.error);
     setLanguage(value);
   };
