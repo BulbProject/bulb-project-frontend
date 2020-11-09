@@ -16,7 +16,7 @@ export const FilterDrawer: FC<{
   isRequestedNeedAbsent: boolean;
 }> = ({ isDrawerOpen, setDrawerOpen, isRequestedNeedAbsent }) => {
   const isLg = useMedia('screen and (min-width: 832px)');
-  const { t } = useTranslation('filter-drawer');
+  const { t } = useTranslation('calculation-result');
 
   return (
     <>

@@ -19,7 +19,7 @@ export const OptionGroup: FC<{
 }> = ({ optionGroup, requirement, isDisabled, defaultValue, isDefaultOpen }) => {
   const optionsMap = useMemo(() => (optionGroup ? mapOptionsToItems(optionGroup.options) : {}), [optionGroup?.options]);
 
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('form');
 
   return (
     <Field requirement={requirement} isDisabled={isDisabled}>

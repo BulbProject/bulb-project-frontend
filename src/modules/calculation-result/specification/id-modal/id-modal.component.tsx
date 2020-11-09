@@ -28,7 +28,7 @@ export const IdModal: FC<{
   const idRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [isTooltipShown, setTooltipShown] = useState(false);
-  const { t } = useTranslation('id-modal');
+  const { t } = useTranslation('calculation-result');
 
   useEffect(() => {
     if (isTooltipShown) {

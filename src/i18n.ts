@@ -14,7 +14,6 @@ i18n
     ns: ['common'],
     returnEmptyString: false,
 
-    debug: process.env.NODE_ENV === 'development',
     detection: {
       order: ['localStorage'],
     },

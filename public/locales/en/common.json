@@ -6,9 +6,10 @@
   "refresh": "Refresh the page",
   "back": "Go back",
   "to-main": "To the main",
-  "choose-option": "Choose one of the available options",
   "designed-by": "Design and development",
   "cannot-fetch-category": "Sorry, we were unable to load this category.",
   "resources": "Resources",
-  "documentation": "Tender documentation"
+  "start": "Start calculation",
+  "description": "Integrating Energy Efficiency Output Specifications and Dedicated Evaluation Methods into Electronic Public Procurement",
+  "title": "Brings light to eProcurement"
 }
