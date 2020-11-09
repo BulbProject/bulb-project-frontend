@@ -68,7 +68,7 @@ export const Item: FC<{
 
   const [isCalculationModalOpen, setCalculationModalOpen] = useState(false);
 
-  const { t } = useTranslation(['item', 'common']);
+  const { t } = useTranslation('calculation-result');
 
   const isModeOfUseProvided = useMemo(() => {
     return (
@@ -161,7 +161,9 @@ export const Item: FC<{
             <Classification {...item.classification} />
           </Flex>
 
-          <Text variant="h6">{`Кількість: ${variant.quantity}`}</Text>
+          <Text variant="h6">
+            {t('quantity')} {`${variant.quantity}`}
+          </Text>
         </Styled.ItemDescription>
 
         <Metrics isRequested={isRequested} showTitles={showMetricsTitles} metrics={metrics} />
@@ -171,11 +173,11 @@ export const Item: FC<{
           metrics={[
             {
               id: '0300',
-              title: t('item:offers-on-Prozorro-market'),
+              title: t('offers-on-Prozorro-market'),
               observations: [
                 {
                   id: 'prozorroQuantity',
-                  notes: t('item:proposals-number'),
+                  notes: t('proposals-number'),
                   measure: isLed ? 109 : '-',
                   unit: isLed
                     ? {
@@ -185,7 +187,7 @@ export const Item: FC<{
                 },
                 {
                   id: 'prozorroPrice',
-                  notes: t('item:average-cost'),
+                  notes: t('average-cost'),
                   value: {
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
@@ -194,7 +196,7 @@ export const Item: FC<{
                   },
                   unit: isLed
                     ? {
-                        name: t('item:uah'),
+                        name: t('uah'),
                       }
                     : undefined,
                 },
@@ -242,7 +244,7 @@ export const Item: FC<{
             intent="positive"
             onClick={() => setSpecificationOpen(true)}
           >
-            {t('common:documentation')}
+            {t('documentation')}
           </Button>
 
           {isLed && (
