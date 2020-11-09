@@ -142,13 +142,10 @@ export const CalculationModal: FC<{
                 <Cell>
                   <Flex>
                     <Text variant="h6">
-                      {/* eslint-disable-next-line no-warning-comments */}
-                      {/* TODO: Need refactor */}
                       <span
                         dangerouslySetInnerHTML={{
                           __html: t('paybackPeriod', {
                             count: Number(paybackPeriod.toFixed(2)),
-                            interpolation: { escapeValue: true },
                           }),
                         }}
                       />
