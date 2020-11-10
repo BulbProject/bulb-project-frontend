@@ -105,7 +105,7 @@ export const Specification: FC<{
 
   const isLoading = useMemo(() => isDownloading || isCopying, [isDownloading, isCopying]);
 
-  const { t } = useTranslation('specification');
+  const { t } = useTranslation('calculation-result');
 
   useEffect(
     function onRejection() {

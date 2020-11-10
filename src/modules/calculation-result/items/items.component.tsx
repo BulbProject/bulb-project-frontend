@@ -26,7 +26,7 @@ export const Items: FC<{
     return 'criteria' in availableVariants[0] && availableVariants[0]?.criteria?.length === 0;
   }, [availableVariants]);
 
-  const { t } = useTranslation('items');
+  const { t } = useTranslation('calculation-result');
 
   return (
     <Styled.Items direction="column" isRequestedNeedAbsent={isRequestedNeedAbsent}>

@@ -33,7 +33,7 @@ export const CalculationModal: FC<{
   calculationPayback: CalculationPayback;
   currentBulbName: string | undefined;
 }> = ({ isOpen, setOpen, requestedVariant, calculationPayback, currentBulbName }) => {
-  const { t } = useTranslation('item');
+  const { t } = useTranslation('calculation-result');
 
   const [requestedPrice, setRequestedPrice] = useState<null | number | undefined>(null);
   const [selectedPrice, setSelectedPrice] = useState<null | number | undefined>(null);
@@ -143,13 +143,10 @@ export const CalculationModal: FC<{
                 <Cell>
                   <Flex>
                     <Text variant="h6">
-                      {/* eslint-disable-next-line no-warning-comments */}
-                      {/* TODO: Need refactor */}
                       <span
                         dangerouslySetInnerHTML={{
                           __html: t('paybackPeriod', {
                             count: Number(paybackPeriod.toFixed(2)),
-                            interpolation: { escapeValue: true },
                           }),
                         }}
                       />
@@ -172,7 +169,7 @@ export const CalculationModal: FC<{
               placeholder={t('input-placeholder')}
               id="requested"
               onChange={setRequestedPrice}
-              suffix="грн"
+              suffix={t('uah')}
               inputMode="decimal"
               styled={{
                 Suffix: css`
@@ -197,7 +194,7 @@ export const CalculationModal: FC<{
               placeholder={t('input-placeholder')}
               id="selected"
               onChange={setSelectedPrice}
-              suffix="грн"
+              suffix={t('uah')}
               inputMode="decimal"
               styled={{
                 Suffix: css`

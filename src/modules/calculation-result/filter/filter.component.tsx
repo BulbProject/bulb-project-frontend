@@ -25,7 +25,7 @@ export const Filter: FC<{
 
   const [hasFormChanged, setFormChanged] = useState(false);
 
-  const { t } = useTranslation('criterion');
+  const { t } = useTranslation('form');
 
   return (
     <Styled.Wrapper>

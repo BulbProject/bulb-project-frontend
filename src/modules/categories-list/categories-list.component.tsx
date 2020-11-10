@@ -26,7 +26,7 @@ const sortCategories = (categories: CategoriesListItem[]): CategoriesListItem[] 
 };
 
 const CategoriesList: FC = () => {
-  const { t } = useTranslation(['common', 'categories-list-component']);
+  const { t } = useTranslation('form');
   const { getCategoriesConfig } = useApi();
 
   const { call: getCategories, onPending, onResolve, onReject } = useAsync<CategoriesListItem[]>(async () => {
@@ -54,7 +54,7 @@ const CategoriesList: FC = () => {
                   <Styled.Grid elementAmount={categories.length + 1}>
                     <Styled.BigCell>
                       <Styled.CategoriesHeader>
-                        <Styled.Title variant="h1">{t('categories-list-component:choose-category')}</Styled.Title>
+                        <Styled.Title variant="h1">{t('choose-category')}</Styled.Title>
                       </Styled.CategoriesHeader>
                     </Styled.BigCell>
 
@@ -67,7 +67,7 @@ const CategoriesList: FC = () => {
                     })}
                   </Styled.Grid>
                 ) : (
-                  <Text variant="h3">{t('categories-list-component:no-categories-added')}</Text>
+                  <Text variant="h3">{t('no-categories-added')}</Text>
                 )}
               </Flex>
             </Fade>
