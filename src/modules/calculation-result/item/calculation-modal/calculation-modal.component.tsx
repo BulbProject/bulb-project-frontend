@@ -185,14 +185,14 @@ export const CalculationModal: FC<{
               )}
             </Styled.WarningContainer>
 
-            <label htmlFor="selected">
+            <label htmlFor={currentBulbName}>
               {t('insert-requesting-price')}
               {currentBulbName}
             </label>
             <Styled.Input
               isRequired
               placeholder={t('input-placeholder')}
-              id="selected"
+              id={currentBulbName}
               onChange={setSelectedPrice}
               suffix={t('uah')}
               inputMode="decimal"
