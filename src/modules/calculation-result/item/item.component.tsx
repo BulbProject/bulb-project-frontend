@@ -91,10 +91,8 @@ export const Item: FC<{
       hoursPerDay: _formData?.['0300000000']?.['0301010000'] ?? 0,
       daysPerWeek: _formData?.['0300000000']?.['0301020000'] ?? 0,
       pricePerKwtOnHour: (_formData?.['0400000000']?.['0401010000'] ?? 0) * 0.001,
-      ledLifeTime: 42000,
-      ledPower: (calculationData?.availableVariants.find(
-        (availableVariant) => availableVariant.relatedItem === '31712341-2'
-      )?.metrics[0].observations[0].measure ?? 0) as number,
+      requestedLifeTime: variant.metrics[0].observations[1].measure as number,
+      requestedPower: variant.metrics[0].observations[0].measure as number,
       requestedVariantObservations: {
         lifeTime: (requestedVariantObject?.metrics[0].observations?.[1].measure ?? 0) as number,
         power: (requestedVariantObject?.metrics[0].observations?.[0].measure ?? 0) as number,
@@ -205,7 +203,7 @@ export const Item: FC<{
         />
 
         <Flex direction="column" margin={{ top: 'regular' }}>
-          {isLed && recommendedVariant !== requestedVariant && !isModeOfUseProvided && (
+          {variant.relatedItem !== requestedVariant && !isModeOfUseProvided && (
             <>
               <Button
                 styled={{
@@ -226,6 +224,7 @@ export const Item: FC<{
                 setOpen={setCalculationModalOpen}
                 requestedVariant={requestedVariantName}
                 calculationPayback={calculationPayback}
+                currentBulbName={item.description}
               />
             </>
           )}

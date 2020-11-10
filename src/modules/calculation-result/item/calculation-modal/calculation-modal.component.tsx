@@ -16,8 +16,8 @@ interface CalculationPayback {
   hoursPerDay: number;
   daysPerWeek: number;
   pricePerKwtOnHour: number;
-  ledLifeTime: number;
-  ledPower: number;
+  requestedLifeTime: number;
+  requestedPower: number;
   requestedVariantObservations: {
     lifeTime: number;
     power: number;
@@ -31,11 +31,12 @@ export const CalculationModal: FC<{
   setOpen: (isOpen: boolean) => void;
   requestedVariant: string | undefined;
   calculationPayback: CalculationPayback;
-}> = ({ isOpen, setOpen, requestedVariant, calculationPayback }) => {
+  currentBulbName: string | undefined;
+}> = ({ isOpen, setOpen, requestedVariant, calculationPayback, currentBulbName }) => {
   const { t } = useTranslation('item');
 
   const [requestedPrice, setRequestedPrice] = useState<null | number | undefined>(null);
-  const [ledPrice, setLedPrice] = useState<null | number | undefined>(null);
+  const [selectedPrice, setSelectedPrice] = useState<null | number | undefined>(null);
 
   const [requestedWarning, setRequestedWarning] = useState(false);
   const [ledPriceWarning, setLedPriceWarning] = useState(false);
@@ -47,19 +48,19 @@ export const CalculationModal: FC<{
   }, [requestedPrice]);
 
   useEffect(() => {
-    setLedPriceWarning(typeof ledPrice === 'number' && Number(ledPrice) < 0.01);
-  }, [ledPrice]);
+    setLedPriceWarning(typeof selectedPrice === 'number' && Number(selectedPrice) < 0.01);
+  }, [selectedPrice]);
 
   const onModalChange = useCallback(() => {
     setRequestedPrice(null);
-    setLedPrice(null);
+    setSelectedPrice(null);
     setPaybackPeriod(0);
     setOpen(false);
   }, []);
 
   const calculatePayback = useCallback(
     (event: FormEvent) => {
-      if (!ledPrice || !requestedPrice) return;
+      if (!selectedPrice || !requestedPrice) return;
 
       event.preventDefault();
 
@@ -67,13 +68,13 @@ export const CalculationModal: FC<{
         quantity,
         daysPerWeek,
         hoursPerDay,
-        ledLifeTime,
-        ledPower,
+        requestedLifeTime,
+        requestedPower,
         pricePerKwtOnHour,
         requestedVariantObservations: { lifeTime, power },
       } = calculationPayback;
 
-      const totalPriceForLedSet = quantity * (ledPrice + ledLifeTime * ledPower * pricePerKwtOnHour);
+      const totalPriceForLedSet = quantity * (selectedPrice + requestedLifeTime * requestedPower * pricePerKwtOnHour);
       /* eslint immutable/no-let: 0 */
       let priceForRequestedBulbSets = 0;
       let sets = 1;
@@ -87,7 +88,7 @@ export const CalculationModal: FC<{
 
       setPaybackPeriod(paybackPeriodInHours / (hoursPerDay * daysPerWeek * weeksPerYear));
     },
-    [ledPrice, requestedPrice]
+    [selectedPrice, requestedPrice]
   );
 
   return (
@@ -187,12 +188,15 @@ export const CalculationModal: FC<{
               )}
             </Styled.WarningContainer>
 
-            <label htmlFor="led">{t('insert-led-price')}</label>
+            <label htmlFor="led">
+              {t('insert-requesting-price')}
+              {currentBulbName}
+            </label>
             <Styled.Input
               isRequired
               placeholder={t('input-placeholder')}
               id="led"
-              onChange={setLedPrice}
+              onChange={setSelectedPrice}
               suffix="грн"
               inputMode="decimal"
               styled={{
