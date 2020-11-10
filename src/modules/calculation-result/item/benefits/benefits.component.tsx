@@ -15,9 +15,9 @@ export const Benefits: FC<{ benefits: Metric[] }> = ({ benefits }) => {
         <Styled.Benefit key={metric.id} $backgroundColor={metric.id === 'energyEconomy' ? 'secondary' : 'primary'}>
           <Styled.BenefitTitle variant="small">{metric.title}</Styled.BenefitTitle>
 
-          {metric.observations.map(({ id, notes, measure, unit, value }) => (
+          {metric.observations.map(({ id, notes = '', measure, unit, value }) => (
             <Flex key={id} alignment={{ horizontal: 'space-between', vertical: 'end' }}>
-              <Styled.BenefitNote>{notes ?? ''}</Styled.BenefitNote>
+              <Styled.BenefitNote>{notes}</Styled.BenefitNote>
 
               {unit ?? value ? (
                 <div style={{ whiteSpace: 'nowrap' }}>
