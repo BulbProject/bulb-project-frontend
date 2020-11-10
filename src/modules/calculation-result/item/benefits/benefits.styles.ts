@@ -3,9 +3,9 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
 
-const Economy = styled(Flex)<{ $backgroundColor: string }>(
+const Benefit = styled(Flex)<{ $backgroundColor: string }>(
   ({ $backgroundColor }) => css`
-    align-items: center;
+    flex-direction: column;
 
     padding: var(--i-medium);
     margin-top: var(--i-small);
@@ -18,7 +18,7 @@ const Economy = styled(Flex)<{ $backgroundColor: string }>(
   `
 );
 
-const EconomyContainer = styled.div`
+const BenefitsContainer = styled.div`
   display: inline-flex;
   flex-direction: column;
 
@@ -26,34 +26,34 @@ const EconomyContainer = styled.div`
 
   z-index: 2;
 
-  min-width: 40%;
-  max-width: 195px;
+  min-width: 45%;
+  max-width: 220px;
 `;
 
-const EconomyMeasure = styled(Flex)`
-  flex-direction: column;
-  justify-content: center;
+const BenefitTitle = styled(Text)`
+  line-height: 1.5;
+  text-transform: uppercase;
+`;
+
+const BenefitNote = styled(Text)`
+  ${Mixin.Font.bodySmall()};
+  white-space: nowrap;
+`;
+
+const BenefitMeasure = styled(Flex)`
   align-items: flex-end;
 
   margin-left: var(--i-regular);
 
-  width: 45%;
+  line-height: 1;
+  white-space: nowrap;
 `;
 
-const EconomyTimesMeasure = styled(Text)`
-  ${Mixin.Font.h2()};
+const BenefitTimesMeasure = styled(Text)`
+  ${Mixin.Font.h5()};
+  font-weight: 700;
 
   line-height: 1;
-`;
-
-const EconomyNote = styled(Text)`
-  width: 55%;
-
-  line-height: 1.5;
-`;
-
-const EconomyUnit = styled(Text)`
-  margin-top: -4px;
 `;
 
 const BoldText = styled(Text)`
@@ -61,12 +61,12 @@ const BoldText = styled(Text)`
 `;
 
 const Styled = {
-  Economy,
-  EconomyContainer,
-  EconomyMeasure,
-  EconomyTimesMeasure,
-  EconomyNote,
-  EconomyUnit,
+  Benefit,
+  BenefitsContainer,
+  BenefitMeasure,
+  BenefitNote,
+  BenefitTimesMeasure,
+  BenefitTitle,
   BoldText,
 };
 

@@ -61,7 +61,7 @@ export const Metrics: FC<{
               {areTitlesShown && (
                 <Styled.ObservationTitle>
                   <Text variant="small" color="var(--c-dark)">
-                    {observation.notes}
+                    {observation.notes ?? ''}
                   </Text>
                 </Styled.ObservationTitle>
               )}

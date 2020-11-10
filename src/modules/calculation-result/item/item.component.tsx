@@ -16,7 +16,7 @@ import recommendedBadge from '../../../assets/images/recommended-badge.svg';
 
 import { CategoryFeature } from '../category-feature';
 import { Specification } from '../specification';
-import { Economy } from './economy';
+import { Benefits } from './benefits';
 
 import { CalculationModal } from './calculation-modal';
 import { MarketModal } from './market-modal';
@@ -39,8 +39,10 @@ interface BulbFormData {
   };
 }
 
-const isEconomyObservation = ({ id }: { id: string }): boolean => {
-  return id === 'serviceLife' || id === 'energyEconomy' || id === 'financeEconomy' || id === 'lifetimeFinanceEconomy';
+const benefitIds = ['serviceLife', 'energyEconomy', 'financeEconomy'];
+
+const isBenefits = ({ id }: { id: string }): boolean => {
+  return benefitIds.includes(id);
 };
 
 export const Item: FC<{
@@ -100,15 +102,12 @@ export const Item: FC<{
     };
   }, [formData, calculationData]);
 
-  const economyObservations = useMemo(() => {
-    return variant.metrics
-      .flatMap(({ observations }) => observations)
-      .filter(isEconomyObservation)
-      .sort(({ id }) => (id === 'energyEconomy' ? 1 : -1));
+  const benefitMetrics = useMemo(() => {
+    return variant.metrics.filter(isBenefits).sort(({ id }) => (id === 'energyEconomy' ? 1 : -1));
   }, [variant.id]);
 
-  const metrics = useMemo(() => {
-    return variant.metrics.filter(({ observations }) => !observations.some(isEconomyObservation));
+  const metricsWithoutBenefits = useMemo(() => {
+    return variant.metrics.filter((metric) => !isBenefits(metric));
   }, [variant.id]);
 
   const [imgLink, setImgLink] = useState(document);
@@ -132,7 +131,7 @@ export const Item: FC<{
       <Styled.ImageContainer isReversed={!isRequested}>
         <CategoryFeature availableVariant={variant} item={item} isItemRequested={isRequested} />
 
-        {Boolean(economyObservations.length) && <Economy economyObservations={economyObservations} />}
+        {Boolean(benefitMetrics.length) && <Benefits benefits={benefitMetrics} />}
 
         <Styled.Image src={imgLink} onError={() => setImgLink(Bulb as string)} />
       </Styled.ImageContainer>
@@ -164,7 +163,7 @@ export const Item: FC<{
           </Text>
         </Styled.ItemDescription>
 
-        <Metrics isRequested={isRequested} showTitles={showMetricsTitles} metrics={metrics} />
+        <Metrics isRequested={isRequested} showTitles={showMetricsTitles} metrics={metricsWithoutBenefits} />
 
         <Metrics
           isRequested={isRequested}

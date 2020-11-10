@@ -9,6 +9,25 @@ const FilterButton = styled(Button)<IsRequestedNeedAbsent>(
   ({ isRequestedNeedAbsent }) => css`
     position: ${isRequestedNeedAbsent ? 'fixed' : 'relative'};
 
+    z-index: 1;
+
+    ${isRequestedNeedAbsent
+      ? css`
+          &:before {
+            content: '';
+
+            position: absolute;
+            top: -0.25rem;
+            bottom: -0.25rem;
+            left: -0.25rem;
+            right: -0.25rem;
+            z-index: -1;
+
+            background-color: var(--c-base-strong);
+          }
+        `
+      : ''}
+
     svg {
       width: 0.7rem;
 
