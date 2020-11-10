@@ -163,14 +163,14 @@ export const CalculationModal: FC<{
       ) : (
         <Flex isWrap padding={{ left: 'large', right: 'large' }} direction="column">
           <form onSubmit={calculatePayback}>
-            <label htmlFor="requesting">
+            <label htmlFor="requested">
               {t('insert-requesting-price')}
               {requestedVariant}
             </label>
             <Styled.Input
               isRequired
               placeholder={t('input-placeholder')}
-              id="requesting"
+              id="requested"
               onChange={setRequestedPrice}
               suffix="грн"
               inputMode="decimal"
@@ -188,14 +188,14 @@ export const CalculationModal: FC<{
               )}
             </Styled.WarningContainer>
 
-            <label htmlFor="led">
+            <label htmlFor="selected">
               {t('insert-requesting-price')}
               {currentBulbName}
             </label>
             <Styled.Input
               isRequired
               placeholder={t('input-placeholder')}
-              id="led"
+              id="selected"
               onChange={setSelectedPrice}
               suffix="грн"
               inputMode="decimal"
