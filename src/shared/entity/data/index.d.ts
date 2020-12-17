@@ -7,3 +7,4 @@ export * from './requirement-group';
 export * from './categories-list-item';
 export * from './available-variant';
 export * from './selected-variant';
+export * from './option-group';

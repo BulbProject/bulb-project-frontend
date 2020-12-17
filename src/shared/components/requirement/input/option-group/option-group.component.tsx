@@ -1,9 +1,10 @@
 import React, { FC, useMemo } from 'react';
 import { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
-
+import type { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 import Select from 'ustudio-ui/components/Select/Select';
+
+import type { OptionGroupType } from 'shared/entity/data';
 
 import { Field } from '../field';
 import { mapOptionsToItems } from '../utils';
