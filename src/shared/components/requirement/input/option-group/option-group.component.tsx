@@ -1,10 +1,11 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import type { RequirementWithOptionDetails } from 'ts4ocds/extensions/options';
 import Select from 'ustudio-ui/components/Select/Select';
 
 import type { OptionGroupType } from 'shared/entity/data';
+import { useCalculation } from 'shared/context/calculation';
 
 import { Field } from '../field';
 import { mapOptionsToItems } from '../utils';
@@ -18,9 +19,25 @@ export const OptionGroup: FC<{
   defaultValue?: string;
   isDefaultOpen?: boolean;
 }> = ({ optionGroup, requirement, isDisabled, defaultValue, isDefaultOpen }) => {
+  const { dispatch } = useCalculation();
+
   const optionsMap = useMemo(() => (optionGroup ? mapOptionsToItems(optionGroup.options) : {}), [optionGroup?.options]);
 
   const { t } = useTranslation('form');
+
+  useEffect(() => {
+    const { options } = optionGroup ?? ({} as OptionGroupType);
+    const option = options.find(({ id, relatedRequirementID }) => id === defaultValue && relatedRequirementID);
+
+    if (option) {
+      const requirementGroupId = `${option.relatedRequirementID?.slice(0, 4)}000000`;
+
+      dispatch.addRelatedRequirementId({
+        requirementGroupId,
+        relatedRequirementId: option.relatedRequirementID as string,
+      });
+    }
+  }, [defaultValue]);
 
   return (
     <Field requirement={requirement} isDisabled={isDisabled}>
