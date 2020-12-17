@@ -7,7 +7,8 @@ export type CalculationAction =
   | AddFormData
   | SetFormData
   | AddCalculationPayload
-  | AddCalculationData;
+  | AddCalculationData
+  | AddRelatedRequirementId;
 
 export class CalculationDispatcher {
   public constructor(private readonly dispatch: Dispatch<CalculationAction>) {}
@@ -46,6 +47,13 @@ export class CalculationDispatcher {
       payload,
     });
   }
+
+  public addRelatedRequirementId(payload: AddRelatedRequirementId['payload']): void {
+    return this.dispatch({
+      type: 'add_related_requirement_id',
+      payload,
+    });
+  }
 }
 
 interface SetActiveRequirementGroup {
@@ -67,6 +75,14 @@ interface AddFormData {
 interface SetFormData {
   type: 'set_form_data';
   payload: Record<string, Record<string, unknown>>;
+}
+
+interface AddRelatedRequirementId {
+  type: 'add_related_requirement_id';
+  payload: {
+    requirementGroupId: string;
+    relatedRequirementId: string;
+  };
 }
 
 interface AddCalculationPayload {

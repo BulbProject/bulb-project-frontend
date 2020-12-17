@@ -6,4 +6,5 @@ export interface CalculationState {
   formData: Record<string, unknown>;
   calculationPayload?: RequestedNeed;
   calculationData?: CalculationResponse;
+  relatedRequirementIds?: Record<string, string>;
 }
