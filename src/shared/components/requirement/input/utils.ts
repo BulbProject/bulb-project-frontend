@@ -7,11 +7,7 @@ export const mapOptionsToItems = (options: OptionType[]): Record<string, Item> =
   return options.sort(sortByValue('id')).reduce(
     (map, option) =>
       Object.assign(map, {
-        [option.value as string]: {
-          value: option.value,
-          label: option.title,
-          relatedRequirementId: option.relatedRequirementID,
-        },
+        [option.value as string]: { value: option.value, label: option.title },
       }),
     {}
   );
