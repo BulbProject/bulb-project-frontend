@@ -8,3 +8,4 @@ export * from './categories-list-item';
 export * from './available-variant';
 export * from './selected-variant';
 export * from './option-group';
+export * from './option';
