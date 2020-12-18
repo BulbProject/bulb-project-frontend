@@ -6,3 +6,4 @@ export * from './prepare-requested-need';
 export * from './get-locale-data-type';
 export * from './format-number';
 export * from './create-request-config';
+export * from './is-not-related-requirement-group';
