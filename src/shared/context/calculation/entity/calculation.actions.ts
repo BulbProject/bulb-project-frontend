@@ -80,7 +80,7 @@ interface SetFormData {
 interface AddRelatedRequirementId {
   type: 'add_related_requirement_id';
   payload: {
-    requirementGroupId: string;
+    criterionId: string;
     relatedRequirementId: string;
   };
 }

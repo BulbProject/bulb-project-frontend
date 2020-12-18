@@ -27,13 +27,13 @@ export const calculationReducer: Reducer<CalculationState, CalculationAction> = 
       };
     }
     case 'add_related_requirement_id': {
-      const { relatedRequirementId, requirementGroupId } = action.payload;
+      const { relatedRequirementId, criterionId } = action.payload;
 
       return {
         ...state,
         relatedRequirementIds: {
           ...state.relatedRequirementIds,
-          [requirementGroupId]: relatedRequirementId,
+          [criterionId]: relatedRequirementId,
         },
       };
     }

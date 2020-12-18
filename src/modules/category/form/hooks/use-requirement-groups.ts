@@ -7,10 +7,12 @@ export const useRequirementGroups = (criterion: Criterion): RequirementGroup[] =
   const { relatedRequirementIds } = useCalculation();
 
   return useMemo(() => {
-    const filteredRequirementGroups = criterion.requirementGroups.filter(
-      (group) => relatedRequirementIds?.[group.id]
-    ) as RequirementGroup[];
+    const filteredRequirementGroups = criterion.requirementGroups.filter((requirementGroup) => {
+      const relatedRequirementId = relatedRequirementIds?.[criterion.id];
+
+      return relatedRequirementId && `${relatedRequirementId.slice(0, 4)}000000` === requirementGroup.id;
+    }) as RequirementGroup[];
 
     return filteredRequirementGroups.length === 1 ? filteredRequirementGroups : criterion.requirementGroups;
-  }, [criterion, relatedRequirementIds]);
+  }, [criterion.id, relatedRequirementIds]);
 };

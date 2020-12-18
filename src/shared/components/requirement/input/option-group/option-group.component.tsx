@@ -30,10 +30,10 @@ export const OptionGroup: FC<{
     const option = options.find(({ id, relatedRequirementID }) => id === defaultValue && relatedRequirementID);
 
     if (option) {
-      const requirementGroupId = `${option.relatedRequirementID?.slice(0, 4)}000000`;
+      const criterionId = `${option.relatedRequirementID?.slice(0, 2)}00000000`;
 
       dispatch.addRelatedRequirementId({
-        requirementGroupId,
+        criterionId,
         relatedRequirementId: option.relatedRequirementID as string,
       });
     }
