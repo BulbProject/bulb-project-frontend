@@ -45,10 +45,10 @@ export const Criterion: FC<CriterionProps> = (criterion) => {
   const { id } = criterion;
 
   const requirementGroups = useMemo(() => {
-    return relatedRequirementIds
-      ? (criterion.requirementGroups.filter((group) => relatedRequirementIds[group.id]) as RequirementGroupType[])
-      : (criterion.requirementGroups as RequirementGroupType[]);
-  }, [criterion]);
+    const groups = (criterion.requirementGroups.filter((group) => relatedRequirementIds?.[group.id]) as RequirementGroupType[]);
+
+    return groups.length === 1 ? groups : criterion.requirementGroups;
+  }, [criterion, relatedRequirementIds]);
 
   const selectedRequirementGroup = useMemo(() => selectedRequirementGroups?.[id], [selectedRequirementGroups]);
 
