@@ -10,6 +10,7 @@ import { useCalculation } from 'shared/context/calculation';
 import { getLocaleDataType } from 'shared/utils';
 import { useFormValidator } from 'shared/context/form-validator';
 import { Criterion } from 'shared/entity/data';
+import { useRequirementGroups } from '../../../modules/category/form/hooks';
 
 import { Input } from './input';
 import { Title } from './title';
@@ -44,12 +45,14 @@ export const Requirement: FC<
     return optionDetails !== undefined && 'optionGroups' in optionDetails && optionDetails.optionGroups.length === 1;
   }, [JSON.stringify(optionDetails)]);
 
+  const requirementGroups = useRequirementGroups(criterion);
+
   return (
     <Styled.Requirement htmlFor={id}>
       <Flex
         direction={isBoolean(dataType) ? 'row' : 'column'}
         alignment={{ vertical: 'center' }}
-        margin={criterion.requirementGroups.length > 1 ? { top: 'medium' } : undefined}
+        margin={requirementGroups.length > 1 ? { top: 'medium' } : undefined}
       >
         {(title ?? hasSingleOptionGroup) && (
           <Title

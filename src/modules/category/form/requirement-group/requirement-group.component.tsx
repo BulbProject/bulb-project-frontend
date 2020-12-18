@@ -7,6 +7,7 @@ import { RequirementGroup as RequirementGroupProps } from 'shared/entity/data';
 import { sortByValue } from 'shared/utils';
 
 import { useStepperState } from '../../stepper-state';
+import { useRequirementGroups } from '../hooks';
 
 export const RequirementGroup: FC<RequirementGroupProps & { isDisabled?: boolean }> = ({
   id,
@@ -14,10 +15,11 @@ export const RequirementGroup: FC<RequirementGroupProps & { isDisabled?: boolean
   isDisabled,
 }) => {
   const { currentStep } = useStepperState();
+  const requirementGroups = useRequirementGroups(currentStep);
 
   return (
     <FieldSet name={id}>
-      <Flex margin={currentStep.requirementGroups.length > 1 ? { top: 'regular' } : undefined} direction="column">
+      <Flex margin={requirementGroups.length > 1 ? { top: 'regular' } : undefined} direction="column">
         {requirements.sort(sortByValue('id')).map((requirement) => (
           <Requirement
             {...requirement}

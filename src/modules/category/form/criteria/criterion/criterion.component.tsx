@@ -9,6 +9,7 @@ import { Criterion as CriterionProps, RequirementGroup as RequirementGroupType }
 import { useCalculation } from 'shared/context/calculation';
 
 import { BinaryGroup } from '../../binary-group';
+import { useRequirementGroups } from '../../hooks';
 import { RequirementGroup } from '../../requirement-group';
 
 const isGroupBoolean = (requirementGroup: RequirementGroupType): boolean => {
@@ -41,14 +42,10 @@ const hasBinarySelection = (requirementGroups: RequirementGroupType[]): boolean 
 
 export const Criterion: FC<CriterionProps> = (criterion) => {
   const { t } = useTranslation('form');
-  const { selectedRequirementGroups, relatedRequirementIds, dispatch } = useCalculation();
+  const { selectedRequirementGroups, dispatch } = useCalculation();
   const { id } = criterion;
 
-  const requirementGroups = useMemo(() => {
-    const groups = (criterion.requirementGroups.filter((group) => relatedRequirementIds?.[group.id]) as RequirementGroupType[]);
-
-    return groups.length === 1 ? groups : criterion.requirementGroups;
-  }, [criterion, relatedRequirementIds]);
+  const requirementGroups = useRequirementGroups(criterion);
 
   const selectedRequirementGroup = useMemo(() => selectedRequirementGroups?.[id], [selectedRequirementGroups]);
 
