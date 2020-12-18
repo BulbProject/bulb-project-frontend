@@ -1,6 +1,7 @@
-import React, { FC, FormEvent, useCallback, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuid } from 'uuid';
 
 import Modal from 'ustudio-ui/components/Modal';
 import Text from 'ustudio-ui/components/Text';
@@ -91,6 +92,8 @@ export const CalculationModal: FC<{
     [selectedPrice, requestedPrice]
   );
 
+  const requestedPriceId = useMemo(uuid, []);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -160,14 +163,14 @@ export const CalculationModal: FC<{
       ) : (
         <Flex isWrap padding={{ left: 'large', right: 'large' }} direction="column">
           <form onSubmit={calculatePayback}>
-            <label htmlFor="requested">
+            <label htmlFor={requestedPriceId}>
               {t('insert-requesting-price')}
               {requestedVariant}
             </label>
             <Styled.Input
               isRequired
               placeholder={t('input-placeholder')}
-              id="requested"
+              id={requestedPriceId}
               onChange={setRequestedPrice}
               suffix={t('uah')}
               inputMode="decimal"

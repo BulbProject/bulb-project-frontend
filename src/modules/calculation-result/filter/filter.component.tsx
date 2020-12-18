@@ -51,11 +51,6 @@ export const Filter: FC<{
           <>
             {criteria
               .filter((criterion) => {
-                console.log(
-                  criterion.requirementGroups,
-                  criterion.requirementGroups.every(isNotRelatedRequirementGroup)
-                );
-
                 return criterion.requirementGroups.every(isNotRelatedRequirementGroup);
               })
               .map((criterion) => (
