@@ -39,9 +39,16 @@ const hasBinarySelection = (requirementGroups: RequirementGroupType[]): boolean 
   return hasTwoGroups && hasBooleanGroup;
 };
 
-export const Criterion: FC<CriterionProps> = ({ requirementGroups, id }) => {
+export const Criterion: FC<CriterionProps> = (criterion) => {
   const { t } = useTranslation('form');
-  const { selectedRequirementGroups, dispatch } = useCalculation();
+  const { selectedRequirementGroups, relatedRequirementIds, dispatch } = useCalculation();
+  const { id } = criterion;
+
+  const requirementGroups = useMemo(() => {
+    return relatedRequirementIds
+      ? (criterion.requirementGroups.filter((group) => relatedRequirementIds[group.id]) as RequirementGroupType[])
+      : (criterion.requirementGroups as RequirementGroupType[]);
+  }, [criterion]);
 
   const selectedRequirementGroup = useMemo(() => selectedRequirementGroups?.[id], [selectedRequirementGroups]);
 
