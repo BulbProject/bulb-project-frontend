@@ -42,7 +42,7 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
   ]) as number | undefined;
 
   useEffect(() => {
-    if (selectedCardIndex) {
+    if (selectedCardIndex && listWidth > carouselWidth) {
       setShift(
         Math.min(
           Math.max(
