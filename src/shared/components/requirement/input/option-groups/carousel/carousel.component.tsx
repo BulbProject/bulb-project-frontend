@@ -53,7 +53,7 @@ export const Carousel: FC<{ cards: CarouselCard[]; selectedCard?: string; onCard
         )
       );
     }
-  }, [hasMounted]);
+  }, [hasMounted, listWidth, carouselWidth]);
 
   const shouldShiftLeft = useMemo(() => shift > 0, dependencies);
 
