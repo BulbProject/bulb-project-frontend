@@ -27,7 +27,7 @@ export const OptionGroup: FC<{
 
   useEffect(() => {
     const { options } = optionGroup ?? ({} as OptionGroupType);
-    const option = options.find(({ id, relatedRequirementID }) => id === defaultValue && relatedRequirementID);
+    const option = options.find(({ value, relatedRequirementID }) => value === defaultValue && relatedRequirementID);
 
     if (option) {
       const criterionId = `${option.relatedRequirementID?.slice(0, 2)}00000000`;
@@ -46,7 +46,7 @@ export const OptionGroup: FC<{
         autocomplete={Object.values(optionsMap).length >= 10}
         isDisabled={isDisabled}
         items={optionsMap}
-        defaultValue={defaultValue}
+        defaultValue={Object.values(optionsMap).length === 1 ? Object.values(optionsMap)[0].value : defaultValue}
         isDefaultOpen={isDefaultOpen}
         styled={{
           ValuesListItem: Styled.ValuesListItem,
