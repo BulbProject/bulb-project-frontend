@@ -3,9 +3,10 @@ import type { OptionGroup as OptionGroupType, RequirementWithOptionDetails } fro
 import Select from 'ustudio-ui/components/Select/Select';
 import type { Group } from 'ustudio-ui/components/Select/select.types';
 
-import { sortByValue } from 'shared/utils';
+import { isRelatedOptionGroup, sortByValue } from 'shared/utils';
 
 import { Field } from '../field';
+import { useRelatedRequirement } from '../hooks';
 import { mapOptionsToItems } from '../utils';
 import { CarouselGroups } from './carousel-groups';
 
@@ -28,6 +29,8 @@ export const OptionGroups: FC<{
     }, {});
   }, [optionGroups]);
 
+  const watch = useRelatedRequirement(optionGroups.filter(isRelatedOptionGroup).flatMap(({ options }) => options));
+
   return showCarousel ? (
     <CarouselGroups
       isDisabled={isDisabled}
@@ -37,7 +40,7 @@ export const OptionGroups: FC<{
       criterionId={criterionId}
     />
   ) : (
-    <Field requirement={requirement} isDisabled={isDisabled}>
+    <Field requirement={requirement} isDisabled={isDisabled} watch={watch}>
       <Select
         autocomplete={groupsMap.flatMap((group) => Object.values(group.items)).length >= 10}
         isDisabled={isDisabled}

@@ -6,26 +6,16 @@ import Text from 'ustudio-ui/components/Text';
 import useMount from 'honks/use-mount';
 
 import type { Criterion as CriterionProps, RequestedNeed } from 'shared/entity/data';
-import { modifyId } from 'shared/utils';
 import { useCalculation } from 'shared/context/calculation';
+import { useRequirementGroups } from 'shared/hooks';
 
 import { RequirementGroup } from './requirement-group';
 
 import Styled from './criterion.styles';
 
-const filterRequirementGroups = ({ calculationPayload }: { calculationPayload: RequestedNeed }) => ({
-  id,
-}: {
-  id: string;
-}) => {
-  const predicateIds = calculationPayload.requirementResponses.map(({ requirement }) =>
-    modifyId(requirement.id, 3, () => 0)
-  );
+export const Criterion: FC<CriterionProps> = (criterion) => {
+  const { id, title } = criterion;
 
-  return predicateIds.includes(id);
-};
-
-export const Criterion: FC<CriterionProps> = ({ id, title, requirementGroups }) => {
   const { calculationPayload, dispatch } = useCalculation();
 
   const hasMounted = useMount();
@@ -45,6 +35,8 @@ export const Criterion: FC<CriterionProps> = ({ id, title, requirementGroups }) 
     }
   }, [hasMounted()]);
 
+  const requirementGroups = useRequirementGroups(criterion);
+
   return (
     <Flex direction="column">
       <Text appearance="bold" color="var(--c-secondary)">
@@ -53,11 +45,9 @@ export const Criterion: FC<CriterionProps> = ({ id, title, requirementGroups }) 
 
       {hasMounted() && (
         <FieldSet name={id}>
-          {requirementGroups
-            .filter(filterRequirementGroups({ calculationPayload: calculationPayload as RequestedNeed }))
-            .map((requirementGroup) => (
-              <RequirementGroup {...requirementGroup} key={requirementGroup.id} />
-            ))}
+          {requirementGroups.map((requirementGroup) => (
+            <RequirementGroup {...requirementGroup} key={requirementGroup.id} />
+          ))}
         </FieldSet>
       )}
 

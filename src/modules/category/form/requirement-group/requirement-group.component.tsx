@@ -5,9 +5,9 @@ import FieldSet from 'formfish/components/FieldSet';
 import { Requirement } from 'shared/components';
 import { RequirementGroup as RequirementGroupProps } from 'shared/entity/data';
 import { sortByValue } from 'shared/utils';
+import { useRequirementGroups } from 'shared/hooks';
 
 import { useStepperState } from '../../stepper-state';
-import { useRequirementGroups } from '../hooks';
 
 export const RequirementGroup: FC<RequirementGroupProps & { isDisabled?: boolean }> = ({
   id,

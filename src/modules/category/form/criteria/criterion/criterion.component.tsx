@@ -7,9 +7,9 @@ import { useTranslation } from 'react-i18next';
 
 import { Criterion as CriterionProps, RequirementGroup as RequirementGroupType } from 'shared/entity/data';
 import { useCalculation } from 'shared/context/calculation';
+import { useRequirementGroups } from 'shared/hooks';
 
 import { BinaryGroup } from '../../binary-group';
-import { useRequirementGroups } from '../../hooks';
 import { RequirementGroup } from '../../requirement-group';
 
 const isGroupBoolean = (requirementGroup: RequirementGroupType): boolean => {
