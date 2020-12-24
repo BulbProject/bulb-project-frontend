@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useFormValidator } from 'shared/context/form-validator';
 import { useCalculation } from 'shared/context/calculation';
-import { prepareRequestedNeed, isFormFilledIn, isNotRelatedRequirementGroup } from 'shared/utils';
+import { prepareRequestedNeed, isFormFilledIn } from 'shared/utils';
 import { useCategory } from 'core/context/category-provider';
 
 import { Criterion } from './criterion';
@@ -49,13 +49,9 @@ export const Filter: FC<{
           }}
         >
           <>
-            {criteria
-              .filter((criterion) => {
-                return criterion.requirementGroups.every(isNotRelatedRequirementGroup);
-              })
-              .map((criterion) => (
-                <Criterion {...criterion} key={criterion.id} />
-              ))}
+            {criteria.map((criterion) => (
+              <Criterion {...criterion} key={criterion.id} />
+            ))}
 
             <Styled.Recalculate type="submit" isDisabled={!hasFormChanged || hasValidationFailed()}>
               {t('recalculate')}

@@ -31,7 +31,8 @@ const getValueGuard = ({
 export const Field: FC<{
   requirement: RequirementWithOptionDetails;
   isDisabled?: boolean;
-}> = ({ children, requirement, isDisabled }) => {
+  watch?(value: string): void;
+}> = ({ children, requirement, isDisabled, watch }) => {
   const { id, optionDetails, dataType, maxValue, minValue } = useMemo(() => requirement, []);
   const { state: validationState, dispatch } = useFormValidator();
 
@@ -84,8 +85,18 @@ export const Field: FC<{
       return undefined;
     }
 
-    return setValue;
-  }, [Boolean(optionDetails), dataType, isDisabled]);
+    return (value: string) => {
+      if (watch) {
+        watch(value);
+      }
+
+      if (setValue) {
+        setValue(value);
+      }
+
+      return value;
+    };
+  }, [Boolean(optionDetails), dataType, isDisabled, watch, setValue]);
 
   return (
     <FormField name={id} getValue={getValue} setValue={setValue}>
