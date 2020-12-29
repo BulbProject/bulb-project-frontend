@@ -78,7 +78,7 @@ module.exports = {
   },
   plugins: [
     new Dotenv({
-      systemvars: true
+      systemvars: true,
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),

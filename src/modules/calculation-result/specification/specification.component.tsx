@@ -75,6 +75,7 @@ export const Specification: FC<{
     version,
   } = useCategory();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requirement, setRequirement] = useState(criterion?.requirementGroups[0].requirements[0]);
   const [mode, setMode] = useState(modes[0].value);
 
@@ -94,6 +95,8 @@ export const Specification: FC<{
         },
       })
     );
+
+    console.log(data);
 
     return data;
   });
@@ -186,12 +189,10 @@ export const Specification: FC<{
       <FormModal
         isOpen={isOpen}
         isLoading={isLoading}
-        requirement={requirement}
         criterion={criterion}
         mode={mode}
         setOpen={setOpen}
         setDownloading={setDownloading}
-        setRequirement={setRequirement}
         setMode={setMode}
         setCopying={setCopying}
       />
