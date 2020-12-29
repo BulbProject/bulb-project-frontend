@@ -75,6 +75,7 @@ export const Specification: FC<{
     version,
   } = useCategory();
 
+  const requirement = useMemo(() => criterion?.requirementGroups[0].requirements[0], [criterion]);
   const [mode, setMode] = useState(modes[0].value);
 
   const { postSpecificationConfig } = useApi();
@@ -88,6 +89,7 @@ export const Specification: FC<{
         body: {
           selectedVariant: generateSelectedVariant({
             availableVariant,
+            requirement,
           }),
         },
       })
@@ -184,10 +186,12 @@ export const Specification: FC<{
       <FormModal
         isOpen={isOpen}
         isLoading={isLoading}
+        // Requirement={requirement}
         criterion={criterion}
         mode={mode}
         setOpen={setOpen}
         setDownloading={setDownloading}
+        // SetRequirement={setRequirement()}
         setMode={setMode}
         setCopying={setCopying}
       />
