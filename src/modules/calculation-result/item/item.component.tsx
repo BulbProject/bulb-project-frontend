@@ -31,11 +31,11 @@ interface BulbFormData {
   '0500000000'?: {
     '0501010000'?: number;
     '0501020000'?: number;
-    '0502010000'?: number;
+    '0502010000'?: boolean;
   };
   '0600000000'?: {
     '0601010000'?: number;
-    '0602010000'?: number;
+    '0602010000'?: boolean;
   };
 }
 
@@ -73,10 +73,7 @@ export const Item: FC<{
   const { t } = useTranslation('calculation-result');
 
   const isModeOfUseProvided = useMemo(() => {
-    return (
-      (formData as BulbFormData)?.['0500000000']?.['0502010000'] ??
-      (formData as BulbFormData)?.['0600000000']?.['0602010000']
-    );
+    return !(formData as BulbFormData)?.['0500000000']?.['0502010000'];
   }, [formData]);
 
   const requestedVariantObject = useMemo(
@@ -204,7 +201,7 @@ export const Item: FC<{
         />
 
         <Flex direction="column" margin={{ top: 'regular' }}>
-          {variant.relatedItem !== requestedVariant && !isModeOfUseProvided && (
+          {variant.relatedItem !== requestedVariant && isModeOfUseProvided && (
             <>
               <Button
                 styled={{
