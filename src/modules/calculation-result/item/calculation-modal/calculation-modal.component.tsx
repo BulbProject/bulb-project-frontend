@@ -105,14 +105,15 @@ export const CalculationModal: FC<{
         `,
       }}
     >
-      {paybackPeriod ? (
-        <Flex isWrap padding={{ left: 'large', right: 'large' }} direction="column">
+      <Flex isWrap direction="column">
+        {paybackPeriod ? (
           <Grid xs={{ direction: 'column', gap: 16 }}>
             <Cell>
               <Flex>
                 <Text>{t('conditionOfUse')}</Text>
               </Flex>
             </Cell>
+
             <Cell>
               <Grid xs={{ gap: 16 }}>
                 <Cell>
@@ -120,6 +121,7 @@ export const CalculationModal: FC<{
                     <Text>{t('hr/day')}</Text>
                   </Flex>
                 </Cell>
+
                 <Cell>
                   <Flex>
                     <Text>{calculationPayback.hoursPerDay}</Text>
@@ -127,6 +129,7 @@ export const CalculationModal: FC<{
                 </Cell>
               </Grid>
             </Cell>
+
             <Cell>
               <Grid xs={{ gap: 16 }}>
                 <Cell>
@@ -134,6 +137,7 @@ export const CalculationModal: FC<{
                     <Text>{t('day/week')}</Text>
                   </Flex>
                 </Cell>
+
                 <Cell>
                   <Flex>
                     <Text>{calculationPayback.daysPerWeek}</Text>
@@ -141,6 +145,7 @@ export const CalculationModal: FC<{
                 </Cell>
               </Grid>
             </Cell>
+
             <Cell>
               <Grid xs={{ gap: 16 }}>
                 <Cell>
@@ -159,14 +164,13 @@ export const CalculationModal: FC<{
               </Grid>
             </Cell>
           </Grid>
-        </Flex>
-      ) : (
-        <Flex isWrap padding={{ left: 'large', right: 'large' }} direction="column">
+        ) : (
           <form onSubmit={calculatePayback}>
             <label htmlFor={requestedPriceId}>
               {t('insert-requesting-price')}
               {requestedVariant}
             </label>
+
             <Styled.Input
               isRequired
               placeholder={t('input-placeholder')}
@@ -192,6 +196,7 @@ export const CalculationModal: FC<{
               {t('insert-requesting-price')}
               {currentBulbName}
             </label>
+
             <Styled.Input
               isRequired
               placeholder={t('input-placeholder')}
@@ -205,6 +210,7 @@ export const CalculationModal: FC<{
                 `,
               }}
             />
+
             <Styled.WarningContainer margin={{ bottom: 'medium' }}>
               {ledPriceWarning && (
                 <Text variant="small" style={{ color: '#e3871a' }}>
@@ -212,12 +218,13 @@ export const CalculationModal: FC<{
                 </Text>
               )}
             </Styled.WarningContainer>
+
             <Flex alignment={{ horizontal: 'center' }}>
               <Button isDisabled={requestedWarning || ledPriceWarning}>{t('calculate')}</Button>
             </Flex>
           </form>
-        </Flex>
-      )}
+        )}
+      </Flex>
     </Modal>
   );
 };
