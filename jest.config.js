@@ -3,7 +3,7 @@ module.exports = {
   roots: ['<rootDir>/src'],
   preset: 'ts-jest',
   transform: {
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': 'ts-jest',
   },
   testRegex: '.*\\.spec.tsx?$',
   coveragePathIgnorePatterns: ['/node_modules/'],
@@ -12,15 +12,15 @@ module.exports = {
       branches: 80,
       functions: 80,
       lines: 80,
-      statements: -250
-    }
+      statements: -250,
+    },
   },
   collectCoverageFrom: ['src/**/*.ts', 'src/**/*.tsx'],
   clearMocks: true,
   moduleFileExtensions: ['ts', 'tsx', 'js'],
   moduleDirectories: ['node_modules', 'src'],
   moduleNameMapper: {
-    '^/(.*)$': '<rootDir>/src/$1'
+    '^/(.*)$': '<rootDir>/src/$1',
   },
-  testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/']
+  testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
 };

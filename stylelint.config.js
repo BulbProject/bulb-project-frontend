@@ -4,6 +4,6 @@ module.exports = {
   rules: {
     'declaration-empty-line-before': 'off',
     'selector-pseudo-element-colon-notation': 'off',
-    'value-keyword-case': 'off'
+    'value-keyword-case': 'off',
   },
 };

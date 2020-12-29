@@ -1,12 +1,11 @@
 import React, { FC, ReactElement } from 'react';
 import { css } from 'styled-components';
-import { Criterion, Requirement } from 'ts4ocds/extensions/requirements';
+import { Criterion } from 'ts4ocds/extensions/requirements';
 import { useTranslation } from 'react-i18next';
 
 import Button from 'ustudio-ui/components/Button';
 import Flex from 'ustudio-ui/components/Flex';
 import Modal from 'ustudio-ui/components/Modal';
-import Tabs from 'ustudio-ui/components/Tabs';
 import Text from 'ustudio-ui/components/Text';
 import { Mixin } from 'ustudio-ui/theme';
 
@@ -20,26 +19,13 @@ import Styled from './form-modal.styles';
 export const FormModal: FC<{
   isOpen: boolean;
   isLoading: boolean;
-  requirement?: Requirement;
   criterion?: Criterion;
   mode: string;
   setOpen(value: boolean): void;
   setDownloading(value: boolean): void;
-  setRequirement(requirement: Requirement): void;
   setMode(mode: string): void;
   setCopying(value: boolean): void;
-}> = ({
-  isOpen,
-  isLoading,
-  requirement,
-  criterion,
-  mode,
-  setOpen,
-  setDownloading,
-  setRequirement,
-  setMode,
-  setCopying,
-}) => {
+}> = ({ isOpen, isLoading, criterion, setOpen, setDownloading, setCopying }) => {
   const { t } = useTranslation('calculation-result');
 
   return (
@@ -74,86 +60,19 @@ export const FormModal: FC<{
           background-color: var(--c-darkest);
         `,
       }}
-      footer={
-        // Conflicts with prettier
-        // eslint-disable-next-line react/jsx-wrap-multilines
-        <Flex alignment={{ horizontal: 'center' }}>
-          <Button
-            onClick={() => {
-              if (mode === 'docx') {
-                setDownloading(true);
-              }
-
-              if (mode === 'json') {
-                setCopying(true);
-              }
-            }}
-          >
-            {t('generate-document')}
-          </Button>
-        </Flex>
-      }
     >
-      {(isLoading && <Loader size={32} />) as ReactElement}
-
-      <Flex direction="column" alignment={{ horizontal: 'center' }}>
-        {criterion && (
-          <SpecificationStyles.Group>
-            <Styled.GroupTitle>{criterion.description}</Styled.GroupTitle>
-
-            <Tabs
-              // Tabs props declaration miss this prop
-              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
-              variant="body"
-              active={JSON.stringify(requirement)}
-              tabs={criterion.requirementGroups
-                .flatMap(({ requirements }) => requirements)
-                .map((tabRequirement) => ({
-                  value: JSON.stringify(tabRequirement),
-                  children: <Styled.Tab>{tabRequirement.title}</Styled.Tab>,
-                }))}
-              onChange={(value: string) => setRequirement(JSON.parse(value))}
-              styled={{
-                Tabs: css`
-                  &:before {
-                    background: var(--c-primary);
-                  }
-                `,
-              }}
-            />
-          </SpecificationStyles.Group>
-        )}
-
+      <Flex alignment={{ horizontal: 'center' }} direction="column">
         <SpecificationStyles.Group>
           <Styled.GroupTitle>{t('select-format')}</Styled.GroupTitle>
+          <Flex direction="row" alignment={{ horizontal: 'space-around' }}>
+            <Button onClick={() => setCopying(true)}>{t(modes[0].title)}</Button>
 
-          <Tabs
-            // Tabs props declaration miss this prop
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            variant="body"
-            active={mode}
-            tabs={modes.map(({ value, title }) => ({
-              value,
-              children: <Styled.Tab>{t(title)}</Styled.Tab>,
-            }))}
-            onChange={setMode}
-            styled={{
-              Tabs: css`
-                &:before {
-                  background: var(--c-secondary);
-                }
-              `,
-              Tab: ({ isActive }) => css`
-                &:hover {
-                  color: ${isActive ? 'var(--c-white)' : 'var(--c-secondary)'};
-                }
-              `,
-            }}
-          />
+            <Button onClick={() => setDownloading(true)}>{t(modes[1].title)}</Button>
+          </Flex>
         </SpecificationStyles.Group>
       </Flex>
+
+      {(isLoading && <Loader size={32} />) as ReactElement}
     </Modal>
   );
 };
