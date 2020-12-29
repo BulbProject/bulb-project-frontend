@@ -96,8 +96,6 @@ export const Specification: FC<{
       })
     );
 
-    console.log(data);
-
     return data;
   });
 
