@@ -28,14 +28,14 @@ interface BulbFormData {
   '0100000000'?: {
     '0101020000'?: number;
   };
-  '0300000000'?: {
-    '0301010000'?: number;
-    '0301020000'?: number;
-    '0302010000'?: number;
+  '0500000000'?: {
+    '0501010000'?: number;
+    '0501020000'?: number;
+    '0502010000'?: number;
   };
-  '0400000000'?: {
-    '0401010000'?: number;
-    '0402010000'?: number;
+  '0600000000'?: {
+    '0601010000'?: number;
+    '0602010000'?: number;
   };
 }
 
@@ -74,8 +74,8 @@ export const Item: FC<{
 
   const isModeOfUseProvided = useMemo(() => {
     return (
-      (formData as BulbFormData)?.['0300000000']?.['0302010000'] ??
-      (formData as BulbFormData)?.['0400000000']?.['0402010000']
+      (formData as BulbFormData)?.['0500000000']?.['0502010000'] ??
+      (formData as BulbFormData)?.['0600000000']?.['0602010000']
     );
   }, [formData]);
 
@@ -90,9 +90,9 @@ export const Item: FC<{
 
     return {
       quantity: _formData?.['0100000000']?.['0101020000'] ?? 0,
-      hoursPerDay: _formData?.['0300000000']?.['0301010000'] ?? 0,
-      daysPerWeek: _formData?.['0300000000']?.['0301020000'] ?? 0,
-      pricePerKwtOnHour: (_formData?.['0400000000']?.['0401010000'] ?? 0) * 0.001,
+      hoursPerDay: _formData?.['0500000000']?.['0501010000'] ?? 0,
+      daysPerWeek: _formData?.['0500000000']?.['0501020000'] ?? 0,
+      pricePerKwtOnHour: (_formData?.['0600000000']?.['0601010000'] ?? 0) * 0.001,
       requestedLifeTime: variant.metrics[0].observations[1].measure as number,
       requestedPower: variant.metrics[0].observations[0].measure as number,
       requestedVariantObservations: {
