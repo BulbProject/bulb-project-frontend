@@ -186,12 +186,10 @@ export const Specification: FC<{
       <FormModal
         isOpen={isOpen}
         isLoading={isLoading}
-        // Requirement={requirement}
         criterion={criterion}
         mode={mode}
         setOpen={setOpen}
         setDownloading={setDownloading}
-        // SetRequirement={setRequirement()}
         setMode={setMode}
         setCopying={setCopying}
       />
