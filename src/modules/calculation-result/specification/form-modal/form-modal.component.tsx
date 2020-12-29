@@ -25,7 +25,7 @@ export const FormModal: FC<{
   setDownloading(value: boolean): void;
   setMode(mode: string): void;
   setCopying(value: boolean): void;
-}> = ({ isOpen, isLoading, criterion, setOpen, setDownloading, setCopying }) => {
+}> = ({ isOpen, isLoading, criterion, setMode, setOpen, setDownloading, setCopying }) => {
   const { t } = useTranslation('calculation-result');
 
   return (
@@ -65,9 +65,23 @@ export const FormModal: FC<{
         <SpecificationStyles.Group>
           <Styled.GroupTitle>{t('select-format')}</Styled.GroupTitle>
           <Flex direction="row" alignment={{ horizontal: 'space-around' }}>
-            <Button onClick={() => setCopying(true)}>{t(modes[0].title)}</Button>
+            <Button
+              onClick={() => {
+                setMode(modes[0].value);
+                setCopying(true);
+              }}
+            >
+              {t(modes[0].title)}
+            </Button>
 
-            <Button onClick={() => setDownloading(true)}>{t(modes[1].title)}</Button>
+            <Button
+              onClick={() => {
+                setMode(modes[1].value);
+                setDownloading(true);
+              }}
+            >
+              {t(modes[1].title)}
+            </Button>
           </Flex>
         </SpecificationStyles.Group>
       </Flex>
