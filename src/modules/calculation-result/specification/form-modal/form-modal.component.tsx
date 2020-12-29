@@ -3,7 +3,6 @@ import { css } from 'styled-components';
 import { Criterion } from 'ts4ocds/extensions/requirements';
 import { useTranslation } from 'react-i18next';
 
-import Button from 'ustudio-ui/components/Button';
 import Flex from 'ustudio-ui/components/Flex';
 import Modal from 'ustudio-ui/components/Modal';
 import Text from 'ustudio-ui/components/Text';
@@ -64,24 +63,26 @@ export const FormModal: FC<{
       <Flex alignment={{ horizontal: 'center' }} direction="column">
         <SpecificationStyles.Group>
           <Styled.GroupTitle>{t('select-format')}</Styled.GroupTitle>
-          <Flex direction="row" alignment={{ horizontal: 'space-around' }}>
-            <Button
+
+          <Flex direction="row" alignment={{ horizontal: 'stretch' }}>
+            <Styled.Button
+              intent="positive"
               onClick={() => {
                 setMode(modes[0].value);
                 setCopying(true);
               }}
             >
               {t(modes[0].title)}
-            </Button>
+            </Styled.Button>
 
-            <Button
+            <Styled.Button
               onClick={() => {
                 setMode(modes[1].value);
                 setDownloading(true);
               }}
             >
               {t(modes[1].title)}
-            </Button>
+            </Styled.Button>
           </Flex>
         </SpecificationStyles.Group>
       </Flex>
