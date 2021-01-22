@@ -18,7 +18,7 @@ const Heading = styled.h1`
   scroll-margin: calc(54px + 2rem) 0 0;
 `;
 
-const Paragraph = styled(Text).attrs(() => ({ variant: 'article' }))`
+const Paragraph = styled(Text).attrs(() => ({ variant: 'body' }))`
   color: var(--c-contrast-strong);
   margin: var(--i-medium) 0;
 `;
