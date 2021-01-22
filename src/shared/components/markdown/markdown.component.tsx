@@ -2,6 +2,7 @@ import React, { FC, ReactElement, ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import Styled from './markdown.styles';
+import { MdCarousel } from '../markdown-carousel/md-carousel';
 
 const renderers = {
   thematicBreak: Styled.Divider,
@@ -24,7 +25,17 @@ const renderers = {
       {children}
     </Styled.List>
   ),
-  link: Styled.Link,
+  link({ href, children }: { href: any; children: any }) {
+    console.log(href);
+
+    if (href.startsWith('$')) {
+      const value = children?.[0].props?.children;
+
+      console.log(value);
+    }
+
+    return children === '$carousel' ? <MdCarousel images={href.split(',')} /> : <Styled.Link />;
+  },
 };
 
 export const Markdown: FC<{
