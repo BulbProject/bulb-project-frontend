@@ -25,21 +25,22 @@ const renderers = {
       {children}
     </Styled.List>
   ),
-  link({ href, children }: { href: any; children: any }) {
-    console.log(href);
-
+  // eslint-disable-next-line object-shorthand
+  link: ({ href, children }: { href: string; children: any }) => {
     if (href.startsWith('$')) {
-      const value = children?.[0].props?.children;
+      const baseUrl = href.slice(1);
 
-      console.log(value);
+      return (
+        <MdCarousel images={children?.[0]?.props?.children?.split(',').map((src: string) => `${baseUrl}/${src}`)} />
+      );
     }
 
-    return children === '$carousel' ? <MdCarousel images={href.split(',')} /> : <Styled.Link />;
+    return <Styled.Link href={href}>{children}</Styled.Link>;
   },
 };
 
 export const Markdown: FC<{
   source: string;
 }> = ({ source }) => {
-  return <ReactMarkdown escapeHtml={false} renderers={renderers} source={source} />;
+  return <ReactMarkdown escapeHtml={false} transformLinkUri={(uri) => uri} renderers={renderers} source={source} />;
 };
