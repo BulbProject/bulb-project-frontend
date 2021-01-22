@@ -26,7 +26,7 @@
 
 > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-![](..p/src/assets/images/resources/steps/bulb_steps_7.jpg)
+![](https://github.com/BulbProject/bulb-project-frontend/blob/develop/src/assets/images/resources/steps/bulb_steps_7.jpg)
 
 > Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
