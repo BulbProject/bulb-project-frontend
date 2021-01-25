@@ -39,7 +39,7 @@ const Resource: FC = () => {
 
   return (
     <Fade>
-      <Container>
+      <Container useGap={false}>
         <Helmet>
           <title>{resourceFileName}</title>
         </Helmet>
