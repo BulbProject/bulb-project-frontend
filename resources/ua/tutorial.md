@@ -61,7 +61,7 @@
 
 Після отримання та опрацювання всієї інформації, що описано вище, система пропонує комбінований результат:
 
-![$[bulb_modals_1.jpg,bulb_modals_2.jpg,bulb_modals_3.jpg]](https://raw.githubusercontent.com/BulbProject/bulb-project-frontend/tutorial/public/assets/images/resources/modals)
+[bulb_modals_1.jpg,bulb_modals_2.jpg,bulb_modals_3.jpg]($https://raw.githubusercontent.com/BulbProject/bulb-project-frontend/tutorial/public/assets/images/resources/modals)
 
 ## Modals
 
