@@ -2,14 +2,10 @@ import React, { FC } from 'react';
 import Carousel from 'react-multi-carousel';
 
 const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-  },
   mobile: {
     breakpoint: {
-      max: 464,
-      min: 0,
+      max: 576,
+      min: 320,
     },
     items: 1,
     partialVisibilityGutter: 30,
@@ -17,10 +13,14 @@ const responsive = {
   tablet: {
     breakpoint: {
       max: 1024,
-      min: 464,
+      min: 576,
     },
-    items: 2,
+    items: 1,
     partialVisibilityGutter: 30,
+  },
+  desktop: {
+    breakpoint: { max: 1200, min: 1024 },
+    items: 1,
   },
 };
 
@@ -32,9 +32,7 @@ export const MdCarousel: FC<CarouselProps> = ({ images }) => {
   return (
     <Carousel responsive={responsive}>
       {images.map((image) => {
-        return (
-          <img src={image} alt="1" key={image} />
-        )
+        return <img src={image} alt="1" key={image} />;
       })}
     </Carousel>
   );
