@@ -2,7 +2,7 @@ import React, { FC, ReactElement, ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import Styled from './markdown.styles';
-import { MdCarousel } from '../markdown-carousel/md-carousel';
+import { MdCarousel } from '../markdown-carousel/md-carousel.component';
 
 const renderers = {
   thematicBreak: Styled.Divider,
@@ -42,5 +42,5 @@ const renderers = {
 export const Markdown: FC<{
   source: string;
 }> = ({ source }) => {
-  return <ReactMarkdown escapeHtml={false} transformLinkUri={(uri) => uri} renderers={renderers} source={source} />;
+  return <ReactMarkdown disallowedTypes={['paragraph']} unwrapDisallowed escapeHtml={false} transformLinkUri={(uri) => uri} renderers={renderers} source={source} />;
 };
