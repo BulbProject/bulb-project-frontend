@@ -27,6 +27,8 @@ import Styled from './item.styles';
 interface BulbFormData {
   '0100000000'?: {
     '0101020000'?: number;
+    '0102030000'?: number;
+    '0103030000'?: number;
   };
   '0500000000'?: {
     '0501010000'?: number;
@@ -85,8 +87,14 @@ export const Item: FC<{
   const calculationPayback = useMemo(() => {
     const _formData: BulbFormData = formData;
 
+    const quantity = (() => {
+      const criterion = _formData?.['0100000000'];
+
+      return criterion?.['0101020000'] ?? criterion?.['0102030000'] ?? criterion?.['0103030000'] ?? 0;
+    })();
+
     return {
-      quantity: _formData?.['0100000000']?.['0101020000'] ?? 0,
+      quantity,
       hoursPerDay: _formData?.['0500000000']?.['0501010000'] ?? 0,
       daysPerWeek: _formData?.['0500000000']?.['0501020000'] ?? 0,
       pricePerKwtOnHour: (_formData?.['0600000000']?.['0601010000'] ?? 0) * 0.001,
