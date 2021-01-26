@@ -41,7 +41,7 @@ const List = styled.ul`
 const Item = styled.li`
   width: 100%;
 
-  padding: 0 50px;
+  padding: 0 36px;
 
   position: relative;
 
