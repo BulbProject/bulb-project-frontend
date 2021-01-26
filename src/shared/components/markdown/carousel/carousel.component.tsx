@@ -24,11 +24,11 @@ export const Carousel: FC<CarouselProps> = ({ images }) => {
                 zIndex: images.length - index,
               }}
             >
-              <Styled.PreviousAnchor href={`/#item-${Math.max(index - 1, 0)}`} />
+              <Styled.PreviousAnchor to={`#item-${Math.max(index - 1, 0)}`} />
 
               <Styled.Image src={image} alt="2" />
 
-              <Styled.NextAnchor href={`/#item-${index + 1 < images.length ? index + 1 : images.length - 1}`} />
+              <Styled.NextAnchor to={`#item-${index + 1 < images.length ? index + 1 : images.length - 1}`} />
             </Styled.Item>
           );
         })}
