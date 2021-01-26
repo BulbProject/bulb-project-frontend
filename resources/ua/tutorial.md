@@ -60,21 +60,3 @@
 Після отримання та опрацювання всієї інформації, що описано вище, система пропонує комбінований результат:
 
 [bulb_result_1.jpg,bulb_result_2.jpg,bulb_result_3.jpg,bulb_result_4.jpg,bulb_result_5.jpg,bulb_result_6.jpg,bulb_result_7.jpg,bulb_result_8.jpg,bulb_result_9.jpg]($https://raw.githubusercontent.com/BulbProject/bulb-project-frontend/tutorial/public/assets/images/resources/result)
-
-## Modals
-
-![](https://raw.githubusercontent.com/BulbProject/bulb-project-frontend/tutorial/public/assets/images/resources/modals/bulb_modals_1.jpg)
-
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-![](https://raw.githubusercontent.com/BulbProject/bulb-project-frontend/tutorial/public/assets/images/resources/modals/bulb_modals_2.jpg)
-
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-![](https://raw.githubusercontent.com/BulbProject/bulb-project-frontend/tutorial/public/assets/images/resources/modals/bulb_modals_3.jpg)
-
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-![](https://raw.githubusercontent.com/BulbProject/bulb-project-frontend/tutorial/public/assets/images/resources/modals/bulb_modals_4.jpg)
-
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
