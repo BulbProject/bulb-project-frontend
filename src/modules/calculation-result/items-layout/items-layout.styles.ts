@@ -2,7 +2,6 @@ import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 import { Mixin } from 'ustudio-ui/theme';
 
 // Must have had access to the styles only here
-// eslint-disable-next-line boundaries/no-private,boundaries/allowed-types
 import StyledContainer from 'shared/components/container/container.styles';
 
 import layoutConfig from '../layout.config';

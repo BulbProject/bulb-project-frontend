@@ -36,7 +36,6 @@ export const OptionGroup: FC<{
         isDefaultOpen={isDefaultOpen}
         styled={{
           ValuesListItem: Styled.ValuesListItem,
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
           Dropdown: ({ isOpen }: { isOpen: boolean }) =>
             // eslint-disable-next-line new-cap

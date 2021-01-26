@@ -41,10 +41,10 @@ interface BulbFormData {
   };
 }
 
-const benefitIds = ['serviceLife', 'energyEconomy', 'financeEconomy'];
+const benefitIds = new Set(['serviceLife', 'energyEconomy', 'financeEconomy']);
 
 const isBenefits = ({ id }: { id: string }): boolean => {
-  return benefitIds.includes(id);
+  return benefitIds.has(id);
 };
 
 export const Item: FC<{
@@ -191,7 +191,6 @@ export const Item: FC<{
                   id: 'prozorroPrice',
                   notes: t('average-cost'),
                   value: {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
                     amount: isLed ? 22.8 : '-',
                     currency: isLed ? 'UAH' : undefined,

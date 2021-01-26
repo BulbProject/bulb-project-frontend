@@ -36,7 +36,7 @@ export const App: FC = () => {
               position: 'fixed',
               top: 0,
               left: '50%',
-              zIndex: 1000,
+              zIndex: 1_000,
               transform: 'translateX(-50%)',
               fontSize: 20,
               color: 'red',
@@ -56,7 +56,7 @@ export const App: FC = () => {
                 <Suspense fallback={<div />}>
                   <Switch>
                     {routes.map((route) => (
-                      <Route {...route} key={route.path as string} />
+                      <Route key={route.path as string} {...route} />
                     ))}
                   </Switch>
                 </Suspense>

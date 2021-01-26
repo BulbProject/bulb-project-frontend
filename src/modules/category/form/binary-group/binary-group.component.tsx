@@ -38,7 +38,6 @@ export const BinaryGroup: FC<{
 
   useEffect(() => {
     // Many unknown types and records
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     const prevValue = formData[currentStep.id]?.[booleanGroup.requirements[0].id] as boolean;
 

@@ -10,6 +10,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     defaultNS: 'common',
     ns: ['common'],
     returnEmptyString: false,

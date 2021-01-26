@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
 // Type declarations are missing for this package
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import ReactFullpage from '@fullpage/react-fullpage';
 import 'fullpage.js/vendors/scrolloverflow';

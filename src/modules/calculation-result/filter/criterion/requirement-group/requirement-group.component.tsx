@@ -2,7 +2,7 @@ import React, { FC, useMemo } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
 
 import { useCategory } from 'core/context/category-provider';
-import type { RequirementGroup as RequirementGroupProps } from 'shared/entity/data';
+import type { Criterion, RequirementGroup as RequirementGroupProps } from 'shared/entity/data';
 import { Requirement } from 'shared/components';
 import { modifyId } from 'shared/utils';
 
@@ -15,7 +15,7 @@ export const RequirementGroup: FC<RequirementGroupProps> = ({ id, requirements }
     []
   );
   const criterion = useMemo(
-    () => category.criteria.filter(({ id: criterionId }) => criterionId === modifyId(id, 2, () => 0))[0],
+    () => category.criteria.find(({ id: criterionId }) => criterionId === modifyId(id, 2, () => 0)) as Criterion,
     []
   );
 

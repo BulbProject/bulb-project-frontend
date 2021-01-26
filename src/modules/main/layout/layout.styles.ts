@@ -4,7 +4,6 @@ import { Mixin } from 'ustudio-ui/theme';
 import Flex from 'ustudio-ui/components/Flex';
 
 // Must have had access to these styles only
-// eslint-disable-next-line boundaries/allowed-types
 import StyledCategories from 'modules/categories-list/categories-list.styles';
 
 const CategoryListWrapper = styled(Flex)`

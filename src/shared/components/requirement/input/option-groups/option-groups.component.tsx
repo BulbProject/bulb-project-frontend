@@ -50,7 +50,6 @@ export const OptionGroups: FC<{
           ValuesListItem: Styled.MultiValuesListItem,
           ValuesListTitle: Styled.ValuesListTitle,
           // Another problem with UI Kit type declarations
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
           Dropdown: Styled.Dropdown,
         }}

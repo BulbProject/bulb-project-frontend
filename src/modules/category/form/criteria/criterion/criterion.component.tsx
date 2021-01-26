@@ -29,7 +29,7 @@ const getBooleanGroup = (requirementGroups: RequirementGroupType[]): Requirement
 };
 
 const getNonBooleanGroup = (requirementGroups: RequirementGroupType[]): RequirementGroupType => {
-  return requirementGroups.filter((requirementGroup) => !isGroupBoolean(requirementGroup))[0];
+  return requirementGroups.find((requirementGroup) => !isGroupBoolean(requirementGroup)) as RequirementGroupType;
 };
 
 const hasBinarySelection = (requirementGroups: RequirementGroupType[]): boolean => {
@@ -78,7 +78,6 @@ export const Criterion: FC<CriterionProps> = (criterion) => {
           autocomplete={requirementGroups.length >= 10}
           placeholder={t('form:choose-option')}
           // Select props declaration miss this prop
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
           emptyListMessage={t('form:nothing-found')}
           items={requirementGroups.reduce((items, requirementGroup) => {

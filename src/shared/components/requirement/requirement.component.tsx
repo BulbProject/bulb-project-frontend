@@ -68,7 +68,6 @@ export const Requirement: FC<
         <Input
           hasError={Boolean(validationState[id])}
           // Once again unknown type
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
           defaultValue={formData[criterion.id]?.[id]}
           suffix={

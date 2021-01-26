@@ -29,7 +29,6 @@ export const RequestedNeed: FC<{
         <Styled.Title
           variant="body"
           // Another bug in props types
-          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
           // @ts-ignore
           appearance="bold"
         >
