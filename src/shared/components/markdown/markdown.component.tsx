@@ -10,6 +10,7 @@ const renderers = {
   heading: ({ children, level }: { children: ReactElement[]; level: number }) => (
     <Styled.Heading
       as={`h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'}
+      data-level={level}
       id={children[0]?.props?.children
         .split(' ')
         .reduce((id: string, word: string) => `${id ? `${id}-` : ''}${word}`, ``)
@@ -19,13 +20,22 @@ const renderers = {
     </Styled.Heading>
   ),
   blockquote: Styled.Quote,
-  paragraph: Styled.Paragraph,
+  paragraph: ({ children }: { children: any }) => {
+    if (!children?.[0]?.key.startsWith('text')) {
+      // rendering media without p wrapper
+      return children;
+    }
+
+    return <Styled.TextNode>{children}</Styled.TextNode>;
+    // return <p>{children}</p>;
+  },
+  listItem: ({ children }: { children: string }) => <Styled.ListItem forwardedAs="li">{children}</Styled.ListItem>,
+  image: Styled.Image,
   list: ({ depth, children, ordered }: { depth: number; children: ReactNode[]; ordered: boolean }) => (
     <Styled.List depth={depth} ordered={ordered}>
       {children}
     </Styled.List>
   ),
-  // eslint-disable-next-line object-shorthand
   link: ({ href, children }: { href: string; children: any }) => {
     if (href.startsWith('$')) {
       const baseUrl = href.slice(1);
@@ -42,7 +52,6 @@ export const Markdown: FC<{
 }> = ({ source }) => {
   return (
     <ReactMarkdown
-      disallowedTypes={['paragraph']}
       unwrapDisallowed
       escapeHtml={false}
       transformLinkUri={(uri) => uri}
