@@ -56,7 +56,7 @@
 ![](https://raw.githubusercontent.com/BulbProject/bulb-project-frontend/tutorial/public/assets/images/resources/steps/bulb_steps_9.jpg)
 
 ## Що є результатом роботи:
-
-Після отримання та опрацювання всієї інформації, що описано вище, система пропонує комбінований результат:
+<br />
+<div align='center'>Після отримання та опрацювання всієї інформації, що описано вище, система пропонує комбінований результат:</div>
 
 [bulb_result_1.jpg,bulb_result_2.jpg,bulb_result_3.jpg,bulb_result_4.jpg,bulb_result_5.jpg,bulb_result_6.jpg,bulb_result_7.jpg,bulb_result_8.jpg,bulb_result_9.jpg]($https://raw.githubusercontent.com/BulbProject/bulb-project-frontend/tutorial/public/assets/images/resources/result)
