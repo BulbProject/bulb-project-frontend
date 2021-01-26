@@ -2,7 +2,7 @@ import React, { FC, ReactElement, ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import Styled from './markdown.styles';
-import { MdCarousel } from '../markdown-carousel/md-carousel.component';
+import { Carousel } from './carousel';
 
 const renderers = {
   thematicBreak: Styled.Divider,
@@ -30,9 +30,7 @@ const renderers = {
     if (href.startsWith('$')) {
       const baseUrl = href.slice(1);
 
-      return (
-        <MdCarousel images={children?.[0]?.props?.children?.split(',').map((src: string) => `${baseUrl}/${src}`)} />
-      );
+      return <Carousel images={children?.[0]?.props?.children?.split(',').map((src: string) => `${baseUrl}/${src}`)} />;
     }
 
     return <Styled.Link href={href}>{children}</Styled.Link>;
@@ -42,5 +40,14 @@ const renderers = {
 export const Markdown: FC<{
   source: string;
 }> = ({ source }) => {
-  return <ReactMarkdown disallowedTypes={['paragraph']} unwrapDisallowed escapeHtml={false} transformLinkUri={(uri) => uri} renderers={renderers} source={source} />;
+  return (
+    <ReactMarkdown
+      disallowedTypes={['paragraph']}
+      unwrapDisallowed
+      escapeHtml={false}
+      transformLinkUri={(uri) => uri}
+      renderers={renderers}
+      source={source}
+    />
+  );
 };
