@@ -44,7 +44,7 @@ export const Carousel: FC<CarouselProps> = ({ images }) => {
       </Styled.Carousel>
 
       <Styled.NavigationList>
-        {[...new Array(images.length - 1).keys()].map((key) => {
+        {[...new Array(images.length).keys()].map((key) => {
           return (
             <li key={key}>
               <Styled.NavigationItem
