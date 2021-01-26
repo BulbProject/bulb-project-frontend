@@ -146,5 +146,6 @@ module.exports = {
     'no-process-env': 'off',
     'no-underscore-dangle': 'off',
     'sort-imports': 'off',
+    'object-shorthand': 'off',
   },
 };
