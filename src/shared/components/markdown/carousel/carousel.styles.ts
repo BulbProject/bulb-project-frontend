@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { HashLink } from 'react-router-hash-link';
 
 const Carousel = styled.div`
   width: 100%;
-  margin: 0 auto;
+  margin: 50px auto 0;
 
   display: flex;
   align-items: center;
@@ -41,7 +42,7 @@ const List = styled.ul`
 const Item = styled.li`
   width: 100%;
 
-  padding: 0 32px;
+  padding: 0 50px;
 
   position: relative;
 
@@ -50,7 +51,7 @@ const Item = styled.li`
   scroll-snap-align: center;
 `;
 
-const Anchor = styled.a`
+const Anchor = styled(HashLink)`
   position: absolute;
   top: 50%;
 
