@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 import { HashLink } from 'react-router-hash-link';
 
+const CarouselWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const Carousel = styled.div`
   width: 100%;
-  margin: 50px auto 0;
+  margin-top: 36px;
 
   display: flex;
   align-items: center;
@@ -41,7 +47,7 @@ const List = styled.ul`
 const Item = styled.li`
   width: 100%;
 
-  padding: 0 36px;
+  padding: 0 42px;
 
   position: relative;
 
@@ -98,6 +104,50 @@ const Image = styled.img`
   height: auto;
 `;
 
-const Styled = { Carousel, List, Item, PreviousAnchor, NextAnchor, PreviousButton, NextButton, Image };
+const NavigationList = styled.ul`
+  margin-top: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > li:not(:last-child) {
+    margin-right: 12px;
+  }
+`;
+
+const NavigationItem = styled(HashLink)`
+  width: 12px;
+  height: 12px;
+
+  display: block;
+
+  border-radius: 8px;
+  border: 1px solid var(--c-primary);
+
+  background-color: transparent;
+
+  &[data-active='true'] {
+    background-color: var(--c-primary);
+  }
+
+  &:after {
+    content: unset;
+  }
+`;
+
+const Styled = {
+  CarouselWrapper,
+  Carousel,
+  List,
+  Item,
+  PreviousAnchor,
+  NextAnchor,
+  PreviousButton,
+  NextButton,
+  Image,
+  NavigationList,
+  NavigationItem,
+};
 
 export default Styled;
