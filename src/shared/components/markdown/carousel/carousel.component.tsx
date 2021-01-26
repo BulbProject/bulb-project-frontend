@@ -18,11 +18,11 @@ export const Carousel: FC<CarouselProps> = ({ images }) => {
         {images.map((image, index) => {
           return (
             <Styled.Item key={image} id={`item-${index}`}>
-              <Styled.PreviousAnchor to={`#item-${index - 1 === -1 ? images.length - 1 : Math.max(index - 1, 0)}`} />
+              <Styled.PreviousAnchor to={`#item-${index === 0 ? images.length - 1 : index - 1}`} />
 
               <Styled.Image src={image} alt="2" />
 
-              <Styled.NextAnchor to={`#item-${index + 1 <= images.length - 1 ? index + 1 : 0}`} />
+              <Styled.NextAnchor to={`#item-${index + 1 < images.length ? index + 1 : 0}`} />
             </Styled.Item>
           );
         })}
