@@ -44,7 +44,7 @@
     "favicons-webpack-plugin": "^3.0.1",
     "file-loader": "^6.0.0",
     "formfish": "^0.6.15",
-    "fullpage.js": "^3.0.8",
+    "fullpage.js": "^4.0.5",
     "honks": "^0.4.0",
     "html-webpack-plugin": "^4.3.0",
     "i18next": "^19.7.0",
